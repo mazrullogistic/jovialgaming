@@ -20,7 +20,6 @@ export const axiosPost = async (
     response.data = result?.data || result?.data?.data;
     response.status = result?.status;
   } catch (e) {
-    console.log("EEEEEE", e.response);
     response.status = false;
     response.message = e?.response?.data?.message || "something went wrong";
     response.data = e?.response?.data || e;

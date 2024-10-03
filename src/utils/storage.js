@@ -4,7 +4,7 @@ import { decodeData, encodeData } from "./jwt";
 export const setRoomID = (key, value) => {
   console.log("value", key);
 
-  if (window) {
+  if (typeof window !== "undefined") {
     try {
       const encryptedData = encodeData(value);
 
@@ -30,7 +30,7 @@ export const getRoomId = (key) => {
 export const setChatUserData = (key, value) => {
   console.log("value", key);
 
-  if (window) {
+  if (typeof window !== "undefined") {
     try {
       const encryptedData = encodeData(value);
 
@@ -56,7 +56,7 @@ export const getChatUserData = (key) => {
 export const setDisputeData = (key, value) => {
   console.log("value", key);
 
-  if (window) {
+  if (typeof window !== "undefined") {
     try {
       const encryptedData = encodeData(value);
 
@@ -82,7 +82,7 @@ export const getDisputeData = (key) => {
 export const setConsoleData = (key, value) => {
   console.log("value", key);
 
-  if (window) {
+  if (typeof window !== "undefined") {
     try {
       const encryptedData = encodeData(value);
 
@@ -108,7 +108,7 @@ export const getConsoleData = (key) => {
 export const setRoomData = (key, value) => {
   console.log("value", key);
 
-  if (window) {
+  if (typeof window !== "undefined") {
     try {
       const encryptedData = encodeData(value);
 
@@ -135,7 +135,7 @@ export const getRoomData = (key) => {
 export const saveData = (key, value) => {
   console.log("value", key);
 
-  if (window) {
+  if (typeof window !== "undefined") {
     try {
       const encryptedData = encodeData(value);
 
@@ -160,7 +160,7 @@ export const getData = (key) => {
 };
 
 export const removeData = (key) => {
-  if (window) {
+  if (typeof window !== "undefined") {
     try {
       window.localStorage.removeItem(key);
     } catch (error) {}
@@ -168,7 +168,7 @@ export const removeData = (key) => {
 };
 
 export const updateData = (key, value) => {
-  if (window) {
+  if (typeof window !== "undefined") {
     try {
       removeData(key);
       saveData(key, value);
@@ -177,7 +177,7 @@ export const updateData = (key, value) => {
 };
 
 export const removeAll = () => {
-  if (window) {
+  if (typeof window !== "undefined") {
     try {
       window.localStorage.clear();
     } catch (error) {}

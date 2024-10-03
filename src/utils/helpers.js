@@ -2,8 +2,9 @@ import S3 from "react-aws-s3";
 import { S3KEY } from "@/constants/keywords";
 
 import AWS from "aws-sdk";
-window.Buffer = window.Buffer || require("buffer").Buffer;
-
+if (typeof window !== "undefined") {
+  window.Buffer = window.Buffer || require("buffer").Buffer;
+}
 export async function upload(file, folderName, extension, contentType) {
   try {
     console.log("extension", extension);
