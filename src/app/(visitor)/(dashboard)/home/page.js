@@ -1055,7 +1055,7 @@ const HomePage = ({ Component, pageProps }) => {
             >
               {newsData.map((post) => {
                 return (
-                  <div className="h-48 w-24 mt-6" onClick={}>
+                  <div className="h-48 w-24 mt-6">
                     <Image
                       // src={post.newsImg}
                       src={
