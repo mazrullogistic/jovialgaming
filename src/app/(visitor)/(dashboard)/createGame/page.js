@@ -301,8 +301,6 @@ const CreateGame = () => {
     setRoomData(roomData);
     const user = getData("user");
     // const roomId = getRoomId("roomId");
-    console.log("roomData", roomData);
-    console.log("user", user);
     // console.log("roomId", roomId);
     getAmountDataApi();
     // return () => {};
@@ -937,9 +935,7 @@ const CreateGame = () => {
             </button>
           </div>
         </div>
-        {console.log("selectedModelIndex 218", selectedModelIndex)}
-        {console.log("isModelShow 219", isModelShow)}
-        {console.log("readyTimes 346", readyTimes)}
+
         {isModelShow && (
           <Model
             isLoader={isLoader}

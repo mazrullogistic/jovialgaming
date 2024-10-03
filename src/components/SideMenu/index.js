@@ -23,7 +23,6 @@ export default function SideMenu({ children }) {
   const { toaster } = useToaster();
   // const isLoader = useSelector((state) => state.dashboardReducer.isLoading);
   const [isLoader, setIsLoader] = useState(false); // Initialize with null or some default value
-  console.log("user", user);
   // Function to handle menu item click
   const handleMenuItemClick = (title) => {
     console.log("title", title);

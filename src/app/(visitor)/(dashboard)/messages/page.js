@@ -117,7 +117,6 @@ const Messages = () => {
     //getChatList();
     getThreadList();
     getUserMessagesEvent();
-    console.log("user", user);
     return () => {};
   }, []);
   useEffect(() => {

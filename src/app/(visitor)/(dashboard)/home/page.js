@@ -793,7 +793,7 @@ const HomePage = ({ Component, pageProps }) => {
       ) : (
         <div className="flex bg-black06  ">
           <div className=" w-[100%] bg-black06">
-            <p className="header-home-txt">Welcome {user.data.username} ,</p>
+            <p className="header-home-txt">Welcome {user?.data?.username} ,</p>
             <img
               // src="https://admin.jovialgaming.com/backend/uploads/newsImg/ad29da13-efc1-461e-a74e-47b628484927.png"
               // src={user.roomDetails.image}

@@ -115,7 +115,6 @@ const Chat = () => {
     //getChatList();
     // getThreadList();
     getUserMessagesEvent();
-    console.log("user", user);
     return () => {};
   }, []);
   useEffect(() => {
@@ -491,12 +490,12 @@ const Chat = () => {
                 <div className="rounded-full h-10 w-10 bg-gray82 flex items-center justify-center">
                   <img
                     className="rounded-full h-full w-full object-cover"
-                    src={user.roomDetails.image}
+                    src={user?.roomDetails?.image}
                     alt="User Profile Picture"
                   />
                 </div>
                 <h1 className="text-xl font-semibold">
-                  {user.roomDetails.gamename}
+                  {user?.roomDetails?.gamename}
                 </h1>
               </div>
             </div>

@@ -123,7 +123,6 @@ const Chat = () => {
     //getChatList();
     // getThreadList();
     getUserMessagesEvent();
-    console.log("user", user);
     return () => {};
   }, []);
   useEffect(() => {
@@ -219,7 +218,7 @@ const Chat = () => {
     const userDataForChat = getChatUserData("chat");
 
     const payload = new FormData();
-    payload.append("disputes_id", dispute.id);
+    payload.append("disputes_id", dispute?.id);
 
     payload.append("perPage", 20);
     payload.append("page", chatListPage);
@@ -289,7 +288,7 @@ const Chat = () => {
 
       payload.append("fromUserId", user.data.id);
 
-      payload.append("disputes_id", dispute.id);
+      payload.append("disputes_id", dispute?.id);
 
       payload.append("chatType", "individualchat");
       payload.append("group_id", 0);
@@ -415,23 +414,23 @@ const Chat = () => {
         <div className="bg-black26 rounded-lg p-6 space-y-4">
           <div>
             <h2 className="text-gray82 text-sm">Case Status</h2>
-            <p>{dispute.regarding}</p>
+            <p>{dispute?.regarding}</p>
           </div>
           <div>
             <h2 className="text-gray82 text-sm">Case ID</h2>
-            <p>{dispute.caseId}</p>
+            <p>{dispute?.caseId}</p>
           </div>
           <div>
             <h2 className="text-gray82 text-sm">Your Name</h2>
-            <p>{dispute.userdesc}</p>
+            <p>{dispute?.userdesc}</p>
           </div>
           <div>
             <h2 className="text-gray82 text-sm">Email Address</h2>
-            <p className="italic text-gray-400">{dispute.email}</p>
+            <p className="italic text-gray-400">{dispute?.email}</p>
           </div>
           <div>
             <h2 className="text-gray82 text-sm">This Case Regarding for</h2>
-            <p>{dispute.regarding}</p>
+            <p>{dispute?.regarding}</p>
           </div>
           <div>
             <h2 className="text-gray82 text-sm">Please Select The Game</h2>
@@ -440,15 +439,15 @@ const Chat = () => {
           <div className="flex items-center space-x-2">
             <img
               className="h-12 w-12 rounded-lg"
-              src={dispute.gameData.image}
+              src={dispute?.gameData.image}
               alt="Warzone 2"
             />
             <div>
-              <p>{dispute.gameData.gamename}</p>
+              <p>{dispute?.gameData.gamename}</p>
               <p className="text-gray82 text-sm">
                 Played at
                 {` ${moment
-                  .utc(dispute.createdAt)
+                  .utc(dispute?.createdAt)
                   .local()
                   .format("MMM DD, YYYY hh:mm A")}`}
               </p>
@@ -456,7 +455,7 @@ const Chat = () => {
           </div>
           <div>
             <h2 className="text-gray82text-sm">Explain Your Issue</h2>
-            <p>{dispute.details}</p>
+            <p>{dispute?.details}</p>
           </div>
         </div>
       </div>
@@ -546,12 +545,12 @@ const Chat = () => {
                 <div className="rounded-full h-10 w-10 bg-gray82 flex items-center justify-center">
                   <img
                     className="rounded-full h-full w-full object-cover"
-                    src={user.roomDetails.image}
+                    src={user?.roomDetails?.image}
                     alt="User Profile Picture"
                   />
                 </div>
                 <h1 className="text-xl font-semibold">
-                  {user.roomDetails.gamename}
+                  {user?.roomDetails?.gamename}
                 </h1>
               </div>
             </div>
