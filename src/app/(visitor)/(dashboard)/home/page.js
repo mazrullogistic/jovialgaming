@@ -801,18 +801,10 @@ const HomePage = ({ Component, pageProps }) => {
           <div className=" w-[100%] bg-black06">
             <p className="header-home-txt">Welcome {user?.data?.username} ,</p>
             <img
-              // src="https://admin.jovialgaming.com/backend/uploads/newsImg/ad29da13-efc1-461e-a74e-47b628484927.png"
-              // src={user.roomDetails.image}
-              src={
-                "http://52.32.200.186/backend/uploads/game/a1dd4057-8641-47dc-ac1d-76abfa49f116.png"
-              }
+              src={user.roomDetails.image}
               className="w-[90%] h-[18%] ml-4 rounded-xl mt-2"
             />
             <div className="flex mt-4">
-              {/* <div className="w-20 bg-black25 text-white text-[12px]  text-center pt-[0.4%] rounded-3xl ml-4 mt-2 h-8 ">
-                PC
-              </div> */}
-
               <select
                 className="w-24 bg-black25 text-white text-[12px]  text-center   rounded-3xl ml-4 mt-2 h-8 pr-2"
                 onChange={handleChangeConsole}
