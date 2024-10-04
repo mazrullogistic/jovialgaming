@@ -796,7 +796,7 @@ const HomePage = ({ Component, pageProps }) => {
           <div className=" w-[100%] bg-black06">
             <p className="header-home-txt">Welcome {user?.data?.username} ,</p>
             <img
-              src={user.roomDetails.image}
+              src={user?.roomDetails?.image}
               className="w-[90%] h-[18%] ml-4 rounded-xl mt-2"
             />
             <div className="flex mt-4">
