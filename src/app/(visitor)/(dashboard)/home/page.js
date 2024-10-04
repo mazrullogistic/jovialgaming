@@ -782,11 +782,6 @@ const HomePage = ({ Component, pageProps }) => {
                 </li>
               );
             })}
-            {/* <li className="text-red">L - mg vs jayesh</li>
-            <li className="text-green">W - mg vs jayesh</li>
-            <li className="text-green-500">W - mg vs jayesh</li>
-            <li className="text-green-500">W - mg vs jayesh</li>
-            <li className="text-green-500">W - mg vs jayesh</li> */}
           </ul>
         </div>
       </div>
