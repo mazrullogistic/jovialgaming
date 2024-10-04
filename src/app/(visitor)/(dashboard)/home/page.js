@@ -47,7 +47,7 @@ const HomePage = ({ Component, pageProps }) => {
   const { toaster } = useToaster();
   const dispatch = useDispatch();
   const router = useRouter();
-  const user = getData("user");
+  // const user = getData("user");
   const [SeasonId, setSeasonId] = useState();
   const [profileData, setProfileData] = useState([]);
   const [isProfileCardModel, setIsProfileCard] = useState(false);
@@ -99,7 +99,13 @@ const HomePage = ({ Component, pageProps }) => {
       items: 1,
     },
   };
+  const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    // Only run this on the client side
+    const storedUser = getData("user");
+    setUser(storedUser);
+  }, []);
   useEffect(() => {
     getAvailableMatches();
     getCurrentMatches();
@@ -1029,7 +1035,7 @@ const HomePage = ({ Component, pageProps }) => {
               </div>
             )}
             {/* <p className="bold-txt">Tournaments</p> */}
-            <Carousel
+            {/* <Carousel
               responsive={responsive}
               itemClass="carousel-item-padding-40-px"
               containerClass="ml-4 mt-4"
@@ -1045,7 +1051,7 @@ const HomePage = ({ Component, pageProps }) => {
                   </div>
                 );
               })}
-            </Carousel>
+            </Carousel> */}
 
             <p className="bold-txt">Jovial News</p>
             <Carousel

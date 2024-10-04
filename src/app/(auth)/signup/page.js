@@ -655,7 +655,7 @@ const SignupPage = () => {
       fileImg.type || ""
     );
 
-    console.log("s3Data", s3Data.Location);
+    console.log("s3Data", s3Data);
     if (!s3Data) {
       toast.error("Uploading failed");
       setIsLoading(false);
@@ -1462,8 +1462,8 @@ const SignupPage = () => {
 
     return (
       <>
-        <FormProvider
-          methods={methods}
+        <div
+          // methods={methods}
           // onSubmit={handleSubmit(onSubmitForm)}
           className="pt-[12%] mb-[40px]"
         >
@@ -1473,11 +1473,11 @@ const SignupPage = () => {
             </div>
           </div>
           <div className="center-container">
-            <button className="btn-next" onClick={() => onClickContinue()}>
+            <button className="btn-next" onClick={onClickContinue}>
               Continue
             </button>
           </div>
-        </FormProvider>
+        </div>
       </>
     );
   }

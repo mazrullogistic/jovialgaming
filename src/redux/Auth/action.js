@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { toast } from "react-toastify";
-import { saveData } from "@/utils/storage";
+import { saveData, saveSignUpData } from "@/utils/storage";
 import {
   CheckUserNameExist,
   ForgetPasswordUser,
@@ -25,7 +25,8 @@ export const registerAction = createAsyncThunk(
 
       if (data.token) {
         // localStorage.setItem("user", JSON.stringify(data));
-        saveData("user", data);
+        // saveData("user", data);
+        saveSignUpData("signUp", data);
       }
       return data;
     } catch (err) {

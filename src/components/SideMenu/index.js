@@ -13,7 +13,6 @@ import Loader from "@/components/Loader";
 import { PATH_AUTH, PATH_DASHBOARD } from "@/routes/paths";
 import { getData, getRoomId, removeData, setRoomID } from "@/utils/storage";
 export default function SideMenu({ children }) {
-  const user = getData("user");
   const [editMode, setEditMode] = useState(false);
 
   const router = useRouter();
@@ -21,6 +20,13 @@ export default function SideMenu({ children }) {
 
   const dispatch = useDispatch();
   const { toaster } = useToaster();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Only run this on the client side
+    const storedUser = getData("user");
+    setUser(storedUser);
+  }, []);
   // const isLoader = useSelector((state) => state.dashboardReducer.isLoading);
   const [isLoader, setIsLoader] = useState(false); // Initialize with null or some default value
   // Function to handle menu item click
@@ -74,42 +80,42 @@ export default function SideMenu({ children }) {
     {
       href: "/home",
       title: "Home",
-      src: "/images/home.png",
+      src: "/images/home.svg",
     },
     {
       href: "/messages",
       title: "Messages",
-      src: "/images/msg.png",
+      src: "/images/chat.svg",
     },
     {
       href: "/createGame",
       title: "Create",
-      src: "/images/create.png",
+      src: "/images/add.svg",
     },
     {
       href: "/ranking",
       title: "Ranking",
-      src: "/images/create.png",
+      src: "/images/trophywhite.svg",
     },
     {
       href: "/historyBook",
       title: "History Book",
-      src: "/images/create.png",
+      src: "/images/agenda.svg",
     },
-    {
-      href: "/Subscriptions",
-      title: "Subscriptions",
-      src: "/images/subscription.png",
-    },
+    // {
+    //   href: "/Subscriptions",
+    //   title: "Subscriptions",
+    //   src: "/images/subscription.png",
+    // },
     {
       href: "/disputeCenter",
       title: "Dispute center",
-      src: "/images/subscription.png",
+      src: "/images/dispute.svg",
     },
     {
       href: "/about",
       title: "About",
-      src: "/images/create.png",
+      src: "/images/about.svg",
     },
   ];
 
@@ -128,7 +134,7 @@ export default function SideMenu({ children }) {
               alt="Logo"
             />
             <button
-              onClick={() => router.push("/profileCard")}
+              // onClick={() => router.push("/profileCard")}
               className="flex items-center ml-6"
             >
               <Image
@@ -175,11 +181,11 @@ export default function SideMenu({ children }) {
                   ))}
 
                   <li
-                    className="drawer-txt-container flex items-center space-x-2"
+                    className="drawer-txt-container flex items-center  "
                     onClick={leaveRoomApi}
                   >
                     <Image
-                      src="/images/leaveroom.png"
+                      src="/images/leaveroom.svg"
                       className="h-6 w-6 md:h-[12%] md:w-[12%]"
                       width={100}
                       height={100}
@@ -188,12 +194,12 @@ export default function SideMenu({ children }) {
                     <p className="drawer-txt">{"Leave Room"}</p>
                   </li>
                   <li
-                    className="drawer-txt-container flex items-center space-x-2 mb-8"
+                    className="drawer-txt-container flex items-center   mb-8  "
                     onClick={logOut}
                   >
                     <Image
-                      src="/images/leaveroom.png"
-                      className="h-6 w-6 md:h-[12%] md:w-[12%]"
+                      src="/images/logout.svg"
+                      className="h-6 w-6 md:h-[12%] md:w-[12%] "
                       width={100}
                       height={100}
                       alt="Logout"

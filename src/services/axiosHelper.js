@@ -1,5 +1,5 @@
 import axiosInstance from "@/utils/axios";
-import { getData } from "@/utils/storage";
+import { getData, getDataSignUpData } from "@/utils/storage";
 
 export const axiosPost = async (
   url,
@@ -8,12 +8,14 @@ export const axiosPost = async (
 ) => {
   let response = {};
   const user = getData("user");
-
+  const userData = getDataSignUpData("signUp");
+  const userToken = user?.token ? user?.token : userData?.token;
+  console.log("userToken 13", userToken);
   try {
     const result = await axiosInstance.post(url, data, {
       headers: {
         "Content-Type": contentType,
-        Authorization: user?.token ? `Bearer ${user.token}` : null,
+        Authorization: userToken ? `Bearer ${userToken}` : null,
       },
     });
     console.log("🚀 ~ result:", result);
@@ -35,12 +37,13 @@ export const axiosGet = async (
 ) => {
   let response = {};
   const user = getData("user");
-
+  const userData = getDataSignUpData("signUp");
+  const userToken = user?.token ? user?.token : userData?.token;
   try {
     const result = await axiosInstance.get(url, {
       headers: {
         "Content-Type": contentType,
-        Authorization: user?.token ? `Bearer ${user.token}` : null,
+        Authorization: userToken ? `Bearer ${userToken}` : null,
       },
       params,
     });
