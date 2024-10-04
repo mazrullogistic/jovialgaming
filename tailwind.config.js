@@ -25,7 +25,14 @@ module.exports = {
       yellow: "#e6d500",
       grayA4: "#a4a4a4",
     },
-
+    async rewrites() {
+      return [
+        {
+          source: "/api/:path*",
+          destination: "http://52.32.200.186:1337/api/v1", // Proxy to your API
+        },
+      ];
+    },
     extend: {
       fontFamily: {
         archivo: ["var(--font-archivo)"],
