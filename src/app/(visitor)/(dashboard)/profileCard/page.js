@@ -87,12 +87,10 @@ const ProfileCard = () => {
   const updateProfileApi = async () => {
     console.log("userInfo", userInfo);
     setIsLoader(true);
-
     try {
       const payload = new FormData();
       payload.append("id", user.data.id);
       payload.append("username", userInfo.userName);
-
       payload.append("firstname", userInfo.firstName);
       payload.append("lastname", userInfo.lastName);
       payload.append("email", userInfo.emailAddress);
@@ -104,13 +102,10 @@ const ProfileCard = () => {
       payload.append("console_name", "");
       payload.append("gameId", "");
       payload.append("game_name", userInfo.gamertag);
-
       const { payload: res } = await dispatch(updateProfileAction(payload));
       console.log("status 137", res);
-
       const { data, status } = res;
       setIsLoader(false);
-
       if (status) {
         getSeasonList();
         toast.success(res.message, TOAST_TYPES.ERROR);
@@ -120,42 +115,34 @@ const ProfileCard = () => {
       }
     } catch (error) {
       setIsLoader(false);
-
       console.log("Error", error);
     }
   };
   const getConsoleList = async () => {
     setIsLoader(true);
     const roomId = getRoomId("roomId");
-
     const object = {
       roomId: roomId,
     };
     try {
       const res = await dispatch(getConsoleAction(object));
-
       console.log("res--> 108", res);
-
       if (res.payload.statusCode == 200) {
         // setConsoleData("consoleData", res.payload.data[0]);
         setConsoleList(res.payload.data);
         let indexConsole = 0;
-
         let param = "";
         const data = res.payload.data;
-
         param = `${data[indexConsole].id}/0`;
         console.log("param", param);
         getGameByConsole(param);
       } else {
         console.log("res--> 133");
         setIsLoader(false);
-
         toast.success(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
       console.log("Error", error);
     }
@@ -174,23 +161,18 @@ const ProfileCard = () => {
     console.log("object 314", object);
     try {
       const res = await dispatch(getGameWinLossAction(object));
-
       console.log("res--> 110", res.payload.data);
-
       if (res.payload.status) {
         // setProfileData(res.payload.data.data);
         setGameTourWinLoss(res.payload.data.data);
-
         setIsLoader(false);
       } else {
         console.log("res--> 133");
         setIsLoader(false);
-
         toast.error(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
       console.log("Error", error);
     }
@@ -209,23 +191,18 @@ const ProfileCard = () => {
     console.log("object 314", object);
     try {
       const res = await dispatch(getGameWinLossAction(object));
-
       console.log("res--> 318", res.payload.data);
-
       if (res.payload.status) {
         // setProfileData(res.payload.data.data);
         setGameWinLoss(res.payload.data.data);
-
         setIsLoader(false);
       } else {
         console.log("res--> 133");
         setIsLoader(false);
-
         toast.error(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
       console.log("Error", error);
     }
@@ -241,23 +218,18 @@ const ProfileCard = () => {
     console.log("object 314", object);
     try {
       const res = await dispatch(getProfileCardAction(object));
-
       console.log("res--> 244", res.payload.data);
-
       if (res.payload.status) {
         setProfileData(res.payload.data.data);
         // setIsProfileCard(true);
-
         setIsLoader(false);
       } else {
         console.log("res--> 133");
         setIsLoader(false);
-
         toast.error(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
       console.log("Error", error);
     }
@@ -265,13 +237,10 @@ const ProfileCard = () => {
 
   const getSeasonList = async () => {
     setIsLoader(true);
-
     try {
       const res = await dispatch(getSeasonListAction());
-
       console.log("res--> 242", res.payload.data.data);
       console.log("res--> 242", res.payload.data.data[0].id);
-
       if (res.payload.status) {
         setSeasonList(res.payload.data.data);
         setSeasonId(res.payload.data.data[0].id);
@@ -287,19 +256,16 @@ const ProfileCard = () => {
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
       console.log("Error", error);
     }
   };
   const getGameByConsole = async (param) => {
     setIsLoader(true);
-
     try {
       //const res = await dispatch(getGameByConsoleAction(param));
       const res = await dispatch(getGameByConsoleAction(param));
       setIsLoader(false);
-
       console.log("res.payload.data 269", res);
       if (res.payload.status) {
         setGameByConsole(res.payload.data);
@@ -310,19 +276,16 @@ const ProfileCard = () => {
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
       console.log("Error", error);
     }
   };
   const getProfile = async () => {
     setIsLoader(true);
-
     try {
       //const res = await dispatch(getGameByConsoleAction(param));
       const res = await dispatch(getProfileDataAction(user.data.id));
       setIsLoader(false);
-
       console.log("res.payload.data 269", res);
       if (res.payload.status) {
         CommonConstant.isPaymentDetail = res.payload;
@@ -334,7 +297,6 @@ const ProfileCard = () => {
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
       console.log("Error", error);
     }
@@ -345,13 +307,10 @@ const ProfileCard = () => {
     const object = {
       user_id: user.data.id,
     };
-
     console.log("object 314", object);
     try {
       const res = await dispatch(getBadgesDataAction(object));
-
       console.log("res--> 371", res.payload.data);
-
       if (res.payload.status) {
         // setProfileData(res.payload.data.data);
         // setIsProfileCard(true);
@@ -360,12 +319,10 @@ const ProfileCard = () => {
       } else {
         console.log("res--> 133");
         setIsLoader(false);
-
         toast.error(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
       console.log("Error", error);
     }
@@ -378,18 +335,13 @@ const ProfileCard = () => {
       game: selectedBadgedData.id,
       user_id: user.data.id,
     };
-
     console.log("object 314", object);
-
     const paramObj = new FormData();
     paramObj.append("game", selectedBadgedData.id);
-
     paramObj.append("user_id", user.data.id);
     try {
       const res = await dispatch(getSearchBadgesAction(paramObj));
-
       console.log("res--> 371", res.payload.data);
-
       if (res.payload.status) {
         // setProfileData(res.payload.data.data);
         // setIsProfileCard(true);
@@ -398,25 +350,20 @@ const ProfileCard = () => {
       } else {
         console.log("res--> 133");
         setIsLoader(false);
-
         toast.error(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
       console.log("Error", error);
     }
   };
   const getGameListApi = async () => {
     setIsLoader(true);
-
     try {
       const res = await dispatch(getRoomList());
-
       console.log("res-->", res);
       console.log("statusCode-->", res.payload.statusCode);
-
       if (res.payload.statusCode == 200) {
         setIsLoader(false);
         setTournamentData(res.payload.data);
@@ -424,7 +371,6 @@ const ProfileCard = () => {
       } else {
         setIsLoading(false);
         console.log("res--> 133");
-
         toast.error(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
@@ -436,46 +382,38 @@ const ProfileCard = () => {
 
   const updateProfilePicture = async (fileImg) => {
     setIsLoader(true);
-
     let s3Data = await upload(
       fileImg,
       "userImages",
       fileImg.extension || "",
       fileImg.type || ""
     );
-
     console.log("s3Data", s3Data);
     console.log("fileImg", fileImg);
     if (!s3Data) {
       toast.error("Uploading failed");
       setIsLoader(false);
-
       return false;
     }
-
     const payload = new FormData();
     console.log("user337", user.data);
     payload.append("id", user.data.id);
     payload.append("image", s3Data.Location);
     try {
       // New data to update the object
-
       const res = await dispatch(updateProfileAction(payload));
       setIsLoader(false);
-
       if (!res.payload.status) {
         toast.error(res.payload.message, TOAST_TYPES.ERROR);
       } else {
         console.log("first 349", res.payload.data);
         saveData("user", res.payload);
         dispatch(userData(res.payload));
-
         setIsRefresh();
         toast.success(res.payload.message, TOAST_TYPES.SUCCESS);
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
       console.log("Error", error);
     }
@@ -613,11 +551,11 @@ const ProfileCard = () => {
 
   const [isEditable, setIsEditable] = useState(false);
   const [userInfo, setUserInfo] = useState({
-    userName: user.data.username,
-    firstName: user.data.firstname,
-    lastName: user.data.lastname,
-    emailAddress: user.data.email,
-    mobileNumber: user.data.phone,
+    userName: user?.data?.username,
+    firstName: user?.data?.firstname,
+    lastName: user?.data?.lastname,
+    emailAddress: user?.data?.email,
+    mobileNumber: user?.data?.phone,
     psn: "",
     gamertag: "",
     switchId: "",
@@ -821,7 +759,7 @@ const ProfileCard = () => {
                           Select Favorite Game
                         </option>
                         {console.log("gameByConsole", gameByConsole)}
-                        {gameByConsole.data.map((option) => (
+                        {gameByConsole?.data.map((option) => (
                           <option>{option.gamename}</option>
                         ))}
                       </select>
