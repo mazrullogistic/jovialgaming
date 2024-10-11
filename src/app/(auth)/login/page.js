@@ -31,8 +31,8 @@ const LoginPage = () => {
   // Form Config
   const defaultValues = useMemo(
     () => ({
-      email: "jayeshrathod@logisticinfotech.co.in",
-      password: "12345",
+      email: "",
+      password: "",
     }),
     []
   );
