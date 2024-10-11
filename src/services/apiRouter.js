@@ -34,6 +34,10 @@ export const API_ROUTER = {
   SUBMIT_SCORE: "/score/add-score",
   AVAILABLE_MATCH_JOIN: "/matchrequests/do-match-from-avaliable",
   FREE_PLAY_AVAILABLE_MATCH_JOIN: "/freeplaymatch/do-match-from-avaliable",
+  WITHDRAW_AMOUNT: "/payment/add-paypal-data",
+  PAYPAL_PLAN_DETAIL: "/payment/paypal-plan-details",
+  GET_SUBSCRIPTION_DETAIL: "/user/user-subscription-details",
+  PAYPAL_SUBSCRIPTION_ADD: "/payment/paypal-subscription",
 
   //Chat
   ROOM_CHAT: "/room/groupchat/message-list?",
@@ -58,9 +62,13 @@ export const API_ROUTER = {
   ROOM_CHAT_THREAD: "/room/groupchat/get-roomchat-thread",
   USER_CHAT_LIST: "/chat/user-chat-list",
   CHAT_LIST: "/chat/chatlist",
+  GET_PROFILE: "/user/",
   GET_DISPUTE_CHAT: "/disputeschat/get-disputes-chat",
   GAME_LIST: "/games?",
-
+  GAME_BY_CONSOLE: "/gamesbyconsole/",
+  UPDATE_PROFILE: "/user/update",
+  PAYPAL_PLAN_LIST: "/payment/paypal-charges-details",
+  CARD_PURCHASE: "/payment/card-purchase-new",
   //
 
   FREE_PLAY_MATCH_REQUEST_CREATE: "/freeplaymatch/create",

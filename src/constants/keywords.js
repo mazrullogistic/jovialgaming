@@ -22,6 +22,7 @@ export const CommonConstant = {
   FreePlayData: null,
   SelectedMatchData: null,
   userDataForChat: null,
+  isPaymentDetail: null,
 };
 
 export const S3KEY = {

@@ -118,6 +118,10 @@ const HomePage = ({ Component, pageProps }) => {
     getConsoleList();
     getEarnerList();
     getSeasonList();
+    {
+      console.log("user?.roomDetails?.image", user?.roomDetails?.image);
+    }
+
     // return () => {};
   }, []);
 
@@ -798,10 +802,10 @@ const HomePage = ({ Component, pageProps }) => {
           <div className=" w-[100%] bg-black06">
             <p className="header-home-txt">Welcome {user?.data?.username} ,</p>
             <img
-              // src={user?.roomDetails?.image}
-              src={
-                "https://admin.jovialgaming.com/backend/uploads/newsImg/ad29da13-efc1-461e-a74e-47b628484927.png"
-              }
+              src={user?.roomDetails?.image}
+              // src={
+              //   "https://admin.jovialgaming.com/backend/uploads/newsImg/ad29da13-efc1-461e-a74e-47b628484927.png"
+              // }
               className="w-[90%] h-[18%] ml-4 rounded-xl mt-2"
             />
             <div className="flex mt-4">
@@ -1053,7 +1057,14 @@ const HomePage = ({ Component, pageProps }) => {
             >
               {newsData.map((post) => {
                 return (
-                  <div className="h-48 w-24 mt-6">
+                  <div
+                    onClick={() => {
+                      console.log("post", post);
+                      console.log("post", post.url);
+                      window.location.href = post.url; // Redirect to the URL
+                    }}
+                    className="h-48 w-24 mt-6"
+                  >
                     <Image
                       // src={post.newsImg}
                       src={

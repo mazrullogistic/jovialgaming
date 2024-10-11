@@ -1,5 +1,6 @@
 "use client";
 
+import { authApiSliceReducer } from "./Auth/AuthSlice";
 import rootReducers from "./rootReducers";
 import { configureStore } from "@reduxjs/toolkit";
 
@@ -15,6 +16,7 @@ const initialState = {};
 // const store = legacy_createStore(pReducer, initialState);
 const store = configureStore({
   reducer: rootReducers,
+  userData: authApiSliceReducer,
 });
 
 // const persistor = persistStore(store);

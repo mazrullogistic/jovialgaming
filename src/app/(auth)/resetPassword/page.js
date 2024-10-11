@@ -35,7 +35,7 @@ const ResetPassword = () => {
   const user = getData("user");
   const userAuth = user?.token;
   const [isLoading, setIsLoading] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(2);
   const [email, setEmail] = useState("");
   const route = useRouter();
 
@@ -139,9 +139,9 @@ const ResetPassword = () => {
       .shape({
         email: yup
           .string()
-          .nullable()
-          .trim()
-          .lowercase()
+          .required("Please enter email address")
+          .email("Please enter valid email address")
+          .trim("Please enter valid email address")
           .matches(
             /^($)|(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))$/,
             "Please enter a valid email address"
@@ -282,7 +282,43 @@ const ResetPassword = () => {
 
     return (
       <>
-        <FormProvider
+        <div className="bg-black26 rounded-lg p-8">
+          <div className="flex justify-center mb-8">
+            <Image src="/images/logo.png" alt="Logo" width={95} height={95} />
+          </div>
+
+          <FormProvider
+            methods={methodsEmail}
+            onSubmit={handleSubmitEmail((formData) =>
+              onSubmitFormEmail(formData, nextStep)
+            )}
+            className="space-y-6"
+          >
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium mb-2 text-white"
+              >
+                Email
+              </label>
+
+              <RHFTextInput
+                name="email"
+                placeholder="Enter your email address "
+                className="w-full px-3 py-2 bg-gray-800 rounded-md"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-2 w-[160px] transition duration-300 border-white border-[1px] rounded-full mt-4 text-blueF0"
+            >
+              Submit
+            </button>
+          </FormProvider>
+        </div>
+
+        {/* <FormProvider
           methods={methodsEmail}
           onSubmit={handleSubmitEmail((formData) =>
             onSubmitFormEmail(formData, nextStep)
@@ -306,7 +342,7 @@ const ResetPassword = () => {
               </div>
             </div>
           </div>
-        </FormProvider>
+        </FormProvider> */}
       </>
     );
   };
@@ -322,7 +358,43 @@ const ResetPassword = () => {
 
     return (
       <>
-        <FormProvider
+        <div className="bg-black26 rounded-lg p-8">
+          <div className="flex justify-center mb-8">
+            <Image src="/images/logo.png" alt="Logo" width={95} height={95} />
+          </div>
+
+          <FormProvider
+            methods={methodsVerificationCode}
+            onSubmit={handleSubmitVerificationCode((formData) =>
+              onSubmitFormVerificationCode(formData, nextStep)
+            )}
+            className="space-y-6"
+          >
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium mb-2 text-white"
+              >
+                Enter Verification Code
+              </label>
+
+              <RHFTextInput
+                name="verificationCode"
+                placeholder="Verification Code"
+                className="w-full px-3 py-2 bg-gray-800 rounded-md"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-2 w-[160px] transition duration-300 border-white border-[1px] rounded-full mt-4 text-blueF0"
+            >
+              Verify
+            </button>
+          </FormProvider>
+        </div>
+
+        {/* <FormProvider
           methods={methodsVerificationCode}
           onSubmit={handleSubmitVerificationCode((formData) =>
             onSubmitFormVerificationCode(formData, nextStep)
@@ -348,7 +420,7 @@ const ResetPassword = () => {
               </div>
             </div>
           </div>
-        </FormProvider>
+        </FormProvider> */}
       </>
     );
   }
@@ -363,6 +435,58 @@ const ResetPassword = () => {
     } = methodsPassword;
     return (
       <>
+        <div className="bg-black26 rounded-lg p-8">
+          <div className="flex justify-center mb-8">
+            <Image src="/images/logo.png" alt="Logo" width={95} height={95} />
+          </div>
+
+          <FormProvider
+            methods={methodsPassword}
+            onSubmit={handleSubmitPassword((formData) =>
+              onSubmitFormPassword(formData, nextStep)
+            )}
+            className="space-y-6"
+          >
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium mb-2 text-white"
+              >
+                Confirm Password
+              </label>
+
+              <RHFTextInput
+                name="password"
+                type="password"
+                placeholder="New Password"
+                className="w-full px-3 py-2 bg-gray-800 rounded-md"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium mb-2 text-white"
+              >
+                Confirm Password
+              </label>
+
+              <RHFTextInput
+                name="confirmPassword"
+                type="password"
+                placeholder="Confirm Password"
+                className="w-full px-3 py-2 bg-gray-800 rounded-md"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-2 w-[160px] transition duration-300 border-white border-[1px] rounded-full mt-4 text-blueF0"
+            >
+              Change Password
+            </button>
+          </FormProvider>
+        </div>
+        {/* 
         <FormProvider
           methods={methodsPassword}
           onSubmit={handleSubmitPassword((formData) =>
@@ -399,7 +523,7 @@ const ResetPassword = () => {
               </div>
             </div>
           </div>
-        </FormProvider>
+        </FormProvider> */}
       </>
     );
   }
@@ -408,7 +532,7 @@ const ResetPassword = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="main-container">
+        /* <div className="main-container">
           <Image
             src="/images/logo.png"
             className="logo-img"
@@ -433,6 +557,37 @@ const ResetPassword = () => {
                 <Step3 />
               </Wizard>
             </div>
+          </div>
+        </div> */
+
+        <div className="min-h-screen bg-gradient-to-b from-gray6d to-black06 flex flex-col items-center justify-center p-4 relative">
+          {/* <div className="absolute top-4 left-4">
+            <Image
+              src="/images/logo.png"
+              className="logo-img"
+              width={45}
+              height={45}
+            />
+          </div> */}
+
+          <div className="w-full max-w-md mx-auto">
+            <div className="flex items-center justify-center mb-8">
+              <div>
+                <div>
+                  <h1 className="text-2xl md:text-4xl font-bold text-center text-white md:w-full">
+                    The First Platform for Gamer Growth.
+                  </h1>
+                </div>
+                <p className="text-lg text-gray82 text-[30px] text-center mt-2">
+                  Show the world.
+                </p>
+              </div>
+            </div>
+            <Wizard startIndex={activeIndex}>
+              <Step1 />
+              <Step2 />
+              <Step3 />
+            </Wizard>
           </div>
         </div>
       )}

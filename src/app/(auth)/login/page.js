@@ -142,75 +142,101 @@ const LoginPage = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="main-container">
-          <Image
-            src="/images/logo.png"
-            className="logo-img"
-            width={45}
-            height={45}
-          />
-          <p className="header-txt">
-            The First Platform for Gamer
-            <br /> Growth.
-          </p>
-          <p className="header-sub-txt">Show the world.</p>
-          <div className="center-container">
-            <div className="box-container">
-              <div className="center-container">
+        <div className="min-h-screen bg-gradient-to-b from-gray6d to-black06 flex flex-col items-center justify-center p-4 relative">
+          {/* <div className="absolute top-4 left-4">
+            <Image
+              src="/images/logo.png"
+              className="logo-img"
+              width={45}
+              height={45}
+            />
+          </div> */}
+
+          <div className="w-full max-w-md mx-auto">
+            <div className="flex items-center justify-center mb-8">
+              <div>
+                <div>
+                  <h1 className="text-2xl md:text-4xl font-bold text-center text-white md:w-full">
+                    The First Platform for Gamer Growth.
+                  </h1>
+                </div>
+                <p className="text-lg text-gray82 text-[30px] text-center mt-2">
+                  Show the world.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-black26 rounded-lg p-8">
+              <div className="flex justify-center mb-8">
                 <Image
                   src="/images/logo.png"
+                  alt="Logo"
                   width={95}
                   height={95}
-                  className="box-container-img"
                 />
               </div>
+
               <FormProvider
                 methods={methods}
                 onSubmit={handleSubmit(onSubmitForm)}
-                className="mt-[20px] mb-[40px]"
+                className="space-y-6"
               >
-                <div className="center-container">
-                  <div>
-                    <p className="textInput-txt">Email</p>
-                    <RHFTextInput
-                      name="email"
-                      placeholder="Enter your email address "
-                      className="textInput"
-                    />
-                  </div>
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium mb-2 text-white"
+                  >
+                    Email
+                  </label>
+
+                  <RHFTextInput
+                    name="email"
+                    placeholder="Enter your email address "
+                    className="w-full px-3 py-2 bg-gray-800 rounded-md"
+                  />
                 </div>
-                <div className="center-container">
-                  <div>
-                    <p className="textInput-txt">Password</p>
-                    <RHFTextInput
-                      name="password"
-                      type="password"
-                      placeholder="Enter password"
-                      className="textInput"
-                    />
-                    <div className="center-container">
-                      <button className="btn-login">Log in</button>
-                    </div>
-                    <div className="center-container mt-8">
-                      <p className="textInput-txt">Don't have an account?</p>
-                      <p
-                        className="textInput-txt-blue ml-2 cursor-pointer"
-                        onClick={onClickSignUp}
-                      >
-                        Sign up
-                      </p>
-                    </div>
-                    <div className="center-container mt-4">
-                      <a
-                        className="textInput-txt cursor-pointer"
-                        onClick={onClickForgetPassWord}
-                      >
-                        Forgot password
-                      </a>
-                    </div>
-                  </div>
+
+                <div>
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium mb-2 text-white"
+                  >
+                    Password
+                  </label>
+
+                  <RHFTextInput
+                    name="password"
+                    type="password"
+                    placeholder="Enter password"
+                    className="w-full px-3 py-2 bg-gray-800 rounded-md"
+                  />
                 </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-2 w-[160px] transition duration-300 border-white border-[1px] rounded-full mt-4 text-blueF0"
+                >
+                  Log in
+                </button>
               </FormProvider>
+
+              <div className="mt-6 text-center">
+                <p className="text-sm text-white">
+                  Don't have an account?
+                  <button
+                    className="ml-2 text-blueF0 hover:underline"
+                    onClick={onClickSignUp}
+                  >
+                    Sign up
+                  </button>
+                </p>
+                <button
+                  className="text-sm text-white hover:underline mt-2"
+                  onClick={onClickForgetPassWord}
+                >
+                  Forgot password
+                </button>
+              </div>
             </div>
           </div>
         </div>

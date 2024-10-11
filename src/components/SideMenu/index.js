@@ -12,6 +12,7 @@ import { TOAST_ALERTS, TOAST_TYPES } from "@/constants/keywords";
 import Loader from "@/components/Loader";
 import { PATH_AUTH, PATH_DASHBOARD } from "@/routes/paths";
 import { getData, getRoomId, removeData, setRoomID } from "@/utils/storage";
+import { userData } from "@/redux/Auth/AuthSlice";
 export default function SideMenu({ children }) {
   const [editMode, setEditMode] = useState(false);
 
@@ -25,6 +26,8 @@ export default function SideMenu({ children }) {
   useEffect(() => {
     // Only run this on the client side
     const storedUser = getData("user");
+    dispatch(userData(storedUser));
+
     setUser(storedUser);
   }, []);
   // const isLoader = useSelector((state) => state.dashboardReducer.isLoading);
@@ -102,11 +105,11 @@ export default function SideMenu({ children }) {
       title: "History Book",
       src: "/images/agenda.svg",
     },
-    // {
-    //   href: "/Subscriptions",
-    //   title: "Subscriptions",
-    //   src: "/images/subscription.png",
-    // },
+    {
+      href: "/subscription",
+      title: "Subscriptions",
+      src: "/images/payment.svg",
+    },
     {
       href: "/disputeCenter",
       title: "Dispute center",
@@ -118,7 +121,7 @@ export default function SideMenu({ children }) {
       src: "/images/about.svg",
     },
   ];
-
+  const userDataNew = useSelector((state) => state.userData.userData);
   return (
     <div>
       {isLoader ? (
@@ -134,19 +137,21 @@ export default function SideMenu({ children }) {
               alt="Logo"
             />
             <button
-              // onClick={() => router.push("/profileCard")}
+              onClick={() => router.push("/profileCard")}
               className="flex items-center ml-6"
             >
-              <Image
-                src={user?.data?.image}
-                className="h-[70px] w-[70px] md:h-[80px] md:w-[80px] rounded-full mt-[5%] md:mt-[15%]"
-                width={50}
-                height={50}
+              <img
+                src={userDataNew?.data?.image}
                 alt="Profile"
+                className="w-20 h-20 rounded-full object-cover"
               />
               <div className="ml-6 text-white mt-8">
-                <p className="text-lg font-semibold">{user?.data?.username}</p>
-                <p className="text-sm text-gray-500">${user?.data?.balance}</p>
+                <p className="text-lg font-semibold">
+                  {userDataNew?.data?.username}
+                </p>
+                <p className="text-sm text-gray-500">
+                  ${userDataNew?.data?.balance}
+                </p>
               </div>
             </button>
             <aside className="bg-fuchsia-100 w-full md:w-60">

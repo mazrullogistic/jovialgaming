@@ -11,9 +11,11 @@ export async function upload(file, folderName, extension, contentType) {
     console.log("contentType", contentType);
     console.log("file 11", file);
     console.log("folderName", folderName);
+    console.log("ACCESS_KEY_ID", process.env.ACCESS_KEY_ID);
+    console.log("SECRET_KEY_ID", process.env.SECRET_KEY_ID);
     const s3 = new AWS.S3({
-      accessKeyId: process.env.accessKeyId,
-      secretAccessKey: process.env.secretAccessKey,
+      accessKeyId: process.env.ACCESS_KEY_ID,
+      secretAccessKey: process.env.SECRET_KEY_ID,
     });
 
     const params = {

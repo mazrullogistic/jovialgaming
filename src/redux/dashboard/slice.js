@@ -66,7 +66,17 @@ import {
   getGameRemainAction,
   getBadgesDataAction,
   getSearchBadgesAction,
+  getGameByConsoleAction,
+  paypalPlanListAction,
+  cardPurchaseAction,
+  getProfileDataAction,
+  getWithdrawAmountAction,
+  getPlanDetailAction,
+  getSubscriptionDetailAction,
+  addSubscriptionDataAction,
 } from "./action";
+import { updateProfileAction } from "../Auth/action";
+import { WithdrawAmount } from "./services";
 
 const initialState = {
   userData: {},
@@ -655,6 +665,105 @@ const DashboardSlice = createSlice({
         state.error = null;
       })
       .addCase(sendDisputeChatAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(getGameByConsoleAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getGameByConsoleAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getGameByConsoleAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(getProfileDataAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getProfileDataAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getProfileDataAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(getWithdrawAmountAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getWithdrawAmountAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getWithdrawAmountAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(getPlanDetailAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getPlanDetailAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getPlanDetailAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(getSubscriptionDetailAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getSubscriptionDetailAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getSubscriptionDetailAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(addSubscriptionDataAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addSubscriptionDataAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(addSubscriptionDataAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(cardPurchaseAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(cardPurchaseAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(cardPurchaseAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(paypalPlanListAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(paypalPlanListAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(paypalPlanListAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(updateProfileAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateProfileAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(updateProfileAction.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || "Error fetching user data";
       })

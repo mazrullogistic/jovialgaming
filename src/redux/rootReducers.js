@@ -4,6 +4,7 @@ import { dashboardApiSliceReducer } from "./dashboard/slice";
 
 const rootReducers = combineReducers({
   registerApi: authApiSliceReducer,
+  userData: authApiSliceReducer,
   dashboardReducer: dashboardApiSliceReducer,
 });
 

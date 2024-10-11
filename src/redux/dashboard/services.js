@@ -130,17 +130,38 @@ export const DisputesList = (data) => {
 export const MatchHistoryList = (data) => {
   return axiosPost(API_ROUTER.MATCH_HISTORY, data);
 };
+export const UpdateProfile = (data) => {
+  return axiosPost(API_ROUTER.UPDATE_PROFILE, data);
+};
+export const WithdrawAmount = (data) => {
+  return axiosPost(API_ROUTER.WITHDRAW_AMOUNT, data);
+};
 export const UserChatList = (data) => {
   return axiosPost(API_ROUTER.USER_CHAT_LIST, data);
 };
 export const GetGameWinLoss = (data) => {
   return axiosGet(API_ROUTER.GET_GAME_WIN_LOSS, data);
 };
+export const GetSubscriptionDetail = (data) => {
+  return axiosGet(API_ROUTER.GET_SUBSCRIPTION_DETAIL, data);
+};
+export const GetPlanDetail = (data) => {
+  return axiosGet(API_ROUTER.PAYPAL_PLAN_DETAIL, data);
+};
 export const GetBadges = (data) => {
   return axiosGet(API_ROUTER.GET_BADGES, data);
 };
+export const GetGameByConsole = (data) => {
+  return axiosGet(API_ROUTER.GAME_BY_CONSOLE + data, null);
+};
+export const GetProfileData = (data) => {
+  return axiosGet(API_ROUTER.GET_PROFILE + data, null);
+};
 export const GetBadgesData = (data) => {
   return axiosPost(API_ROUTER.GET_BADGES, data);
+};
+export const AddSubscriptionData = (data) => {
+  return axiosPost(API_ROUTER.PAYPAL_SUBSCRIPTION_ADD, data);
 };
 export const GetSearchBadges = (data) => {
   return axiosPost(API_ROUTER.USER_SEARCH_BADGE, data);
@@ -157,8 +178,14 @@ export const GetRoomChatThread = (data) => {
 export const GetGameRemain = (data) => {
   return axiosGet(API_ROUTER.GET_GAME_REMAIN, data);
 };
+export const GetPaypalPlanList = (data) => {
+  return axiosGet(API_ROUTER.PAYPAL_PLAN_LIST, data);
+};
 export const GetChatList = (data) => {
   return axiosPost(API_ROUTER.CHAT_LIST, data);
+};
+export const GetCardPurchase = (data) => {
+  return axiosPost(API_ROUTER.CARD_PURCHASE, data);
 };
 export const GetDisputeChat = (data) => {
   return axiosPost(API_ROUTER.GET_DISPUTE_CHAT, data);
