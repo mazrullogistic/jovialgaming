@@ -36,7 +36,7 @@ const Model = ({
   const [selectedBox, setSelectedBox] = useState(0);
   const [selectedBoxMatch, setSelectedBoxMatch] = useState(0);
   const [selectedModelIndex, setSelectedModelIndex] = useState(
-    selectedIndex ? selectedModelIndex : 0
+    selectedIndex ? selectedIndex : 0
   );
   const [submitScoreDialog, setSubmitScoreDialog] = useState(submitScoreModel);
   const [iWonLossModelDialog, setIWonLossModelDialog] = useState(false);

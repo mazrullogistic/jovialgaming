@@ -168,14 +168,16 @@ const HomePage = ({ Component, pageProps }) => {
   }, []);
 
   useEffect(() => {
-    onMessage(messaging, (payload) => {
-      if (payload.notification) {
-        console.log("Message received in foreground: ", payload);
-        handleShowNotification(payload); // Pass payload here
-      } else {
-        console.log("No notification payload found.");
-      }
-    });
+    try {
+      onMessage(messaging, (payload) => {
+        if (payload.notification) {
+          console.log("Message received in foreground: ", payload);
+          handleShowNotification(payload); // Pass payload here
+        } else {
+          console.log("No notification payload found.");
+        }
+      });
+    } catch (error) {}
   }, []);
 
   useEffect(() => {
@@ -966,12 +968,14 @@ const HomePage = ({ Component, pageProps }) => {
         <div className="flex bg-black06  ">
           <div className=" w-[100%] bg-black06">
             <p className="header-home-txt">Welcome {user?.data?.username} ,</p>
-            <img
-              // src={user?.roomDetails?.image}
-              src={
-                "https://admin.jovialgaming.com/backend/uploads/newsImg/ad29da13-efc1-461e-a74e-47b628484927.png"
-              }
-              className="w-[70%] h-auto max-h-[380px] ml-4 rounded-xl mt-2 object-cover"
+
+            <Image
+              src={user?.roomDetails?.image}
+              width={400} // Adjust as needed for your design
+              height={300} // Adjust as needed for your design
+              className="w-[70%] h-auto max-h-[380px] ml-4 rounded-xl mt-2 object-cover bg-gray30"
+              alt="Room Details"
+              style={{ objectFit: "contain" }} // Ensures the image is properly cropped to fill
             />
             <div className="flex mt-4">
               <div className=" bg-black25 w-20 rounded-3xl h-8 items-center justify-center content-center mt-2 ml-4 pr-2">
