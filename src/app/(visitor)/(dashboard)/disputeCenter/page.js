@@ -77,11 +77,12 @@ const DisputeCenter = () => {
                   }}
                   className="w-[94%] bg-gray30 mb-2 rounded-lg ml-[3%] flex items-center p-4"
                 >
-                  <div className="rounded-lg h-24 w-24 bg-gray-300 flex items-center justify-center overflow-hidden">
-                    <img
-                      className="rounded-lg h-full w-full object-cover"
+                  <div className="rounded-lg  bg-gray-300 flex items-center justify-center overflow-hidden">
+                    <Image
+                      className="rounded-lg  "
                       src={item.gameData.image}
-                      alt="Profile Picture"
+                      width={140} // Matches Tailwind h-24 (96px)
+                      height={140} // Matches Tailwind w-24 (96px)
                     />
                   </div>
                   <div className="ml-4 flex flex-col justify-between">
