@@ -45,10 +45,6 @@ import moment from "moment";
 import { onMessage } from "firebase/messaging";
 import { toast } from "react-toastify";
 import dynamic from "next/dynamic";
-const ServiceWorkerRegistration = dynamic(
-  () => import("@/components/ServiceWorkerRegistration"),
-  { ssr: false }
-);
 
 const HomePage = ({ Component, pageProps }) => {
   const [isLoader, setIsLoader] = useState(false); // Initialize with null or some default value
@@ -182,6 +178,25 @@ const HomePage = ({ Component, pageProps }) => {
     });
   }, []);
 
+  useEffect(() => {
+    // Ensure this only runs on the client side
+    if (typeof window !== "undefined" && typeof navigator !== "undefined") {
+      // Register the service worker if 'serviceWorker' is available in the navigator
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/firebase-messaging-sw.js")
+          .then((registration) => {
+            console.log(
+              "Service Worker registered with scope:",
+              registration.scope
+            );
+          })
+          .catch((error) => {
+            console.error("Service Worker registration failed:", error);
+          });
+      }
+    }
+  }, []);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -949,8 +964,6 @@ const HomePage = ({ Component, pageProps }) => {
         <Loader />
       ) : (
         <div className="flex bg-black06  ">
-          <ServiceWorkerRegistration />
-
           <div className=" w-[100%] bg-black06">
             <p className="header-home-txt">Welcome {user?.data?.username} ,</p>
             <img
