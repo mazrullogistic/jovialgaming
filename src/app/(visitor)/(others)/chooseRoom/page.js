@@ -122,29 +122,33 @@ const ChooseRoom = () => {
           </button>
 
           <p className="bold-txt-room">CHOOSE A ROOM.</p>
+          <div className="room-carousel  ">
+            <Carousel
+              responsive={responsive}
+              itemClass="carousel-item-padding-40-px"
+              containerClass="ml-4 mt-4"
+              showDots={false}
+              renderDotsOutside={true}
+            >
+              {tournamentData.map((item) => {
+                return (
+                  <button onClick={selectRoomApi(item)}>
+                    <Image
+                      src={item.image}
+                      layout="fill"
+                      className="rounded-3xl"
+                    ></Image>
 
-          <Carousel
-            responsive={responsive}
-            itemClass="carousel-item-padding-40-px"
-            containerClass="ml-4 mt-4"
-            showDots={false}
-            renderDotsOutside={true}
-          >
-            {tournamentData.map((item) => {
-              return (
-                <button
-                  className="h-48 w-24 mt-6"
-                  onClick={selectRoomApi(item)}
-                >
-                  <Image
-                    src={item.image}
-                    layout="fill"
-                    className="rounded-3xl"
-                  ></Image>
-                </button>
-              );
-            })}
-          </Carousel>
+                    {/* <img
+                      className="h-148 w-124 mt-6"
+                      src={item.image}
+                      alt="Sender's Profile Picture"
+                    /> */}
+                  </button>
+                );
+              })}
+            </Carousel>
+          </div>
         </div>
       )}
     </div>

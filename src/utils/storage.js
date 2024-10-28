@@ -105,6 +105,32 @@ export const getConsoleData = (key) => {
     }
   }
 };
+export const setTournamentId = (key, value) => {
+  console.log("value", key);
+
+  if (typeof window !== "undefined") {
+    try {
+      const encryptedData = encodeData(value);
+
+      window.localStorage.setItem(key, encryptedData);
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+};
+
+export const getTournamentId = (key) => {
+  if (typeof window !== "undefined") {
+    try {
+      const localEncryptedData = window.localStorage.getItem(key);
+      if (localEncryptedData) {
+        return decodeData(localEncryptedData);
+      }
+    } catch (error) {
+      return "";
+    }
+  }
+};
 export const setRoomData = (key, value) => {
   console.log("value", key);
 
@@ -120,6 +146,32 @@ export const setRoomData = (key, value) => {
 };
 
 export const getRoomData = (key) => {
+  if (typeof window !== "undefined") {
+    try {
+      const localEncryptedData = window.localStorage.getItem(key);
+      if (localEncryptedData) {
+        return decodeData(localEncryptedData);
+      }
+    } catch (error) {
+      return "";
+    }
+  }
+};
+export const setCreate = (key, value) => {
+  console.log("value", key);
+
+  if (typeof window !== "undefined") {
+    try {
+      const encryptedData = encodeData(value);
+
+      window.localStorage.setItem(key, encryptedData);
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+};
+
+export const getCreate = (key) => {
   if (typeof window !== "undefined") {
     try {
       const localEncryptedData = window.localStorage.getItem(key);
@@ -173,6 +225,58 @@ export const setPaymentData = (key, value) => {
 };
 
 export const getPaymentData = (key) => {
+  if (typeof window !== "undefined") {
+    try {
+      const localEncryptedData = window.localStorage.getItem(key);
+      if (localEncryptedData) {
+        return decodeData(localEncryptedData);
+      }
+    } catch (error) {
+      return "";
+    }
+  }
+};
+export const setCurrentTourDetailsData = (key, value) => {
+  console.log("value", key);
+
+  if (typeof window !== "undefined") {
+    try {
+      const encryptedData = encodeData(value);
+
+      window.localStorage.setItem(key, encryptedData);
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+};
+
+export const getCurrentTourDetailsData = (key) => {
+  if (typeof window !== "undefined") {
+    try {
+      const localEncryptedData = window.localStorage.getItem(key);
+      if (localEncryptedData) {
+        return decodeData(localEncryptedData);
+      }
+    } catch (error) {
+      return "";
+    }
+  }
+};
+export const setCurrentTourRoundDetailsData = (key, value) => {
+  console.log("value", key);
+
+  if (typeof window !== "undefined") {
+    try {
+      const encryptedData = encodeData(value);
+
+      window.localStorage.setItem(key, encryptedData);
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+};
+
+export const getCurrentTourRoundDetailsData = (key) => {
   if (typeof window !== "undefined") {
     try {
       const localEncryptedData = window.localStorage.getItem(key);

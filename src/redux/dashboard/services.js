@@ -71,6 +71,18 @@ export const UpdateMatchStatus = (data) => {
 export const UpdateReadyStatus = (data) => {
   return axiosPost(API_ROUTER.UPDATE_READY_STATUS, data);
 };
+export const TournamentRegister = (data) => {
+  return axiosPost(API_ROUTER.TOURNAMENT_REGISTER, data);
+};
+export const UpdateReadyTournamentStatus = (data) => {
+  return axiosPost(API_ROUTER.UPDATE_READY_TOURNAMENT_STATUS, data);
+};
+export const TournamentSubmitScore = (data) => {
+  return axiosPost(API_ROUTER.TOURNAMENT_SUBMIT_SCORE, data);
+};
+export const TournamentMatchResult = (data) => {
+  return axiosPost(API_ROUTER.TOURNAMENT_MATCH_RESULT, data);
+};
 export const MatchResult = (data) => {
   return axiosPost(API_ROUTER.MATCH_RESULT, data);
 };
@@ -103,8 +115,14 @@ export const FreePlayMatchResult = (data) => {
 export const FreePlaySubmitScore = (data) => {
   return axiosPost(API_ROUTER.FREE_PLAY_SUBMIT_SCORE, data);
 };
+export const getRegisterUserList = (data) => {
+  return axiosPost(API_ROUTER.REGISTER_USER_LIST, data);
+};
 export const SendRoomChat = (data) => {
   return axiosPost(API_ROUTER.SEND_ROOM_CHAT, data, "multipart/form-data");
+};
+export const UpdateStartMatch = (data) => {
+  return axiosPost(API_ROUTER.UPDATE_START_MATCH, data, "multipart/form-data");
 };
 export const SendChat = (data) => {
   return axiosPost(API_ROUTER.SEND_CHAT, data, "multipart/form-data");
@@ -117,6 +135,9 @@ export const CreateDisputes = (data) => {
 };
 export const RoomChat = (data) => {
   return axiosGet(API_ROUTER.ROOM_CHAT, data);
+};
+export const getCurrentTournamentMatch = (data) => {
+  return axiosGet(API_ROUTER.GET_CURRENT_TOURNAMENT_MATCH, data);
 };
 export const GetProfileCard = (data) => {
   return axiosGet(API_ROUTER.GET_PROFILE_CARD, data);
@@ -154,6 +175,9 @@ export const GetBadges = (data) => {
 export const GetGameByConsole = (data) => {
   return axiosGet(API_ROUTER.GAME_BY_CONSOLE + data, null);
 };
+export const GetTournamentRules = (data) => {
+  return axiosGet(API_ROUTER.TOURNAMENT_RULES + data, null);
+};
 export const GetProfileData = (data) => {
   return axiosGet(API_ROUTER.GET_PROFILE + data, null);
 };
@@ -166,8 +190,20 @@ export const AddSubscriptionData = (data) => {
 export const GetSearchBadges = (data) => {
   return axiosPost(API_ROUTER.USER_SEARCH_BADGE, data);
 };
+export const AddDeviceToken = (data) => {
+  return axiosPost(API_ROUTER.ADD_DEVICE_TOKEN, data);
+};
+export const TestNotification = (data) => {
+  return axiosPost(API_ROUTER.TEST_NOTIFICATION, data);
+};
 export const GetBadgesList = (data) => {
   return axiosGet(API_ROUTER.GET_BADGE_LIST, data);
+};
+export const GetTop5Users = (data) => {
+  return axiosGet(API_ROUTER.TOP_5_USER, data);
+};
+export const GetNotificationList = (data) => {
+  return axiosGet(API_ROUTER.NOTIFICATION_LIST, data);
 };
 export const GetGameHistory = (data) => {
   return axiosGet(API_ROUTER.GET_GAME_HISTORY, data);

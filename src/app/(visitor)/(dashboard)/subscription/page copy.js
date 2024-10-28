@@ -49,90 +49,6 @@ const Subscription = () => {
   const [isPayPalBtnShow, setIsPayPalBtnShow] = useState(false);
   const [paypalDetail, setPaypalDetail] = useState(null);
   const [subscriptionDetails, setSubscriptionDetails] = useState(null);
-  const plans = [
-    {
-      name: "FREE PLAY",
-      price: "$6.99/month",
-      features: [
-        { name: "Free Play", included: true },
-        { name: "Priority Updates", included: false },
-        { name: "Priority Support", included: false },
-      ],
-    },
-    {
-      name: "FREE PLAY PLUS",
-      price: "$14.99/month",
-      features: [
-        { name: "Free Play", included: true },
-        { name: "Priority Updates", included: true },
-        { name: "Priority Support", included: true },
-      ],
-    },
-    {
-      name: "FREE PLAY",
-      price: "$149.99/Year",
-      features: [
-        { name: "Free Play", included: true },
-        { name: "Priority Updates", included: true },
-        { name: "Priority Support", included: true },
-      ],
-    },
-  ];
-  const [currentPlan, setCurrentPlan] = useState(1);
-
-  const nextPlan = () => {
-    setCurrentPlan((prev) => (prev + 1) % plans.length);
-  };
-  const prevPlan = () => {
-    setCurrentPlan((prev) => (prev - 1 + plans.length) % plans.length);
-  };
-  const images = [
-    "https://images.unsplash.com/photo-1549989476-69a92fa57c36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1549396535-c11d5c55b9df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1550133730-695473e544be?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1550167164-1b67c2be3973?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1550338861-b7cfeaf8ffd8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1550223640-23097fc71cb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1550353175-a3611868086b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1550330039-a54e15ed9d33?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1549737328-8b9f3252b927?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1549833284-6a7df91c1f65?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1549985908-597a09ef0a7c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1550064824-8f993041ffd3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-  ];
-  const texts = [
-    "Appending currency sign to a purchase form in your e-commerce site using plain JavaScript.",
-    "Fixing CSS load order/style.chunk.css incorrect in Nextjs",
-    "React Carousel with Server Side Rendering Support – Part 1",
-    "React Carousel with Server Side Rendering Support – Part 2",
-    "Flutter Xcode couldn’t find any iOS App Development provisioning profiles",
-  ];
-  const fakerData = Array(12)
-    .fill(0)
-    .map((item, index) => {
-      return {
-        image: images[index],
-        headline: "w3js -> web front-end studio",
-        description: texts[index] || texts[0],
-      };
-    });
-  const responsive = {
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-      slidesToSlide: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-      slidesToSlide: 2,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-      slidesToSlide: 1,
-    },
-  };
 
   useEffect(() => {
     getPlanList();
@@ -143,7 +59,25 @@ const Subscription = () => {
       PlanPurchaseApi();
     }
   }, [paypalDetail]);
-
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 3000, min: 2000 },
+      items: 5,
+    },
+    desktop: {
+      breakpoint: { max: 2000, min: 1024 },
+      items: 3,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+    },
+  };
   const getNextDayDate = () => {
     const today = new Date(); // Get the current date
     const nextDay = new Date(today); // Copy the current date
@@ -275,8 +209,6 @@ const Subscription = () => {
         toast.success("Plan purchase successfully", TOAST_TYPES.SUCCESS);
       } else {
         setIsLoader(false);
-        window.history.back();
-        toast.success("Already Subscribed", TOAST_TYPES.ERROR);
         // toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       }
       // setIsLoading(false);
@@ -348,84 +280,76 @@ const Subscription = () => {
         </div>
       ) : (
         <div>
-          <div className="flex justify-center items-center w-full ">
-            <button className="p-2 rounded-md"></button>
+          <div className="flex justify-between items-center bg-red">
+            <button className=" p-2 rounded-md"></button>
+            <h1 className="text-2xl">Payment</h1>
+            <div></div> {/* Placeholder for alignment */}
           </div>
-
-          <div className="flex flex-col items-center justify-center min-h-screen bg-black06 p-4">
-            <div className="relative w-full  ">
-              <div className="flex overflow-hidden">
-                {planList.map((plan, index) => (
-                  <div
-                    key={index}
-                    className={`flex-shrink-0 w-full md:w-1/3  text-white overflow-hidden transition-all duration-300 ease-in-out transform ${
-                      index === currentPlan
-                        ? "scale-100 opacity-100"
-                        : "scale-95 opacity-70"
-                    }`}
-                  >
-                    <button
-                      onClick={() => {
-                        setSelectedPlan(planList[currentPlan]);
-                        setSelectedPlaId(planList[currentPlan].planId);
-                        console.log("current Plan", planList[currentPlan]);
-                        if (index === currentPlan) {
-                          setIsPayPalBtnShow(true);
-                        }
-                      }}
-                      className="    hover:bg-yellow absolute mt-[85%]   bg-yellow    text-black26 py-2 px-4 rounded-full w-[45%]  ml-[30%]  "
-                    >
-                      Subscribe
-                    </button>
-                    <img
-                      draggable={false}
-                      src={
-                        index == 0
-                          ? "/images/plan1.png"
-                          : index == 1
-                          ? "/images/plan2.png"
-                          : "/images/plan3.png"
-                      }
-                    ></img>
-                  </div>
-                ))}
-              </div>
-              <button
-                variant="ghost"
-                size="icon"
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 text-white bg-black06 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center "
-                onClick={prevPlan}
-              >
-                <img
-                  src="/images/previousArrow.svg"
-                  alt="Filter"
-                  className="w-6 h-6 "
-                />
-              </button>
-              <button
-                variant="ghost"
-                size="icon"
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 text-white bg-black06 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center"
-                onClick={nextPlan}
-              >
-                <img
-                  src="/images/nextArrow.svg"
-                  alt="Filter"
-                  className="w-6 h-6 self-center"
-                />
-              </button>
-            </div>
-            <div className="flex mt-4 space-x-2">
-              {plans.map((_, index) => (
+          {/* Subscription Section */}
+          {/* {planList.map((option, index) => (
                 <div
-                  key={index}
-                  className={`h-2 w-2 rounded-full ${
-                    index === currentPlan ? "bg-white" : "bg-gray82"
+                  key={option.id}
+                  className={`text-center p-4 cursor-pointer ${
+                    selectedPlan === option
+                      ? "border-2 border-white rounded-md"
+                      : ""
                   }`}
-                />
-              ))}
-            </div>
+                  onClick={() => handleSelect(option, index)}
+                >
+                  <span className="block text-sm">
+                    ${option.amount}/{option.type}
+                  </span>
+                </div>
+              ))} */}
+          {/* <div className="text-center border-2 border-gray82 px-4 py-2 rounded-md">
+            <span className="block text-sm">$14.99/month</span>
           </div>
+           */}
+          <div className="subscription-small-carousel  w-screen">
+            {planList.length > 0 ? (
+              <Carousel
+                responsive={responsive}
+                ssr
+                showDots
+                infinite
+                containerClass="container-with-dots"
+                itemClass="image-item"
+              >
+                {planList.map((post) => {
+                  return (
+                    <div>
+                      <img
+                        draggable={false}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          position: "relative",
+                        }}
+                        src={"/images/plan1.png"}
+                      ></img>
+                    </div>
+                  );
+                })}
+              </Carousel>
+            ) : (
+              <p className="avl-txt">No data Found</p>
+            )}
+          </div>
+          {/* <ul className="mt-4 space-y-2">
+              <li className="flex items-center">
+                <span className="mr-2">✔</span> Free Play
+              </li>
+              {!selectedIndex == 0 && (
+                <li className="flex items-center">
+                  <span className="mr-2">✔</span> Priority Support
+                </li>
+              )}
+              {!selectedIndex == 0 && (
+                <li className="flex items-center">
+                  <span className="mr-2">✔</span> Priority Updates
+                </li>
+              )}
+            </ul> */}
         </div>
       )}
     </div>

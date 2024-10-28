@@ -153,7 +153,6 @@ const WithdrawBalance = () => {
         <Loader />
       ) : (
         <div className="min-h-screen bg-black06 flex flex-col text-white px-4">
-          {/* Header */}
           <div className="flex items-center py-4 ">
             <button
               onClick={() => router.back()}
@@ -161,60 +160,54 @@ const WithdrawBalance = () => {
             >
               <ArrowLeft size={24} />
             </button>
-            <h1 className="text-2xl font-bold mx-auto">Withdraw</h1>
           </div>
+          <div className="bg-black26 rounded-xl mt-28 h-[90%] w-1/2.5 mx-auto flex flex-col p-12 justify-center items-center">
+            <h1 className="text-2xl mb-6">Withdraw</h1>
 
-          {/* Form */}
-          <div className="space-y-6 pt-52 w-[60%] justify-center self-center">
-            {/* PayPal Section */}
-            <div className="flex justify-between items-center">
-              <button className="bg-yellow text-black06 px-6 py-2 rounded-full">
-                PayPal
-              </button>
-              <button
-                className="text-yellow"
-                onClick={() => setIsEditable(!isEditable)} // Toggle the input editable state
-              >
-                {isEditable ? "Save" : "Edit"}
-              </button>
+            <div className="space-y-6 w-full max-w-md">
+              <div className="flex justify-between items-center">
+                <button className="text-black06 px-6 py-2 rounded"></button>
+                <button
+                  className="text-yellow"
+                  onClick={() => setIsEditable(!isEditable)}
+                >
+                  {isEditable ? "Save" : "Edit"}
+                </button>
+              </div>
+
+              <input
+                type="text"
+                value={paypalId ? paypalId : zelleId}
+                onChange={(e) => setPaypalId(e.target.value)}
+                disabled={!isEditable}
+                className={`w-full ${
+                  isEditable
+                    ? "bg-gray-700 text-black25"
+                    : "bg-gray-800 text-white"
+                } py-3 px-4 rounded-full focus:outline-none`}
+              />
+
+              <input
+                type="text"
+                placeholder="Enter Amount"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="w-full bg-gray-800 text-black06 py-3 px-4 rounded-full focus:outline-none"
+              />
             </div>
 
-            {/* PayPal ID Input */}
-            <input
-              type="text"
-              // value={paypalId}
-              value={paypalId ? paypalId : zelleId}
-              onChange={(e) => setPaypalId(e.target.value)} // Update PayPal ID on change
-              disabled={!isEditable} // Make input editable or disabled based on state
-              className={`w-full ${
-                isEditable
-                  ? "bg-gray-700 text-black25"
-                  : "bg-gray-800 text-white"
-              } py-3 px-4 rounded-lg focus:outline-none`}
-            />
-
-            {/* Amount Input */}
-            <input
-              type="text"
-              placeholder="Enter Amount"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="w-full bg-gray-800 text-black06 py-3 px-4 rounded-lg focus:outline-none"
-            />
-          </div>
-
-          {/* Withdraw Button and Info */}
-          <div className="space-y-4 w-[60%] self-center">
-            <p className="text-center text-gray6E text-sm pt-6">
-              Please allow 3-10 Business days for earnings to reach the form of
-              withdrawal.
-            </p>
-            <button
-              onClick={withDrawAmountApi}
-              className="w-full bg-yellow text-black06 py-3 rounded-full"
-            >
-              Withdraw
-            </button>
+            <div className="space-y-4 w-full max-w-md mt-6">
+              <p className="text-center text-gray6E text-sm">
+                Please allow 3-10 Business days for earnings to reach the form
+                of withdrawal.
+              </p>
+              <button
+                onClick={withDrawAmountApi}
+                className="w-[40%] bg-yellow text-black06 py-3 rounded-full mx-auto ml-[30%]"
+              >
+                Withdraw
+              </button>
+            </div>
           </div>
         </div>
       )}

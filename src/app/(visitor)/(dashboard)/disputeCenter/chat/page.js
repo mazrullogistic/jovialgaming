@@ -566,6 +566,8 @@ const Chat = () => {
             style={{ height: "80vh" }}
           >
             <div className="flex-grow p-4 bg-black06 mb-[5%]">
+              {renderCase("")}
+
               {chatReverseList.map((item, index) => {
                 let header = false;
                 let chatMsgDate = item.createdAt;
@@ -609,7 +611,6 @@ const Chat = () => {
                   </div>
                 );
               })}
-              {renderCase("")}
             </div>
             <div ref={bottomRef} />
           </div>

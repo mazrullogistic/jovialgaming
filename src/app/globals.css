@@ -162,7 +162,28 @@
   100% { transform: rotate(360deg); }
 }
 
+/* / scrollbar / */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
 
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(255, 255, 255, 0.3);
+}
 
 /* Auth CSS */
 
@@ -288,7 +309,10 @@
 .avl-txt {
   @apply text-[18px] text-white  font-inter_tight font-[600] ml-6 mt-2;
 }.earn-txt {
-  @apply text-[18px] text-white  font-inter_tight font-[600]  mt-2;
+  @apply text-[18px] text-white  font-inter_tight font-[200]  mt-2;
+} 
+.earn-txt-green {
+  @apply text-[18px] text-green  font-inter_tight font-[200]  mt-2;
 } 
 .header-home-txt {
   @apply text-[32px] text-white  font-inter_tight font-[600]  ml-6 mt-6;
@@ -304,6 +328,66 @@
 .react-multi-carousel-list .react-multi-carousel-track {
   gap: 20px;
 }
+.small-carousel .react-multi-carousel-list
+.react-multi-carousel-track
+.react-multi-carousel-item {
+height: 180px !important;
+width: 230px !important;
+}
+.small-carousel .react-multi-carousel-list .react-multi-carousel-track {
+  gap: 20px;
+}
+.room-carousel .react-multi-carousel-list
+.react-multi-carousel-track
+.react-multi-carousel-item {
+height: 400px !important;
+width: 400px !important;
+}
+.room-carousel .react-multi-carousel-list .react-multi-carousel-track {
+  gap: 20px;
+}
+
+
+
+
+.elite-small-carousel .react-multi-carousel-list
+.react-multi-carousel-track
+.react-multi-carousel-item {
+height: 170px !important;
+width: 110px !important;
+}
+.elite-small-carousel .react-multi-carousel-list .react-multi-carousel-track {
+  gap: 20px;
+}
+.match-small-carousel .react-multi-carousel-list
+.react-multi-carousel-track
+.react-multi-carousel-item {
+height: 210px !important;
+width: 260px !important;
+}
+.match-small-carousel .react-multi-carousel-list .react-multi-carousel-track {
+  gap: 20px;
+}
+
+.subscription-small-carousel .react-multi-carousel-list
+.react-multi-carousel-track
+.react-multi-carousel-item {
+height: 640px !important;
+width: 640px !important;
+}
+.subscription-small-carousel .react-multi-carousel-list .react-multi-carousel-track {
+  gap: 20px;
+}
+.container-with-dots {
+  margin-top: 20px;
+  padding-bottom: 10px;
+  padding-right: 50px;
+}
+
+
+.image-item {
+  padding: 10px;
+}
 .bold-txt-match {
   @apply text-[62px] text-white  font-inter_tight font-[700] ml-12 pt-12;
 }
@@ -313,6 +397,7 @@
 .normal-bold-txt-match {
   @apply text-[20px] text-white  font-inter_tight font-[200] ml-12 mt-8 w-[50%];
 }
+ 
 .normal-txt-match {
   @apply text-[22px] text-white  font-inter_tight font-[200] mt-56;
 }
@@ -343,9 +428,9 @@
 .btn-complete-green {
   @apply w-[150px] h-[40px]   text-center ml-[20px]  rounded-full   text-black06 font-inter_tight bg-green mt-6;
 }.btn-complete-red {
-  @apply w-[150px] h-[40px]   text-center ml-[20px]  rounded-full   text-black06 font-inter_tight bg-red mt-6;
+  @apply w-[150px] h-[40px]   text-center ml-[20px]  rounded-full   text-black06 font-inter_tight bg-red mt-4;
 }.btn-complete-yellow {
-  @apply w-[150px] h-[40px]   text-center ml-[20px]  rounded-full   text-black06 font-inter_tight bg-yellow mt-6;
+  @apply w-[150px] h-[40px]   text-center ml-[20px]  rounded-full   text-black06 font-inter_tight bg-yellow mt-4;
 }
 .medium-txt-dispute {
   @apply text-[40px] text-white  font-inter_tight font-[400]  ml-[20px] pt-12 pb-12 ml-[2%];

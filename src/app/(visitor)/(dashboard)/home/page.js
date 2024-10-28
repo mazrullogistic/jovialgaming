@@ -8,9 +8,11 @@ import {
   TOAST_TYPES,
 } from "@/constants/keywords";
 import {
+  addDeviceTokenAction,
   getAvailableMatchesAction,
   getBadgeAction,
   getBadgesAction,
+  getBadgesDataAction,
   getConsoleAction,
   getCurrentMatchesAction,
   getGameWinLossAction,
@@ -19,19 +21,34 @@ import {
   getProfileCardAction,
   getRecentEarnerAction,
   getSeasonListAction,
+  getTop5UsersAction,
   getTournamentListAction,
 } from "@/redux/dashboard/action";
-import { getData, getRoomId, setConsoleData } from "@/utils/storage";
+import {
+  getData,
+  getRoomId,
+  setConsoleData,
+  setCreate,
+  setTournamentId,
+} from "@/utils/storage";
 import Image from "next/image";
 import React, { useMemo, useState, useEffect } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import useToaster from "@/hooks/useToaster";
-import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import Loader from "@/components/Loader";
+import { messaging, getToken } from "../../../../../public/firebase-config";
 import { PATH_DASHBOARD } from "@/routes/paths";
 import { useRouter } from "next/navigation";
+import moment from "moment";
+import { onMessage } from "firebase/messaging";
+import { toast } from "react-toastify";
+import dynamic from "next/dynamic";
+const ServiceWorkerRegistration = dynamic(
+  () => import("@/components/ServiceWorkerRegistration"),
+  { ssr: false }
+);
 
 const HomePage = ({ Component, pageProps }) => {
   const [isLoader, setIsLoader] = useState(false); // Initialize with null or some default value
@@ -54,6 +71,7 @@ const HomePage = ({ Component, pageProps }) => {
   const [seasonList, setSeasonList] = useState([]);
   const [clickUserId, setClickUserId] = useState("");
   const [gameWinLoss, setGameWinLoss] = useState([]);
+  const [top5users, setTop5users] = useState([]);
 
   const games = [
     { name: "Warzone 2", score: "19 - 8" },
@@ -83,6 +101,25 @@ const HomePage = ({ Component, pageProps }) => {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
+      breakpoint: { max: 3000, min: 2000 },
+      items: 5,
+    },
+    desktop: {
+      breakpoint: { max: 2000, min: 1024 },
+      items: 3,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+    },
+  };
+  const responsiveNew = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
       items: 5,
     },
@@ -99,6 +136,52 @@ const HomePage = ({ Component, pageProps }) => {
       items: 1,
     },
   };
+
+  const handleShowNotification = (payload) => {
+    if (Notification.permission === "granted") {
+      console.log("payload 147", payload);
+      new Notification(payload.notification.title, {
+        body: payload.notification.body,
+        icon: "/images/logo.png",
+      });
+    }
+  };
+
+  useEffect(() => {
+    const requestPermission = async () => {
+      try {
+        const token = await getToken(messaging, {
+          vapidKey: process.env.V_API_KEY,
+        });
+        if (token) {
+          console.log("FCM Token:", token);
+          updateDeviceToken(token);
+
+          // You can now send this token to your server to subscribe for notifications
+        } else {
+          console.log(
+            "No registration token available. Request permission to generate one."
+          );
+        }
+      } catch (error) {
+        console.log("An error occurred while retrieving token. ", error);
+      }
+    };
+
+    requestPermission();
+  }, []);
+
+  useEffect(() => {
+    onMessage(messaging, (payload) => {
+      if (payload.notification) {
+        console.log("Message received in foreground: ", payload);
+        handleShowNotification(payload); // Pass payload here
+      } else {
+        console.log("No notification payload found.");
+      }
+    });
+  }, []);
+
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -108,6 +191,7 @@ const HomePage = ({ Component, pageProps }) => {
 
     setUser(storedUser);
   }, []);
+
   useEffect(() => {
     getAvailableMatches();
     getCurrentMatches();
@@ -116,6 +200,7 @@ const HomePage = ({ Component, pageProps }) => {
     getNewsList();
     getBadgeNewsList();
     getConsoleList();
+    getTop5UsersList();
     getEarnerList();
     getSeasonList();
     {
@@ -124,6 +209,30 @@ const HomePage = ({ Component, pageProps }) => {
 
     // return () => {};
   }, []);
+
+  const updateDeviceToken = async (token) => {
+    setIsLoader(true);
+    const payload = new FormData();
+
+    try {
+      payload.append("devicetype", "web");
+      payload.append("devicetoken", token);
+
+      const res = await dispatch(addDeviceTokenAction(payload));
+
+      console.log("res--> 217", res.payload.data);
+
+      // if (status) {
+      //   console.log("status 137", status);
+      // } else {
+      //   console.log("res--> 133");
+      // }
+    } catch (error) {
+      setIsLoader(false);
+      toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+      console.log("Error", error);
+    }
+  };
 
   const getAvailableMatches = async () => {
     setIsLoader(true);
@@ -340,6 +449,37 @@ const HomePage = ({ Component, pageProps }) => {
       console.log("Error", error);
     }
   };
+  const getTop5UsersList = async () => {
+    setIsLoader(true);
+    const roomId = getRoomId("roomId");
+
+    const object = {
+      roomId: roomId,
+    };
+
+    try {
+      const res = await dispatch(getTop5UsersAction(object));
+
+      console.log("res--> 401", res);
+
+      if (res.payload.status) {
+        setTop5users(res.payload.data.data);
+        // setIsLoader(false);
+        // setTop5users(false);
+        //toaster(res.payload.message, TOAST_TYPES.SUCCESS);
+      } else {
+        console.log("res--> 133");
+        setIsLoader(false);
+
+        toaster(res.payload.message, TOAST_TYPES.ERROR);
+      }
+    } catch (error) {
+      setIsLoader(false);
+
+      toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+      console.log("Error", error);
+    }
+  };
   const getProfileCard = async (SeasonId, Uid) => {
     setIsLoader(true);
     console.log("SeasonId 311", SeasonId);
@@ -377,18 +517,19 @@ const HomePage = ({ Component, pageProps }) => {
     console.log("SeasonId 311", SeasonId);
     const object = {
       user_id: clickUserId,
-      seasonId: SeasonId,
+      // seasonId: SeasonId,
     };
 
     console.log("object 314", object);
     try {
-      const res = await dispatch(getBadgesAction(object));
+      const res = await dispatch(getBadgesDataAction(object));
 
       console.log("res--> 371", res.payload.data);
 
       if (res.payload.status) {
         // setProfileData(res.payload.data.data);
         // setIsProfileCard(true);
+        setGameWinLoss(res.payload.data.data);
 
         setIsLoader(false);
       } else {
@@ -462,9 +603,9 @@ const HomePage = ({ Component, pageProps }) => {
       if (res.payload.status) {
         // setProfileData(res.payload.data.data);
         setGameWinLoss(res.payload.data.data);
-        setScoreBoardModel(true);
+        // setScoreBoardModel(true);
 
-        setScoreBoardModel(true);
+        // setScoreBoardModel(true);
 
         setIsLoader(false);
       } else {
@@ -568,7 +709,9 @@ const HomePage = ({ Component, pageProps }) => {
           <ul className="list-none space-y-2">
             {gameWinLoss.map((game, index) => (
               <button key={index} className="flex justify-between">
-                <span>{"djkdj"}</span>
+                {console.log("game", game)}
+
+                <span>{game.name}</span>
               </button>
             ))}
           </ul>
@@ -597,7 +740,7 @@ const HomePage = ({ Component, pageProps }) => {
           <ul className="list-none space-y-2">
             {gameWinLoss.map((game, index) => (
               <button key={index} className="flex justify-between">
-                <span>{"djkdj"}</span>
+                <span>{game.tname}</span>
               </button>
             ))}
           </ul>
@@ -763,7 +906,13 @@ const HomePage = ({ Component, pageProps }) => {
 
         {/* Challenge Button */}
         <div className="mt-4 flex items-center space-x-4">
-          <button className="bg-yellow hover:bg-yellow text-black06   py-2 px-4 rounded">
+          <button
+            onClick={() => {
+              router.push("./createGame");
+              setCreate("create", true);
+            }}
+            className="bg-yellow hover:bg-yellow text-black06   py-2 px-4 rounded"
+          >
             + Challenge
           </button>
         </div>
@@ -800,6 +949,8 @@ const HomePage = ({ Component, pageProps }) => {
         <Loader />
       ) : (
         <div className="flex bg-black06  ">
+          <ServiceWorkerRegistration />
+
           <div className=" w-[100%] bg-black06">
             <p className="header-home-txt">Welcome {user?.data?.username} ,</p>
             <img
@@ -807,20 +958,21 @@ const HomePage = ({ Component, pageProps }) => {
               src={
                 "https://admin.jovialgaming.com/backend/uploads/newsImg/ad29da13-efc1-461e-a74e-47b628484927.png"
               }
-              className="w-[90%] h-[18%] ml-4 rounded-xl mt-2"
+              className="w-[70%] h-auto max-h-[380px] ml-4 rounded-xl mt-2 object-cover"
             />
             <div className="flex mt-4">
-              <select
-                className="w-24 bg-black25 text-white text-[12px]  text-center   rounded-3xl ml-4 mt-2 h-8 pr-2"
-                onChange={handleChangeConsole}
-              >
-                {consoleList.map((option, index) => (
-                  <option key={index} value={JSON.stringify(option)}>
-                    {option.consolename}
-                  </option>
-                ))}
-              </select>
-
+              <div className=" bg-black25 w-20 rounded-3xl h-8 items-center justify-center content-center mt-2 ml-4 pr-2">
+                <select
+                  className=" bg-black25 text-white text-[12px] text-center rounded-3xl  h-8    "
+                  onChange={handleChangeConsole}
+                >
+                  {consoleList.map((option, index) => (
+                    <option key={index} value={JSON.stringify(option)}>
+                      {option.consolename}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <button
                 onClick={() => {
                   router.push(PATH_DASHBOARD.chat);
@@ -840,7 +992,16 @@ const HomePage = ({ Component, pageProps }) => {
               </div>
             </div>
             <div>
-              <select className="dropdown-available " onChange={handleChange}>
+              <select
+                className={` text-[22px] mb-2 h-12 text-white bg-black06 ml-6 mt-6 outline-none font-[600] ${
+                  dropDownSelection == "Available"
+                    ? "w-[130px]"
+                    : dropDownSelection == "My Matches"
+                    ? "w-[160px]"
+                    : "w-[210px]"
+                }`}
+                onChange={handleChange}
+              >
                 {matchesDropDown.map((option) => (
                   <option>{option.name}</option>
                 ))}
@@ -848,16 +1009,16 @@ const HomePage = ({ Component, pageProps }) => {
             </div>
 
             {dropDownSelection == "Available" && (
-              <div>
+              <div className="match-small-carousel  ">
                 {availableData.length > 0 ? (
                   <Carousel
                     responsive={responsive}
                     itemClass="carousel-item-padding-40-px"
-                    containerClass="ml-4 mt-4"
+                    containerClass="ml-4  "
                   >
                     {availableData.map((post) => {
                       return (
-                        <div className="  w-64   mt-6   bg-black25 rounded-2xl pt-[1px]">
+                        <div className="  w-64       bg-black25 rounded-2xl pt-[1px]">
                           <div className="mt-[5%]">
                             <div className="flex">
                               <Image
@@ -866,14 +1027,16 @@ const HomePage = ({ Component, pageProps }) => {
                                 width={40}
                                 height={40}
                               />
-                              <p className="avl-txt">{post.amount}</p>
+                              <p className="text-[18px] text-white  font-inter_tight font-[600] ml-14 mt-2  ">
+                                {post.amount}
+                              </p>
                             </div>
                             <p className="avl-txt">{post.gamename}</p>
 
                             <p className="avl-txt">{post.gameModeName}</p>
                             <div className="center-container">
                               <button
-                                className="btn-join"
+                                className=" w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4"
                                 onClick={() => {
                                   console.log("item", post);
                                   CommonConstant.SelectedMatchData = post;
@@ -895,16 +1058,16 @@ const HomePage = ({ Component, pageProps }) => {
             )}
 
             {dropDownSelection == "My Matches" && (
-              <div>
+              <div className="match-small-carousel  ">
                 {currentMatchData.length > 0 ? (
                   <Carousel
                     responsive={responsive}
                     itemClass="carousel-item-padding-40-px"
-                    containerClass="ml-4 mt-4"
+                    containerClass="ml-4  "
                   >
                     {currentMatchData.map((item) => {
                       return (
-                        <div className="  w-64   mt-6   bg-black25 rounded-2xl pt-[1px]">
+                        <div className="  w-64       bg-black25 rounded-2xl pt-[1px]">
                           <div className="mt-[5%]">
                             <div className="flex">
                               <Image
@@ -913,14 +1076,16 @@ const HomePage = ({ Component, pageProps }) => {
                                 width={40}
                                 height={40}
                               />
-                              <p className="avl-txt">{item.amount}</p>
+                              <p className="text-[18px] text-white  font-inter_tight font-[600] ml-14 mt-2  ">
+                                {item.amount}
+                              </p>
                             </div>
                             <p className="avl-txt">{item.gamename}</p>
 
                             <p className="avl-txt">{item.gameModeName}</p>
                             <div className="center-container">
                               <button
-                                className="btn-join"
+                                className=" w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4"
                                 onClick={() => {
                                   console.log("item", item);
                                   CommonConstant.SelectedMatchData = item;
@@ -942,30 +1107,51 @@ const HomePage = ({ Component, pageProps }) => {
             )}
 
             {dropDownSelection == "My Tournaments" && (
-              <div>
+              <div className="match-small-carousel  ">
                 {myTournaments.length > 0 ? (
                   <Carousel
                     responsive={responsive}
                     itemClass="carousel-item-padding-40-px"
-                    containerClass="ml-4 mt-4"
+                    containerClass="ml-4  "
                   >
                     {myTournaments.map((post) => {
                       return (
-                        <div className="  w-64   mt-6   bg-black25 rounded-2xl pt-[1px]">
+                        <div className="  w-64    bg-black25 rounded-2xl pt-[1px]">
                           <div className="mt-[5%]">
-                            <Image
-                              src={post.game_image}
-                              className="h-[40px] w-[40px] rounded-full  ml-4"
-                              width={40}
-                              height={40}
-                            />
-                            <p className="avl-txt">{post.gamename}</p>
+                            <div className="flex">
+                              <Image
+                                src={post.image}
+                                className="h-[40px] w-[40px] rounded-full  ml-4"
+                                width={40}
+                                height={40}
+                              />
 
-                            <p className="avl-txt">{post.gameModeName}</p>
+                              <p className="text-[18px] text-white  font-inter_tight font-[600] ml-14 mt-2  ">
+                                {post.tournament_fees}
+                              </p>
+                            </div>
+                            <p className="avl-txt">{post.tname}</p>
+
+                            <p className="avl-txt">
+                              {moment(post.startdate).format("MMM Do, YYYY")}
+                            </p>
                             <div className="center-container">
                               <button
-                                className="btn-join"
+                                className=" w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4"
                                 onClick={() => {
+                                  console.log("post", post.id);
+                                  setTournamentId("id", post);
+                                  if (post.status == 2 && post.winnerId != 0) {
+                                    toast.error("The tournament is over.");
+                                  } else {
+                                    if (post.isDisqualified === true) {
+                                      toast.error(
+                                        "You have been disqualified from this tournament."
+                                      );
+                                    } else {
+                                      router.push("./tournament");
+                                    }
+                                  }
                                   console.log("post", post);
                                 }}
                               >
@@ -982,42 +1168,46 @@ const HomePage = ({ Component, pageProps }) => {
                 )}
               </div>
             )}
-            <p className="bold-txt">Recent Earners</p>
-            <Carousel
-              responsive={responsive}
-              itemClass="carousel-item-padding-40-px"
-              containerClass="ml-4 mt-4"
-            >
-              {earnerList.map((item) => {
-                console.log("====================================");
-                console.log("post", item.userData.image);
-                console.log("====================================");
-                return (
-                  <div
-                    className="w-56  h-52mt-6 bg-black25 rounded-2xl pt-[1px] border border-white flex items-center justify-center"
-                    onClick={() => handleEarnerClick(item)} // Open modal on click
-                  >
-                    <div className="text-center mt-4">
-                      <Image
-                        src={
-                          item.userData.image
-                            ? item.userData.image
-                            : "/images/logo.png"
-                        }
-                        className="h-[40px] w-[40px] rounded-xl mx-auto "
-                        width={40}
-                        height={40}
-                      />
-                      <p className="earn-txt">{item.userData.username}</p>
-                      <p className="earn-txt mb-6">{"$" + item.amount}</p>
+            <p className="text-[22px] text-white  font-inter_tight font-[600] ml-6 mt-2">
+              Recent Earners
+            </p>
+            <div className="small-carousel ml-6 mt-6">
+              <Carousel
+                responsive={responsive}
+                itemClass="carousel-item-padding-2-px"
+              >
+                {earnerList.map((item) => {
+                  console.log("====================================");
+                  console.log("post", item.userData.image);
+                  console.log("====================================");
+                  return (
+                    <div
+                      className="w-56       bg-black25 rounded-2xl pt-[1px] border border-white flex items-center justify-center"
+                      onClick={() => handleEarnerClick(item)} // Open modal on click
+                    >
+                      <div className="text-center mt-4">
+                        <Image
+                          src={
+                            item.userData.image
+                              ? item.userData.image
+                              : "/images/logo.png"
+                          }
+                          className="h-[40px] w-[40px] rounded-full mx-auto "
+                          width={40}
+                          height={40}
+                        />
+                        <p className="earn-txt">{item.userData.username}</p>
+                        <p className="earn-txt-green mb-6">
+                          {"$" + item.amount}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </Carousel>
+                  );
+                })}
+              </Carousel>
+            </div>
             {/* Profile Card Modal */}
             {selectedEarner && (
-              /* {true && ( */
               <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                 {isProfileCardModel && (
                   <ProfileCard
@@ -1031,26 +1221,47 @@ const HomePage = ({ Component, pageProps }) => {
                 {seasonModel && <SeasonModel />}
               </div>
             )}
-            {/* <p className="bold-txt">Tournaments</p> */}
-            {/* <Carousel
+            <p className="  text-[22px] text-white  font-inter_tight font-[600] ml-6 mb-4">
+              Tournaments
+            </p>
+            <Carousel
               responsive={responsive}
               itemClass="carousel-item-padding-40-px"
-              containerClass="ml-4 mt-4"
+              containerClass="ml-4 mt-6"
             >
-              {tournamentListData.map((post) => {
+              {tournamentListData.map((item) => {
                 return (
-                  <div className="h-48 w-24 mt-6">
+                  <div
+                    onClick={() => {
+                      console.log("post", item.id);
+                      setTournamentId("id", item);
+                      if (item.status == 2 && item.winnerId != 0) {
+                        toast.error("The tournament is over.");
+                      } else {
+                        if (item.isDisqualified === true) {
+                          toast.error(
+                            "You have been disqualified from this tournament."
+                          );
+                        } else {
+                          router.push("./tournament");
+                        }
+                      }
+                    }}
+                    className="h-48 w-24 mt-6"
+                  >
                     <Image
-                      src={post.image}
+                      src={item.image}
                       layout="fill"
                       className="rounded-3xl"
                     ></Image>
                   </div>
                 );
               })}
-            </Carousel> */}
+            </Carousel>
 
-            <p className="bold-txt">Jovial News</p>
+            <p className="text-[22px] text-white  font-inter_tight font-[600] ml-6 mb-6 mt-6">
+              Jovial News
+            </p>
             <Carousel
               responsive={responsive}
               itemClass="carousel-item-padding-40-px"
@@ -1067,10 +1278,7 @@ const HomePage = ({ Component, pageProps }) => {
                     className="h-48 w-24 mt-6"
                   >
                     <Image
-                      // src={post.newsImg}
-                      src={
-                        "https://admin.jovialgaming.com/backend/uploads/newsImg/ad29da13-efc1-461e-a74e-47b628484927.png"
-                      }
+                      src={post.newsImg}
                       layout="fill"
                       className="rounded-3xl"
                     ></Image>
@@ -1078,20 +1286,28 @@ const HomePage = ({ Component, pageProps }) => {
                 );
               })}
             </Carousel>
-            <p className="bold-txt">Elite 5 </p>
-            <Carousel
-              responsive={responsive}
-              itemClass="carousel-item-padding-40-px"
-              className="flex flex-row  mt-2 "
-            >
-              {badgeData.map((post) => {
-                return (
-                  <div className="h-28 w-28   mt-6  relative ml-6 ">
-                    <Image src={post.image} layout="fill"></Image>
-                  </div>
-                );
-              })}
-            </Carousel>
+            <p className="text-[22px] text-white  font-inter_tight font-[600] ml-6  mt-6">
+              Elite 5
+            </p>
+            <div className="elite-small-carousel  ">
+              <Carousel
+                responsive={responsive}
+                itemClass="carousel-item-padding-40-px"
+                className="flex flex-row  mt-2 "
+              >
+                {top5users.map((post) => {
+                  return (
+                    <div className="h-28 w-28    mt-2 relative ml-6 rounded-full">
+                      <Image
+                        className="rounded-full"
+                        src={post.userData.image}
+                        layout="fill"
+                      ></Image>
+                    </div>
+                  );
+                })}
+              </Carousel>
+            </div>
           </div>
         </div>
       )}

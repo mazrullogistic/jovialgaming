@@ -35,7 +35,7 @@ const ResetPassword = () => {
   const user = getData("user");
   const userAuth = user?.token;
   const [isLoading, setIsLoading] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(2);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [email, setEmail] = useState("");
   const route = useRouter();
 

@@ -73,35 +73,36 @@ const DisputeCenter = () => {
                 <div
                   onClick={() => {
                     router.push(PATH_DASHBOARD.disputeChat);
-
                     setDisputeData("dispute", item);
                   }}
-                  className="sub-container-dispute"
+                  className="w-[94%] bg-gray30 mb-2 rounded-lg ml-[3%] flex items-center p-4"
                 >
-                  <div className="rounded-2xl h-44 w-32 bg-gray-300 flex items-center justify-center pt-4 pl-4">
+                  <div className="rounded-lg h-24 w-24 bg-gray-300 flex items-center justify-center overflow-hidden">
                     <img
-                      className="rounded-2xl h-full w-full object-cover"
+                      className="rounded-lg h-full w-full object-cover"
                       src={item.gameData.image}
                       alt="Profile Picture"
                     />
                   </div>
-                  <div>
-                    <p className="dispute-txt">
+                  <div className="ml-4 flex flex-col justify-between">
+                    <p className="text-[12px] text-gray6E font-inter_tight font-[300]">
                       {moment
                         .utc(item.createdAt)
                         .local()
                         .format("MMM DD, YYYY hh:mm")}
                     </p>
-                    <p className="dispute-white-txt">{item.regarding}</p>
+                    <p className="text-[14px] text-white font-inter_tight font-[300] mt-1">
+                      {item.regarding}
+                    </p>
                     <button
                       className={
                         item.status === "0"
-                          ? "btn-complete-red"
+                          ? "btn-complete-red text-xs"
                           : item.status === "1"
-                          ? "btn-complete-yellow"
+                          ? "btn-complete-yellow text-xs"
                           : item.status === "2"
-                          ? "btn-complete-green"
-                          : "btn-complete-red"
+                          ? "btn-complete-green text-xs"
+                          : "btn-complete-red text-xs"
                       }
                     >
                       {item.status === "0"

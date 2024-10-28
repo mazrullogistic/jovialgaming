@@ -30,6 +30,10 @@ export const API_ROUTER = {
   GAME_RULE: "/rulesbygame/",
   UPDATE_MATCH_STATUS: "/matchrequests/update-start-match-status",
   UPDATE_READY_STATUS: "/matchrequests/update-ready-status",
+  UPDATE_READY_TOURNAMENT_STATUS: "/tournament/update-ready-status",
+  TOURNAMENT_MATCH_RESULT: "/tournament/match-result",
+  TOURNAMENT_SUBMIT_SCORE: "/tournamentscore/add-score",
+
   MATCH_RESULT: "/matchrequests/match-result",
   SUBMIT_SCORE: "/score/add-score",
   AVAILABLE_MATCH_JOIN: "/matchrequests/do-match-from-avaliable",
@@ -38,12 +42,16 @@ export const API_ROUTER = {
   PAYPAL_PLAN_DETAIL: "/payment/paypal-plan-details",
   GET_SUBSCRIPTION_DETAIL: "/user/user-subscription-details",
   PAYPAL_SUBSCRIPTION_ADD: "/payment/paypal-subscription",
+  TOURNAMENT_REGISTER: "/tournament-register",
+  GET_CURRENT_TOURNAMENT_MATCH: "/tournament/get-current-match?",
+  REGISTER_USER_LIST: "/get-registerd-tour-user-list",
 
   //Chat
   ROOM_CHAT: "/room/groupchat/message-list?",
   SEND_ROOM_CHAT: "/room/groupchat/send-message-topic",
   SEND_CHAT: "/chat/create-chat",
   SEND_DISPUTE_CHAT: "/disputeschat/create-disputes-chat",
+  UPDATE_START_MATCH: "/tournament/update-start-match-status",
 
   //
   DISPUTES_LIST: "/disputes",
@@ -69,6 +77,12 @@ export const API_ROUTER = {
   UPDATE_PROFILE: "/user/update",
   PAYPAL_PLAN_LIST: "/payment/paypal-charges-details",
   CARD_PURCHASE: "/payment/card-purchase-new",
+  TOURNAMENT_RULES: "/get-tournament-rules-list/",
+  TOP_5_USER: "/games/get-top5-win-user",
+  ADD_DEVICE_TOKEN: "/user/change-device-token-and-type",
+  TEST_NOTIFICATION: "/test-notification",
+  NOTIFICATION_LIST: "/notification/get-notification",
+
   //
 
   FREE_PLAY_MATCH_REQUEST_CREATE: "/freeplaymatch/create",

@@ -11,8 +11,15 @@ import { TOAST_ALERTS, TOAST_TYPES } from "@/constants/keywords";
 
 import Loader from "@/components/Loader";
 import { PATH_AUTH, PATH_DASHBOARD } from "@/routes/paths";
-import { getData, getRoomId, removeData, setRoomID } from "@/utils/storage";
+import {
+  getData,
+  getRoomId,
+  removeData,
+  setCreate,
+  setRoomID,
+} from "@/utils/storage";
 import { userData } from "@/redux/Auth/AuthSlice";
+import NotificationDialog from "@/components/NotificationDialog";
 export default function SideMenu({ children }) {
   const [editMode, setEditMode] = useState(false);
 
@@ -22,6 +29,7 @@ export default function SideMenu({ children }) {
   const dispatch = useDispatch();
   const { toaster } = useToaster();
   const [user, setUser] = useState(null);
+  const [openNotificationDialog, setOpenNotificationDialog] = useState(false);
 
   useEffect(() => {
     // Only run this on the client side
@@ -36,6 +44,12 @@ export default function SideMenu({ children }) {
   const handleMenuItemClick = (title) => {
     console.log("title", title);
     setSelectedItem(title); // Update selected item state
+    if (title === "Create") {
+      setCreate("create", "");
+    }
+    if (title === "Notification") {
+      setOpenNotificationDialog(true);
+    }
     if (title === "Leave Room") {
       leaveRoomApi();
       // Perform the specific action for "Leave Room" click here
@@ -91,6 +105,11 @@ export default function SideMenu({ children }) {
       src: "/images/chat.svg",
     },
     {
+      href: "",
+      title: "Notification",
+      src: "/images/notification.svg",
+    },
+    {
       href: "/createGame",
       title: "Create",
       src: "/images/add.svg",
@@ -100,11 +119,11 @@ export default function SideMenu({ children }) {
       title: "Ranking",
       src: "/images/trophywhite.svg",
     },
-    {
-      href: "/historyBook",
-      title: "History Book",
-      src: "/images/agenda.svg",
-    },
+    // {
+    //   href: "/historyBook",
+    //   title: "History Book",
+    //   src: "/images/agenda.svg",
+    // },
     {
       href: "/subscription",
       title: "Subscriptions",
@@ -121,6 +140,7 @@ export default function SideMenu({ children }) {
       src: "/images/about.svg",
     },
   ];
+
   const userDataNew = useSelector((state) => state.userData.userData);
   return (
     <div>
@@ -220,6 +240,11 @@ export default function SideMenu({ children }) {
           </div>
         </div>
       )}
+      {/* Render the notification modal */}
+      <NotificationDialog
+        open={openNotificationDialog}
+        onClose={() => setOpenNotificationDialog(false)}
+      />
     </div>
   );
 }

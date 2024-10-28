@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import {
+  AddDeviceToken,
   AddSubscriptionData,
   AvailableMatchJoin,
   CreateDisputes,
@@ -20,6 +21,7 @@ import {
   GetChatList,
   GetConsole,
   GetCurrentMatches,
+  getCurrentTournamentMatch,
   GetDisputeChat,
   GetEntryAmount,
   GetFreePlayMatchReqCreate,
@@ -34,16 +36,20 @@ import {
   GetMatchRule,
   GetMyTournament,
   GetNews,
+  GetNotificationList,
   GetPaypalPlanList,
   GetPlanDetail,
   GetProfileCard,
   GetProfileData,
   GetRecentEarner,
+  getRegisterUserList,
   GetRoomChatThread,
   GetSearchBadges,
   GetSeasonList,
   GetSubscriptionDetail,
+  GetTop5Users,
   GetTournamentList,
+  GetTournamentRules,
   LeaveRoom,
   MatchHistoryList,
   MatchReqUpdate,
@@ -55,9 +61,15 @@ import {
   SendDisputeChat,
   SendRoomChat,
   SubmitScore,
+  TestNotification,
+  TournamentMatchResult,
+  TournamentRegister,
+  TournamentSubmitScore,
   UpdateMatchStatus,
   UpdateProfile,
   UpdateReadyStatus,
+  UpdateReadyTournamentStatus,
+  UpdateStartMatch,
   UserChatList,
   WithdrawAmount,
 } from "./services";
@@ -355,6 +367,74 @@ export const getMatchRuleAction = createAsyncThunk(
     }
   }
 );
+export const tournamentRegisterAction = createAsyncThunk(
+  "dashboardSlice/tournamentRegisterAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await TournamentRegister(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const getRegisterUserListAction = createAsyncThunk(
+  "dashboardSlice/getRegisterUserListAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await getRegisterUserList(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const getUpdateStartMatchAction = createAsyncThunk(
+  "dashboardSlice/getUpdateStartMatchAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await UpdateStartMatch(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const getCurrentTournamentMatchAction = createAsyncThunk(
+  "dashboardSlice/getCurrentTournamentMatchAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await getCurrentTournamentMatch(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
 export const updateMatchAction = createAsyncThunk(
   "dashboardSlice/updateMatchAction",
   async (payload, { rejectWithValue }) => {
@@ -376,6 +456,54 @@ export const updateReadyStatusAction = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const { data, status } = await UpdateReadyStatus(payload);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const updateReadyTournamentStatusAction = createAsyncThunk(
+  "dashboardSlice/updateReadyTournamentStatusAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await UpdateReadyTournamentStatus(payload);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const tournamentSubmitScoreAction = createAsyncThunk(
+  "dashboardSlice/tournamentSubmitScoreAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await TournamentSubmitScore(payload);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const tournamentMatchResultAction = createAsyncThunk(
+  "dashboardSlice/tournamentMatchResultAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await TournamentMatchResult(payload);
       return { data, status };
     } catch (err) {
       console.log("🚀 ~ err:", err);
@@ -776,6 +904,57 @@ export const getBadgesAction = createAsyncThunk(
     }
   }
 );
+export const getTop5UsersAction = createAsyncThunk(
+  "dashboardSlice/getTop5UsersAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await GetTop5Users(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const addDeviceTokenAction = createAsyncThunk(
+  "dashboardSlice/addDeviceTokenAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await AddDeviceToken(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const getNotificationListAction = createAsyncThunk(
+  "dashboardSlice/getNotificationListAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await GetNotificationList(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
 export const getWithdrawAmountAction = createAsyncThunk(
   "dashboardSlice/getWithdrawAmountAction",
   async (payload, { rejectWithValue }) => {
@@ -798,6 +977,23 @@ export const getPlanDetailAction = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const { data, status } = await GetPlanDetail(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const getTournamentRulesAction = createAsyncThunk(
+  "dashboardSlice/getTournamentRulesAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await GetTournamentRules(payload);
       // console.log("status", status);
       return { data, status };
     } catch (err) {

@@ -74,6 +74,17 @@ import {
   getPlanDetailAction,
   getSubscriptionDetailAction,
   addSubscriptionDataAction,
+  getTournamentRulesAction,
+  tournamentRegisterAction,
+  getCurrentTournamentMatchAction,
+  getRegisterUserListAction,
+  getUpdateStartMatchAction,
+  updateReadyTournamentStatusAction,
+  tournamentMatchResultAction,
+  tournamentSubmitScoreAction,
+  getTop5UsersAction,
+  addDeviceTokenAction,
+  getNotificationListAction,
 } from "./action";
 import { updateProfileAction } from "../Auth/action";
 import { WithdrawAmount } from "./services";
@@ -687,6 +698,123 @@ const DashboardSlice = createSlice({
         state.error = null;
       })
       .addCase(getProfileDataAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(getUpdateStartMatchAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUpdateStartMatchAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getUpdateStartMatchAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(getCurrentTournamentMatchAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateReadyTournamentStatusAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(updateReadyTournamentStatusAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateReadyTournamentStatusAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getTop5UsersAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(getTop5UsersAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getTop5UsersAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(addDeviceTokenAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(addDeviceTokenAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addDeviceTokenAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getNotificationListAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(getNotificationListAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getNotificationListAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getCurrentTournamentMatchAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(getRegisterUserListAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getRegisterUserListAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getRegisterUserListAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(tournamentMatchResultAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(tournamentMatchResultAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(tournamentMatchResultAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(tournamentSubmitScoreAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(tournamentSubmitScoreAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(tournamentSubmitScoreAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(tournamentRegisterAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(tournamentRegisterAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(tournamentRegisterAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(getTournamentRulesAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getTournamentRulesAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getTournamentRulesAction.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || "Error fetching user data";
       })

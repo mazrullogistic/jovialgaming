@@ -75,6 +75,14 @@ const start = () => {
       EventEmitter.emit(EmitterKey.RoomGroupchatMessage, message);
     } else if (message.action === "ride_request_process_cancelled") {
       EventEmitter.emit(EmitterKey.ChatReceive, message);
+    } else if (message.action === "tournament_start") {
+      EventEmitter.emit(EmitterKey.TournamentStart, message);
+    } else if (message.action === "tournament_start_by_admin") {
+      EventEmitter.emit(EmitterKey.TournamentStart, message);
+    } else if (message.action === "new_tournament_match") {
+      EventEmitter.emit(EmitterKey.TournamentStart, message);
+    } else if (message.action === "new_tournament_match_by_disqualify") {
+      EventEmitter.emit(EmitterKey.TournamentStart, message);
     }
   });
 

@@ -480,26 +480,26 @@ const Messages = () => {
                   CommonConstant.userDataForChat = item;
                   setChatUserData("chat", item);
                 }}
-                class="bg-black25 p-4 rounded-lg flex items-center w-full"
+                className="bg-black25 p-3 rounded-md flex items-center w-full mb-3"
               >
-                <div class="w-12 h-12 rounded-full overflow-hidden bg-gray69">
+                <div className="w-10 h-10 rounded-full overflow-hidden bg-gray69">
                   <Image
                     src={item.image}
                     className="get-started-bar"
-                    width={200}
-                    height={5}
+                    width={40}
+                    height={40}
                   />
                 </div>
-                <div class="ml-4">
-                  <h3 class="text-white text-lg font-bold text-left">
+                <div className="ml-3">
+                  <h3 className="text-white text-md font-semibold text-left">
                     {item.uName}
                   </h3>
-                  <p class="text-white text-left">
+                  <p className="text-white text-xs text-left">
                     {item.mediaExt !== "text"
                       ? item.mediaExt
                       : item.mediaContent}
                   </p>
-                  <p class="text-white text-sm text-left">
+                  <p className="text-white text-xs text-left">
                     {moment(item.createdAt).fromNow()}
                   </p>
                 </div>

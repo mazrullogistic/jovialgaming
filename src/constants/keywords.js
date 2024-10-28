@@ -23,6 +23,7 @@ export const CommonConstant = {
   SelectedMatchData: null,
   userDataForChat: null,
   isPaymentDetail: null,
+  isChallenge: false,
 };
 
 export const S3KEY = {
@@ -55,6 +56,7 @@ export const EmitterKey = {
   ReloadApp: "ReloadApp",
   RoomGroupchatMessage: "roomGroupchatMessage",
   ChatReceive: "ChatReceive",
+  TournamentStart: "TournamentStart",
 
   DrawerClick: "DrawerClick",
 };

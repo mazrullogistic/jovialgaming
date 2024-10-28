@@ -2,14 +2,18 @@
 import { useRef, useEffect, useState } from "react";
 import Modal from "react-modal";
 import Image from "next/image";
-import { getData } from "@/utils/storage";
+import {
+  getCurrentTourDetailsData,
+  getCurrentTourRoundDetailsData,
+  getData,
+} from "@/utils/storage";
 import { useRouter } from "next/navigation";
 import { PATH_DASHBOARD } from "@/routes/paths";
 import Loader from "../Loader";
 import { CommonConstant } from "@/constants/keywords";
 import socket from "@/socket/socket";
 
-const Model = ({
+const TournamentModel = ({
   amountData,
   closeModel,
   getModelData,
@@ -31,23 +35,25 @@ const Model = ({
   isLoader,
   submitScoreModel,
   selectedMatchData,
-  isModelShow,
 }) => {
+  const [gameDetails, setGameDetails] = useState(null);
+  const [tourRoundDetails, setTourRoundDetails] = useState(null);
   const [selectedBox, setSelectedBox] = useState(0);
   const [selectedBoxMatch, setSelectedBoxMatch] = useState(0);
-  const [selectedModelIndex, setSelectedModelIndex] = useState(
-    selectedIndex ? selectedModelIndex : 0
-  );
+  const [selectedModelIndex, setSelectedModelIndex] = useState(selectedIndex);
   const [submitScoreDialog, setSubmitScoreDialog] = useState(submitScoreModel);
   const [iWonLossModelDialog, setIWonLossModelDialog] = useState(false);
-  const [modelVisible, setModelVisible] = useState(isModelShow);
   const [scoreText, setScoreText] = useState("");
   const [selectedAmountData, setSelectedAmountData] = useState(amountData[0]);
   const [selectionMatchData, setSelectionMatchData] =
     useState(selectedMatchData);
-  const [selectedGameModeData, setSelectedGameModeData] = useState(
-    gameModes[0]
-  );
+  const [selectedGameModeData, setSelectedGameModeData] = useState([]);
+  // const [selectedGameModeData, setSelectedGameModeData] = useState(
+  //   gameModes[0]
+  // );
+  var currentTourDetails = getCurrentTourDetailsData("tourDetailData");
+  var currentTourRoundDetails =
+    getCurrentTourRoundDetailsData("tournamentData");
   const route = useRouter();
 
   const user = getData("user");
@@ -74,8 +80,7 @@ const Model = ({
     setSelectedModelIndex(1);
   };
   const handleChangeSearching = () => {
-    setSelectedModelIndex(1);
-    closeModel();
+    setSelectedModelIndex(2);
   };
   useEffect(() => {
     console.log("selectedModelIndex 47", selectedModelIndex);
@@ -97,6 +102,8 @@ const Model = ({
   };
   const [modalIsOpen, setIsOpen] = useState(false);
   useEffect(() => {
+    setGameDetails(currentTourDetails);
+    setTourRoundDetails(currentTourRoundDetails);
     setSelectedModelIndex(selectedIndex);
     return () => {};
   }, [selectedIndex]);
@@ -222,7 +229,7 @@ const Model = ({
                 className="btn-challenge "
                 onClick={handleChangeSearching}
               >
-                {"Close"}
+                {"Previuos"}
               </button>
             </div>
           </button>
@@ -314,13 +321,15 @@ const Model = ({
       <div className="max-h-[800px] relative">
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
           <p className="text-[18px] text-white font-inter_tight font-[300] text-center ">
-            {"GAME RULES"}
+            {currentTourRoundDetails?.userCount == 3 ||
+            currentTourRoundDetails?.userCount == 4
+              ? "Semi Final "
+              : currentTourRoundDetails?.userCount == 2
+              ? "Final"
+              : `Round ${currentTourRoundDetails?.round}`}
           </p>
           <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2 ">
-            Add opponent as friend on console. <br />
-            Match creator send game invite
             <br />
-            Submit scores when finished.
           </p>
           <p className="text-[20px] text-white font-inter_tight font-[300] text-center mt-16 ">
             {"GAME TIME"}
@@ -337,24 +346,24 @@ const Model = ({
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
-                src={matchData.opponent_image}
+                src={gameDetails?.opponent_image}
                 alt="Profile Picture"
               />
             </div>
             <div className="w-32">
-              <p className="userName-txt">{matchData.opponent_name}</p>
+              <p className="userName-txt">{gameDetails?.opponent_name}</p>
             </div>
           </div>
           <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
-                src={matchData.host_image}
+                src={gameDetails?.host_image}
                 alt="Profile Picture"
               />
             </div>
             <div className="w-32">
-              <p className="userName-txt">{matchData.host_name}</p>
+              <p className="userName-txt">{gameDetails?.host_name}</p>
             </div>
           </div>
         </div>
@@ -400,7 +409,7 @@ const Model = ({
           ) : null}
         </div>
         <div className="flex max-h-[700px]">
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]">
+          <div className="w-[50%] bg-gray69 h-screen pl-[15%] pt-[42%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -440,38 +449,38 @@ const Model = ({
       <div className="max-h-[800px] relative">
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
           <p className="text-[18px] text-white font-inter_tight font-[300] text-center ">
-            {"GAME RULES"}
+            {currentTourRoundDetails?.userCount == 3 ||
+            currentTourRoundDetails?.userCount == 4
+              ? "Semi Final "
+              : currentTourRoundDetails?.userCount == 2
+              ? "Final"
+              : `Round ${currentTourRoundDetails?.round}`}
           </p>
-          <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2 ">
-            Add opponent as friend on console. <br />
-            Match creator send game invite
-            <br />
-            Submit scores when finished.
-          </p>
+          <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2 "></p>
         </div>
         <div className="flex max-h-[700px]">
           <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
-                src={matchData.opponent_image}
+                src={gameDetails?.opponent_image}
                 alt="Profile Picture"
               />
             </div>
             <div className="w-32">
-              <p className="userName-txt">{matchData.opponent_name}</p>
+              <p className="userName-txt">{gameDetails?.opponent_name}</p>
             </div>{" "}
           </div>
           <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
-                src={matchData.host_image}
+                src={gameDetails?.host_image}
                 alt="Profile Picture"
               />
             </div>
             <div className="w-32">
-              <p className="userName-txt">{matchData.host_name}</p>
+              <p className="userName-txt">{gameDetails?.host_name}</p>
             </div>
           </div>
         </div>
@@ -579,16 +588,16 @@ const Model = ({
                 <div className="rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center border-white border-2">
                   <img
                     className="rounded-full h-full w-full object-cover"
-                    src={matchData.opponent_image}
+                    src={gameDetails.opponent_image}
                     alt="Profile Picture"
                   />
                 </div>
                 <p className="text-[16px] text-white font-inter_tight font-[200] text-center pt-2 w-[20%]">
-                  {matchData.opponent_name}
+                  {gameDetails.opponent_name}
                 </p>
                 <p className="text-[16px] text-white font-inter_tight font-[200] text-center pt-2 w-[20%] h-8">
-                  {matchData.opponent_score_count
-                    ? matchData.opponent_score_count
+                  {gameDetails.opponent_score_count
+                    ? gameDetails.opponent_score_count
                     : 0}
                   {/* {matchData.opponent_score_count} */}
                 </p>
@@ -597,12 +606,12 @@ const Model = ({
                 <div className="rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center border-white border-2">
                   <img
                     className="rounded-full h-full w-full object-cover"
-                    src={matchData.host_image}
+                    src={gameDetails.host_image}
                     alt="Profile Picture"
                   />
                 </div>
                 <p className="text-[16px] text-white font-inter_tight font-[300] text-center pt-2 w-[20%]">
-                  {matchData.host_name}
+                  {gameDetails.host_name}
                 </p>
                 <input
                   placeholder="Enter Score"
@@ -684,7 +693,7 @@ const Model = ({
           }}
           className="w-[250px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight bg-yellow absolute left-1/2 transform -translate-x-1/2 bottom-4"
         >
-          {"Find another match"}
+          {"Winner"}
         </button>
       </div>
     );
@@ -724,7 +733,7 @@ const Model = ({
             }}
             className="w-[200px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight bg-grayA4  mt-16  "
           >
-            {"Rematch"}
+            {"Continue"}
           </button>
           <p className="text-[18px] text-white font-inter_tight font-[300] text-center   pt-6 w-[88%]  ">
             Feel like you been cheated? Contact us
@@ -750,7 +759,7 @@ const Model = ({
   return (
     <Modal
       className="modal-common-block-send"
-      isOpen={modelVisible}
+      isOpen={true}
       // onRequestClose={closeModal}
       style={customStyles}
       contentLabel="Example Modal"
@@ -790,4 +799,4 @@ const Model = ({
   );
 };
 
-export default Model;
+export default TournamentModel;

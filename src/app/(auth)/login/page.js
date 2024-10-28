@@ -214,7 +214,7 @@ const LoginPage = () => {
 
                 <button
                   type="submit"
-                  className="w-full py-2 w-[160px] transition duration-300 border-white border-[1px] rounded-full mt-4 text-blueF0"
+                  className="w-full py-2 w-[160px] transition duration-300 border-white border-[1px] rounded-full mt-4 text-white"
                 >
                   Log in
                 </button>
@@ -224,7 +224,7 @@ const LoginPage = () => {
                 <p className="text-sm text-white">
                   Don't have an account?
                   <button
-                    className="ml-2 text-blueF0 hover:underline"
+                    className="ml-2 text-white hover:underline"
                     onClick={onClickSignUp}
                   >
                     Sign up
