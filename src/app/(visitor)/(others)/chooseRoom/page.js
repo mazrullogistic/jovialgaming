@@ -12,7 +12,13 @@ import { toast } from "react-toastify";
 import useToaster from "@/hooks/useToaster";
 import Loader from "@/components/Loader";
 import { useRouter } from "next/navigation";
-import { removeData, saveData, setRoomData, setRoomID } from "@/utils/storage";
+import {
+  getData,
+  removeData,
+  saveData,
+  setRoomData,
+  setRoomID,
+} from "@/utils/storage";
 import { PATH_AUTH, PATH_DASHBOARD } from "@/routes/paths";
 
 const ChooseRoom = () => {
@@ -77,13 +83,19 @@ const ChooseRoom = () => {
 
   const selectRoomApi = (item) => async () => {
     setIsLoading(true);
+    console.log("item", item);
+    const user = getData("user");
+    console.log("user", JSON.stringify(user));
+
+    const updatedData = { ...user, roomDetails: item };
+    saveData("user", updatedData);
 
     try {
       const payload = new FormData();
       payload.append("roomId", item.id);
       const res = await dispatch(selectRoomAction(payload));
 
-      console.log("res--> 96", res);
+      console.log("res--> 86", res);
 
       if (res.payload.status) {
         setRoomID("roomId", item.id);
