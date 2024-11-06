@@ -8,6 +8,7 @@ import { PATH_DASHBOARD } from "@/routes/paths";
 import Loader from "../Loader";
 import { CommonConstant } from "@/constants/keywords";
 import socket from "@/socket/socket";
+import { toast } from "react-toastify";
 
 const Model = ({
   amountData,
@@ -32,6 +33,8 @@ const Model = ({
   submitScoreModel,
   selectedMatchData,
   isModelShow,
+  isWageringStop,
+  isSubscription,
 }) => {
   const [selectedBox, setSelectedBox] = useState(0);
   const [selectedBoxMatch, setSelectedBoxMatch] = useState(0);
@@ -53,9 +56,12 @@ const Model = ({
   const user = getData("user");
 
   const handleBoxClick = (index, item) => {
-    setSelectedAmountData(item);
-
-    setSelectedBox(index);
+    if (isWageringStop == 0 || item.amount == "Free Play") {
+      setSelectedBox(index);
+      setSelectedAmountData(item);
+    } else {
+      toast.error("All wagering is prohibited in this room");
+    }
   };
   const handleBoxClickMatch = (index, item) => {
     setSelectedGameModeData(item);
@@ -63,7 +69,17 @@ const Model = ({
     setSelectedBoxMatch(index);
   };
   const handleChangeNext = (item) => {
-    setSelectedModelIndex(2);
+    console.log("item) =", selectedAmountData);
+    console.log("isSubscription", isSubscription);
+    if (isSubscription == 0 && selectedAmountData.amount == "Free Play") {
+      toast.error("Please subscribe to continue.");
+    } else {
+      if (isWageringStop == 0 || selectedAmountData.amount == "Free Play") {
+        setSelectedModelIndex(2);
+      } else {
+        toast.error("All wagering is prohibited in this room");
+      }
+    }
   };
   const handleChangeStartGame = () => {
     setSelectedModelIndex(3);

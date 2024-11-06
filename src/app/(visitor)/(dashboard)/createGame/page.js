@@ -71,6 +71,8 @@ const CreateGame = () => {
   const [readyTimes, setReadyTimer] = useState("");
   const [readyClick, setReadyClick] = useState(false);
   const [isMatchStart, setIsMatchStart] = useState(false);
+  const [isWageringStop, setIsWageringStop] = useState(0);
+  const [isSubscription, setIsSubscription] = useState("1");
   const [isDataShow, setIsDataShow] = useState(false);
   const [isSubmitScoreBtn, setIsSubmitScoreBtn] = useState(false);
   const [scoreTimeCount, setScoreTimeCount] = useState("");
@@ -371,10 +373,13 @@ const CreateGame = () => {
     try {
       const res = await dispatch(getEntryAmountAction());
 
-      console.log("res--> 36", res);
+      console.log("res--> 376", res.payload);
 
       if (res.payload.statusCode == 200) {
         setAmountData(res.payload.data);
+        setIsWageringStop(res.payload.isWageringStop);
+        setIsSubscription(res.payload.isSubscription);
+
         setIsLoader(false);
         // toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
@@ -1000,6 +1005,7 @@ const CreateGame = () => {
         {isModelShow && (
           <Model
             isModelShow={isModelShow}
+            isWageringStop={isWageringStop}
             isLoader={isLoader}
             amountData={amountData}
             closeModel={closeModel}
@@ -1036,6 +1042,7 @@ const CreateGame = () => {
             readyTimerData={readyTimerData}
             submitScoreModel={submitScoreDialog}
             selectedMatchData={CommonConstant.SelectedMatchData}
+            isSubscription={isSubscription}
           />
         )}
         <div className="mt-16  ml-8">
