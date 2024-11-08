@@ -969,13 +969,24 @@ const HomePage = ({ Component, pageProps }) => {
           <div className=" w-[100%] bg-black06">
             <p className="header-home-txt">Welcome {user?.data?.username} ,</p>
 
-            <img
+            {/* <img
               src={user?.roomDetails?.image}
               // Adjust as needed for your design
               className="w-[60%] h-auto max-h-[380px] ml-4 rounded-xl mt-2   bg-gray30"
               alt="Room Details"
               style={{ objectFit: "fill" }} // Ensures the image is properly cropped to fill
+            /> */}
+
+            <Image
+              src={user?.roomDetails?.image}
+              width={400} // Adjust as needed for your design
+              height={300} // Adjust as needed for your design
+              className="w-[70%] h-auto max-h-[380px] ml-4 rounded-xl mt-2 object-cover bg-gray30"
+              // Adjust as needed for your design
+              alt="Room Details"
+              style={{ objectFit: "fill" }} // Ensures the image is properly cropped to fill
             />
+
             <div className="flex mt-4">
               <div className="bg-black25 w-16 sm:w-20 rounded-3xl h-6 sm:h-8 flex items-center justify-center mt-2 ml-2 sm:ml-4 relative">
                 <select
