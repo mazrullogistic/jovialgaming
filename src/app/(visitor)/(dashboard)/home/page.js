@@ -969,19 +969,23 @@ const HomePage = ({ Component, pageProps }) => {
           <div className=" w-[100%] bg-black06">
             <p className="header-home-txt">Welcome {user?.data?.username} ,</p>
 
-            <Image
+            <img
               src={user?.roomDetails?.image}
-              width={400} // Adjust as needed for your design
-              height={300} // Adjust as needed for your design
-              className="w-[70%] h-auto max-h-[380px] ml-4 rounded-xl mt-2 object-cover bg-gray30"
+              // Adjust as needed for your design
+              className="w-[60%] h-auto max-h-[380px] ml-4 rounded-xl mt-2   bg-gray30"
               alt="Room Details"
-              style={{ objectFit: "contain" }} // Ensures the image is properly cropped to fill
+              style={{ objectFit: "fill" }} // Ensures the image is properly cropped to fill
             />
             <div className="flex mt-4">
-              <div className=" bg-black25 w-20 rounded-3xl h-8 items-center justify-center content-center mt-2 ml-4 pr-2">
+              <div className="bg-black25 w-16 sm:w-20 rounded-3xl h-6 sm:h-8 flex items-center justify-center mt-2 ml-2 sm:ml-4 relative">
                 <select
-                  className=" bg-black25 text-white text-[12px] text-center rounded-3xl  h-8    "
+                  className="bg-black25 text-white text-[10px] sm:text-[12px] text-center rounded-3xl h-full px-2 appearance-none pr-6" // Add `appearance-none` and padding-right for space
                   onChange={handleChangeConsole}
+                  style={{
+                    WebkitAppearance: "none",
+                    MozAppearance: "none",
+                    appearance: "none",
+                  }}
                 >
                   {consoleList.map((option, index) => (
                     <option key={index} value={JSON.stringify(option)}>
@@ -989,6 +993,19 @@ const HomePage = ({ Component, pageProps }) => {
                     </option>
                   ))}
                 </select>
+
+                {/* Custom arrow */}
+                <img
+                  className="absolute right-2 pointer-events-none"
+                  style={{
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    width: "0.6rem", // Adjust as needed for your design
+                    height: "1rem", // Adjust as needed for your design
+                  }}
+                  src="/images/arrowDown.svg"
+                  alt="Dropdown arrow"
+                />
               </div>
               <button
                 onClick={() => {

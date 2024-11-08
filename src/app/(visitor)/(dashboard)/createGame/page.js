@@ -104,12 +104,7 @@ const CreateGame = () => {
   };
   useEffect(() => {
     getCurrentMatches();
-    var create = getCreate("create");
-    if (create) {
-      setIsModelShow(true);
-    } else {
-      setIsModelShow(false);
-    }
+
     return () => {};
   }, []);
 
@@ -238,6 +233,12 @@ const CreateGame = () => {
 
       if (res.payload.statusCode == 200) {
         setCurrentMatchData(res.payload.data);
+        var create = getCreate("create");
+        if (create) {
+          setIsModelShow(true);
+        } else {
+          setIsModelShow(false);
+        }
         setIsLoader(false);
         //toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
@@ -979,6 +980,7 @@ const CreateGame = () => {
 
   return (
     <div>
+      {isLoader && <Loader />}
       {/* {isLoader ? (
         <Loader />
       ) : ( */}

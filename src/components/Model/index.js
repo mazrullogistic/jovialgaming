@@ -87,6 +87,8 @@ const Model = ({
     getModelData(selectedAmountData, selectedGameModeData);
   };
   const handleChangePreviuos = () => {
+    closeModel();
+
     setSelectedModelIndex(1);
   };
   const handleChangeSearching = () => {
@@ -153,7 +155,7 @@ const Model = ({
         <div>
           <div className="center-container space-x-3 mt-8">
             <button className="btn-challenge " onClick={handleChangePreviuos}>
-              {"Previuos"}
+              {"Close"}
             </button>
 
             <button className="btn-challenge" onClick={handleChangeStartGame}>
