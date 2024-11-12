@@ -92,7 +92,7 @@ const Ranking = () => {
 
       if (res.payload.status) {
         setBadgesData(res.payload.data.data);
-        setNoDataFoundText("");
+        setNoDataFoundText("Create a match to start collecting");
 
         setIsLoader(false);
       } else {
