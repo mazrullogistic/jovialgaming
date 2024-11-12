@@ -82,6 +82,8 @@ export const API_ROUTER = {
   ADD_DEVICE_TOKEN: "/user/change-device-token-and-type",
   TEST_NOTIFICATION: "/test-notification",
   NOTIFICATION_LIST: "/notification/get-notification",
+  GET_USER_POINT: "/user/get-user-points",
+  GET_BADGE_USER_LIST: "/get-earn-badges-user-list",
 
   //
 

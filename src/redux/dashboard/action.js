@@ -17,6 +17,7 @@ import {
   GetBadges,
   GetBadgesData,
   GetBadgesList,
+  GetBadgeUserList,
   GetCardPurchase,
   GetChatList,
   GetConsole,
@@ -50,6 +51,7 @@ import {
   GetTop5Users,
   GetTournamentList,
   GetTournamentRules,
+  GetUserPoints,
   LeaveRoom,
   MatchHistoryList,
   MatchReqUpdate,
@@ -1113,6 +1115,40 @@ export const getBadgesDataAction = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const { data, status } = await GetBadgesData(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const getUserPointsAction = createAsyncThunk(
+  "dashboardSlice/getUserPointsAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await GetUserPoints(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const getBadgeUserListAction = createAsyncThunk(
+  "dashboardSlice/getUserPointsAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await GetBadgeUserList(payload);
       // console.log("status", status);
       return { data, status };
     } catch (err) {

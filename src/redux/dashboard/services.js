@@ -193,6 +193,12 @@ export const GetSearchBadges = (data) => {
 export const AddDeviceToken = (data) => {
   return axiosPost(API_ROUTER.ADD_DEVICE_TOKEN, data);
 };
+export const GetBadgeUserList = (data) => {
+  return axiosPost(API_ROUTER.GET_BADGE_USER_LIST, data);
+};
+export const GetUserPoints = (data) => {
+  return axiosPost(API_ROUTER.GET_USER_POINT, data);
+};
 export const TestNotification = (data) => {
   return axiosPost(API_ROUTER.TEST_NOTIFICATION, data);
 };

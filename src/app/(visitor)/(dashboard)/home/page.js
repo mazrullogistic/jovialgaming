@@ -477,7 +477,7 @@ const HomePage = ({ Component, pageProps }) => {
     try {
       const res = await dispatch(getTop5UsersAction(object));
 
-      console.log("res--> 401", res);
+      console.log("res--> 480", res.payload.data.data);
 
       if (res.payload.status) {
         setTop5users(res.payload.data.data);
@@ -1097,7 +1097,7 @@ const HomePage = ({ Component, pageProps }) => {
                     })}
                   </Carousel>
                 ) : (
-                  <p className="avl-txt">No data Found</p>
+                  <p className="avl-txt"> No Matches Available</p>
                 )}
               </div>
             )}
@@ -1146,7 +1146,7 @@ const HomePage = ({ Component, pageProps }) => {
                     })}
                   </Carousel>
                 ) : (
-                  <p className="avl-txt">No data Found</p>
+                  <p className="avl-txt">No Matches Available</p>
                 )}
               </div>
             )}
@@ -1209,7 +1209,7 @@ const HomePage = ({ Component, pageProps }) => {
                     })}
                   </Carousel>
                 ) : (
-                  <p className="avl-txt">No data Found</p>
+                  <p className="avl-txt">No Tournament Available</p>
                 )}
               </div>
             )}
@@ -1231,16 +1231,25 @@ const HomePage = ({ Component, pageProps }) => {
                       onClick={() => handleEarnerClick(item)} // Open modal on click
                     >
                       <div className="text-center mt-4">
-                        <Image
-                          src={
-                            item.userData.image
-                              ? item.userData.image
-                              : "/images/logo.png"
-                          }
-                          className="h-[40px] w-[40px] rounded-full mx-auto "
-                          width={40}
-                          height={40}
-                        />
+                        {item?.userData?.image ? (
+                          <img
+                            src={
+                              item.userData.image
+                                ? item.userData.image
+                                : "/images/logo.png"
+                            }
+                            className="h-[40px] w-[40px] rounded-full mx-auto "
+                            width={40}
+                            height={40}
+                          />
+                        ) : (
+                          <img
+                            src={"/images/logo.png"}
+                            className="h-[40px] w-[40px] rounded-full mx-auto "
+                            width={40}
+                            height={40}
+                          />
+                        )}
                         <p className="earn-txt">{item.userData.username}</p>
                         <p className="earn-txt-green mb-6">
                           {"$" + item.amount}
@@ -1335,23 +1344,27 @@ const HomePage = ({ Component, pageProps }) => {
               Elite 5
             </p>
             <div className="elite-small-carousel  ">
-              <Carousel
-                responsive={responsive}
-                itemClass="carousel-item-padding-40-px"
-                className="flex flex-row  mt-2 "
-              >
-                {top5users.map((post) => {
-                  return (
-                    <div className="h-28 w-28    mt-2 relative ml-6 rounded-full">
-                      <Image
-                        className="rounded-full"
-                        src={post.userData.image}
-                        layout="fill"
-                      ></Image>
-                    </div>
-                  );
-                })}
-              </Carousel>
+              {top5users.length > 0 && (
+                <Carousel
+                  responsive={responsive}
+                  itemClass="carousel-item-padding-40-px"
+                  className="flex flex-row  mt-2 "
+                >
+                  {top5users.map((post) => {
+                    return (
+                      <div className="h-28 w-28    mt-2 relative ml-6 rounded-full">
+                        {post?.userData?.image ? (
+                          <Image
+                            className="rounded-full"
+                            src={post?.userData?.image}
+                            layout="fill"
+                          ></Image>
+                        ) : null}
+                      </div>
+                    );
+                  })}
+                </Carousel>
+              )}
             </div>
           </div>
         </div>

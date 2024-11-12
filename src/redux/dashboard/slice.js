@@ -85,6 +85,7 @@ import {
   getTop5UsersAction,
   addDeviceTokenAction,
   getNotificationListAction,
+  getBadgeUserListAction,
 } from "./action";
 import { updateProfileAction } from "../Auth/action";
 import { WithdrawAmount } from "./services";
@@ -252,6 +253,17 @@ const DashboardSlice = createSlice({
         state.error = null;
       })
       .addCase(getConsoleAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(getBadgeUserListAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getBadgeUserListAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getBadgeUserListAction.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || "Error fetching user data";
       })
