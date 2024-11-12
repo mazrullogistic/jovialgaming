@@ -531,10 +531,16 @@ const Ranking = () => {
                             }}
                           >
                             <div className="object-contain max-w-full max-h-full rounded-lg shadow-lg border bg-black06  border-gray82">
-                              <img
+                              {/* <img
                                 draggable={false}
                                 src={item.image}
-                                alt={item.alt}
+                                className="object-contain max-w-full max-h-full  rounded-lg  "
+                              />{" "} */}
+                              <Image
+                                draggable={false}
+                                src={item.image}
+                                height={300}
+                                width={450}
                                 className="object-contain max-w-full max-h-full  rounded-lg  "
                               />
                               <h2 className="text-lg font-semibold ml-4 mt-2">
