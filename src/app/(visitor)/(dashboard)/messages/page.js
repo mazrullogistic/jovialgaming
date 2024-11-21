@@ -489,14 +489,13 @@ const Messages = () => {
                         ? item.image
                         : "/images/logo.png"
                     }
-                    alt={item?.uName || "Default Avatar"}
                     width={40}
                     height={40}
                   />
                 </div>
                 <div className="ml-3">
                   <h3 className="text-white text-md font-semibold text-left">
-                    {item?.uName}
+                    {item.uName}
                   </h3>
                   <p className="text-white text-xs text-left">
                     {item.mediaExt !== "text"
