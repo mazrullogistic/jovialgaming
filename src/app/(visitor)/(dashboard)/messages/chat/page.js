@@ -491,7 +491,7 @@ const Chat = () => {
                   />
                 </div>
                 <h1 className="text-xl font-semibold">
-                  {userDataForChat.uName}
+                  {userDataForChat?.uName}
                 </h1>
               </div>
             </div>
