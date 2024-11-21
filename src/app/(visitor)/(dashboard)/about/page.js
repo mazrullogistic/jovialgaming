@@ -65,16 +65,12 @@ const About = () => {
   }, []);
   const getUserBadgeList = async () => {
     setIsLoader(true);
-    //    console.log("SeasonId 311", SeasonId);
     const object = {
       user_id: user.data.id,
     };
 
-    console.log("object 314", object);
     try {
       const res = await dispatch(getBadgesDataAction(object));
-
-      console.log("res--> 371", res.payload.data);
 
       if (res.payload.status) {
         // setProfileData(res.payload.data.data);
@@ -82,7 +78,6 @@ const About = () => {
         setBadgesData(res.payload.data.data);
         setIsLoader(false);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
 
         toast.error(res.payload.message, TOAST_TYPES.ERROR);
@@ -91,19 +86,14 @@ const About = () => {
       setIsLoader(false);
 
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getSearchBadge = async () => {
-    console.log("gameData", selectedBadgedData);
     setIsLoader(true);
-    //    console.log("SeasonId 311", SeasonId);
     const object = {
       game: selectedBadgedData.id,
       user_id: user.data.id,
     };
-
-    console.log("object 314", object);
 
     const paramObj = new FormData();
     paramObj.append("game", selectedBadgedData.id);
@@ -112,24 +102,16 @@ const About = () => {
     try {
       const res = await dispatch(getSearchBadgesAction(paramObj));
 
-      console.log("res--> 371", res.payload.data);
-
       if (res.payload.status) {
-        // setProfileData(res.payload.data.data);
-        // setIsProfileCard(true);
         setBadgesData(res.payload.data.data);
         setIsLoader(false);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
-
         toast.error(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getGameListApi = async () => {
@@ -138,22 +120,16 @@ const About = () => {
     try {
       const res = await dispatch(getRoomList());
 
-      console.log("res-->", res);
-      console.log("statusCode-->", res.payload.statusCode);
-
       if (res.payload.statusCode == 200) {
         setIsLoader(false);
         setTournamentData(res.payload.data);
-        // toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
         setIsLoading(false);
-        console.log("res--> 133");
 
         toast.error(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getDisputesList = async () => {
@@ -167,21 +143,16 @@ const About = () => {
       if (res.payload.status) {
         setDisputeList(res.payload.data.data);
         //setChatData([...res.payload.data.data].reverse());
-        console.log("res--> 2451", res.payload.data.data);
       } else {
-        console.log("res--> 133");
       }
     } catch (error) {
       setIsLoader(false);
-      console.log("Error", error);
     }
   };
   const handleSelectChange = (event) => {
     const selectedIndex = event.target.selectedIndex;
     const index = selectedIndex - 1;
-    console.log("index", index);
-    console.log("badgesData[index]", tournamentData[index]);
-    //  console.log("badgesData[index]", badgesData[index]);
+
     setSelectedBadgedData(tournamentData[index]);
     setSelectedOption(event.target.value);
   };

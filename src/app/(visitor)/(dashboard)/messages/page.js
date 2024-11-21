@@ -484,8 +484,12 @@ const Messages = () => {
               >
                 <div className="w-10 h-10 rounded-full overflow-hidden bg-gray69">
                   <Image
-                    src={item.image}
-                    className="get-started-bar"
+                    src={
+                      item?.image?.startsWith("http")
+                        ? item.image
+                        : "/images/logo.png"
+                    }
+                    alt={item?.uName || "Default Avatar"}
                     width={40}
                     height={40}
                   />

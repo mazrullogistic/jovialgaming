@@ -102,7 +102,6 @@ const Chat = () => {
 
   const handleScrollToBottom = () => {
     // Your method call when scrolled to the bottom
-    console.log("Scrolled to the bottom");
   };
 
   useEffect(() => {
@@ -162,13 +161,11 @@ const Chat = () => {
     });
 
     EventEmitter.on(EmitterKey.RoomGroupchatMessage, (msg) => {
-      console.log("msg", msg);
       if (threadIdValue == msg.message.threadId) {
         addMsgDetails(msg.message);
       }
     });
     EventEmitter.on(EmitterKey.ReloadWeb, (msg) => {
-      console.log("Event received:128", msg);
       getChatList();
       // GroupTourReadMessage(true);
     });
@@ -190,7 +187,6 @@ const Chat = () => {
         };
         reader.readAsDataURL(file);
       }
-      console.log("file 97", file);
       setSelectedImage(file);
       setSelectedVideoUrl(null); // Clear any selected video URL
     }
@@ -232,14 +228,10 @@ const Chat = () => {
         //   newObj.push(item);
         // });
         // setChatData(newObj);
-
-        console.log("res--> 2451", res.payload.data.data);
       } else {
-        console.log("res--> 133");
       }
     } catch (error) {
       setIsLoader(false);
-      console.log("Error", error);
     }
   };
   const getThreadList = async () => {
@@ -249,24 +241,13 @@ const Chat = () => {
       const res = await dispatch(getRoomChatThreadAction());
 
       setIsLoader(false);
-      console.log("res--> 244", res.payload.data);
 
       if (res.payload.status) {
         setThreadList(res.payload.data?.data);
-
-        // setChatData([...chatData, ...res.payload.data.data]);
-        // setChatListIsNext(res.payload.data.isNextPage);
-        // var tempArray = [...chatData, ...res.payload.data.data];
-        // tempArray = tempArray.reverse();
-        // setChatReverseList(tempArray);
-
-        console.log("res--> 2451", res.payload.data.data);
       } else {
-        console.log("res--> 133");
       }
     } catch (error) {
       setIsLoader(false);
-      console.log("Error", error);
     }
   };
   const sendChatMessage = async () => {
@@ -283,7 +264,6 @@ const Chat = () => {
       }
 
       const { payload: res } = await dispatch(sendRoomChatAction(payload));
-      console.log("status 137", res);
 
       const { data, status } = res;
 
@@ -293,9 +273,7 @@ const Chat = () => {
         addMsgDetails(res.data.result);
       } else {
       }
-    } catch (error) {
-      console.log("Error", error);
-    }
+    } catch (error) {}
   };
 
   function addMsgDetails(msg) {
@@ -446,13 +424,10 @@ const Chat = () => {
       </div>
     );
   }
-  const onEndReach = async () => {
-    console.log("onEndReach");
-  };
+
   const handleScroll = () => {
     if (scrollRef.current.scrollTop === 0) {
       loadMore();
-      console.log("onEndReach");
     }
   };
   function loadMore() {
@@ -521,7 +496,6 @@ const Chat = () => {
                       return (
                         <li
                           onClick={() => {
-                            console.log("item", item.id);
                             setThreadId(item.id);
                             setIsOpen(false);
                             threadIdValue = item.id;

@@ -163,14 +163,10 @@ const MatchHistory = () => {
 
       if (res.payload.status) {
         setMatchHistory(res.payload.data.data);
-        //setChatData([...res.payload.data.data].reverse());
-        console.log("res--> 2451", res.payload.data.data);
       } else {
-        console.log("res--> 133");
       }
     } catch (error) {
       setIsLoader(false);
-      console.log("Error", error);
     }
   };
   return (

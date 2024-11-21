@@ -28,16 +28,12 @@ export const getRoomId = (key) => {
   }
 };
 export const setChatUserData = (key, value) => {
-  console.log("value", key);
-
   if (typeof window !== "undefined") {
     try {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) {
-      console.log("error", error);
-    }
+    } catch (error) {}
   }
 };
 
@@ -54,16 +50,12 @@ export const getChatUserData = (key) => {
   }
 };
 export const setDisputeData = (key, value) => {
-  console.log("value", key);
-
   if (typeof window !== "undefined") {
     try {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) {
-      console.log("error", error);
-    }
+    } catch (error) {}
   }
 };
 
@@ -80,16 +72,12 @@ export const getDisputeData = (key) => {
   }
 };
 export const setConsoleData = (key, value) => {
-  console.log("value", key);
-
   if (typeof window !== "undefined") {
     try {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) {
-      console.log("error", error);
-    }
+    } catch (error) {}
   }
 };
 
@@ -106,16 +94,12 @@ export const getConsoleData = (key) => {
   }
 };
 export const setTournamentId = (key, value) => {
-  console.log("value", key);
-
   if (typeof window !== "undefined") {
     try {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) {
-      console.log("error", error);
-    }
+    } catch (error) {}
   }
 };
 
@@ -132,16 +116,12 @@ export const getTournamentId = (key) => {
   }
 };
 export const setRoomData = (key, value) => {
-  console.log("value", key);
-
   if (typeof window !== "undefined") {
     try {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) {
-      console.log("error", error);
-    }
+    } catch (error) {}
   }
 };
 
@@ -158,16 +138,12 @@ export const getRoomData = (key) => {
   }
 };
 export const setCreate = (key, value) => {
-  console.log("value", key);
-
   if (typeof window !== "undefined") {
     try {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) {
-      console.log("error", error);
-    }
+    } catch (error) {}
   }
 };
 

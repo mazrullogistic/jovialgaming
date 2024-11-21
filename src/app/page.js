@@ -14,8 +14,6 @@ const Home = () => {
     const user = getData("user");
     const roomId = getRoomId("roomId");
 
-    console.log("roomId 13", user?.roomId);
-    console.log("user 13", user?.token);
     if (user?.token) {
       // route.replace("/home");
       if (roomId) {

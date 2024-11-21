@@ -135,7 +135,6 @@ const HomePage = ({ Component, pageProps }) => {
 
   const handleShowNotification = (payload) => {
     if (Notification.permission === "granted") {
-      console.log("payload 147", payload);
       new Notification(payload.notification.title, {
         body: payload.notification.body,
         icon: "/images/logo.png",
@@ -150,18 +149,11 @@ const HomePage = ({ Component, pageProps }) => {
           vapidKey: process.env.V_API_KEY,
         });
         if (token) {
-          console.log("FCM Token:", token);
           updateDeviceToken(token);
 
           // You can now send this token to your server to subscribe for notifications
-        } else {
-          console.log(
-            "No registration token available. Request permission to generate one."
-          );
         }
-      } catch (error) {
-        console.log("An error occurred while retrieving token. ", error);
-      }
+      } catch (error) {}
     };
 
     requestPermission();
@@ -171,10 +163,8 @@ const HomePage = ({ Component, pageProps }) => {
     try {
       onMessage(messaging, (payload) => {
         if (payload.notification) {
-          console.log("Message received in foreground: ", payload);
+          console.log("payload.notification", payload.notification);
           handleShowNotification(payload); // Pass payload here
-        } else {
-          console.log("No notification payload found.");
         }
       });
     } catch (error) {}
@@ -187,12 +177,7 @@ const HomePage = ({ Component, pageProps }) => {
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
           .register("/firebase-messaging-sw.js")
-          .then((registration) => {
-            console.log(
-              "Service Worker registered with scope:",
-              registration.scope
-            );
-          })
+          .then((registration) => {})
           .catch((error) => {
             console.error("Service Worker registration failed:", error);
           });
@@ -204,7 +189,6 @@ const HomePage = ({ Component, pageProps }) => {
   useEffect(() => {
     // Only run this on the client side
     const storedUser = getData("user");
-    console.log("storedUser", storedUser?.roomDetails?.image);
 
     setUser(storedUser);
   }, []);
@@ -220,11 +204,6 @@ const HomePage = ({ Component, pageProps }) => {
     getTop5UsersList();
     getEarnerList();
     getSeasonList();
-    {
-      console.log("user?.roomDetails?.image", user?.roomDetails?.image);
-    }
-
-    // return () => {};
   }, []);
 
   const updateDeviceToken = async (token) => {
@@ -236,18 +215,9 @@ const HomePage = ({ Component, pageProps }) => {
       payload.append("devicetoken", token);
 
       const res = await dispatch(addDeviceTokenAction(payload));
-
-      console.log("res--> 217", res.payload.data);
-
-      // if (status) {
-      //   console.log("status 137", status);
-      // } else {
-      //   console.log("res--> 133");
-      // }
     } catch (error) {
       setIsLoader(false);
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
 
@@ -259,25 +229,15 @@ const HomePage = ({ Component, pageProps }) => {
       const payload = new FormData();
       const res = await dispatch(getAvailableMatchesAction());
 
-      console.log("res--> 96", res);
-
       if (res.payload.statusCode == 200) {
         setAvailableData(res.payload.data);
 
-        // setRoomID("roomId", "");
         setIsLoader(false);
-        // toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
         setIsLoader(false);
-        console.log("res--> 133");
-
-        // toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
-      //   toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getCurrentMatches = async () => {
@@ -285,23 +245,16 @@ const HomePage = ({ Component, pageProps }) => {
 
     try {
       const res = await dispatch(getCurrentMatchesAction());
-
-      console.log("res--> 96", res);
-
       if (res.payload.statusCode == 200) {
         setCurrentMatchData(res.payload.data);
         setIsLoader(false);
-        //toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getSeasonList = async () => {
@@ -310,16 +263,11 @@ const HomePage = ({ Component, pageProps }) => {
     try {
       const res = await dispatch(getSeasonListAction());
 
-      console.log("res--> 152", res.payload.data.data);
-      console.log("res--> 152", res.payload.data.data[0].id);
-
       if (res.payload.status) {
         setSeasonList(res.payload.data.data);
         setSeasonId(res.payload.data.data[0].id);
         setIsLoader(false);
-        //toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
@@ -327,7 +275,6 @@ const HomePage = ({ Component, pageProps }) => {
       setIsLoader(false);
 
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getMyTournament = async () => {
@@ -336,24 +283,19 @@ const HomePage = ({ Component, pageProps }) => {
     try {
       const res = await dispatch(getMyTournamentAction());
 
-      console.log("res--> 96", res);
-
       if (res.payload.statusCode == 200) {
         setMyTournaments(res.payload.data);
         // setRoomID("roomId", "");
         setIsLoader(false);
         //toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
-
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
 
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getTournamentList = async () => {
@@ -361,25 +303,16 @@ const HomePage = ({ Component, pageProps }) => {
 
     try {
       const res = await dispatch(getTournamentListAction());
-
-      console.log("res--> 96", res);
-
       if (res.payload.statusCode == 200) {
         setTournamentListData(res.payload.data);
-        // setRoomID("roomId", "");
         setIsLoader(false);
-        //toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
-
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getNewsList = async () => {
@@ -388,24 +321,17 @@ const HomePage = ({ Component, pageProps }) => {
     try {
       const res = await dispatch(getNewsAction());
 
-      console.log("res--> 96", res);
-
       if (res.payload.statusCode == 200) {
         setNewsData(res.payload.data);
-        // setRoomID("roomId", "");
         setIsLoader(false);
-        //toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
-
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
 
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getBadgeNewsList = async () => {
@@ -414,24 +340,16 @@ const HomePage = ({ Component, pageProps }) => {
     try {
       const res = await dispatch(getBadgeAction());
 
-      console.log("res--> 96", res);
-
       if (res.payload.statusCode == 200) {
         setBadgeData(res.payload.data);
         setIsLoader(false);
-        // setIsLoading(false);
-        //toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
-
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getConsoleList = async () => {
@@ -445,25 +363,17 @@ const HomePage = ({ Component, pageProps }) => {
     try {
       const res = await dispatch(getConsoleAction(object));
 
-      console.log("res--> 2451", res);
-
       if (res.payload.statusCode == 200) {
         setConsoleData("consoleData", res.payload.data[0]);
         setConsoleList(res.payload.data);
-        // setIsLoader(false);
-        // setIsLoading(false);
-        //toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
-
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
 
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getTop5UsersList = async () => {
@@ -477,71 +387,48 @@ const HomePage = ({ Component, pageProps }) => {
     try {
       const res = await dispatch(getTop5UsersAction(object));
 
-      console.log("res--> 480", res.payload.data.data);
-
       if (res.payload.status) {
         setTop5users(res.payload.data.data);
-        // setIsLoader(false);
-        // setTop5users(false);
-        //toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
-
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
 
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getProfileCard = async (SeasonId, Uid) => {
     setIsLoader(true);
-    console.log("SeasonId 311", SeasonId);
     const object = {
       id: Uid,
       seasonId: SeasonId,
     };
-    console.log("object 314", object);
     try {
       const res = await dispatch(getProfileCardAction(object));
 
-      console.log("res--> 318", res.payload.data);
-
       if (res.payload.status) {
         setProfileData(res.payload.data.data);
-
         setIsProfileCard(true);
-
         setIsLoader(false);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
-
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getUserBadgeList = async () => {
     setIsLoader(true);
-    console.log("SeasonId 311", SeasonId);
     const object = {
       user_id: clickUserId,
-      // seasonId: SeasonId,
     };
 
-    console.log("object 314", object);
     try {
       const res = await dispatch(getBadgesDataAction(object));
-
-      console.log("res--> 371", res.payload.data);
 
       if (res.payload.status) {
         // setProfileData(res.payload.data.data);
@@ -550,92 +437,59 @@ const HomePage = ({ Component, pageProps }) => {
 
         setIsLoader(false);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
-
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
 
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getGameWinLoss = async () => {
     setIsLoader(true);
-    console.log("SeasonId 360", SeasonId);
     const object = {
       id: clickUserId,
       seasonId: SeasonId,
       status: 0,
     };
-    //  setClickUserId(earner.userData.id);
-    //  setSelectedEarner(earner); // Set selected earner data
-    //  getProfileCard(SeasonId, earner.userData.id);
-    console.log("object 314", object);
+
     try {
       const res = await dispatch(getGameWinLossAction(object));
-
-      console.log("res--> 318", res.payload.data);
-
       if (res.payload.status) {
-        // setProfileData(res.payload.data.data);
         setGameWinLoss(res.payload.data.data);
         setScoreBoardModel(true);
-
         setScoreBoardModel(true);
-
         setIsLoader(false);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
-
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getTourGameWinLoss = async () => {
     setIsLoader(true);
-    console.log("SeasonId 360", SeasonId);
     const object = {
       id: clickUserId,
       seasonId: SeasonId,
       status: 1,
     };
-    //  setClickUserId(earner.userData.id);
-    //  setSelectedEarner(earner); // Set selected earner data
-    //  getProfileCard(SeasonId, earner.userData.id);
-    console.log("object 314", object);
+
     try {
       const res = await dispatch(getGameWinLossAction(object));
-
-      console.log("res--> 318", res.payload.data);
-
       if (res.payload.status) {
-        // setProfileData(res.payload.data.data);
         setGameWinLoss(res.payload.data.data);
-        // setScoreBoardModel(true);
-
-        // setScoreBoardModel(true);
-
         setIsLoader(false);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
-
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getEarnerList = async () => {
@@ -644,32 +498,22 @@ const HomePage = ({ Component, pageProps }) => {
     try {
       const res = await dispatch(getRecentEarnerAction());
 
-      console.log("res--> 241", res);
-
       if (res.payload.statusCode == 200) {
         setEarnerList(res.payload.data);
-        // setIsLoader(false);
-        // setIsLoading(false);
-        //toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
-
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
 
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
 
   const handleEarnerClick = (earner) => {
-    console.log("earner 367", earner);
     setClickUserId(earner.userData.id);
     setSelectedEarner(earner); // Set selected earner data
-    console.log("SeasonId 371", SeasonId);
     getProfileCard(SeasonId, earner.userData.id);
   };
 
@@ -678,18 +522,15 @@ const HomePage = ({ Component, pageProps }) => {
   };
   const handleChange = (event) => {
     const { value } = event.target;
-    console.log("stateCode", value);
     setDropDownSelection(value);
   };
   const handleChangeConsole = (event) => {
     const selectedOption = JSON.parse(event.target.value);
-    console.log("selectedOption", selectedOption);
     setConsoleData("consoleData", selectedOption);
   };
   // setScoreBoardModel(true);
 
   function ScoreBoard() {
-    console.log("gameWinLoss", gameWinLoss);
     return (
       <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[50%]">
         <div className="bg-black p-4 rounded-lg shadow-lg  ">
@@ -717,7 +558,6 @@ const HomePage = ({ Component, pageProps }) => {
     );
   }
   function BCBoard() {
-    console.log("gameWinLoss", gameWinLoss);
     return (
       <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[25%]">
         <span className="text-[22px]  font-[400] pl-4">{"Badges"}</span>
@@ -726,8 +566,6 @@ const HomePage = ({ Component, pageProps }) => {
           <ul className="list-none space-y-2">
             {gameWinLoss.map((game, index) => (
               <button key={index} className="flex justify-between">
-                {console.log("game", game)}
-
                 <span>{game.name}</span>
               </button>
             ))}
@@ -746,7 +584,6 @@ const HomePage = ({ Component, pageProps }) => {
     );
   }
   function TWBoard() {
-    console.log("gameWinLoss", gameWinLoss);
     return (
       <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[25%]">
         <span className="text-[22px]  font-[400] pl-4">
@@ -775,7 +612,6 @@ const HomePage = ({ Component, pageProps }) => {
     );
   }
   function SeasonModel() {
-    console.log("seasonList", seasonList);
     return (
       <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[25%]">
         <span className="text-[22px]  font-[400] pl-4">{"Season"}</span>
@@ -788,8 +624,6 @@ const HomePage = ({ Component, pageProps }) => {
                 className="flex justify-between"
                 onClick={() => {
                   setSeasonId(game.id);
-
-                  console.log("ids", game.id);
                   setSeasonModel(false);
                   setIsProfileCard(true);
                 }}
@@ -818,7 +652,6 @@ const HomePage = ({ Component, pageProps }) => {
           <button
             className="text-white text-xl mb-4 w-[100%] flex items-center"
             onClick={() => {
-              console.log("item 497", selectedEarner);
               setIsProfileCard(false);
               setSeasonModel(true);
             }}
@@ -847,7 +680,6 @@ const HomePage = ({ Component, pageProps }) => {
                 <button
                   className="flex items-center"
                   onClick={() => {
-                    console.log("item 497", selectedEarner);
                     setIsProfileCard(false);
                     getGameWinLoss();
                   }}
@@ -871,7 +703,6 @@ const HomePage = ({ Component, pageProps }) => {
                 <button
                   className="flex items-center"
                   onClick={() => {
-                    console.log("item 497", selectedEarner);
                     setIsProfileCard(false);
                     setBcModel(true);
                     getUserBadgeList();
@@ -894,7 +725,6 @@ const HomePage = ({ Component, pageProps }) => {
                 <button
                   className="flex items-center"
                   onClick={() => {
-                    console.log("item 497", selectedEarner);
                     setIsProfileCard(false);
                     setTwModel(true);
                     getTourGameWinLoss();
@@ -1083,7 +913,6 @@ const HomePage = ({ Component, pageProps }) => {
                               <button
                                 className=" w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4"
                                 onClick={() => {
-                                  console.log("item", post);
                                   CommonConstant.SelectedMatchData = post;
                                   router.push(PATH_DASHBOARD.createGame);
                                 }}
@@ -1132,7 +961,6 @@ const HomePage = ({ Component, pageProps }) => {
                               <button
                                 className=" w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4"
                                 onClick={() => {
-                                  console.log("item", item);
                                   CommonConstant.SelectedMatchData = item;
                                   router.push(PATH_DASHBOARD.createGame);
                                 }}
@@ -1184,7 +1012,6 @@ const HomePage = ({ Component, pageProps }) => {
                               <button
                                 className=" w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4"
                                 onClick={() => {
-                                  console.log("post", post.id);
                                   setTournamentId("id", post);
                                   if (post.status == 2 && post.winnerId != 0) {
                                     toast.error("The tournament is over.");
@@ -1197,7 +1024,6 @@ const HomePage = ({ Component, pageProps }) => {
                                       router.push("./tournament");
                                     }
                                   }
-                                  console.log("post", post);
                                 }}
                               >
                                 Join
@@ -1222,9 +1048,6 @@ const HomePage = ({ Component, pageProps }) => {
                 itemClass="carousel-item-padding-2-px"
               >
                 {earnerList.map((item) => {
-                  console.log("====================================");
-                  console.log("post", item.userData.image);
-                  console.log("====================================");
                   return (
                     <div
                       className="w-56       bg-black25 rounded-2xl pt-[1px] border border-white flex items-center justify-center"
@@ -1287,7 +1110,6 @@ const HomePage = ({ Component, pageProps }) => {
                 return (
                   <div
                     onClick={() => {
-                      console.log("post", item.id);
                       setTournamentId("id", item);
                       if (item.status == 2 && item.winnerId != 0) {
                         toast.error("The tournament is over.");
@@ -1325,8 +1147,6 @@ const HomePage = ({ Component, pageProps }) => {
                 return (
                   <div
                     onClick={() => {
-                      console.log("post", post);
-                      console.log("post", post.url);
                       window.location.href = post.url; // Redirect to the URL
                     }}
                     className="h-48 w-24 mt-6"

@@ -80,7 +80,7 @@ const DisputeCenter = () => {
                   <div className="rounded-lg  bg-gray-300 flex items-center justify-center overflow-hidden">
                     <Image
                       className="rounded-lg  "
-                      src={item.gameData.image}
+                      src={item?.gameData?.image}
                       width={140} // Matches Tailwind h-24 (96px)
                       height={140} // Matches Tailwind w-24 (96px)
                     />

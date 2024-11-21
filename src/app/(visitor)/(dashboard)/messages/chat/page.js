@@ -54,6 +54,7 @@ const Chat = () => {
   const scrollRef = useRef(null); // Ref for the scroll container
   const [chatListIsNext, setChatListIsNext] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const userDataForChat = getChatUserData("chat");
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -385,13 +386,6 @@ const Chat = () => {
             </div>
           )}
           <div class="flex items-center space-x-2">
-            <div class="rounded-full h-5 w-5 bg-gray82 flex items-center justify-center">
-              <img
-                class="rounded-full h-full w-full object-cover"
-                src={item?.senderId?.image}
-                alt="Receiver's Profile Picture"
-              />
-            </div>
             <div class="flex justify-center items-center">
               <span class="text-[10px] text-white">
                 {item?.senderId?.username}
@@ -407,6 +401,7 @@ const Chat = () => {
   }
 
   function renderSenderView(item) {
+    console.log("item.", item);
     return (
       <div class="flex flex-col items-end space-y-2">
         {item.mediaExt === "image" ? (
@@ -445,13 +440,13 @@ const Chat = () => {
               {item?.senderId?.username}
             </span>
           </div>
-          <div class="rounded-full h-5 w-5 bg-gray82 flex items-center justify-center">
+          {/* <div class="rounded-full h-5 w-5 bg-gray82 flex items-center justify-center">
             <img
               class="rounded-full h-full w-full object-cover"
               src={item?.senderId?.image}
               alt="Sender's Profile Picture"
             />
-          </div>
+          </div> */}
         </div>
       </div>
     );
@@ -479,6 +474,7 @@ const Chat = () => {
 
   return (
     <>
+      {console.log("userDataForChat", userDataForChat)}
       {isLoader ? (
         <Loader />
       ) : (
@@ -490,12 +486,12 @@ const Chat = () => {
                 <div className="rounded-full h-10 w-10 bg-gray82 flex items-center justify-center">
                   <img
                     className="rounded-full h-full w-full object-cover"
-                    src={user?.roomDetails?.image}
+                    src={userDataForChat?.image}
                     alt="User Profile Picture"
                   />
                 </div>
                 <h1 className="text-xl font-semibold">
-                  {user?.roomDetails?.gamename}
+                  {userDataForChat.uName}
                 </h1>
               </div>
             </div>

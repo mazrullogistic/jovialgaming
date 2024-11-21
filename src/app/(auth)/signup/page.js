@@ -83,7 +83,6 @@ const SignupPage = () => {
   };
   useEffect(() => {
     setStates(State.getStatesOfCountry("US"));
-    console.log(State.getStatesOfCountry("US"));
   }, []);
 
   useEffect(() => {
@@ -102,13 +101,11 @@ const SignupPage = () => {
 
   const handleStateChange = (event) => {
     const { value } = event.target;
-    console.log("stateCode", value);
     setSelectedState(value);
   };
 
   // const selector = useSelector((state) => state.registerApi);
   const registerData = useSelector((state) => state.registerApi.registerData);
-  console.log("registerData", registerData);
 
   // FirstName Methods
   const onSubmitFormFirstName = async (formData, nextStep) => {
@@ -143,7 +140,6 @@ const SignupPage = () => {
   //LastName Methods
   const onSubmitFormLastName = async (formData, nextStep) => {
     const { lastName } = formData;
-    console.log("lastName", lastName);
     setLastName(lastName);
 
     nextStep();
@@ -175,7 +171,6 @@ const SignupPage = () => {
   const onSubmitFormUserName = async (formData, nextStep) => {
     setIsLoading(true);
     const { userName } = formData;
-    console.log("userName", userName);
     setUserName(userName);
 
     const payload = new FormData();
@@ -185,20 +180,15 @@ const SignupPage = () => {
       const res = await dispatch(checkUserAction(payload));
       if (!res.payload.status) {
         setIsLoading(false);
-        console.log("res--> 133");
         setActiveIndex(2);
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       } else {
         nextStep();
         setActiveIndex(3);
         setIsLoading(false);
-        // toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       }
-      // setIsLoading(false);
     } catch (error) {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
-      //   setIsLoading(false);
     }
   };
   const defaultValuesUserName = useMemo(
@@ -227,7 +217,6 @@ const SignupPage = () => {
   //  Password Methods
   const onSubmitFormPassword = async (formData, nextStep) => {
     const { password } = formData;
-    console.log("password", password);
     setPassword(password);
     nextStep();
   };
@@ -272,8 +261,7 @@ const SignupPage = () => {
   //Confirm Password Methods
   const onSubmitFormConfirmPassword = async (formData, nextStep) => {
     const { confirmPassword } = formData;
-    console.log("confirmPassword 273", confirmPassword);
-    console.log("confirmPassword 273", confirmPassword);
+
     nextStep();
   };
   const defaultValuesConfirmPassword = useMemo(
@@ -283,7 +271,6 @@ const SignupPage = () => {
     []
   );
   const formSchemaConfirmPassword = useMemo(() => {
-    console.log("password 283", password);
     return yup
       .object()
       .shape({
@@ -320,11 +307,6 @@ const SignupPage = () => {
   const onSubmitFormEmail = async (formData, nextStep) => {
     setIsLoading(true);
     const { email } = formData;
-    console.log("email d", email);
-    console.log("firstName", firstName);
-    console.log("lastName", lastName);
-    console.log("userName", userName);
-    console.log("password", password);
 
     const payload = new FormData();
     payload.append("firstname", firstName);
@@ -335,12 +317,9 @@ const SignupPage = () => {
 
     try {
       const res = await dispatch(registerAction(payload));
-      console.log("res", res);
-      console.log("res", res.payload.data.verificationToken);
-      console.log("id", res.payload.data.id);
+
       if (!res.payload.status) {
         setIsLoading(false);
-        console.log("res--> 133");
         setActiveIndex(5);
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       } else {
@@ -351,7 +330,6 @@ const SignupPage = () => {
       }
     } catch (error) {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const defaultValuesEmail = useMemo(
@@ -389,9 +367,7 @@ const SignupPage = () => {
   const onSubmitFormVerifyCode = async (formData, nextStep) => {
     setIsLoading(true);
     const { verificationCode } = formData;
-    console.log("verificationCode", verificationCode);
-    console.log("registerData.id", registerData.data);
-    console.log("registerData.id", registerData.data.id);
+
     const payload = new FormData();
     payload.append("verificationCode", verificationCode);
     payload.append("id", registerData.data.id);
@@ -401,7 +377,6 @@ const SignupPage = () => {
 
       if (!res.payload.status) {
         setIsLoading(false);
-        console.log("res--> 133");
         setActiveIndex(6);
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       } else {
@@ -412,7 +387,6 @@ const SignupPage = () => {
       }
     } catch (error) {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const defaultValuesVerifyCode = useMemo(
@@ -443,9 +417,7 @@ const SignupPage = () => {
   const onSubmitFormPhoneNumber = async (formData, nextStep) => {
     setIsLoading(true);
     const { phoneNumber } = formData;
-    console.log("verificationCode", phoneNumber);
-    console.log("registerData.id", registerData.data);
-    console.log("registerData.id", registerData.data.id);
+
     const payload = new FormData();
     payload.append("phone", phoneNumber);
     payload.append("id", registerData.data.id);
@@ -455,7 +427,6 @@ const SignupPage = () => {
 
       if (!res.payload.status) {
         setIsLoading(false);
-        console.log("res--> 133");
         setActiveIndex(7);
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       } else {
@@ -466,7 +437,6 @@ const SignupPage = () => {
       }
     } catch (error) {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const defaultValuesPhoneNumber = useMemo(
@@ -526,9 +496,7 @@ const SignupPage = () => {
     setIsDOBError(false);
 
     setIsLoading(true);
-    console.log("verificationCode", dob);
-    console.log("registerData.id", registerData.data);
-    console.log("registerData.id", registerData.data.id);
+
     const payload = new FormData();
     payload.append("dob", dob);
     payload.append("id", registerData.data.id);
@@ -538,7 +506,6 @@ const SignupPage = () => {
 
       if (!res.payload.status) {
         setIsLoading(false);
-        console.log("res--> 133");
         setActiveIndex(8);
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       } else {
@@ -549,7 +516,6 @@ const SignupPage = () => {
       }
     } catch (error) {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   // const defaultValuesDOB = useMemo(
@@ -579,7 +545,6 @@ const SignupPage = () => {
   const onSubmitFormAddress = async (formData, nextStep) => {
     setIsLoading(true);
     const { address, city, zipcode } = formData;
-    console.log("address", address);
 
     const payload = new FormData();
     payload.append("address", address);
@@ -592,7 +557,6 @@ const SignupPage = () => {
 
       if (!res.payload.status) {
         setIsLoading(false);
-        console.log("res--> 133");
         setActiveIndex(9);
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       } else {
@@ -603,7 +567,6 @@ const SignupPage = () => {
       }
     } catch (error) {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const defaultValuesAddress = useMemo(
@@ -655,7 +618,6 @@ const SignupPage = () => {
       fileImg.type || ""
     );
 
-    console.log("s3Data", s3Data);
     if (!s3Data) {
       toast.error("Uploading failed");
       setIsLoading(false);
@@ -674,7 +636,6 @@ const SignupPage = () => {
 
       if (!res.payload.status) {
         setIsLoading(false);
-        console.log("res--> 133");
         setActiveIndex(10);
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       } else {
@@ -685,7 +646,6 @@ const SignupPage = () => {
       }
     } catch (error) {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const defaultValuesPicture = useMemo(() => ({}), []);
@@ -734,8 +694,6 @@ const SignupPage = () => {
   ///////
   const onSubmitForm = async (formData) => {
     const { firstName } = formData;
-
-    console.log("firstName", firstName);
   };
 
   // Form Config
@@ -832,7 +790,6 @@ const SignupPage = () => {
 
   const onVerifyOtpChange = (event) => {
     const inputValue = event.target.value;
-    console.log("inputValue", inputValue);
     // Check if the input length is less than or equal to 4
     if (inputValue.length <= 4) {
       setOtp(inputValue);
@@ -1124,9 +1081,7 @@ const SignupPage = () => {
                 className="textInput-signUp"
                 type="text"
                 value={otp}
-                onChange={() => {
-                  console.log("onCHange");
-                }}
+                onChange={() => {}}
               />
             </div>
           </div>

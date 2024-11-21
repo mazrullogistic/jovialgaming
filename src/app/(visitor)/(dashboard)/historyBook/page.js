@@ -47,9 +47,6 @@ const HistoryBook = () => {
     try {
       const res = await dispatch(getSeasonListAction());
 
-      console.log("res--> 48", res.payload.data.data[0].name);
-      console.log("res--> 152", res.payload.data.data[0].id);
-
       if (res.payload.status) {
         setSeasonList(res.payload.data.data);
         setSeasonId(res.payload.data.data[0].id);
@@ -58,13 +55,10 @@ const HistoryBook = () => {
 
         //toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
       }
     } catch (error) {
       setIsLoader(false);
-
-      console.log("Error", error);
     }
   };
   const getBadgeList = async () => {
@@ -73,22 +67,14 @@ const HistoryBook = () => {
     try {
       const res = await dispatch(getBadgesListAction());
 
-      console.log("res--> 152", res.payload.data);
-      //console.log("res--> 152", res.payload.data.data[0].id);
-
       if (res.payload.status) {
         setBadgeList(res.payload.data.data);
-        // setSeasonId(res.payload.data.data[0].id);
         setIsLoader(false);
-        //toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
       }
     } catch (error) {
       setIsLoader(false);
-
-      console.log("Error", error);
     }
   };
   const getGameHistoryList = async () => {
@@ -97,22 +83,15 @@ const HistoryBook = () => {
       const res = await dispatch(getGameHistoryAction());
 
       setIsLoader(false);
-      console.log("res--> 2451", res.payload);
 
       if (res.payload.status) {
         setGameHistoryList(res.payload.data.data);
-        //setChatData([...res.payload.data.data].reverse());
-        console.log("res--> 2451", res.payload.data.data);
-      } else {
-        console.log("res--> 133");
       }
     } catch (error) {
       setIsLoader(false);
-      console.log("Error", error);
     }
   };
   function SeasonModel() {
-    console.log("seasonList", seasonList);
     return (
       <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[25%] ml-[15%]">
         <span className="text-[22px]  font-[400] pl-4">{"Season"}</span>
@@ -125,7 +104,6 @@ const HistoryBook = () => {
                 className="flex justify-between"
                 onClick={() => {
                   setSeasonId(game.id);
-                  console.log("ids", game.id);
                   setSeasonModel(false);
                   setIsSelectedSeason(index);
                 }}
@@ -153,7 +131,6 @@ const HistoryBook = () => {
     );
   }
   function GameHistoryModel() {
-    console.log("gameHistoryList", gameHistoryList);
     return (
       <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[25%] ml-[15%]">
         <span className="text-[22px]  font-[400] pl-4">{"Games"}</span>
@@ -166,7 +143,6 @@ const HistoryBook = () => {
                 className="flex justify-between"
                 onClick={() => {
                   setIsSelectGame(index);
-                  console.log("ids", game.id);
                   setGameHistoryModel(false);
                 }}
               >

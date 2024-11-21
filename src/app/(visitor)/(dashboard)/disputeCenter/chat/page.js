@@ -110,45 +110,22 @@ const Chat = () => {
     };
   }, []);
 
-  const handleScrollToBottom = () => {
-    // Your method call when scrolled to the bottom
-    console.log("Scrolled to the bottom");
-  };
+  const handleScrollToBottom = () => {};
 
   useEffect(() => {
-    // if (SocketKEY.socketConnect === null) {
-    //   socket.start();
-    //   socket.subscribeUser();
-    // }
-    //getChatList();
-    // getThreadList();
     getUserMessagesEvent();
     return () => {};
   }, []);
   useEffect(() => {
-    // if (SocketKEY.socketConnect === null) {
-    //   socket.start();
-    //   socket.subscribeUser();
-    // }
     getChatList();
     return () => {};
   }, [threadId]);
   useEffect(() => {
     if (chatListIsNext) {
       getChatList();
-      // GroupTourReadMessage(true);
     }
   }, [chatListPage]);
   useEffect(() => {
-    // bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-    // const container = bottomRef.current?.parentNode;
-    // if (container) {
-    //   const halfScroll = container.scrollHeight / 10;
-    //   container.scrollTo({
-    //     top: halfScroll,
-    //     behavior: "smooth",
-    //   });
-    // }
     if (chatListPage == 1) {
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     } else {
@@ -172,13 +149,10 @@ const Chat = () => {
     });
 
     EventEmitter.on(EmitterKey.ChatReceive, (msg) => {
-      console.log("msg", msg);
       addMsgDetails(msg.message);
     });
     EventEmitter.on(EmitterKey.ReloadWeb, (msg) => {
-      console.log("Event received:128", msg);
       getChatList();
-      // GroupTourReadMessage(true);
     });
   }
 
@@ -198,7 +172,6 @@ const Chat = () => {
         };
         reader.readAsDataURL(file);
       }
-      console.log("file 97", file);
       setSelectedImage(file);
       setSelectedVideoUrl(null); // Clear any selected video URL
     }
@@ -212,8 +185,6 @@ const Chat = () => {
     setSelectedVideoUrl(null);
   };
   const getChatList = async () => {
-    console.log("res.payload.data.isNextPage");
-
     setIsLoader(true);
     const userDataForChat = getChatUserData("chat");
 
@@ -231,55 +202,17 @@ const Chat = () => {
 
       if (res.payload.status) {
         setChatList(res.payload.data);
-        console.log("res.payload.data.isNextPage", res.payload.data.isNextPage);
         setChatData([...chatData, ...res.payload.data.data]);
         setChatListIsNext(res.payload.data.isNextPage);
         var tempArray = [...chatData, ...res.payload.data.data];
         tempArray = tempArray.reverse();
         setChatReverseList(tempArray);
-        // const newObj = [...chatData];
-        // const obj = _.cloneDeep(res.payload.data.data);
-        // obj.map((item) => {
-        //   newObj.push(item);
-        // });
-        // setChatData(newObj);
-
-        console.log("res--> 2451", res.payload.data.data);
-      } else {
-        console.log("res--> 133");
       }
     } catch (error) {
       setIsLoader(false);
-      console.log("Error", error);
     }
   };
-  const getThreadList = async () => {
-    setIsLoader(true);
 
-    try {
-      const res = await dispatch(getRoomChatThreadAction());
-
-      setIsLoader(false);
-      console.log("res--> 244", res.payload.data);
-
-      if (res.payload.status) {
-        setThreadList(res.payload.data?.data);
-
-        // setChatData([...chatData, ...res.payload.data.data]);
-        // setChatListIsNext(res.payload.data.isNextPage);
-        // var tempArray = [...chatData, ...res.payload.data.data];
-        // tempArray = tempArray.reverse();
-        // setChatReverseList(tempArray);
-
-        console.log("res--> 2451", res.payload.data.data);
-      } else {
-        console.log("res--> 133");
-      }
-    } catch (error) {
-      setIsLoader(false);
-      console.log("Error", error);
-    }
-  };
   const sendChatMessage = async () => {
     try {
       const userDataForChat = getChatUserData("chat");
@@ -292,7 +225,6 @@ const Chat = () => {
 
       payload.append("chatType", "individualchat");
       payload.append("group_id", 0);
-      /////
 
       if (selectedImage) {
         payload.append("mediaType", "textimage");
@@ -303,7 +235,6 @@ const Chat = () => {
       }
 
       const { payload: res } = await dispatch(sendDisputeChatAction(payload));
-      console.log("status 137", res);
 
       const { data, status } = res;
 
@@ -313,9 +244,7 @@ const Chat = () => {
         addMsgDetails(res.data.result);
       } else {
       }
-    } catch (error) {
-      console.log("Error", error);
-    }
+    } catch (error) {}
   };
 
   function addMsgDetails(msg) {
@@ -512,20 +441,9 @@ const Chat = () => {
     );
   }
 
-  function dateHeader(res) {
-    return (
-      <div class="mt-2">
-        <span class="text-sm text-gray-400"> {res || oldDate}</span>
-      </div>
-    );
-  }
-  const onEndReach = async () => {
-    console.log("onEndReach");
-  };
   const handleScroll = () => {
     if (scrollRef.current.scrollTop === 0) {
       loadMore();
-      console.log("onEndReach");
     }
   };
   function loadMore() {
@@ -601,9 +519,7 @@ const Chat = () => {
 
                 return (
                   <div key={index}>
-                    <div className="flex flex-col items-center justify-center p-4">
-                      {/* {header && dateHeader(headerText)} */}
-                    </div>
+                    <div className="flex flex-col items-center justify-center p-4"></div>
 
                     {item.chatBy === "admin"
                       ? renderReceiverView(item)

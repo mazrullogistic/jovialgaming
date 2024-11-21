@@ -190,39 +190,15 @@ const openCase = () => {
     // Add more games here...
   ];
   useEffect(() => {
-    //  getDisputesList();
     getGameRemainAPi();
   }, []);
-  useEffect(() => {
-    console.log("selectedImages", selectedImages);
-  }, [selectedImages]);
+  useEffect(() => {}, [selectedImages]);
 
   const handleSelectChange = (e) => {
     const selectedValue = e.target.value;
     setSelectedOption(selectedValue);
-    console.log("Selected value:", selectedValue);
   };
-  const getDisputesList = async () => {
-    setIsLoader(true);
 
-    try {
-      const res = await dispatch(disputesListAction());
-
-      setIsLoader(false);
-
-      if (res.payload.status) {
-        setDisputeList(res.payload.data.data);
-        setSelectedGame(res.payload.data.data[0]);
-        //setChatData([...res.payload.data.data].reverse());
-        console.log("res--> 2451", res.payload.data.data);
-      } else {
-        console.log("res--> 133");
-      }
-    } catch (error) {
-      setIsLoader(false);
-      console.log("Error", error);
-    }
-  };
   const getGameRemainAPi = async () => {
     setIsLoader(true);
 
@@ -236,14 +212,10 @@ const openCase = () => {
 
         setGameHistoryData(res.payload.data.data);
         setSelectedGame(res.payload.data.data[0]);
-        //setChatData([...res.payload.data.data].reverse());
-        console.log("res--> 2451", res.payload.data.data);
       } else {
-        console.log("res--> 133");
       }
     } catch (error) {
       setIsLoader(false);
-      console.log("Error", error);
     }
   };
   // Form Config
@@ -332,9 +304,6 @@ const openCase = () => {
 
       const res = await dispatch(createDisputesAction(payload));
 
-      console.log("res-->", res.payload.status);
-      console.log("res?.data?.roomId-->", res?.payload?.data);
-
       if (res.payload.status) {
         setIsLoader(false);
         router.back();
@@ -342,17 +311,12 @@ const openCase = () => {
         toaster(res.payload.data.message, TOAST_TYPES.SUCCESS);
       } else {
         setIsLoader(false);
-        console.log("res--> 133");
-
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
-
-      console.log("res", res);
     } catch (error) {
       setIsLoader(false);
 
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   return (
@@ -382,8 +346,6 @@ const openCase = () => {
                       selectedGame.id === session.id ? "bg-gray-700" : ""
                     }`}
                     onClick={() => {
-                      console.log("session", session.image);
-                      console.log("session 376", session);
                       setIsOpen(false);
                       setSelectedGame(session);
                     }}

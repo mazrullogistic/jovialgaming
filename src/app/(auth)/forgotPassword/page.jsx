@@ -73,7 +73,6 @@ const ForgotPassword = () => {
       //     password,
       //   });
 
-      console.log("res", res);
       if (!res.payload.status) {
         return toast.error(TOAST_ALERTS.ERROR_MESSAGE);
       }
@@ -84,7 +83,6 @@ const ForgotPassword = () => {
       }
     } catch (error) {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
 

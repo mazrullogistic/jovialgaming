@@ -121,10 +121,7 @@ const CreateGame = () => {
       setIsModelShow(true);
       CommonConstant.FreePlayData = CommonConstant.SelectedMatchData;
       const user = getData("user");
-      console.log(
-        "CommonConstant.SelectedMatchData",
-        CommonConstant.SelectedMatchData
-      );
+
       CommonConstant.CurrentGameDetails = CommonConstant.SelectedMatchData;
       setMatchData(CommonConstant.FreePlayData);
       getRuleApi(CommonConstant.SelectedMatchData.game);
@@ -134,16 +131,12 @@ const CreateGame = () => {
           setSelectedModelIndex(3);
         } else {
           if (CommonConstant.SelectedMatchData.start_match === 1) {
-            console.log("setSelectedModelIndex 5 95");
-
             if (CommonConstant.SelectedMatchData.host_ready_status === "1") {
               if (
                 CommonConstant.SelectedMatchData.opponent_ready_status === "0"
               ) {
-                console.log("opponent_ready_status");
                 setReadyClick(true);
                 setSelectedModelIndex(6);
-                console.log("opponent_ready_status");
               } else {
                 if (CommonConstant.SelectedMatchData.isScoreAddedHost) {
                   setSelectedModelIndex(11);
@@ -155,19 +148,14 @@ const CreateGame = () => {
               CommonConstant.SelectedMatchData.isResultAddedHost === "1"
             ) {
               setSelectedModelIndex(7);
-              console.log("isResultAddedHost");
             } else {
               setSelectedModelIndex(6);
             }
           } else if (CommonConstant.SelectedMatchData.status === "1") {
             setSelectedModelIndex(5);
-            console.log("setSelectedModelIndex 5 99");
           } else {
             setSelectedModelIndex(4);
-            console.log("found match 137");
-
             AvailableForJoinApi();
-            console.log("setSelectedModelIndex 5 103");
           }
         }
       } else {
@@ -175,21 +163,12 @@ const CreateGame = () => {
           setSelectedModelIndex(3);
         } else {
           if (CommonConstant.SelectedMatchData.start_match1 === 1) {
-            console.log("setSelectedModelIndex 5 95");
-
             if (
               CommonConstant.SelectedMatchData.opponent_ready_status === "1"
             ) {
-              //  else {
-              //   setSelectedModelIndex(7);
-              //   setSubmitScoreDialog(true);
-              //   console.log("isScoreAddedHost");
-              // }
               if (CommonConstant.SelectedMatchData.host_ready_status === "0") {
-                console.log("opponent_ready_status");
                 setReadyClick(true);
                 setSelectedModelIndex(6);
-                console.log("opponent_ready_status");
               } else {
                 if (CommonConstant.SelectedMatchData.isScoreAddedOpponent) {
                   setSelectedModelIndex(11);
@@ -201,20 +180,14 @@ const CreateGame = () => {
               CommonConstant.SelectedMatchData.isResultAddedOpponent === "1"
             ) {
               setSelectedModelIndex(7);
-              console.log("isResultAddedHost");
             } else {
               setSelectedModelIndex(6);
             }
           } else if (CommonConstant.SelectedMatchData.status1 === "1") {
             setSelectedModelIndex(5);
-            console.log("setSelectedModelIndex 5 99");
           } else {
             setSelectedModelIndex(4);
-            console.log("found match 181");
-
             AvailableForJoinApi();
-
-            console.log("setSelectedModelIndex 5 103");
           }
         }
       }
@@ -229,8 +202,6 @@ const CreateGame = () => {
     try {
       const res = await dispatch(getCurrentMatchesAction());
 
-      console.log("res--> 96", res);
-
       if (res.payload.statusCode == 200) {
         setCurrentMatchData(res.payload.data);
         var create = getCreate("create");
@@ -242,7 +213,6 @@ const CreateGame = () => {
         setIsLoader(false);
         //toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
-        console.log("res--> 133");
         setIsLoader(false);
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
@@ -250,22 +220,13 @@ const CreateGame = () => {
       setIsLoader(false);
 
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
-  useEffect(() => {
-    console.log("selectedModelIndex", selectedModelIndex);
-  }, [selectedModelIndex]);
+  useEffect(() => {}, [selectedModelIndex]);
   useEffect(() => {
     EventEmitter.on(EmitterKey.FoundMatch, (response) => {
-      console.log("Event received: 78", response.message);
-      console.log(
-        "Event CommonConstant.CurrentGameDetails: 78",
-        CommonConstant.CurrentGameDetails
-      );
       CommonConstant.SelectedMatchData = CommonConstant.CurrentGameDetails;
       if (CommonConstant.CurrentGameDetails) {
-        console.log("if call 82", matchData);
         CommonConstant.CurrentGameDetails = response.message[0];
         CommonConstant.SelectedMatchData = response.message[0];
         if (response.message[0]?.matchCompleted) {
@@ -278,39 +239,27 @@ const CreateGame = () => {
             CommonConstant?.SelectedMatchData?.start_match !== 1 &&
             CommonConstant.SelectedMatchData?.status !== "1"
           ) {
-            console.log(
-              "CommonConstant?.SelectedMatchData 186",
-              CommonConstant?.SelectedMatchData
-            );
-            console.log("response.message[0] 186", response.message[0]);
-
             setMatchData(response.message);
             CommonConstant.CurrentGameDetails = response.message;
             CommonConstant.SelectedMatchData = response.message;
             setSelectedModelIndex(4);
-            console.log("found match 225");
 
             return;
           }
-          console.log("response.message[0]", response.message[0]);
 
           setMatchData(response.message[0]);
 
           setShowAlert(true);
         }
       } else {
-        console.log("else call 86", matchData);
-
         setMatchData(response.message);
         CommonConstant.CurrentGameDetails = response.message;
         setSelectedModelIndex(4);
-        console.log("found match 239");
       }
     });
   }, []);
   useEffect(() => {
     EventEmitter.on(EmitterKey.DeclineMatch, (message) => {
-      console.log("Event received:128", message);
       setSelectedModelIndex(1);
       setIsModelShow(false);
       toaster(TOAST_ALERTS.OpponentDeclineMatchRequest, TOAST_TYPES.ERROR);
@@ -318,26 +267,22 @@ const CreateGame = () => {
   }, []);
   useEffect(() => {
     EventEmitter.on(EmitterKey.TimerStart, (res) => {
-      console.log("res.message.ready_status", res.message.ready_status);
       setReadyTimer(res.message.timer_sec);
       setReadyClick(res.message.ready_status === "0" ? false : true);
     });
   }, []);
   useEffect(() => {
     EventEmitter.on(EmitterKey.ReadySuccess, (res) => {
-      console.log("res.timer_sec", res.message);
       setSelectedModelIndex(7);
     });
   }, []);
   useEffect(() => {
     EventEmitter.on(EmitterKey.ScoreWaitingTimer, (res) => {
-      console.log("res.timer_sec", res.message);
       setScoreTimeCount(res.message.timer_sec);
     });
   }, []);
   useEffect(() => {
     EventEmitter.on(EmitterKey.ReadyTimerStop, (res) => {
-      console.log("res.ReadyTimerStop 126", res.message);
       setSelectedModelIndex(9);
 
       setReadyTimerData(res.message);
@@ -346,8 +291,6 @@ const CreateGame = () => {
   }, []);
   useEffect(() => {
     EventEmitter.on(EmitterKey.AfterSubmit, (res) => {
-      console.log("res.ReadyTimerStop 126", res.message);
-
       setIsModelShow(false);
 
       setTimeout(() => {
@@ -361,12 +304,7 @@ const CreateGame = () => {
   useEffect(() => {
     const roomData = getRoomData("roomData");
     setRoomData(roomData);
-    const user = getData("user");
-    // const roomId = getRoomId("roomId");
-    // console.log("roomId", roomId);
     getAmountDataApi();
-    // return () => {};
-    //   matchRequestCreateApi();
   }, []);
 
   const getAmountDataApi = async () => {
@@ -374,26 +312,17 @@ const CreateGame = () => {
     try {
       const res = await dispatch(getEntryAmountAction());
 
-      console.log("res--> 376", res.payload);
-
       if (res.payload.statusCode == 200) {
         setAmountData(res.payload.data);
         setIsWageringStop(res.payload.isWageringStop);
         setIsSubscription(res.payload.isSubscription);
 
         setIsLoader(false);
-        // toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
         setIsLoader(false);
-        console.log("res--> 133");
-
-        // toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
-      //   toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getRuleApi = async (gamId) => {
@@ -401,25 +330,16 @@ const CreateGame = () => {
     try {
       const res = await dispatch(getMatchRuleAction(gamId));
 
-      console.log("res--> 118", res.payload.data.data);
-
+      321;
       if (res.payload.data.data.length > 0) {
         setRuleData(res.payload.data.data);
         setIsLoader(false);
-        // toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
         setIsLoader(false);
         setRuleData([]);
-
-        console.log("res--> 133");
-
-        // toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
-      //   toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const getCurrentMatch = async (amountData, gameMode) => {
@@ -427,10 +347,7 @@ const CreateGame = () => {
     try {
       const res = await dispatch(getGameModeCurrentMatchAction());
 
-      console.log("res--> 36", res);
-
       if (res.payload.statusCode == 200) {
-        // if (res.payload.data.length == 0) {
         if (
           CommonConstant.FreePlayData.amount == "Free Play" ||
           CommonConstant?.FreePlayData?.amount == "free play"
@@ -439,28 +356,17 @@ const CreateGame = () => {
         } else {
           matchRequestCreateApi(amountData, gameMode);
         }
-        // }
         setIsLoader(false);
-        // toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
         setIsLoader(false);
-        console.log("res--> 133");
-
-        // toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
-      //   toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const AvailableForJoinApi = async (amountData, gameMode) => {
     try {
       const user = getData("user");
-      console.log("amountData", amountData);
-      console.log("gameMode", gameMode);
-      console.log("matchData", matchData);
       const payload = new FormData();
       payload.append("userId", user.data.id);
       payload.append(
@@ -486,22 +392,17 @@ const CreateGame = () => {
       const { data, status } = res;
 
       if (status) {
-        console.log("status 137", status);
-        console.log("found match 427");
-
         setSelectedModelIndex(4);
         setIsLoader(false);
       } else {
         // setSelectedModelIndex(3);
 
         setIsLoader(false);
-        console.log("res--> 133");
       }
     } catch (error) {
       setLoading(false);
 
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const matchRequestCreateApi = async (amountData, gameMode) => {
@@ -511,8 +412,7 @@ const CreateGame = () => {
     try {
       const user = getData("user");
       const consoleData = getConsoleData("consoleData");
-      console.log("amountData", amountData);
-      console.log("gameMode", gameMode);
+
       const payload = new FormData();
       payload.append("host", user.data.id);
       payload.append("consoles", consoleData.id);
@@ -523,34 +423,23 @@ const CreateGame = () => {
       payload.append("startTime", getCurrentTime());
       payload.append("endTime", getCurrentTime());
 
-      // const { res, status } = await dispatch(getMatchReqCreateAction(payload));
       const { payload: res } = await dispatch(getMatchReqCreateAction(payload));
       const { data, status } = res;
-      // console.log("res--> 137", status);
 
       if (status) {
-        console.log("status 137", status);
         getCurrentMatches();
-
         setSelectedModelIndex(3);
         setIsLoader(false);
-        // setIsLoading(false);
         toaster(data.message, TOAST_TYPES.SUCCESS);
       } else {
         setSelectedModelIndex(2);
-
         setIsLoader(false);
-        console.log("res--> 133");
-
         toaster(data.message, TOAST_TYPES.ERROR);
       }
-
-      //   console.log("res", res);
     } catch (error) {
       setLoading(false);
 
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const freePlayMatchRequestCreateApi = async (amountData, gameMode) => {
@@ -560,48 +449,32 @@ const CreateGame = () => {
     try {
       const user = getData("user");
       const consoleData = getConsoleData("consoleData");
-      // console.log("amountData", amountData);
-      console.log("gameMode", gameMode);
       const payload = new FormData();
       payload.append("host", user.data.id);
       payload.append("consoles", consoleData.id);
       payload.append("game", gameMode.game);
       payload.append("gamemodes", gameMode.id);
-      // payload.append("amount", amountData.amount);
       payload.append("timezone_name", userTimeZone);
       payload.append("startTime", getCurrentTime());
       payload.append("endTime", getCurrentTime());
 
-      // const { res, status } = await dispatch(getMatchReqCreateAction(payload));
       const { payload: res } = await dispatch(
         getFreePlayMatchReqCreateAction(payload)
       );
       const { data, status } = res;
-      // console.log("res--> 137", status);
-
       if (status) {
-        console.log("status 137", status);
         getCurrentMatches();
-
         setSelectedModelIndex(3);
         setIsLoader(false);
-        // setIsLoading(false);
         toaster(data.message, TOAST_TYPES.SUCCESS);
       } else {
         setSelectedModelIndex(2);
-
         setIsLoader(false);
-        console.log("res--> 133");
-
         toaster(data.message, TOAST_TYPES.ERROR);
       }
-
-      //   console.log("res", res);
     } catch (error) {
       setLoading(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
 
@@ -616,21 +489,17 @@ const CreateGame = () => {
 
       const { payload: res } = await dispatch(updateMatchAction(payload));
       const { data, status } = res;
-      // console.log("res--> 137", status);
 
       if (status) {
-        console.log("status 137", status);
         setSelectedModelIndex(6);
         setIsLoader(false);
       } else {
         setSelectedModelIndex(5);
         setIsLoader(false);
-        console.log("res--> 133");
       }
     } catch (error) {
       setIsLoader(false);
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const freePlayUpdateMatchStatusApi = async () => {
@@ -646,21 +515,17 @@ const CreateGame = () => {
         freePlayUpdateMatchAction(payload)
       );
       const { data, status } = res;
-      // console.log("res--> 137", status);
 
       if (status) {
-        console.log("status 137", status);
         setSelectedModelIndex(6);
         setIsLoader(false);
       } else {
         setSelectedModelIndex(5);
         setIsLoader(false);
-        console.log("res--> 133");
       }
     } catch (error) {
       setIsLoader(false);
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const updateReadyStatusApi = async () => {
@@ -676,22 +541,17 @@ const CreateGame = () => {
 
       const { payload: res } = await dispatch(updateReadyStatusAction(payload));
       const { data, status } = res;
-      // console.log("res--> 137", status);
       setIsLoader(false);
       if (status) {
-        // setSelectedModelIndex(7);
         setReadyClick(true);
         setReadyTimer("");
       } else {
-        // setSelectedModelIndex(6);
-
         setLoading(false);
         toast.error(TOAST_ALERTS.OPPONENT_NOT_READY);
       }
     } catch (error) {
       setIsLoader(false);
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
 
@@ -710,22 +570,17 @@ const CreateGame = () => {
         freePlayUpdateReadyStatusAction(payload)
       );
       const { data, status } = res;
-      // console.log("res--> 137", status);
       setIsLoader(false);
       if (status) {
-        // setSelectedModelIndex(7);
         setReadyClick(true);
         setReadyTimer("");
       } else {
-        // setSelectedModelIndex(6);
-
         setLoading(false);
         toast.error(TOAST_ALERTS.OPPONENT_NOT_READY);
       }
     } catch (error) {
       setIsLoader(false);
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const matchResultApi = async (winLosStatus) => {
@@ -740,30 +595,23 @@ const CreateGame = () => {
 
       const { payload: res } = await dispatch(matchResultAction(payload));
       const { data, status } = res;
-      console.log("res--> 137", status);
-      console.log("data", data);
       setIsLoader(false);
       if (status) {
         setSelectedModelIndex(8);
-
-        //setReadyTimer("");
       } else {
         setSelectedModelIndex(7);
-
         setIsLoader(false);
         toast.error(TOAST_ALERTS.OPPONENT_NOT_READY);
       }
     } catch (error) {
       setIsLoader(false);
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const freePlayMatchResultApi = async (winLosStatus) => {
     setIsLoader(true);
     try {
       const user = getData("user");
-
       const payload = new FormData();
       payload.append("id", matchData.match_request_id);
       payload.append("user_id", user.data.id);
@@ -773,23 +621,17 @@ const CreateGame = () => {
         freePlayMatchResultAction(payload)
       );
       const { data, status } = res;
-      console.log("res--> 137", status);
-      console.log("data", data);
       setIsLoader(false);
       if (status) {
         setSelectedModelIndex(8);
-
-        //setReadyTimer("");
       } else {
         setSelectedModelIndex(7);
-
         setIsLoader(false);
         toast.error(TOAST_ALERTS.OPPONENT_NOT_READY);
       }
     } catch (error) {
       setIsLoader(false);
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const submitScoreApi = async (score) => {
@@ -806,7 +648,6 @@ const CreateGame = () => {
 
       const { payload: res } = await dispatch(submitScoreAction(payload));
       const { data, status } = res;
-      console.log("res--> 137", data);
       setIsLoader(false);
       if (status) {
         setIsSubmitScoreBtn(true);
@@ -818,7 +659,6 @@ const CreateGame = () => {
     } catch (error) {
       setIsLoader(false);
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
   const freePlaySubmitScoreApi = async (score) => {
@@ -837,7 +677,6 @@ const CreateGame = () => {
         freePlaySubmitScoreAction(payload)
       );
       const { data, status } = res;
-      console.log("res--> 137", data);
       setIsLoader(false);
       if (status) {
         setIsSubmitScoreBtn(true);
@@ -849,22 +688,16 @@ const CreateGame = () => {
     } catch (error) {
       setIsLoader(false);
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
 
   function onPressAccept() {
-    console.log("match data => ", matchData);
-    console.log("match data => 782", CommonConstant.FreePlayData);
-    console.log("match data => 783", CommonConstant.SelectedMatchData);
     if (
       CommonConstant.FreePlayData?.amount == "free play" ||
       CommonConstant.SelectedMatchData?.amount == "free play" ||
       CommonConstant.FreePlayData?.amount == "Free Play" ||
       CommonConstant.SelectedMatchData?.amount == "Free Play"
     ) {
-      console.log("match data =>  788");
-
       freePlayRequestUpdateCall(matchData.match_request_id, "1");
     } else {
       requestUpdateCall(matchData.match_request_id, "1");
@@ -872,35 +705,24 @@ const CreateGame = () => {
   }
   function onPressAcceptRules() {
     setIsMatchStart(true);
-    console.log("CommonConstant.FreePlayData", CommonConstant.FreePlayData);
     if (
       CommonConstant.FreePlayData?.amount == "free play" ||
       CommonConstant.SelectedMatchData?.amount == "free play" ||
       CommonConstant.FreePlayData?.amount == "Free Play" ||
       CommonConstant.SelectedMatchData?.amount == "Free Play"
     ) {
-      console.log("freePlayRequestUpdateCall.FreePlayData 792");
-
       freePlayUpdateMatchStatusApi();
     } else {
       updateMatchStatusApi();
     }
   }
   function onPressDecline() {
-    console.log("match data => onPressDecline call");
-    console.log("CommonConstant.FreePlayData", CommonConstant.FreePlayData);
-
-    // // console.log('match request Id => ', matchData.match_request_id)
-    // // console.log('match status => ', 2)
-
     if (
       CommonConstant.FreePlayData?.amount == "free play" ||
       CommonConstant.SelectedMatchData?.amount == "free play" ||
       CommonConstant.FreePlayData?.amount == "Free Play" ||
       CommonConstant.SelectedMatchData?.amount == "Free Play"
     ) {
-      console.log("freePlayRequestUpdateCall.FreePlayData");
-
       freePlayRequestUpdateCall(matchData.match_request_id, "2");
     } else {
       requestUpdateCall(matchData.match_request_id, "2");
@@ -917,19 +739,15 @@ const CreateGame = () => {
     let response = null;
 
     obj.append("user_id", user.data.id);
-    console.log("matchRequestUpdate obj =>", obj);
     response = await dispatch(getMatchReqUpdateAction(obj));
-    console.log("response", response);
     setIsLoader(false);
     if (statusParam === "1") {
-      console.log("rules screen calllll");
       setSelectedModelIndex(5);
 
       //Actions.push(ScreenName.RuleScreen, { gameRules: true });
     } else if (statusParam === "2") {
       setSelectedModelIndex(1);
       setIsModelShow(false);
-      console.log("else if calling statusParam.........");
     }
   }
   async function freePlayRequestUpdateCall(idParam, statusParam) {
@@ -942,19 +760,13 @@ const CreateGame = () => {
     let response = null;
 
     obj.append("user_id", user.data.id);
-    console.log("matchRequestUpdate obj =>", obj);
     response = await dispatch(getFreePlayMatchReqUpdateAction(obj));
-    console.log("response", response);
     setIsLoader(false);
     if (statusParam === "1") {
-      console.log("rules screen calllll");
       setSelectedModelIndex(5);
-
-      //Actions.push(ScreenName.RuleScreen, { gameRules: true });
     } else if (statusParam === "2") {
       setSelectedModelIndex(1);
       setIsModelShow(false);
-      console.log("else if calling statusParam.........");
     }
   }
 
@@ -962,17 +774,11 @@ const CreateGame = () => {
     setSelectedModelIndex(1);
 
     setIsModelShow(true);
-    console.log("stateCode");
   };
   const closeModel = () => {
     setIsModelShow(false);
-
-    console.log("stateCode");
   };
-  const getEntryAmountApi = () => {};
   const getModelData = (amountData, gameMode) => {
-    console.log("amountData", amountData);
-    console.log("gameMode", gameMode);
     CommonConstant.FreePlayData = amountData;
     getRuleApi(gameMode.game);
     getCurrentMatch(amountData, gameMode);
@@ -981,9 +787,7 @@ const CreateGame = () => {
   return (
     <div>
       {isLoader && <Loader />}
-      {/* {isLoader ? (
-        <Loader />
-      ) : ( */}
+
       <div className="h-screen bg-black06">
         <div className="h-20 bg-black06 ml-8">
           <div className="flex items-center">
@@ -1003,7 +807,6 @@ const CreateGame = () => {
             </button>
           </div>
         </div>
-        {console.log("selectedModelIndex", selectedModelIndex)}
         {isModelShow && (
           <Model
             isModelShow={isModelShow}
@@ -1077,7 +880,6 @@ const CreateGame = () => {
                           <button
                             className=" w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4"
                             onClick={() => {
-                              console.log("item", item);
                               CommonConstant.SelectedMatchData = item;
                               setIsDataShow(!isDataShow);
                             }}

@@ -100,7 +100,6 @@ const ResetPassword = () => {
   //Email Methods
   const onSubmitFormEmail = async (formData, nextStep) => {
     const { email } = formData;
-    console.log("email", email);
     setEmail(email);
     setIsLoading(true);
 
@@ -111,7 +110,6 @@ const ResetPassword = () => {
       const res = await dispatch(forgotAction(payload));
       if (!res.payload.status) {
         setIsLoading(false);
-        console.log("res--> 133");
         setActiveIndex(0);
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       } else {
@@ -123,7 +121,6 @@ const ResetPassword = () => {
       // setIsLoading(false);
     } catch (error) {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
       //   setIsLoading(false);
     }
   };
@@ -168,7 +165,6 @@ const ResetPassword = () => {
       const res = await dispatch(verifyForgetPasswordAction(payload));
       if (!res.payload.status) {
         setIsLoading(false);
-        console.log("res--> 133");
         setActiveIndex(1);
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       } else {
@@ -180,7 +176,6 @@ const ResetPassword = () => {
       // setIsLoading(false);
     } catch (error) {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
       //   setIsLoading(false);
     }
   };
@@ -221,7 +216,6 @@ const ResetPassword = () => {
       const res = await dispatch(updatePasswordAction(payload));
       if (!res.payload.status) {
         setIsLoading(false);
-        console.log("res--> 133");
         setActiveIndex(2);
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       } else {
@@ -230,11 +224,8 @@ const ResetPassword = () => {
         setIsLoading(false);
         toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       }
-      // setIsLoading(false);
     } catch (error) {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
-      //   setIsLoading(false);
     }
   };
   const defaultValuesPassword = useMemo(

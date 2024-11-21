@@ -81,9 +81,6 @@ const LoginPage = () => {
 
       const res = await dispatch(loginAction(payload));
 
-      console.log("res-->", res.payload.status);
-      console.log("res?.data?.roomId-->", res?.payload?.data?.roomId);
-
       if (res.payload.status) {
         // setIsLoading(false);
         if (res?.payload?.data?.roomId) {
@@ -98,33 +95,13 @@ const LoginPage = () => {
         toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
         setIsLoading(false);
-        console.log("res--> 133");
 
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
-
-      // const res = await dispatch(
-      //   loginAction({
-      //     email: "litip@mailinator.com",
-      //     password: "Admin@123",
-      //     otp: 870213,
-      //   })
-      // );
-      console.log("res", res);
-      // console.log("res", res.payload.status);
-      // if (!res.payload.status) {
-      //   return toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      // }
-      // if (res.payload.status) {
-      //   toaster(TOAST_ALERTS.LOGIN_SUCCESS, TOAST_TYPES.SUCCESS);
-      //   methods.reset();
-      //   router.push("/que1");
-      // }
     } catch (error) {
       setIsLoading(false);
 
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
 

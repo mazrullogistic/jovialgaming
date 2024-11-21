@@ -143,6 +143,9 @@ const Subscription = () => {
       PlanPurchaseApi();
     }
   }, [paypalDetail]);
+  useEffect(() => {
+    console.log("selectedPlanId", selectedPlanId);
+  }, [selectedPlanId]);
 
   const getNextDayDate = () => {
     const today = new Date(); // Get the current date
