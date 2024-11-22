@@ -434,7 +434,7 @@ const ProfileCard = () => {
   function SeasonModel() {
     console.log("seasonList", seasonList);
     return (
-      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[25%]">
+      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[80%] md:w-[25%]">
         <span className="text-[22px]  font-[400] pl-4">{"Season"}</span>
 
         <div className="bg-black p-4 rounded-lg shadow-lg  ">
@@ -469,7 +469,7 @@ const ProfileCard = () => {
   function ScoreBoard() {
     console.log("gameWinLoss", gameWinLoss);
     return (
-      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[50%]">
+      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[80%] md:w-[50%]">
         <div className="bg-black p-4 rounded-lg shadow-lg  ">
           <ul className="list-none space-y-2">
             {gameWinLoss.map((game, index) => (
@@ -497,7 +497,7 @@ const ProfileCard = () => {
   function BCBoard() {
     console.log("badgesData", badgesData);
     return (
-      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[25%]">
+      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[80%] md:w-[25%]">
         <span className="text-[22px]  font-[400] pl-4">{"Badges"}</span>
 
         <div className="bg-black p-4 rounded-lg shadow-lg  ">
@@ -524,7 +524,7 @@ const ProfileCard = () => {
   function TWBoard() {
     console.log("gameWinLoss", gameWinLoss);
     return (
-      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[25%]">
+      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[80%] md:w-[25%]">
         <span className="text-[22px]  font-[400] pl-4">
           {"Tournament Wins"}
         </span>

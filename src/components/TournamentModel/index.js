@@ -94,10 +94,22 @@ const TournamentModel = ({
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
-      width: "694px",
+      width: "90%", // Default for mobile
+      maxWidth: "694px", // Ensures it doesn't exceed the desired width on larger screens
       backgroundColor: "#252525",
       borderRadius: "20px",
-      padding: "30px",
+      padding: "20px", // Reduced padding for mobile
+    },
+    "@media (min-width: 768px)": {
+      content: {
+        width: "80%", // Adjust width for tablets
+        padding: "30px", // Larger padding for tablets
+      },
+    },
+    "@media (min-width: 1024px)": {
+      content: {
+        width: "694px", // Fixed width for larger screens
+      },
     },
   };
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -342,7 +354,7 @@ const TournamentModel = ({
           ) : null}
         </div>
         <div className="flex max-h-[700px]">
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -354,7 +366,7 @@ const TournamentModel = ({
               <p className="userName-txt">{gameDetails?.opponent_name}</p>
             </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen pl-[15%] md:pt-[42%] pt-[102%]  max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -409,7 +421,7 @@ const TournamentModel = ({
           ) : null}
         </div>
         <div className="flex max-h-[700px]">
-          <div className="w-[50%] bg-gray69 h-screen pl-[15%] pt-[42%] max-h-[700px]">
+          <div className="w-[50%] bg-gray69 h-screen md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -421,7 +433,7 @@ const TournamentModel = ({
               <p className="userName-txt">{matchData.opponent_name}</p>
             </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -459,7 +471,7 @@ const TournamentModel = ({
           <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2 "></p>
         </div>
         <div className="flex max-h-[700px]">
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -471,7 +483,7 @@ const TournamentModel = ({
               <p className="userName-txt">{gameDetails?.opponent_name}</p>
             </div>{" "}
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -660,7 +672,7 @@ const TournamentModel = ({
           {!["Free Play", "free play"].includes(
             CommonConstant?.FreePlayData?.amount
           ) && (
-            <p className="w-full h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-green ">
+            <p className="w-full md:h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-green ">
               {"$ " + amount + " has been added to your funds"}
             </p>
           )}
@@ -706,7 +718,7 @@ const TournamentModel = ({
           {!["Free Play", "free play"].includes(
             CommonConstant?.FreePlayData?.amount
           ) && (
-            <p className="w-full h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-red">
+            <p className="w-full md:h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-red">
               {"$ " + amount + " has been deducted from your funds"}
             </p>
           )}

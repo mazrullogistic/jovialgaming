@@ -55,13 +55,18 @@ const DisputeCenter = () => {
         <Loader />
       ) : (
         <div className="h-full  bg-black06">
-          <div className="flex justify-between items-center  ">
-            <p className="medium-txt-dispute">Dispute Center</p>
+          <div className="flex  justify-between items-center">
+            {/* Title */}
+            <p className="text-[24px] sm:text-[40px] text-white font-inter_tight font-[400] ml-[20px] pt-6 sm:pt-12 pb-6 sm:pb-12 text-center sm:text-left">
+              Dispute Center
+            </p>
+
+            {/* Button */}
             <button
               onClick={() => {
                 router.push(PATH_DASHBOARD.openCase);
               }}
-              className="flex items-center bg-blue-500 text-black25 py-2 px-4 mr-8 bg-yellow rounded-lg"
+              className="flex items-center text-black25 py-2 px-4 mt-4 sm:mt-0 w-36 sm:w-36 bg-yellow rounded-lg justify-center sm:justify-start mr-8 sm:mr-8"
             >
               <span className="mr-2">+</span>
               Open Case

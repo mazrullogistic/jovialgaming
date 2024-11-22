@@ -97,7 +97,7 @@ const NotificationDialog = ({ open, onClose }) => {
   };
   return (
     <div
-      className="fixed left-0 top-0 bottom-0 bg-black bg-opacity-50 flex justify-center items-start z-50 w-[30%]"
+      className="fixed left-0 top-0 bottom-0 bg-black bg-opacity-50 flex justify-center items-start z-50 md:w-[30%]"
       onMouseLeave={() => onClose()}
     >
       <div className="bg-black26 text-white rounded-lg w-full h-full overflow-y-auto p-4">

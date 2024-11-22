@@ -107,10 +107,22 @@ const Model = ({
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
-      width: "694px",
+      width: "90%", // Default for mobile
+      maxWidth: "694px", // Ensures it doesn't exceed the desired width on larger screens
       backgroundColor: "#252525",
       borderRadius: "20px",
-      padding: "30px",
+      padding: "20px", // Reduced padding for mobile
+    },
+    "@media (min-width: 768px)": {
+      content: {
+        width: "80%", // Adjust width for tablets
+        padding: "30px", // Larger padding for tablets
+      },
+    },
+    "@media (min-width: 1024px)": {
+      content: {
+        width: "694px", // Fixed width for larger screens
+      },
     },
   };
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -136,7 +148,7 @@ const Model = ({
       <div>
         <div className="model-txt">Select Game Mode</div>
 
-        <div className="ml-[32%]">
+        <div className="ml-[14%] md:ml-[32%]">
           {gameModes.map((item, index) => (
             // <div className="border border-x-white border-">
             <button onClick={() => handleBoxClickMatch(index, item)}>
@@ -171,7 +183,7 @@ const Model = ({
       <div>
         <div className="model-txt">Choose an entry amount</div>
 
-        <div className="grid grid-cols-3 ml-24 mt-4">
+        <div className="grid grid-cols-3 md:ml-24 ml-8 mt-4">
           {amountData.map((item, index) => (
             <button
               key={index}
@@ -214,7 +226,7 @@ const Model = ({
   function renderFindingMatch() {
     return (
       <div>
-        <div className="ml-[32%]">
+        <div className="ml-[18%] md:ml-[32%]">
           <button>
             <div
               className={`w-56  h-10  bg-black25    items-center justify-center`}
@@ -252,7 +264,7 @@ const Model = ({
   function renderFoundMatch() {
     return (
       <div>
-        <div className="ml-[32%]">
+        <div className="ml-[18%] md:ml-[32%]">
           <button>
             <div
               className={`w-56  h-10  bg-black25    items-center justify-center`}
@@ -350,8 +362,8 @@ const Model = ({
             </p>
           ) : null}
         </div>
-        <div className="flex max-h-[700px]">
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]">
+        <div className="flex max-h-[700px]  ">
+          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -363,7 +375,7 @@ const Model = ({
               <p className="userName-txt">{matchData.opponent_name}</p>
             </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -418,7 +430,7 @@ const Model = ({
           ) : null}
         </div>
         <div className="flex max-h-[700px]">
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -430,7 +442,7 @@ const Model = ({
               <p className="userName-txt">{matchData.opponent_name}</p>
             </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -468,7 +480,7 @@ const Model = ({
           </p>
         </div>
         <div className="flex max-h-[700px]">
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -480,7 +492,7 @@ const Model = ({
               <p className="userName-txt">{matchData.opponent_name}</p>
             </div>{" "}
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -669,7 +681,7 @@ const Model = ({
           {!["Free Play", "free play"].includes(
             CommonConstant?.FreePlayData?.amount
           ) && (
-            <p className="w-full h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-green ">
+            <p className="w-full md:h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-green ">
               {"$ " + amount + " has been added to your funds"}
             </p>
           )}
@@ -715,7 +727,7 @@ const Model = ({
           {!["Free Play", "free play"].includes(
             CommonConstant?.FreePlayData?.amount
           ) && (
-            <p className="w-full h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-red">
+            <p className="w-full md:h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-red">
               {"$ " + amount + " has been deducted from your funds"}
             </p>
           )}

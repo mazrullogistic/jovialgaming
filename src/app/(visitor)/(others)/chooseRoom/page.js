@@ -51,8 +51,9 @@ const ChooseRoom = () => {
       items: 2,
     },
     mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
+      // screens smaller than 768px
+      breakpoint: { max: 768, min: 0 },
+      items: 1, // Show one item at a time on mobile
     },
   };
 
@@ -121,7 +122,25 @@ const ChooseRoom = () => {
     removeData("user");
     router.replace(PATH_AUTH.login);
   };
+  const [isMobile, setIsMobile] = useState(false);
 
+  useEffect(() => {
+    // Function to check if the screen is mobile
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint as per your design
+    };
+
+    // Set initial value
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   // console.log("isLoader", isLoader);
   return (
     <div>
@@ -129,38 +148,72 @@ const ChooseRoom = () => {
         <Loader />
       ) : (
         <div className="h-screen bg-black06">
-          <button className="btn-logout" onClick={logOut}>
+          <button
+            className="w-[100px] sm:w-[100px] h-[40px] ml-0 sm:ml-[92%] mt-6 text-center border-[1px] rounded-full text-black06 font-inter_tight bg-yellow"
+            onClick={logOut}
+          >
             Log out
           </button>
 
-          <p className="bold-txt-room">CHOOSE A ROOM.</p>
-          <div className="room-carousel  ">
-            <Carousel
-              responsive={responsive}
-              itemClass="carousel-item-padding-40-px"
-              containerClass="ml-4 mt-4"
-              showDots={false}
-              renderDotsOutside={true}
-            >
-              {tournamentData.map((item) => {
-                return (
-                  <button onClick={selectRoomApi(item)}>
+          <p className="text-[32px] sm:text-[82px] text-white font-inter_tight font-[700] pt-6 sm:pt-12 w-full text-center">
+            CHOOSE A ROOM.
+          </p>
+          {isMobile ? (
+            <div className="room-carousel">
+              <Carousel
+                responsive={responsive}
+                itemClass="carousel-item-padding-40-px"
+                containerClass="ml-4 mt-4"
+                showDots={true}
+                renderDotsOutside={true}
+              >
+                {tournamentData.map((item, index) => (
+                  <button
+                    key={index}
+                    onClick={() => selectRoomApi(item)}
+                    className="relative"
+                  >
                     <Image
                       src={item.image}
-                      layout="fill"
-                      className="rounded-3xl"
-                    ></Image>
+                      layout="responsive"
+                      width={400}
+                      height={400}
+                      className="rounded-3xl object-cover"
+                      alt={`Room ${index + 1}`}
+                    />
+                  </button>
+                ))}
+              </Carousel>
+            </div>
+          ) : (
+            <div className="room-carousel  ">
+              <Carousel
+                responsive={responsive}
+                itemClass="carousel-item-padding-40-px"
+                containerClass="ml-4 mt-4"
+                showDots={false}
+                renderDotsOutside={true}
+              >
+                {tournamentData.map((item) => {
+                  return (
+                    <button onClick={selectRoomApi(item)}>
+                      <Image
+                        src={item.image}
+                        layout="fill"
+                        className="rounded-3xl"
+                      ></Image>
 
-                    {/* <img
+                      {/* <img
                       className="h-148 w-124 mt-6"
                       src={item.image}
                       alt="Sender's Profile Picture"
                     /> */}
-                  </button>
-                );
-              })}
-            </Carousel>
-          </div>
+                    </button>
+                  );
+                })}
+              </Carousel>
+            </div>
+          )}
         </div>
       )}
     </div>

@@ -141,7 +141,25 @@ const HomePage = ({ Component, pageProps }) => {
       });
     }
   };
+  const [isMobile, setIsMobile] = useState(false);
 
+  useEffect(() => {
+    // Function to check if the screen is mobile
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint as per your design
+    };
+
+    // Set initial value
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   useEffect(() => {
     const requestPermission = async () => {
       try {
@@ -459,7 +477,6 @@ const HomePage = ({ Component, pageProps }) => {
       if (res.payload.status) {
         setGameWinLoss(res.payload.data.data);
         setScoreBoardModel(true);
-        setScoreBoardModel(true);
         setIsLoader(false);
       } else {
         setIsLoader(false);
@@ -532,7 +549,7 @@ const HomePage = ({ Component, pageProps }) => {
 
   function ScoreBoard() {
     return (
-      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[50%]">
+      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[80%] md:w-[50%]">
         <div className="bg-black p-4 rounded-lg shadow-lg  ">
           <ul className="list-none space-y-2">
             {gameWinLoss.map((game, index) => (
@@ -559,7 +576,7 @@ const HomePage = ({ Component, pageProps }) => {
   }
   function BCBoard() {
     return (
-      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[25%]">
+      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[85%] md:w-[25%]">
         <span className="text-[22px]  font-[400] pl-4">{"Badges"}</span>
 
         <div className="bg-black p-4 rounded-lg shadow-lg  ">
@@ -585,7 +602,7 @@ const HomePage = ({ Component, pageProps }) => {
   }
   function TWBoard() {
     return (
-      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[25%]">
+      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[75%] md:w-[25%]">
         <span className="text-[22px]  font-[400] pl-4">
           {"Tournament Wins"}
         </span>
@@ -613,7 +630,7 @@ const HomePage = ({ Component, pageProps }) => {
   }
   function SeasonModel() {
     return (
-      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[25%]">
+      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[80%] md:w-[25%]">
         <span className="text-[22px]  font-[400] pl-4">{"Season"}</span>
 
         <div className="bg-black p-4 rounded-lg shadow-lg  ">
@@ -817,55 +834,112 @@ const HomePage = ({ Component, pageProps }) => {
               style={{ objectFit: "fill" }} // Ensures the image is properly cropped to fill
             />
 
-            <div className="flex mt-4">
-              <div className="bg-black25 w-16 sm:w-20 rounded-3xl h-6 sm:h-8 flex items-center justify-center mt-2 ml-2 sm:ml-4 relative">
-                <select
-                  className="bg-black25 text-white text-[10px] sm:text-[12px] text-center rounded-3xl h-full px-2 appearance-none pr-6" // Add `appearance-none` and padding-right for space
-                  onChange={handleChangeConsole}
-                  style={{
-                    WebkitAppearance: "none",
-                    MozAppearance: "none",
-                    appearance: "none",
-                  }}
-                >
-                  {consoleList.map((option, index) => (
-                    <option key={index} value={JSON.stringify(option)}>
-                      {option.consolename}
-                    </option>
-                  ))}
-                </select>
+            {isMobile ? (
+              <div className="flex flex-row mt-4 gap-4 ml-4">
+                {/* Console Dropdown */}
+                <div className="bg-black25 w-full sm:w-20 rounded-3xl h-8 flex items-center justify-center relative">
+                  <select
+                    className="bg-black25 text-white text-[12px] text-center rounded-3xl h-full px-2 appearance-none pr-6 w-full sm:w-auto"
+                    onChange={handleChangeConsole}
+                    style={{
+                      WebkitAppearance: "none",
+                      MozAppearance: "none",
+                      appearance: "none",
+                    }}
+                  >
+                    {consoleList.map((option, index) => (
+                      <option key={index} value={JSON.stringify(option)}>
+                        {option.consolename}
+                      </option>
+                    ))}
+                  </select>
 
-                {/* Custom arrow */}
-                <img
-                  className="absolute right-2 pointer-events-none"
-                  style={{
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    width: "0.6rem", // Adjust as needed for your design
-                    height: "1rem", // Adjust as needed for your design
+                  {/* Custom arrow */}
+                  <img
+                    className="absolute right-4 pointer-events-none"
+                    style={{
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      width: "0.6rem",
+                      height: "1rem",
+                    }}
+                    src="/images/arrowDown.svg"
+                    alt="Dropdown arrow"
+                  />
+                </div>
+
+                {/* Chat Button */}
+                <button
+                  onClick={() => {
+                    router.push(PATH_DASHBOARD.chat);
                   }}
-                  src="/images/arrowDown.svg"
-                  alt="Dropdown arrow"
-                />
-              </div>
-              <button
-                onClick={() => {
-                  router.push(PATH_DASHBOARD.chat);
-                }}
-                className="w-20 bg-black25 text-white text-[12px]  text-center   rounded-3xl ml-4 mt-2 h-8 "
-              >
-                Chat
-              </button>
-              <div className="w-20 bg-black25 text-white text-[12px]  text-center pt-[0.5%] rounded-3xl ml-4 mt-2 h-8 ">
-                <a
-                  target="_blank"
-                  href="https://discord.gg/CtVr3pAnqs"
-                  rel="noopener noreferrer"
+                  className="w-full sm:w-20 bg-black25 text-white text-[12px] text-center rounded-3xl h-8"
                 >
-                  Discord
-                </a>
+                  Chat
+                </button>
+
+                {/* Discord Button */}
+                <div className="w-full sm:w-20 bg-black25 text-white text-[12px] text-center rounded-3xl h-8 flex items-center justify-center">
+                  <a
+                    target="_blank"
+                    href="https://discord.gg/CtVr3pAnqs"
+                    rel="noopener noreferrer"
+                  >
+                    Discord
+                  </a>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="flex mt-4">
+                <div className="bg-black25 w-16 sm:w-20 rounded-3xl h-6 sm:h-8 flex items-center justify-center mt-2 ml-2 sm:ml-4 relative">
+                  <select
+                    className="bg-black25 text-white text-[10px] sm:text-[12px] text-center rounded-3xl h-full px-2 appearance-none pr-6" // Add `appearance-none` and padding-right for space
+                    onChange={handleChangeConsole}
+                    style={{
+                      WebkitAppearance: "none",
+                      MozAppearance: "none",
+                      appearance: "none",
+                    }}
+                  >
+                    {consoleList.map((option, index) => (
+                      <option key={index} value={JSON.stringify(option)}>
+                        {option.consolename}
+                      </option>
+                    ))}
+                  </select>
+
+                  {/* Custom arrow */}
+                  <img
+                    className="absolute right-2 pointer-events-none"
+                    style={{
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      width: "0.6rem", // Adjust as needed for your design
+                      height: "1rem", // Adjust as needed for your design
+                    }}
+                    src="/images/arrowDown.svg"
+                    alt="Dropdown arrow"
+                  />
+                </div>
+                <button
+                  onClick={() => {
+                    router.push(PATH_DASHBOARD.chat);
+                  }}
+                  className="w-20 bg-black25 text-white text-[12px]  text-center   rounded-3xl ml-4 mt-2 h-8 "
+                >
+                  Chat
+                </button>
+                <div className="w-full sm:w-20 bg-black25 text-white text-[12px] text-center rounded-3xl h-8 ml-4 mt-2 flex items-center justify-center">
+                  <a
+                    target="_blank"
+                    href="https://discord.gg/CtVr3pAnqs"
+                    rel="noopener noreferrer"
+                  >
+                    Discord
+                  </a>
+                </div>
+              </div>
+            )}
             <div>
               <select
                 className={` text-[22px] mb-2 h-12 text-white bg-black06 ml-6 mt-6 outline-none font-[600] ${

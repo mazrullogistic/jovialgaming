@@ -24,6 +24,16 @@ module.exports = {
       red: "#FF0000",
       yellow: "#e6d500",
       grayA4: "#a4a4a4",
+      black06: "#1E1E1E",
+      dark: "#121212",
+      gray: {
+        700: "#374151",
+        500: "#A0A0A0",
+      },
+      blue: {
+        500: "#3B82F6",
+        300: "#60A5FA",
+      },
     },
     async rewrites() {
       return [
