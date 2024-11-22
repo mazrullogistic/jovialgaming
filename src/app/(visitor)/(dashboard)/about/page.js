@@ -176,19 +176,19 @@ const About = () => {
           </header>
 
           {/* List items */}
-          <ul className="text-[22px]  flex flex-col items-center m-52">
-            <li className="p-4 w-full text-center">
+          <ul className="text-[16px] sm:text-[22px] flex flex-col items-center m-8 sm:m-52">
+            <li className="p-2 sm:p-4 w-full text-center">
               <a
                 href="https://admin.jovialgaming.com/terms-of-service"
-                className="block"
+                className="block text-white hover:underline"
               >
                 Terms of Use
               </a>
             </li>
-            <li className=" text-[22px] p-4 w-full text-center">
+            <li className="text-[16px] sm:text-[22px] p-2 sm:p-4 w-full text-center">
               <a
                 href="https://admin.jovialgaming.com/privacy-policy"
-                className="block"
+                className="block text-white hover:underline"
               >
                 Privacy Policy
               </a>
