@@ -1,17 +1,41 @@
 import { getNotificationListAction } from "@/redux/dashboard/action";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 
 const NotificationDialog = ({ open, onClose }) => {
   if (!open) return null; // Don't render if the modal is not open
-
+  // const notifications = [
+  //   {
+  //     message: "Juswoo is ready to rumble. Get ready before you DQ",
+  //     time: "34m",
+  //     isNew: false,
+  //   },
+  //   { message: "Juswoo accepted your match", time: "1h", isNew: false },
+  //   { message: "Match has been found !", time: "2h", isNew: false },
+  //   { message: "Guti sent you a message", time: "4h", isNew: true },
+  //   { message: "Guti sent you a message", time: "4h", isNew: true },
+  //   { message: "Guti sent you a message", time: "4h", isNew: true },
+  //   { message: "Guti sent you a message", time: "4h", isNew: true },
+  //   { message: "Guti sent you a message", time: "4h", isNew: true },
+  //   { message: "Guti sent you a message", time: "4h", isNew: true },
+  //   { message: "Guti sent you a message", time: "4h", isNew: true },
+  //   { message: "Guti sent you a message", time: "4h", isNew: true },
+  //   { message: "Guti sent you a message", time: "4h", isNew: true },
+  //   { message: "Guti sent you a message", time: "4h", isNew: true },
+  // ];
   const [notifications, setNotifications] = useState([]);
   const dispatch = useDispatch();
   const [notificationTimes, setNotificationTimes] = useState({});
 
+  var time = "";
   useEffect(() => {
     getNotificationList();
+    console.log("res--> 43");
+
+    return () => {};
   }, []);
 
   useEffect(() => {
@@ -28,8 +52,8 @@ const NotificationDialog = ({ open, onClose }) => {
   }, [notifications]);
 
   const getTime = async (pastTimestamp) => {
-    const now = moment();
-    const past = moment(pastTimestamp);
+    const now = moment(); // current time
+    const past = moment(pastTimestamp); // moment instance of your timestamp
 
     const diffInMinutes = now.diff(past, "minutes");
     let finalTime = "";
@@ -50,6 +74,8 @@ const NotificationDialog = ({ open, onClose }) => {
   };
 
   const getNotificationList = async () => {
+    console.log("res--> 43");
+
     try {
       const object = {
         page: 1,
@@ -58,40 +84,49 @@ const NotificationDialog = ({ open, onClose }) => {
 
       const res = await dispatch(getNotificationListAction(object));
 
+      console.log("res--> 43", res.payload.data);
+
       if (res) {
         setNotifications(res.payload.data.data);
+        // setRoomID("roomId", "");
+        //toaster(res.payload.message, TOAST_TYPES.SUCCESS);
+      } else {
+        console.log("res--> 133");
       }
-    } catch (error) {
-      console.error("Error fetching notifications:", error);
-    }
+    } catch (error) {}
   };
-
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start z-50"
-      onClick={onClose} // Close modal on overlay click
+      className="fixed left-0 top-0 bottom-0 bg-black bg-opacity-50 flex justify-center items-start z-50 md:w-[30%]"
+      onMouseLeave={() => onClose()}
     >
-      <div
-        className="bg-black26 text-white rounded-lg w-full md:w-[30%] max-w-md h-full md:h-auto overflow-y-auto p-4"
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
-      >
-        <h2 className="text-lg font-bold mb-4">Notifications</h2>
-        {notifications.length > 0 ? (
-          notifications.map((notification, index) => (
-            <div key={index} className="mb-4 last:mb-0">
-              <div className="flex items-start">
-                <div className="flex-1">
-                  <p className="text-sm">{notification.message}</p>
-                  <span className="text-xs text-gray82">
-                    {notificationTimes[notification.createdAt]}
-                  </span>
-                </div>
+      <div className="bg-black26 text-white rounded-lg w-full h-full overflow-y-auto p-4">
+        <div>
+          <button
+            className="absolute top-4 right-4 text-gray-300 hover:text-gray-500 block md:hidden"
+            onClick={onClose}
+          >
+            ✕
+          </button>
+          <h2 className="text-[20px] sm:text-[20px] lg:text-[28px] font-bold mb-2 sm:mb-4 text-center sm:text-left mt-4">
+            Notifications
+          </h2>
+        </div>
+        {notifications.map((notification, index) => (
+          <div key={index} className="mb-4 last:mb-0">
+            <div className="flex items-start">
+              {/* {notification.isNew && (
+                <div className="w-2 h-2 bg-white rounded-full mt-2 mr-2" />
+              )} */}
+              <div className="flex-1">
+                <p className="text-sm">{notification.message}</p>
+                <span className="text-xs text-gray82">
+                  {notificationTimes[notification.createdAt]}
+                </span>
               </div>
             </div>
-          ))
-        ) : (
-          <p className="text-sm text-center">No notifications available</p>
-        )}
+          </div>
+        ))}
       </div>
     </div>
   );
