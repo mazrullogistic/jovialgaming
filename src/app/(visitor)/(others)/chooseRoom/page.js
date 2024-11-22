@@ -147,7 +147,7 @@ const ChooseRoom = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="h-screen bg-black06">
+        <div className={`${isMobile ? "h-auto" : "h-screen"} bg-black06`}>
           <button
             className="w-[100px] sm:w-[100px] h-[40px] ml-0 sm:ml-[92%] mt-6 text-center border-[1px] rounded-full text-black06 font-inter_tight bg-yellow"
             onClick={logOut}
@@ -159,31 +159,23 @@ const ChooseRoom = () => {
             CHOOSE A ROOM.
           </p>
           {isMobile ? (
-            <div className="room-carousel">
-              <Carousel
-                responsive={responsive}
-                itemClass="carousel-item-padding-40-px"
-                containerClass="ml-4 mt-4"
-                showDots={true}
-                renderDotsOutside={true}
-              >
-                {tournamentData.map((item, index) => (
-                  <button
-                    key={index}
-                    onClick={() => selectRoomApi(item)}
-                    className="relative"
-                  >
-                    <Image
-                      src={item.image}
-                      layout="responsive"
-                      width={400}
-                      height={400}
-                      className="rounded-3xl object-cover"
-                      alt={`Room ${index + 1}`}
-                    />
-                  </button>
-                ))}
-              </Carousel>
+            <div className="room-grid grid gap-4 grid-cols-2 p-4">
+              {tournamentData.map((item, index) => (
+                <button
+                  key={index}
+                  onClick={selectRoomApi(item)}
+                  className="relative"
+                >
+                  <Image
+                    src={item.image}
+                    layout="intrinsic" // Use fixed dimensions
+                    width={200} // Smaller width
+                    height={200} // Smaller height
+                    className="rounded-3xl object-cover"
+                    alt={`Room ${index + 1}`}
+                  />
+                </button>
+              ))}
             </div>
           ) : (
             <div className="room-carousel  ">

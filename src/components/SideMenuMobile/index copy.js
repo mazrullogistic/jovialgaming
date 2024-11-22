@@ -49,7 +49,7 @@ export default function SideMenu({ children }) {
 
       if (res.payload.status) {
         setRoomID("roomId", "");
-        router.replace("/choose-room");
+        router.replace("/chooseRoom");
         toast.success(res.payload.message);
       } else {
         toast.error(res.payload.message);
