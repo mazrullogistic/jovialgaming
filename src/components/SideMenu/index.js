@@ -158,7 +158,7 @@ export default function SideMenu({ children }) {
             />
             <button
               onClick={() => router.push("/profileCard")}
-              className="flex items-center ml-6"
+              className="flex items-center ml-6 mt-4"
             >
               <img
                 src={userDataNew?.data?.image}
