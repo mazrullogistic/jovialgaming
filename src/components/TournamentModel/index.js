@@ -215,7 +215,7 @@ const TournamentModel = ({
   function renderFindingMatch() {
     return (
       <div>
-        <div className="ml-[32%]">
+        <div className="ml-[32%] h-72">
           <button>
             <div
               className={`w-56  h-10  bg-black25    items-center justify-center`}
@@ -253,7 +253,7 @@ const TournamentModel = ({
   function renderFoundMatch() {
     return (
       <div>
-        <div className="ml-[32%]">
+        <div className="ml-[32%] h-72">
           <button>
             <div
               className={`w-56  h-10  bg-black25    items-center justify-center`}
@@ -354,7 +354,7 @@ const TournamentModel = ({
           ) : null}
         </div>
         <div className="flex max-h-[700px]">
-          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] pl-[5%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -366,7 +366,7 @@ const TournamentModel = ({
               <p className="userName-txt">{gameDetails?.opponent_name}</p>
             </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] md:pt-[42%] pt-[102%]  max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%]   max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -421,7 +421,7 @@ const TournamentModel = ({
           ) : null}
         </div>
         <div className="flex max-h-[700px]">
-          <div className="w-[50%] bg-gray69 h-screen md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] pl-[5%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -433,7 +433,7 @@ const TournamentModel = ({
               <p className="userName-txt">{matchData.opponent_name}</p>
             </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%]   max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -471,7 +471,7 @@ const TournamentModel = ({
           <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2 "></p>
         </div>
         <div className="flex max-h-[700px]">
-          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] pl-[5%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -481,9 +481,9 @@ const TournamentModel = ({
             </div>
             <div className="w-32">
               <p className="userName-txt">{gameDetails?.opponent_name}</p>
-            </div>{" "}
+            </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%]   max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"

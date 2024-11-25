@@ -13,6 +13,8 @@ import Loader from "@/components/Loader";
 import EventEmitter from "@/components/EventEmitter";
 import {
   availableMatchJoinAction,
+  deleteMatchAction,
+  fPDeleteMatchAction,
   freeAvailableMatchJoinAction,
   freePlayMatchResultAction,
   freePlaySubmitScoreAction,
@@ -770,6 +772,55 @@ const CreateGame = () => {
     }
   }
 
+  const handleDelete = async (item) => {
+    console.log("item", item);
+
+    if (item.amount == "free play" || item.amount == "Free Play") {
+      if (item) {
+        try {
+          const user = getData("user");
+
+          const payload = new FormData();
+          payload.append("game_type", item.ismultipleuser);
+          payload.append("matchCommonId", item.matchCommonId);
+
+          const { payload: res } = await dispatch(fPDeleteMatchAction(payload));
+          const { data, status, message } = res;
+          getCurrentMatches();
+          console.log("data", res);
+          toast.success(message);
+
+          if (status) {
+          } else {
+            toast.error(TOAST_ALERTS.OPPONENT_NOT_READY);
+          }
+        } catch (error) {
+          toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+        }
+      }
+    } else {
+      if (item) {
+        try {
+          const user = getData("user");
+
+          const payload = new FormData();
+          payload.append("game_type", item.ismultipleuser);
+          payload.append("matchCommonId", item.matchCommonId);
+
+          const { payload: res } = await dispatch(deleteMatchAction(payload));
+          const { data, status, message } = res;
+          getCurrentMatches();
+          console.log("data", data);
+          if (status) {
+          } else {
+            toast.error(TOAST_ALERTS.OPPONENT_NOT_READY);
+          }
+        } catch (error) {
+          toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+        }
+      }
+    }
+  };
   const onClickAddItem = () => {
     setSelectedModelIndex(1);
 
@@ -860,25 +911,39 @@ const CreateGame = () => {
               >
                 {currentMatchData.map((item) => {
                   return (
-                    <div className="  w-64       bg-black25 rounded-2xl pt-[1px]">
+                    <div className="relative w-64 bg-black25 rounded-2xl pt-[1px]">
+                      {/* Delete Icon */}
+                      <button
+                        className="absolute top-2 right-2 p-1 bg-red-500 rounded-full hover:bg-red-600"
+                        onClick={() => handleDelete(item)} // Replace with your delete function
+                      >
+                        <Image
+                          src="/images/delete.svg" // Replace with your delete icon path
+                          width={20}
+                          height={20}
+                          alt="Delete"
+                        />
+                      </button>
+
+                      {/* Card Content */}
                       <div className="mt-[5%]">
                         <div className="flex">
                           <Image
                             src={item.game_image}
-                            className="h-[40px] w-[40px] rounded-full  ml-4"
+                            className="h-[40px] w-[40px] rounded-full ml-4"
                             width={40}
                             height={40}
+                            alt={item.gamename}
                           />
-                          <p className="text-[18px] text-white  font-inter_tight font-[600] ml-14 mt-2  ">
+                          <p className="text-[18px] text-white font-inter_tight font-[600] ml-14 mt-2">
                             {item.amount}
                           </p>
                         </div>
                         <p className="avl-txt">{item.gamename}</p>
-
                         <p className="avl-txt">{item.gameModeName}</p>
                         <div className="center-container">
                           <button
-                            className=" w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4"
+                            className="w-[80px] h-[35px] text-center border-[1px] rounded-full text-black06 font-inter_tight bg-yellow mb-4 mt-4"
                             onClick={() => {
                               CommonConstant.SelectedMatchData = item;
                               setIsDataShow(!isDataShow);

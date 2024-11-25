@@ -84,7 +84,8 @@ export const API_ROUTER = {
   NOTIFICATION_LIST: "/notification/get-notification",
   GET_USER_POINT: "/user/get-user-points",
   GET_BADGE_USER_LIST: "/get-earn-badges-user-list",
-
+  DELETE_MATCH: "/matchrequests/delete-match",
+  FP_DELETE_MATCH: "/freeplaymatch/delete-match",
   //
 
   FREE_PLAY_MATCH_REQUEST_CREATE: "/freeplaymatch/create",

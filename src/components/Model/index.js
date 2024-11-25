@@ -226,7 +226,7 @@ const Model = ({
   function renderFindingMatch() {
     return (
       <div>
-        <div className="ml-[18%] md:ml-[32%]">
+        <div className="ml-[18%] md:ml-[32%] h-72">
           <button>
             <div
               className={`w-56  h-10  bg-black25    items-center justify-center`}
@@ -264,7 +264,7 @@ const Model = ({
   function renderFoundMatch() {
     return (
       <div>
-        <div className="ml-[18%] md:ml-[32%]">
+        <div className="ml-[18%] md:ml-[32%] h-72">
           <button>
             <div
               className={`w-56  h-10  bg-black25    items-center justify-center`}
@@ -363,7 +363,7 @@ const Model = ({
           ) : null}
         </div>
         <div className="flex max-h-[700px]  ">
-          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] pl-[5%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -375,7 +375,7 @@ const Model = ({
               <p className="userName-txt">{matchData.opponent_name}</p>
             </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%]   max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -430,7 +430,7 @@ const Model = ({
           ) : null}
         </div>
         <div className="flex max-h-[700px]">
-          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] pl-[5%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -442,7 +442,7 @@ const Model = ({
               <p className="userName-txt">{matchData.opponent_name}</p>
             </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%]   max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -480,7 +480,7 @@ const Model = ({
           </p>
         </div>
         <div className="flex max-h-[700px]">
-          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] pl-[5%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -490,9 +490,9 @@ const Model = ({
             </div>
             <div className="w-32">
               <p className="userName-txt">{matchData.opponent_name}</p>
-            </div>{" "}
+            </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%]   max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"

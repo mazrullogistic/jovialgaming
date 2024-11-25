@@ -47,11 +47,6 @@ const Timer = () => {
 
   const [showAlert, setShowAlert] = useState(false);
 
-  //new
-  const [dataList, setConsoleList] = useState([
-    { name: "Rules", value: "Rules" },
-    { name: "Prizes", value: "Prizes" },
-  ]);
   const [dropDownValue, setDropDownValue] = useState("Rules");
   var tournamentNewData = getTournamentId("id");
   const [IsMember, setIsMember] = useState(false);

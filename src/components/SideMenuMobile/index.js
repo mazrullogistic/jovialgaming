@@ -129,14 +129,14 @@ export default function SideMenu({ children }) {
               menuOpen ? "translate-x-0" : "-translate-x-full"
             } md:translate-x-0 z-50 w-3/4 md:w-[16%] h-screen overflow-y-auto border-b-2 md:border-b-0 md:border-r-2 border-[#474747]`}
           >
+            <Image
+              src="/images/logo.png"
+              alt="Logo"
+              width={45}
+              height={45}
+              className="logo-img"
+            />
             <div className="flex items-center p-4">
-              <Image
-                src="/images/logo.png"
-                alt="Logo"
-                width={45}
-                height={45}
-                className="logo-img"
-              />
               <button
                 onClick={() => router.push("/profileCard")}
                 className="ml-4 flex items-center"

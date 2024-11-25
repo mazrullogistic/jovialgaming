@@ -184,6 +184,12 @@ export const GetProfileData = (data) => {
 export const GetBadgesData = (data) => {
   return axiosPost(API_ROUTER.GET_BADGES, data);
 };
+export const DeleteMatch = (data) => {
+  return axiosPost(API_ROUTER.DELETE_MATCH, data);
+};
+export const FPDeleteMatch = (data) => {
+  return axiosPost(API_ROUTER.FP_DELETE_MATCH, data);
+};
 export const AddSubscriptionData = (data) => {
   return axiosPost(API_ROUTER.PAYPAL_SUBSCRIPTION_ADD, data);
 };

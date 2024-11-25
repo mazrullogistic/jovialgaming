@@ -828,10 +828,9 @@ const HomePage = ({ Component, pageProps }) => {
               src={user?.roomDetails?.image}
               width={400} // Adjust as needed for your design
               height={300} // Adjust as needed for your design
-              className="w-[70%] h-auto max-h-[380px] ml-4 rounded-xl mt-2 object-cover bg-gray30"
+              className="w-[93%] h-auto max-h-[430px] ml-4 rounded-xl mt-2 object-center bg-gray30"
               // Adjust as needed for your design
               alt="Room Details"
-              style={{ objectFit: "fill" }} // Ensures the image is properly cropped to fill
             />
 
             {isMobile ? (
@@ -944,10 +943,10 @@ const HomePage = ({ Component, pageProps }) => {
               <select
                 className={` text-[22px] mb-2 h-12 text-white bg-black06 ml-6 mt-6 outline-none font-[600] ${
                   dropDownSelection == "Available"
-                    ? "w-[130px]"
+                    ? "w-[150px] md:w-[130px]"
                     : dropDownSelection == "My Matches"
-                    ? "w-[160px]"
-                    : "w-[210px]"
+                    ? "w-[180px] md:w-[160px]"
+                    : "w-[240px] md:w-[210px]"
                 }`}
                 onChange={handleChange}
               >
@@ -1250,7 +1249,12 @@ const HomePage = ({ Component, pageProps }) => {
                         {post?.userData?.image ? (
                           <Image
                             className="rounded-full"
-                            src={post?.userData?.image}
+                            src={
+                              post.userData.image.startsWith("http") ||
+                              post.userData.image.startsWith("/")
+                                ? post.userData.image
+                                : `/images/logo.png` // Fallback for invalid image paths
+                            }
                             layout="fill"
                           ></Image>
                         ) : null}

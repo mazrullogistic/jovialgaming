@@ -86,6 +86,8 @@ import {
   addDeviceTokenAction,
   getNotificationListAction,
   getBadgeUserListAction,
+  deleteMatchAction,
+  fPDeleteMatchAction,
 } from "./action";
 import { updateProfileAction } from "../Auth/action";
 import { WithdrawAmount } from "./services";
@@ -407,6 +409,28 @@ const DashboardSlice = createSlice({
         state.error = null;
       })
       .addCase(updateReadyStatusAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(deleteMatchAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteMatchAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(deleteMatchAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(fPDeleteMatchAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fPDeleteMatchAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(fPDeleteMatchAction.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || "Error fetching user data";
       })

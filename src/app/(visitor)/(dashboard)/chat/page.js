@@ -574,7 +574,7 @@ const Chat = () => {
           </div>
 
           {/* Footer (Input Section) */}
-          <footer className="bg-gray-800 text-black25 fixed bottom-0 left-[16%] right-0">
+          <footer className="bg-gray-800 text-black25 fixed bottom-0 md:left-[16%] right-0">
             {selectedVideoUrl && (
               <div className="relative flex items-center justify-center p-4 bg-black25 rounded-lg mx-4 mb-2">
                 <video
@@ -631,7 +631,7 @@ const Chat = () => {
                 </button>
               </div>
             )}
-            <div className="flex-none bg-black25">
+            <div className="flex-none md:bg-black25 bg-black06">
               <div className="flex items-center space-x-4 p-4 mx-auto">
                 <button
                   type="button"

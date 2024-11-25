@@ -124,13 +124,13 @@ const Tournament = () => {
           <div class="rounded-xl h-[264px] w-[384px] bg-gray-300 flex items-center justify-center ml-12 pt-12">
             <img
               class="rounded-xl h-full w-full object-cover"
-              src={tournamentNewData.image}
+              src={tournamentNewData?.image}
               alt="Profile Picture"
             />
           </div>
 
           <select
-            className=" bg-black06 text-white text-[22px]   w-24  h-8  ml-12 mt-12 "
+            className=" bg-black06 text-white text-[22px]  w-28 md:w-24  h-8  ml-12 mt-12 "
             onChange={handleChange}
           >
             {dataList.map((option, index) => (
@@ -148,14 +148,14 @@ const Tournament = () => {
           ) : (
             <div>
               <p className="text-[16px] text-white  font-inter_tight font-[200] ml-12 mt-8 w-[50%]">
-                {tournamentNewData.tournament_price !== 0
-                  ? "1. " + tournamentNewData.tournament_price
+                {tournamentNewData?.tournament_price !== 0
+                  ? "1. " + tournamentNewData?.tournament_price
                   : "No winning Amount"}
               </p>
               <p className="text-[16px] text-white  font-inter_tight font-[200] ml-12 mt-8 w-[50%]">
-                {tournamentNewData.badgename !== "" &&
-                tournamentNewData.badgename !== null
-                  ? "2. " + tournamentNewData.badgename
+                {tournamentNewData?.badgename !== "" &&
+                tournamentNewData?.badgename !== null
+                  ? "2. " + tournamentNewData?.badgename
                   : "No Winning Badge"}
               </p>{" "}
             </div>

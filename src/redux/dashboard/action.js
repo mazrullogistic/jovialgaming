@@ -5,7 +5,9 @@ import {
   AddSubscriptionData,
   AvailableMatchJoin,
   CreateDisputes,
+  DeleteMatch,
   DisputesList,
+  FPDeleteMatch,
   FreeAvailableMatchJoin,
   FreePlayMatchReqUpdate,
   FreePlayMatchResult,
@@ -146,6 +148,38 @@ export const getCurrentMatchesAction = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const { data, status } = await GetCurrentMatches(payload);
+      return data;
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const deleteMatchAction = createAsyncThunk(
+  "dashboardSlice/deleteMatchAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await DeleteMatch(payload);
+      return data;
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const fPDeleteMatchAction = createAsyncThunk(
+  "dashboardSlice/fPDeleteMatchAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await FPDeleteMatch(payload);
       return data;
     } catch (err) {
       console.log("🚀 ~ err:", err);

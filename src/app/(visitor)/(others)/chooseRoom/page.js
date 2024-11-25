@@ -161,17 +161,15 @@ const ChooseRoom = () => {
           {isMobile ? (
             <div className="room-grid grid gap-4 grid-cols-2 p-4">
               {tournamentData.map((item, index) => (
-                <button
-                  key={index}
-                  onClick={selectRoomApi(item)}
-                  className="relative"
-                >
-                  <Image
+                <button key={index} onClick={selectRoomApi(item)}>
+                  <img
                     src={item.image}
-                    layout="intrinsic" // Use fixed dimensions
-                    width={200} // Smaller width
-                    height={200} // Smaller height
-                    className="rounded-3xl object-cover"
+                    className="rounded-3xl  "
+                    style={{
+                      width: "200px", // Set a fixed width
+                      height: "120px", // Set a fixed height
+                      objectFit: "cover", // Ensures the image covers the area while maintaining aspect ratio
+                    }}
                     alt={`Room ${index + 1}`}
                   />
                 </button>

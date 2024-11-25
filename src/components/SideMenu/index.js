@@ -158,22 +158,25 @@ export default function SideMenu({ children }) {
             />
             <button
               onClick={() => router.push("/profileCard")}
-              className="flex items-center ml-6 mt-4"
+              className="flex flex-col md:flex-row items-center p-4 space-y-4 md:space-y-0 md:space-x-4"
             >
-              <img
-                src={userDataNew?.data?.image}
-                alt="Profile"
-                className="w-20 h-20 rounded-full object-cover"
-              />
-              <div className="ml-6 text-white mt-8">
-                <p className="text-lg font-semibold">
+              <div className="flex-shrink-0">
+                <img
+                  src={userDataNew?.data?.image}
+                  alt="Profile"
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover max-w-full"
+                />
+              </div>
+              <div className="text-white text-center md:text-left">
+                <p className="text-base md:text-lg font-semibold">
                   {userDataNew?.data?.username}
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-xs md:text-sm text-gray-500">
                   ${userDataNew?.data?.balance}
                 </p>
               </div>
             </button>
+
             <aside className="bg-fuchsia-100 w-full md:w-60">
               <nav>
                 <ul className="flex md:flex-col justify-between w-full">
