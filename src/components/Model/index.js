@@ -623,7 +623,7 @@ const Model = ({
                   {/* {matchData.opponent_score_count} */}
                 </p>
               </div>
-              <div className="  flex flex-col items-center justify-center w-[50%]">
+              <div className="  flex flex-col items-center justify-center w-[60%]">
                 <div className="rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center border-white border-2">
                   <img
                     className="rounded-full h-full w-full object-cover"
@@ -653,7 +653,7 @@ const Model = ({
               </p>
             ) : (
               <button
-                className="btn-accept-rules mt-6"
+                className="    w-[140px]  text-center border-[1px] rounded-xl   text-black06 font-inter_tight bg-yellow mb-2 p-2 mt-2"
                 onClick={() => {
                   submitScoreApi(scoreText);
                 }}

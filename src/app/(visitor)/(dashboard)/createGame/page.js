@@ -210,7 +210,7 @@ const CreateGame = () => {
         if (create) {
           setIsModelShow(true);
         } else {
-          setIsModelShow(false);
+          //setIsModelShow(false);
         }
         setIsLoader(false);
         //toaster(res.payload.message, TOAST_TYPES.SUCCESS);
