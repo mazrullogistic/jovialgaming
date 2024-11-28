@@ -50,6 +50,7 @@ export const EmitterKey = {
   DeclineMatch: "DeclineMatch",
   TimerStart: "TimerStart",
   ReadySuccess: "ReadySuccess",
+  profile: "profile",
   ScoreWaitingTimer: "ScoreWaitingTimer",
   ReadyTimerStop: "ReadyTimerStop",
   AfterSubmit: "AfterSubmit",

@@ -6,9 +6,10 @@ import { getData } from "@/utils/storage";
 import { useRouter } from "next/navigation";
 import { PATH_DASHBOARD } from "@/routes/paths";
 import Loader from "../Loader";
-import { CommonConstant } from "@/constants/keywords";
+import { CommonConstant, EmitterKey } from "@/constants/keywords";
 import socket from "@/socket/socket";
 import { toast } from "react-toastify";
+import EventEmitter from "@/components/EventEmitter";
 
 const Model = ({
   amountData,
@@ -225,27 +226,31 @@ const Model = ({
   }
   function renderFindingMatch() {
     return (
-      <div>
-        <div className="ml-[18%] md:ml-[32%] h-72">
-          <button>
-            <div
-              className={`w-56  h-10  bg-black25    items-center justify-center`}
-            >
-              <div className="flex justify-center items-center">
-                <img src="/images/dollar.svg" className="h-[125px] w-[125px]" />
+      <div className="flex justify-center items-center h-full">
+        <div className="w-full max-w-[56rem] p-4">
+          <button className="w-full">
+            <div className="w-full bg-black25 p-4 flex flex-col justify-center items-center rounded-md">
+              <div className="flex justify-center items-center mb-4">
+                <img
+                  src="/images/dollar.svg"
+                  className="h-[125px] w-[125px] md:h-[150px] md:w-[150px]"
+                />
               </div>
-              <div className="text-center text-white mt-[2.3%] text-[16px]  font-inter_tight  font-[200] animate-blink">
-                {"Finding a match ..."}{" "}
+
+              <div className="text-center text-white text-[16px] md:text-[18px] font-inter_tight font-[200] animate-blink mb-4">
+                {"Finding a match ..."}
               </div>
+
               <Image
                 src="/images/search.png"
-                className="ml-24 mt-6 mb-10"
+                className="mt-6 mb-4"
                 width={25}
                 height={25}
                 alt="Logo"
               />
+
               <button
-                className="btn-challenge "
+                className="btn-challenge w-full  mt-6 bg-blue-500 text-white rounded-md"
                 onClick={handleChangeSearching}
               >
                 {"Close"}
@@ -253,7 +258,6 @@ const Model = ({
             </div>
           </button>
         </div>
-        <div></div>
       </div>
     );
   }
@@ -627,11 +631,18 @@ const Model = ({
                 <p className="text-[16px] text-white font-inter_tight font-[300] text-center pt-2 w-[20%]">
                   {matchData.host_name}
                 </p>
-                <input
+                {/* <input
                   placeholder="Enter Score"
                   className="w-[30%] text-[14px]   h-8 mt-2    rounded-xl text-white bg-gray6E outline-none    pl-2"
                   onChange={(event) => {
                     console.log("test" + event.target.value);
+                    setScoreText(event.target.value);
+                  }}
+                /> */}
+                <input
+                  placeholder="Enter Score"
+                  className="w-[100px]       text-[14px] h-8 mt-2 rounded-xl text-white bg-gray82 outline-none pl-2"
+                  onChange={(event) => {
                     setScoreText(event.target.value);
                   }}
                 />
@@ -702,6 +713,7 @@ const Model = ({
             CommonConstant.CurrentGameDetails = "";
             CommonConstant.SelectedMatchData = "";
             // socket.stop();
+            EventEmitter.emit(EmitterKey.profile, "");
 
             route.replace(PATH_DASHBOARD.home);
           }}
@@ -743,6 +755,8 @@ const Model = ({
               CommonConstant.CurrentGameDetails = "";
               CommonConstant.SelectedMatchData = "";
               //socket.stop();
+              EventEmitter.emit(EmitterKey.profile, "");
+
               route.replace(PATH_DASHBOARD.home);
             }}
             className="w-[200px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight bg-grayA4  mt-16  "

@@ -1,5 +1,8 @@
 "use client";
-import { leaveRoomAction } from "@/redux/dashboard/action";
+import {
+  getProfileDataAction,
+  leaveRoomAction,
+} from "@/redux/dashboard/action";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -7,7 +10,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import useToaster from "@/hooks/useToaster";
-import { TOAST_ALERTS, TOAST_TYPES } from "@/constants/keywords";
+import { EmitterKey, TOAST_ALERTS, TOAST_TYPES } from "@/constants/keywords";
+import EventEmitter from "@/components/EventEmitter";
 
 import Loader from "@/components/Loader";
 import { PATH_AUTH, PATH_DASHBOARD } from "@/routes/paths";
@@ -25,6 +29,7 @@ export default function SideMenu({ children }) {
 
   const router = useRouter();
   const [selectedItem, setSelectedItem] = useState("Home"); // Initialize with null or some default value
+  const [profileData, setProfileData] = useState(null); // Initialize with null or some default value
 
   const dispatch = useDispatch();
   const { toaster } = useToaster();
@@ -35,7 +40,7 @@ export default function SideMenu({ children }) {
     // Only run this on the client side
     const storedUser = getData("user");
     dispatch(userData(storedUser));
-
+    getProfile();
     setUser(storedUser);
   }, []);
   // const isLoader = useSelector((state) => state.dashboardReducer.isLoading);
@@ -57,10 +62,31 @@ export default function SideMenu({ children }) {
       // You can add your custom logic here, such as navigating to a different page or showing a confirmation dialog
     }
   };
-
+  useEffect(() => {
+    EventEmitter.on(EmitterKey.profile, (res) => {
+      getProfile();
+    });
+  }, []);
   const logOut = async () => {
     removeData("user");
     router.replace(PATH_AUTH.login);
+  };
+  const getProfile = async () => {
+    try {
+      const storedUser = getData("user");
+
+      //const res = await dispatch(getGameByConsoleAction(param));
+      const res = await dispatch(getProfileDataAction(storedUser?.data?.id));
+      console.log("res.payload.data 72", res.payload.data);
+      if (res.payload.status) {
+        setProfileData(res.payload.data);
+      } else {
+        console.log("res--> 133");
+        setIsLoader(false);
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
   };
   const leaveRoomApi = async () => {
     setIsLoader(true);
@@ -172,7 +198,7 @@ export default function SideMenu({ children }) {
                   {userDataNew?.data?.username}
                 </p>
                 <p className="text-xs md:text-sm text-gray-500">
-                  ${userDataNew?.data?.balance}
+                  ${profileData?.data?.balance}
                 </p>
               </div>
             </button>
