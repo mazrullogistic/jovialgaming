@@ -785,7 +785,7 @@ const Model = ({
       )}
 
       {selectedModelIndex == 1
-        ? renderFoundMatch()
+        ? renderAmount()
         : selectedModelIndex == 2
         ? renderGameMode()
         : selectedModelIndex == 3
