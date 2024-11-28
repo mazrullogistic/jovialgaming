@@ -259,28 +259,29 @@ const Model = ({
   }
   function renderFoundMatch() {
     return (
-      <div>
-        <div className="ml-[18%] md:ml-[32%] h-72">
-          <button>
-            <div
-              className={`w-56  h-10  bg-black25    items-center justify-center`}
-            >
-              <div className="flex justify-center items-center">
-                <img src="/images/dollar.svg" className="h-[125px] w-[125px]" />
-              </div>
-              <div className="text-center text-white mt-[10%] text-[20px]  mb-4  font-inter_tight  font-[300]   ">
-                {"Found a match "}
-              </div>
-
-              <button className="btn-accept" onClick={onPressAccept}>
+      <div className="flex justify-center items-center">
+        <div className="w-full md:w-2/3 lg:w-1/3 xl:w-1/4 h-72">
+          <button className="w-full h-full bg-black25 flex flex-col justify-center items-center p-4">
+            <div className="flex justify-center items-center mb-4">
+              <img src="/images/dollar.svg" className="h-[125px] w-[125px]" />
+            </div>
+            <div className="text-center text-white mt-4 text-[20px] font-inter_tight font-[300]">
+              {"Found a match "}
+            </div>
+            <div className="flex justify-around mt-4">
+              <button
+                className="btn-accept bg-green-500 text-white rounded-md"
+                onClick={onPressAccept}
+              >
                 {"Accept"}
               </button>
-              <div>
-                <button className="btn-Decline" onClick={onPressDecline}>
-                  {"Decline"}
-                </button>
-              </div>
             </div>
+            <button
+              className="btn-Decline px-4 py-2 bg-red-500 text-white rounded-md"
+              onClick={onPressDecline}
+            >
+              {"Decline"}
+            </button>
           </button>
         </div>
       </div>
