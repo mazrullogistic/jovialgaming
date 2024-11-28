@@ -19,7 +19,7 @@ const start = () => {
   if (SocketKEY.socketConnect === null) {
     console.log("user.token", user);
     const headers = {
-      Authorization: `bearer ${user.token}`,
+      Authorization: `bearer ${user?.token}`,
     };
     if (!socketIO) {
       socketIO = sailsIOClient(socketIOClient);

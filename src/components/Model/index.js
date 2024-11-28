@@ -231,13 +231,9 @@ const Model = ({
             <div
               className={`w-56  h-10  bg-black25    items-center justify-center`}
             >
-              <Image
-                src="/images/dollar.svg"
-                className="ml-14"
-                width={125}
-                height={125}
-                alt="Logo"
-              />
+              <div className="flex justify-center items-center">
+                <img src="/images/dollar.svg" className="h-[125px] w-[125px]" />
+              </div>
               <div className="text-center text-white mt-[2.3%] text-[16px]  font-inter_tight  font-[200] animate-blink">
                 {"Finding a match ..."}{" "}
               </div>
@@ -269,13 +265,9 @@ const Model = ({
             <div
               className={`w-56  h-10  bg-black25    items-center justify-center`}
             >
-              <Image
-                src="/images/dollar.svg"
-                className="ml-14"
-                width={125}
-                height={125}
-                alt="Logo"
-              />
+              <div className="flex justify-center items-center">
+                <img src="/images/dollar.svg" className="h-[125px] w-[125px]" />
+              </div>
               <div className="text-center text-white mt-[10%] text-[20px]  mb-4  font-inter_tight  font-[300]   ">
                 {"Found a match "}
               </div>
@@ -793,7 +785,7 @@ const Model = ({
       )}
 
       {selectedModelIndex == 1
-        ? renderAmount()
+        ? renderFoundMatch()
         : selectedModelIndex == 2
         ? renderGameMode()
         : selectedModelIndex == 3

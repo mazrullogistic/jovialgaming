@@ -166,12 +166,15 @@ const HomePage = ({ Component, pageProps }) => {
         const token = await getToken(messaging, {
           vapidKey: process.env.V_API_KEY,
         });
+        console.log("token", token);
         if (token) {
           updateDeviceToken(token);
 
           // You can now send this token to your server to subscribe for notifications
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log("error", error);
+      }
     };
 
     requestPermission();
@@ -227,12 +230,14 @@ const HomePage = ({ Component, pageProps }) => {
   const updateDeviceToken = async (token) => {
     setIsLoader(true);
     const payload = new FormData();
+    console.log("payload", payload);
 
     try {
       payload.append("devicetype", "web");
       payload.append("devicetoken", token);
 
       const res = await dispatch(addDeviceTokenAction(payload));
+      console.log("res", res);
     } catch (error) {
       setIsLoader(false);
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
