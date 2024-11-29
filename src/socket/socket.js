@@ -100,13 +100,17 @@ const stop = () => {
 };
 
 const subscribeUser = async () => {
-  await socket.get(
-    "/api/v1/chat/subscribeuser1",
-    { id: user.data.id },
-    (body, JWR) => {
-      console.log("Subscribed user:", body, JWR);
-    }
-  );
+  try {
+    await socket.get(
+      "/api/v1/chat/subscribeuser1",
+      { id: user.data.id },
+      (body, JWR) => {
+        console.log("Subscribed user:", body, JWR);
+      }
+    );
+  } catch (error) {
+    console.log("error", error);
+  }
 };
 
 async function updateReadyMatchRequest(param) {

@@ -9,7 +9,7 @@ import {
   Inter_Tight,
 } from "next/font/google";
 import { Open_Sans } from "next/font/google";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter, usePathname } from "next/navigation";
 import "./globals.css";
@@ -23,6 +23,7 @@ import StyledJsxRegistry from "./registry";
 import { persistor, store } from "@/redux/store";
 import { Provider } from "react-redux";
 import ProtectedPageService from "@/services/protectedPage";
+import { setIsMobile } from "@/utils/storage";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -49,7 +50,7 @@ export default function RootLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-
+  var isMobileRes = "";
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -58,6 +59,25 @@ export default function RootLayout({ children }) {
     pathname === "/register" ||
     pathname == "/resetPassword" ||
     pathname == "/forgotPassword";
+
+  useEffect(() => {
+    // Function to check if the screen is mobile
+    const handleResize = () => {
+      console.log("window.innerWidth <= 768", window.innerWidth <= 768);
+      isMobileRes = window.innerWidth <= 768;
+      setIsMobile(window.innerWidth <= 768, "mobile"); // Adjust the breakpoint as per your design
+    };
+    // Set initial value
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <html lang="en">

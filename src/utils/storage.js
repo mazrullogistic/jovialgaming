@@ -186,6 +186,32 @@ export const getData = (key) => {
     }
   }
 };
+export const setIsMobile = (key, value) => {
+  console.log("value", key);
+
+  if (typeof window !== "undefined") {
+    try {
+      const encryptedData = encodeData(value);
+
+      window.localStorage.setItem(key, encryptedData);
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+};
+
+export const getIsMobile = (key) => {
+  if (typeof window !== "undefined") {
+    try {
+      const localEncryptedData = window.localStorage.getItem(key);
+      if (localEncryptedData) {
+        return decodeData(localEncryptedData);
+      }
+    } catch (error) {
+      return "";
+    }
+  }
+};
 export const setPaymentData = (key, value) => {
   console.log("value", key);
 

@@ -14,7 +14,10 @@ import {
   getRoomId,
 } from "@/utils/storage";
 import { userData } from "@/redux/Auth/AuthSlice";
-import { leaveRoomAction } from "@/redux/dashboard/action";
+import {
+  getProfileDataAction,
+  leaveRoomAction,
+} from "@/redux/dashboard/action";
 import { TOAST_TYPES } from "@/constants/keywords";
 import { toast } from "react-toastify";
 
@@ -26,11 +29,16 @@ export default function SideMenu({ children }) {
   const [menuOpen, setMenuOpen] = useState(false); // Mobile menu state
   const [selectedItem, setSelectedItem] = useState("Home");
   const [openNotificationDialog, setOpenNotificationDialog] = useState(false);
+  const [profileData, setProfileData] = useState(null); // Initialize with null or some default value
 
   const userDataNew = useSelector((state) => state.userData.userData);
 
   const menuRef = useRef(null); // Reference for the side menu
+  useEffect(() => {
+    // Only run this on the client side
 
+    getProfile();
+  }, []);
   useEffect(() => {
     const storedUser = getData("user");
     dispatch(userData(storedUser));
@@ -52,7 +60,23 @@ export default function SideMenu({ children }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuOpen]);
+  const getProfile = async () => {
+    try {
+      const storedUser = getData("user");
 
+      //const res = await dispatch(getGameByConsoleAction(param));
+      const res = await dispatch(getProfileDataAction(storedUser?.data?.id));
+      console.log("res.payload.data 72", res.payload.data);
+      if (res.payload.status) {
+        setProfileData(res.payload.data);
+      } else {
+        console.log("res--> 133");
+        setIsLoader(false);
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
   const logOut = () => {
     removeData("user");
     router.replace("/login");
@@ -131,38 +155,38 @@ export default function SideMenu({ children }) {
           >
             <Image
               src="/images/logo.png"
-              alt="Logo"
+              className="logo-img ml-12"
               width={45}
               height={45}
-              className="logo-img"
+              alt="Logo"
             />
-            <div className="flex items-center p-4">
-              <button
-                onClick={() => router.push("/profileCard")}
-                className="ml-4 flex items-center"
-              >
+            <button
+              onClick={() => router.push("/profileCard")}
+              className="flex flex-col md:flex-row items-center p-4 space-y-4 md:space-y-0 md:space-x-4"
+            >
+              <div className="flex-shrink-0">
                 <img
                   src={userDataNew?.data?.image}
                   alt="Profile"
-                  className="w-12 h-12 rounded-full object-cover"
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover max-w-full"
                 />
-                <div className="ml-4">
-                  <p className="text-white font-semibold">
-                    {userDataNew?.data?.username}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    ${userDataNew?.data?.balance}
-                  </p>
-                </div>
-              </button>
-            </div>
+              </div>
+              <div className="text-white text-center md:text-left">
+                <p className="text-base md:text-lg font-semibold">
+                  {userDataNew?.data?.username}
+                </p>
+                <p className="text-xs md:text-sm text-gray-500">
+                  ${profileData?.data?.balance}
+                </p>
+              </div>
+            </button>
             <nav>
               <ul className="space-y-4 p-4">
                 {menuItems.map(({ href, title, src }) => (
                   <li key={title}>
                     <Link href={href} passHref>
                       <div
-                        className={`flex items-center space-x-3 ${
+                        className={`flex items-center space-x-3 md:mt-12 ml-2 ${
                           selectedItem === title
                             ? "text-blue-500"
                             : "text-white"
@@ -175,36 +199,40 @@ export default function SideMenu({ children }) {
                     </Link>
                   </li>
                 ))}
-                <li
-                  className="flex items-center space-x-3 text-white cursor-pointer"
-                  onClick={leaveRoomApi}
-                >
-                  <Image
-                    src="/images/leaveroom.svg"
-                    alt="Leave Room"
-                    width={24}
-                    height={24}
-                  />
-                  <span>Leave Room</span>
-                </li>
-                <li
-                  className="flex items-center space-x-3 text-white cursor-pointer"
-                  onClick={logOut}
-                >
-                  <Image
-                    src="/images/logout.svg"
-                    alt="Logout"
-                    width={24}
-                    height={24}
-                  />
-                  <span>Logout</span>
-                </li>
+                <div>
+                  <li
+                    className="flex items-center space-x-3 text-white cursor-pointer  ml-2 md:mt-10"
+                    onClick={leaveRoomApi}
+                  >
+                    <Image
+                      src="/images/leaveroom.svg"
+                      alt="Leave Room"
+                      width={24}
+                      height={24}
+                    />
+                    <span>Leave Room</span>
+                  </li>
+                </div>
+                <div>
+                  <li
+                    className="flex items-center space-x-3 text-white cursor-pointer md:mt-10 ml-2"
+                    onClick={logOut}
+                  >
+                    <Image
+                      src="/images/logout.svg"
+                      alt="Logout"
+                      width={24}
+                      height={24}
+                    />
+                    <span>Logout</span>
+                  </li>
+                </div>
               </ul>
             </nav>
           </div>
 
           {/* Main Content */}
-          <div className="flex-1 md:w-[84%]">
+          <div className="flex-1 md:w-[84%] h-screen overflow-y-auto">
             <main className="overflow-y-auto">{children}</main>
           </div>
         </>

@@ -116,11 +116,11 @@ const Tournament = () => {
     setDropDownValue(selectedOption.value);
   };
   return (
-    <div>
+    <div className="h-screen bg-black06">
       {isLoader ? (
         <Loader />
       ) : (
-        <div className="h-screen  bg-black06">
+        <div className="h-fit  bg-black06">
           <div class="rounded-xl h-[264px] w-[384px] bg-gray-300 flex items-center justify-center ml-12 pt-12">
             <img
               class="rounded-xl h-full w-full object-cover"
@@ -142,7 +142,9 @@ const Tournament = () => {
           {dropDownValue == "Rules" ? (
             <div>
               {ruleData.map((option, index) => (
-                <p className="normal-bold-txt-match">{option.descriptions}</p>
+                <p className="text-[20px] text-white  font-inter_tight font-[200] ml-12 mt-8 w-[90%]">
+                  {option.descriptions}
+                </p>
               ))}
             </div>
           ) : (
@@ -163,7 +165,7 @@ const Tournament = () => {
 
           <button
             onClick={IsMember ? onPressContinue : RegisterApi}
-            className="bg-yellow text-black06 px-6 py-2 rounded-full ml-[40%] mt-16"
+            className="bg-yellow text-black06 px-6 py-2 rounded-full ml-[40%] mt-16 mb-16"
           >
             {IsMember ? "Continue" : "Register"}
           </button>
