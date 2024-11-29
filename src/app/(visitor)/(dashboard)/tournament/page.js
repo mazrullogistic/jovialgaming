@@ -20,34 +20,34 @@ import {
 import { useRouter } from "next/navigation";
 
 const Tournament = () => {
-  const [isLoader, setIsLoader] = useState(true); // Initialize with null or some default value
+  const [isLoader, setIsLoader] = useState(true);
   const { toaster } = useToaster();
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const [isModelShow, setIsModelShow] = useState(false); // Initialize with null or some default value
+  const [isModelShow, setIsModelShow] = useState(false);
   const [selectedModelIndex, setSelectedModelIndex] = useState(1);
   const [matchData, setMatchData] = useState("");
   const [ruleData, setRuleData] = useState([]);
 
   const [showAlert, setShowAlert] = useState(false);
 
-  //new
   const [dataList, setConsoleList] = useState([
     { name: "Rules", value: "Rules" },
     { name: "Prizes", value: "Prizes" },
   ]);
   const [dropDownValue, setDropDownValue] = useState("Rules");
-  var tournamentNewData = getTournamentId("id");
+  const tournamentNewData = getTournamentId("id");
   const [IsMember, setIsMember] = useState(false);
 
   useEffect(() => {
-    console.log("selectedModelIndex", selectedModelIndex);
     getTournamentRuleApi();
   }, []);
+
   const onPressContinue = () => {
     router.push("tournament/timer");
   };
+
   const RegisterApi = async () => {
     setIsLoader(true);
 
@@ -65,72 +65,58 @@ const Tournament = () => {
       setIsLoader(false);
 
       if (status) {
-        console.log("status 137", status);
-        console.log("found match 427");
         getTournamentRuleApi();
       } else {
         setIsLoader(false);
-        console.log("res--> 133", data);
         toast.error(data.message);
       }
     } catch (error) {
       setLoading(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
 
   const getTournamentRuleApi = async () => {
     setIsLoader(true);
     try {
-      var tournamentId = getTournamentId("id");
+      const tournamentId = getTournamentId("id");
 
       const res = await dispatch(getTournamentRulesAction(tournamentId.id));
-
-      console.log("res--> 118", res.payload.data.data);
 
       if (res.payload.data.data.length > 0) {
         setRuleData(res.payload.data.data);
         setIsMember(res.payload.data.isMember);
         setIsLoader(false);
-        // toaster(res.payload.message, TOAST_TYPES.SUCCESS);
       } else {
         setIsLoader(false);
         setRuleData([]);
-
-        console.log("res--> 133");
-
-        // toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
       setIsLoader(false);
-
-      //   toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
     }
   };
+
   const handleChange = (event) => {
     const selectedOption = JSON.parse(event.target.value);
-    console.log("selectedOption", selectedOption);
     setDropDownValue(selectedOption.value);
   };
+
   return (
     <div className="h-screen bg-black06">
       {isLoader ? (
         <Loader />
       ) : (
-        <div className="h-fit  bg-black06">
-          <div class="rounded-xl h-[264px] w-[384px] bg-gray-300 flex items-center justify-center ml-12 pt-12">
+        <div className="h-fit bg-black06 px-4 md:px-8">
+          <div className="rounded-xl h-[264px] w-full sm:w-[384px] bg-gray-300 flex items-center justify-center mx-auto pt-12 sm:ml-16 md:ml-24">
             <img
-              class="rounded-xl h-full w-full object-cover"
+              className="rounded-xl h-full w-full object-cover"
               src={tournamentNewData?.image}
               alt="Profile Picture"
             />
           </div>
 
           <select
-            className=" bg-black06 text-white text-[22px]  w-28 md:w-24  h-8  ml-12 mt-12 "
+            className="bg-black06 text-white text-lg w-full sm:w-1/2 md:w-40 h-8 mt-12 mx-auto block sm:ml-16 md:ml-24"
             onChange={handleChange}
           >
             {dataList.map((option, index) => (
@@ -139,33 +125,37 @@ const Tournament = () => {
               </option>
             ))}
           </select>
-          {dropDownValue == "Rules" ? (
+
+          {dropDownValue === "Rules" ? (
             <div>
               {ruleData.map((option, index) => (
-                <p className="text-[20px] text-white  font-inter_tight font-[200] ml-12 mt-8 w-[90%]">
+                <p
+                  key={index}
+                  className="text-lg text-white font-inter_tight font-light mt-8 mx-auto w-11/12 sm:w-3/4 md:w-[90%]"
+                >
                   {option.descriptions}
                 </p>
               ))}
             </div>
           ) : (
             <div>
-              <p className="text-[16px] text-white  font-inter_tight font-[200] ml-12 mt-8 w-[50%]">
+              <p className="text-lg text-white font-inter_tight font-light mt-8 mx-auto w-11/12 sm:w-3/4 md:w-2/3">
                 {tournamentNewData?.tournament_price !== 0
                   ? "1. " + tournamentNewData?.tournament_price
                   : "No winning Amount"}
               </p>
-              <p className="text-[16px] text-white  font-inter_tight font-[200] ml-12 mt-8 w-[50%]">
-                {tournamentNewData?.badgename !== "" &&
+              <p className="text-lg text-white font-inter_tight font-light mt-8 mx-auto w-11/12 sm:w-3/4 md:w-2/3">
+                {tournamentNewData?.badgename &&
                 tournamentNewData?.badgename !== null
                   ? "2. " + tournamentNewData?.badgename
                   : "No Winning Badge"}
-              </p>{" "}
+              </p>
             </div>
           )}
 
           <button
             onClick={IsMember ? onPressContinue : RegisterApi}
-            className="bg-yellow text-black06 px-6 py-2 rounded-full ml-[40%] mt-16 mb-16"
+            className="bg-yellow text-black06 px-4 py-1 rounded-full mx-auto mt-8 mb-16 block sm:w-1/2 md:w-1/3 lg:w-[10%]"
           >
             {IsMember ? "Continue" : "Register"}
           </button>
