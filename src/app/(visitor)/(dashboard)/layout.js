@@ -3,7 +3,6 @@
 import SideMenu from "@/components/SideMenu";
 import SideMenuMobile from "@/components/SideMenuMobile";
 import React, { useState, useEffect } from "react";
-import debounce from "lodash.debounce";
 import { getIsMobile } from "@/utils/storage";
 
 const Layout = ({ children }) => {
