@@ -996,6 +996,7 @@ const CreateGame = () => {
             CommonConstant.CurrentGameDetails = "";
             CommonConstant.SelectedMatchData = "";
             // socket.stop();
+            getCurrentMatches();
 
             setSelectedModelIndex(1);
             setIsModelShow(false);

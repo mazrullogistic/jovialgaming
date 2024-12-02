@@ -606,12 +606,26 @@ const Model = ({
                 <div className="rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center border-white border-2">
                   <img
                     className="rounded-full h-full w-full object-cover"
-                    src={matchData.opponent_image}
+                    //  src={matchData.opponent_image}
+
+                    src={
+                      matchData
+                        ? user.data.id !== matchData.host_user_id
+                          ? matchData.host_image !== ""
+                            ? matchData.host_image
+                            : "/images/logo.png"
+                          : matchData.opponent_image !== ""
+                          ? matchData.opponent_image
+                          : "/images/logo.png"
+                        : "/images/logo.png"
+                    }
                     alt="Profile Picture"
                   />
                 </div>
                 <p className="text-[16px] text-white font-inter_tight font-[200] text-center pt-2 w-[20%]">
-                  {matchData.opponent_name}
+                  {matchData && user.data.id !== matchData.host_user_id
+                    ? matchData.host_name
+                    : matchData.opponent_name}
                 </p>
                 <p className="text-[16px] text-white font-inter_tight font-[200] text-center pt-2 w-[20%] h-8">
                   {matchData.opponent_score_count
@@ -624,12 +638,24 @@ const Model = ({
                 <div className="rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center border-white border-2">
                   <img
                     className="rounded-full h-full w-full object-cover"
-                    src={matchData.host_image}
+                    src={
+                      matchData
+                        ? user.data.id === matchData.host_user_id
+                          ? matchData.host_image !== ""
+                            ? matchData.host_image
+                            : "/images/logo.png"
+                          : matchData.opponent_image !== ""
+                          ? matchData.opponent_image
+                          : "/images/logo.png"
+                        : "/images/logo.png"
+                    }
                     alt="Profile Picture"
                   />
                 </div>
                 <p className="text-[16px] text-white font-inter_tight font-[300] text-center pt-2 w-[20%]">
-                  {matchData.host_name}
+                  {matchData && user.data.id === matchData.host_user_id
+                    ? matchData.host_name
+                    : matchData.opponent_name}
                 </p>
                 {/* <input
                   placeholder="Enter Score"

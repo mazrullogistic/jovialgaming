@@ -598,14 +598,37 @@ const TournamentModel = ({
             <div className=" flex    mt-[8%] w-[100%]">
               <div className="  flex flex-col items-center justify-center w-[50%]">
                 <div className="rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center border-white border-2">
-                  <img
+                  {/* <img
                     className="rounded-full h-full w-full object-cover"
                     src={gameDetails.opponent_image}
                     alt="Profile Picture"
+                  /> */}
+                  <img
+                    className="rounded-full h-full w-full object-cover"
+                    //  src={matchData.opponent_image}
+
+                    src={
+                      gameDetails
+                        ? user.data.id !== gameDetails.host_user_id
+                          ? gameDetails.host_image !== ""
+                            ? gameDetails.host_image
+                            : "/images/logo.png"
+                          : gameDetails.opponent_image !== ""
+                          ? gameDetails.opponent_image
+                          : "/images/logo.png"
+                        : "/images/logo.png"
+                    }
+                    alt="Profile Picture"
                   />
                 </div>
-                <p className="text-[16px] text-white font-inter_tight font-[200] text-center pt-2 w-[20%]">
+                {/* <p className="text-[16px] text-white font-inter_tight font-[200] text-center pt-2 w-[20%]">
                   {gameDetails.opponent_name}
+                </p> */}
+
+                <p className="text-[16px] text-white font-inter_tight font-[200] text-center pt-2 w-[20%]">
+                  {gameDetails && user.data.id !== gameDetails.host_user_id
+                    ? gameDetails.host_name
+                    : gameDetails.opponent_name}
                 </p>
                 <p className="text-[16px] text-white font-inter_tight font-[200] text-center pt-2 w-[20%] h-8">
                   {gameDetails.opponent_score_count
@@ -616,20 +639,47 @@ const TournamentModel = ({
               </div>
               <div className="  flex flex-col items-center justify-center w-[50%]">
                 <div className="rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center border-white border-2">
-                  <img
+                  {/* <img
                     className="rounded-full h-full w-full object-cover"
                     src={gameDetails.host_image}
                     alt="Profile Picture"
+                  /> */}
+                  <img
+                    className="rounded-full h-full w-full object-cover"
+                    src={
+                      gameDetails
+                        ? user.data.id === gameDetails.host_user_id
+                          ? gameDetails.host_image !== ""
+                            ? gameDetails.host_image
+                            : "/images/logo.png"
+                          : gameDetails.opponent_image !== ""
+                          ? gameDetails.opponent_image
+                          : "/images/logo.png"
+                        : "/images/logo.png"
+                    }
+                    alt="Profile Picture"
                   />
                 </div>
-                <p className="text-[16px] text-white font-inter_tight font-[300] text-center pt-2 w-[20%]">
+                {/* <p className="text-[16px] text-white font-inter_tight font-[300] text-center pt-2 w-[20%]">
                   {gameDetails.host_name}
+                </p> */}
+                <p className="text-[16px] text-white font-inter_tight font-[300] text-center pt-2 w-[20%]">
+                  {gameDetails && user.data.id === gameDetails.host_user_id
+                    ? gameDetails.host_name
+                    : gameDetails.opponent_name}
                 </p>
-                <input
+                {/* <input
                   placeholder="Enter Score"
                   className="w-[30%] text-[14px]   h-8 mt-2    rounded-xl text-white bg-gray6E outline-none    pl-2"
                   onChange={(event) => {
                     console.log("test" + event.target.value);
+                    setScoreText(event.target.value);
+                  }}
+                /> */}
+                <input
+                  placeholder="Enter Score"
+                  className="w-[100px]       text-[14px] h-8 mt-2 rounded-xl text-white bg-gray82 outline-none pl-2"
+                  onChange={(event) => {
                     setScoreText(event.target.value);
                   }}
                 />
