@@ -508,6 +508,7 @@ const Ranking = () => {
               </div>
             ))} */}
 
+              {/* {badgesData.length > 0 ? ( */}
               {badgesData.length > 0 ? (
                 <div className="flex flex-col items-center justify-center min-h-screen bg-black26 p-4">
                   <div className="relative w-full overflow-hidden">
@@ -599,7 +600,7 @@ const Ranking = () => {
               )}
             </div>
           ) : (
-            <div className="text-white text-3xl text-center pt-[30%]     bg-black26 h-full">
+            <div className=" text-white text-3xl text-center pt-[30%]     bg-black26 h-screen">
               {noDataFoundText}
             </div>
           )}

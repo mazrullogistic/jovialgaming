@@ -123,6 +123,11 @@ const DisputeCenter = () => {
                 </div>
               );
             })}
+            {disputeList.length == 0 && (
+              <div className=" text-white text-3xl text-center pt-[20%]      h-screen">
+                {"No Dispute Found"}
+              </div>
+            )}
           </div>
         </div>
       )}
