@@ -4,6 +4,7 @@ import SideMenu from "@/components/SideMenu";
 import { RHFTextInput } from "@/components/hook-form";
 import {
   CommonConstant,
+  EmitterKey,
   TOAST_ALERTS,
   TOAST_TYPES,
 } from "@/constants/keywords";
@@ -45,6 +46,7 @@ import moment from "moment";
 import { onMessage } from "firebase/messaging";
 import { toast } from "react-toastify";
 import dynamic from "next/dynamic";
+import EventEmitter from "@/components/EventEmitter";
 
 const HomePage = ({ Component, pageProps }) => {
   const [isLoader, setIsLoader] = useState(false); // Initialize with null or some default value
@@ -819,8 +821,25 @@ const HomePage = ({ Component, pageProps }) => {
       ) : (
         <div className="flex bg-black06  ">
           <div className=" w-[100%] bg-black06">
-            <p className="header-home-txt">Welcome {user?.data?.username} ,</p>
-
+            <div className="flex items-center justify-between w-full">
+              <p className="header-home-txt">
+                Welcome {user?.data?.username} ,
+              </p>
+              <button
+                className="ml-auto mr-12 hidden md:block"
+                onClick={() => {
+                  EventEmitter.emit(EmitterKey.ShowDialog, "");
+                }}
+              >
+                <Image
+                  src="/images/plus.png"
+                  className="plus-img"
+                  width={30}
+                  height={30}
+                  alt="Logo"
+                />
+              </button>
+            </div>
             {/* <img
               src={user?.roomDetails?.image}
               // Adjust as needed for your design

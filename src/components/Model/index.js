@@ -2,7 +2,7 @@
 import { useRef, useEffect, useState } from "react";
 import Modal from "react-modal";
 import Image from "next/image";
-import { getData } from "@/utils/storage";
+import { getData, setModelChatData } from "@/utils/storage";
 import { useRouter } from "next/navigation";
 import { PATH_DASHBOARD } from "@/routes/paths";
 import Loader from "../Loader";
@@ -10,6 +10,7 @@ import { CommonConstant, EmitterKey } from "@/constants/keywords";
 import socket from "@/socket/socket";
 import { toast } from "react-toastify";
 import EventEmitter from "@/components/EventEmitter";
+import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/solid";
 
 const Model = ({
   amountData,
@@ -139,10 +140,39 @@ const Model = ({
     setSelectionMatchData(selectedMatchData);
     return () => {};
   }, [selectedMatchData]);
+  const router = useRouter();
 
-  // function sendMessage() {
-  //   router.push(PATH_DASHBOARD.messages);
-  // }
+  const handleRedirect = () => {
+    const chatId = matchData
+      ? user.data.id !== matchData.host_user_id
+        ? matchData.host_user_id
+        : matchData.opponent_user_id
+      : null;
+
+    if (chatId) {
+      const chatName = matchData
+        ? user.data.id !== matchData.host_user_id
+          ? matchData.host_name
+          : matchData.opponent_name
+        : "";
+
+      const imgUrl = matchData
+        ? user.data.id !== matchData.host_user_id
+          ? matchData.host_image
+          : matchData.opponent_image
+        : "default.png";
+
+      setModelChatData("chatId", {
+        id: chatId,
+        name: chatName,
+        imgUrl: imgUrl,
+      });
+
+      console.log("chatId", chatId, "imgUrl", imgUrl);
+
+      router.push(`${PATH_DASHBOARD.msgChat}`);
+    }
+  };
 
   function renderGameMode() {
     return (
@@ -266,6 +296,12 @@ const Model = ({
       <div className="flex justify-center items-center">
         <div className="w-full md:w-2/3 lg:w-1/3 xl:w-1/4 h-72">
           <button className="w-full h-full bg-black25 flex flex-col justify-center items-center p-4">
+            <button
+              onClick={handleRedirect}
+              className="absolute top-4 right-4 flex items-center gap-2 text-white px-3 py-2 bg-blue-500 rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
+            >
+              <ChatBubbleLeftEllipsisIcon className="w-6 h-6" />
+            </button>
             <div className="flex justify-center items-center mb-4">
               <img src="/images/dollar.svg" className="h-[125px] w-[125px]" />
             </div>
@@ -341,8 +377,9 @@ const Model = ({
       <div className="max-h-[800px] relative">
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
           <p className="text-[18px] text-white font-inter_tight font-[300] text-center ">
-            {"GAME RULES"}
+            {"GAME RULES 3"}
           </p>
+
           <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2 ">
             Add opponent as friend on console. <br />
             Match creator send game invite
@@ -350,38 +387,71 @@ const Model = ({
             Submit scores when finished.
           </p>
           <p className="text-[20px] text-white font-inter_tight font-[300] text-center mt-16 ">
-            {"GAME TIME"}
+            {"GAME TIME "}
           </p>
-          {console.log("readyTimes", readyTimes)}
+
           {readyTimes ? (
             <p className="text-[16px] text-white font-inter_tight font-[300] text-center   ">
               {readyTimes}
             </p>
           ) : null}
         </div>
+
         <div className="flex max-h-[700px]  ">
           <div className="w-[50%] bg-black06 h-screen md:pl-[15%] pl-[5%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
-                src={matchData.opponent_image}
+                src={
+                  matchData
+                    ? user.data.id !== matchData.host_user_id
+                      ? matchData.host_image !== ""
+                        ? matchData.host_image
+                        : "/images/logo.png"
+                      : matchData.opponent_image !== ""
+                      ? matchData.opponent_image
+                      : "/images/logo.png"
+                    : "/images/logo.png"
+                }
                 alt="Profile Picture"
               />
             </div>
             <div className="w-32">
-              <p className="userName-txt">{matchData.opponent_name}</p>
+              <p className="userName-txt">
+                {matchData
+                  ? user.data.id !== matchData.host_user_id
+                    ? matchData.host_name
+                    : matchData.opponent_name
+                  : ""}
+              </p>
             </div>
           </div>
           <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%]   max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
-                src={matchData.host_image}
+                src={
+                  matchData
+                    ? user.data.id === matchData.host_user_id
+                      ? matchData.host_image !== ""
+                        ? matchData.host_image
+                        : "/images/logo.png"
+                      : matchData.opponent_image !== ""
+                      ? matchData.opponent_image
+                      : "/images/logo.png"
+                    : "/images/logo.png"
+                }
                 alt="Profile Picture"
               />
             </div>
             <div className="w-32">
-              <p className="userName-txt">{matchData.host_name}</p>
+              <p className="userName-txt">
+                {matchData
+                  ? user.data.id === matchData.host_user_id
+                    ? matchData.host_name
+                    : matchData.opponent_name
+                  : ""}
+              </p>
             </div>
           </div>
         </div>
@@ -398,6 +468,14 @@ const Model = ({
             {"READY"}
           </button>
         )}
+
+        {/* Message Button in Top-Right Corner */}
+        <button
+          onClick={handleRedirect}
+          className="absolute top-4 right-16 flex items-center gap-2 text-white px-3 py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200"
+        >
+          <ChatBubbleLeftEllipsisIcon className="w-6 h-6" />
+        </button>
       </div>
     );
   }
@@ -407,25 +485,36 @@ const Model = ({
     return (
       <div className="max-h-[800px] relative">
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
-          <p className="text-[18px] text-white font-inter_tight font-[300] text-center ">
-            {"GAME RULES"}
+          <p className="text-[18px] text-white font-inter_tight font-[300] text-center">
+            {"GAME RULES 2"}
           </p>
-          <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2 ">
+
+          <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2">
             Add opponent as friend on console. <br />
             Match creator send game invite
             <br />
             Submit scores when finished.
           </p>
-          <p className="text-[20px] text-white font-inter_tight font-[300] text-center mt-16 ">
+
+          <p className="text-[20px] text-white font-inter_tight font-[300] text-center mt-16">
             {"GAME TIME"}
           </p>
-          {console.log("readyTimes", readyTimes)}
+
+          {/* Message Icon Button */}
           {readyTimes ? (
-            <p className="text-[16px] text-white font-inter_tight font-[300] text-center   ">
+            <p className="text-[16px] text-white font-inter_tight font-[300] text-center">
               {readyTimes}
             </p>
           ) : null}
+
+          <button
+            onClick={handleRedirect}
+            className="absolute top-4 right-4 flex items-center gap-2 text-white px-3 py-2 bg-blue-500 rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
+          >
+            <ChatBubbleLeftEllipsisIcon className="w-6 h-6" />
+          </button>
         </div>
+
         <div className="flex max-h-[700px]">
           <div className="w-[50%] bg-black06 h-screen md:pl-[15%] pl-[5%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
@@ -439,7 +528,7 @@ const Model = ({
               <p className="userName-txt">{matchData.opponent_name}</p>
             </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%]   max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -469,6 +558,7 @@ const Model = ({
           <p className="text-[18px] text-white font-inter_tight font-[300] text-center ">
             {"GAME RULES"}
           </p>
+
           <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2 ">
             Add opponent as friend on console. <br />
             Match creator send game invite
@@ -516,6 +606,15 @@ const Model = ({
             Submit Score
           </button>
         </div>
+
+        {/* Message Icon in Top-Right Corner */}
+        <button
+          onClick={handleRedirect}
+          className="absolute top-4 right-4 flex items-center gap-2 text-white px-3 py-2  rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
+        >
+          <ChatBubbleLeftEllipsisIcon className="w-6 h-6" />
+        </button>
+
         {iWonLossModelDialog && renderWonLost()}
         {selectionMatchData?.isResultAddedHost == "1" && renderSubmitScore()}
         {submitScoreDialog && renderSubmitScore()}
@@ -740,7 +839,7 @@ const Model = ({
             CommonConstant.SelectedMatchData = "";
             // socket.stop();
             EventEmitter.emit(EmitterKey.profile, "");
-
+            closeModel();
             route.replace(PATH_DASHBOARD.home);
           }}
           className="w-[250px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight bg-yellow absolute left-1/2 transform -translate-x-1/2 bottom-4"

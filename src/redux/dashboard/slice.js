@@ -88,6 +88,8 @@ import {
   getBadgeUserListAction,
   deleteMatchAction,
   fPDeleteMatchAction,
+  getSearchUserAction,
+  freePlayChallengeAction,
 } from "./action";
 import { updateProfileAction } from "../Auth/action";
 import { WithdrawAmount } from "./services";
@@ -443,6 +445,17 @@ const DashboardSlice = createSlice({
         state.error = null;
       })
       .addCase(matchResultAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(freePlayChallengeAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(freePlayChallengeAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(freePlayChallengeAction.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || "Error fetching user data";
       })
@@ -965,6 +978,18 @@ const DashboardSlice = createSlice({
         state.error = null;
       })
       .addCase(leaveRoomAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      //UserSearchList Silce
+      .addCase(getSearchUserAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getSearchUserAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getSearchUserAction.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || "Error fetching user data";
       });

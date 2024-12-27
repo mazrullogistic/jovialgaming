@@ -817,23 +817,25 @@ const SignupPage = () => {
           )}
           className="pt-[12%] mb-[40px]"
         >
-          <div className="center-container">
-            <div>
-              <p className="textInput-txt-signUp">First Name?</p>
+          <div className="flex flex-col items-center px-4 sm:px-8 lg:px-0">
+            <div className="w-full sm:w-auto">
+              <p className="text-[18px] sm:text-[22px] text-white mb-8 sm:mb-12 font-inter_tight text-center font-[200]">
+                First Name?
+              </p>
               <RHFTextInput
                 name="firstName"
                 placeholder=""
-                className="textInput-signUp"
+                className="w-full sm:w-[480px] text-[14px] mb-4 sm:mb-2 h-12 border-b-2 border-white text-white bg-black06 outline-none"
               />
             </div>
-          </div>
-          <div className="center-container">
-            <button
-              className="btn-next"
-              onClick={() => (isFirstName ? nextStep() : null)}
-            >
-              Next
-            </button>
+            <div className="w-full sm:w-auto flex justify-center mt-4">
+              <button
+                className="btn-next"
+                onClick={() => (isFirstName ? nextStep() : null)}
+              >
+                Next
+              </button>
+            </div>
           </div>
         </FormProvider>
       </>
@@ -857,13 +859,15 @@ const SignupPage = () => {
           )}
           className="pt-[12%] mb-[40px]"
         >
-          <div className="center-container">
-            <div>
-              <p className="textInput-txt-signUp">Last Name?</p>
+          <div className="flex flex-col items-center px-4 sm:px-8 lg:px-0">
+            <div className="w-full sm:w-auto">
+              <p className="text-[18px] sm:text-[22px] text-white mb-8 sm:mb-12 font-inter_tight text-center font-[200]">
+                Last Name?
+              </p>
               <RHFTextInput
                 name="lastName"
                 placeholder=""
-                className="textInput-signUp"
+                className="w-full sm:w-[480px] text-[14px] mb-4 sm:mb-2 h-12 border-b-2 border-white text-white bg-black06 outline-none"
               />
             </div>
           </div>
@@ -900,13 +904,15 @@ const SignupPage = () => {
           )}
           className="pt-[12%] mb-[40px]"
         >
-          <div className="center-container">
-            <div>
-              <p className="textInput-txt-signUp">Username you would like ?</p>
+          <div className="flex flex-col items-center px-4 sm:px-8 lg:px-0">
+            <div className="w-full sm:w-auto">
+              <p className="text-[18px] sm:text-[22px] text-white mb-8 sm:mb-12 font-inter_tight text-center font-[200]">
+                Username you would like ?
+              </p>
               <RHFTextInput
                 name="userName"
                 placeholder=""
-                className="textInput-signUp"
+                className="w-full sm:w-[480px] text-[14px] mb-4 sm:mb-2 h-12 border-b-2 border-white text-white bg-black06 outline-none"
               />
             </div>
           </div>
@@ -943,13 +949,15 @@ const SignupPage = () => {
           )}
           className="pt-[12%] mb-[40px]"
         >
-          <div className="center-container">
-            <div>
-              <p className="textInput-txt-signUp">Create Password</p>
+          <div className="flex flex-col items-center px-4 sm:px-8 lg:px-0">
+            <div className="w-full sm:w-auto">
+              <p className="text-[18px] sm:text-[22px] text-white mb-8 sm:mb-12 font-inter_tight text-center font-[200]">
+                Create Password
+              </p>
               <RHFTextInput
                 name="password"
                 type="password"
-                className="textInput-signUp"
+                className="w-full sm:w-[480px] text-[14px] mb-4 sm:mb-2 h-12 border-b-2 border-white text-white bg-black06 outline-none"
               />
             </div>
           </div>
@@ -986,13 +994,15 @@ const SignupPage = () => {
           )}
           className="pt-[12%] mb-[40px]"
         >
-          <div className="center-container">
-            <div>
-              <p className="textInput-txt-signUp">Confirm Password</p>
+          <div className="flex flex-col items-center px-4 sm:px-8 lg:px-0">
+            <div className="w-full sm:w-auto">
+              <p className="text-[18px] sm:text-[22px] text-white mb-8 sm:mb-12 font-inter_tight text-center font-[200]">
+                Confirm Password
+              </p>
               <RHFTextInput
                 name="confirmPassword"
                 type="password"
-                className="textInput-signUp"
+                className="w-full sm:w-[480px] text-[14px] mb-4 sm:mb-2 h-12 border-b-2 border-white text-white bg-black06 outline-none"
               />
             </div>
           </div>
@@ -1029,14 +1039,16 @@ const SignupPage = () => {
           )}
           className="pt-[12%] mb-[40px]"
         >
-          <div className="center-container">
-            <div>
-              <p className="textInput-txt-signUp">Email ?</p>
+          <div className="flex flex-col items-center px-4 sm:px-8 lg:px-0">
+            <div className="w-full sm:w-auto">
+              <p className="text-[18px] sm:text-[22px] text-white mb-8 sm:mb-12 font-inter_tight text-center font-[200]">
+                Email ?
+              </p>
 
               <RHFTextInput
                 name="email"
                 placeholder=""
-                className="textInput-signUp"
+                className="w-full sm:w-[480px] text-[14px] mb-4 sm:mb-2 h-12 border-b-2 border-white text-white bg-black06 outline-none"
               />
             </div>
           </div>
@@ -1072,13 +1084,15 @@ const SignupPage = () => {
           )}
           className="pt-[12%] mb-[40px]"
         >
-          <div className="center-container">
-            <div>
-              <p className="textInput-txt-signUp">Email Verification Code </p>
+          <div className="flex flex-col items-center px-4 sm:px-8 lg:px-0">
+            <div className="w-full sm:w-auto">
+              <p className="text-[18px] sm:text-[22px] text-white mb-8 sm:mb-12 font-inter_tight text-center font-[200]">
+                Email Verification Code{" "}
+              </p>
               <RHFTextInput
                 name="verificationCode"
                 placeholder=""
-                className="textInput-signUp"
+                className="w-full sm:w-[480px] text-[14px] mb-4 sm:mb-2 h-12 border-b-2 border-white text-white bg-black06 outline-none"
                 type="text"
                 value={otp}
                 onChange={() => {}}
@@ -1118,13 +1132,15 @@ const SignupPage = () => {
           )}
           className="pt-[12%] mb-[40px]"
         >
-          <div className="center-container">
-            <div>
-              <p className="textInput-txt-signUp">Phone Number</p>
+          <div className="flex flex-col items-center px-4 sm:px-8 lg:px-0">
+            <div className="w-full sm:w-auto">
+              <p className="text-[18px] sm:text-[22px] text-white mb-8 sm:mb-12 font-inter_tight text-center font-[200]">
+                Phone Number
+              </p>
               <RHFTextInput
                 name="phoneNumber"
                 placeholder=""
-                className="textInput-signUp"
+                className="w-full sm:w-[480px] text-[14px] mb-4 sm:mb-2 h-12 border-b-2 border-white text-white bg-black06 outline-none"
               />
             </div>
           </div>
@@ -1141,9 +1157,11 @@ const SignupPage = () => {
     return (
       <>
         <div className="pt-[12%] mb-[40px]">
-          <div className="center-container">
-            <div>
-              <p className="textInput-txt-signUp">Date Of Birth?</p>
+          <div className="flex flex-col items-center px-4 sm:px-8 lg:px-0">
+            <div className="w-full sm:w-auto">
+              <p className="text-[18px] sm:text-[22px] text-white mb-8 sm:mb-12 font-inter_tight text-center font-[200]">
+                Date Of Birth?
+              </p>
 
               <div className="flex">
                 <div className="date-dropdown">
@@ -1230,23 +1248,25 @@ const SignupPage = () => {
           )}
           className="pt-[12%] mb-[40px]"
         >
-          <div className="center-container">
-            <div>
-              <p className="textInput-txt-signUp">What Is Your Address?</p>
+          <div className="flex flex-col items-center px-4 sm:px-8 lg:px-0">
+            <div className="w-full sm:w-auto">
+              <p className="text-[18px] sm:text-[22px] text-white mb-8 sm:mb-12 font-inter_tight text-center font-[200]">
+                What Is Your Address?
+              </p>
               <RHFTextInput
                 name="address"
                 placeholder="Address"
-                className="textInput-signUp"
+                className="w-full sm:w-[480px] text-[14px] mb-4 sm:mb-2 h-12 border-b-2 border-white text-white bg-black06 outline-none"
               />
               <RHFTextInput
                 name="city"
                 placeholder="City"
-                className="textInput-signUp mt-2"
+                className="w-full sm:w-[480px] text-[14px] mb-4 sm:mb-2 h-12 border-b-2 border-white text-white bg-black06 outline-none mt-2"
               />
               <div>
-                <div className="textInput-signUp mt-2">
+                <div className="w-full sm:w-[480px] text-[14px] mb-4 sm:mb-2 h-12 border-b-2 border-white text-white bg-black06 outline-none mt-2">
                   <select
-                    className="textInput-signUp "
+                    className="w-full sm:w-[480px] text-[14px] mb-4 sm:mb-2 h-12 border-b-2 border-white text-white bg-black06 outline-none"
                     value={selectedState}
                     onChange={handleStateChange}
                   >
@@ -1260,11 +1280,11 @@ const SignupPage = () => {
                   </select>
                 </div>
 
-                <div className="textInput-signUp mt-2">
+                <div className="w-full sm:w-[480px] text-[14px] mb-4 sm:mb-2 h-12 border-b-2 border-white text-white bg-black06 outline-none mt-2">
                   <RHFTextInput
                     name="zipcode"
                     placeholder="Zipcode"
-                    className="textInput-signUp"
+                    className="w-full sm:w-[480px] text-[14px] mb-4 sm:mb-2 h-12 border-b-2 border-white text-white bg-black06 outline-none"
                   />
                 </div>
               </div>
@@ -1372,36 +1392,36 @@ const SignupPage = () => {
           )}
           className="pt-[12%] mb-[40px]"
         >
-          <div className="center-container">
-            <div>
-              <p className="textInput-txt-signUp w-[500px]">
-                By clicking the boxes below you agree to our Terms of Services
-                Privacy policy and honesty policy.
+          <div className="flex flex-col items-center px-4 sm:px-8 lg:px-0">
+            <div className="w-full max-w-[500px]">
+              <p className="text-[18px] sm:text-[22px] text-white mb-8 sm:mb-12 font-inter_tight text-center font-[200] px-2 sm:px-0">
+                By clicking the boxes below you agree to our Terms of Services,
+                Privacy Policy, and Honesty Policy.
               </p>
-              <div className="space-y-6 ml-[30px]">
+              <div className="space-y-6 sm:ml-[30px]">
                 <CheckBox
                   text="Terms of Services"
                   isChecked={isCheckedTerms}
                   handleCheckboxChange={handleCheckboxChangeTerms}
                 />
                 <CheckBox
-                  text="Privacy policy"
+                  text="Privacy Policy"
                   isChecked={isCheckedPrivacy}
                   handleCheckboxChange={handleCheckboxChangePrivacy}
                 />
                 <CheckBox
-                  text="Honesty policy"
+                  text="Honesty Policy"
                   isChecked={isCheckedHonesty}
                   handleCheckboxChange={handleCheckboxChangeHonesty}
                 />
               </div>
             </div>
           </div>
+
           {isTermsError ? (
-            <p className="text-red mt-8 ml-[34%]">
-              {
-                "Please Check Terms of Services Privacy policy and honesty policy Checkbox."
-              }
+            <p className="text-red mt-4 sm:mt-8 mx-auto sm:ml-[34%] text-center sm:text-left">
+              Please check the Terms of Services, Privacy Policy, and Honesty
+              Policy checkboxes.
             </p>
           ) : null}
           <div className="center-container">
@@ -1456,7 +1476,7 @@ const SignupPage = () => {
               Sign in
             </button>
           </div>
-          <Wizard startIndex={activeIndex}>
+          <Wizard startIndex={activeIndex} className="bg-black06">
             <Step1 />
             <Step2 />
             <Step3 />

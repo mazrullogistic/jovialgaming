@@ -49,6 +49,30 @@ export const getChatUserData = (key) => {
     }
   }
 };
+
+export const setModelChatData = (key, value) => {
+  if (typeof window !== "undefined") {
+    try {
+      const encryptedData = encodeData(value);
+
+      window.localStorage.setItem(key, encryptedData);
+    } catch (error) {}
+  }
+};
+
+export const getModelChatData = (key) => {
+  if (typeof window !== "undefined") {
+    try {
+      const localEncryptedData = window.localStorage.getItem(key);
+      if (localEncryptedData) {
+        return decodeData(localEncryptedData);
+      }
+    } catch (error) {
+      return "";
+    }
+  }
+};
+
 export const setDisputeData = (key, value) => {
   if (typeof window !== "undefined") {
     try {

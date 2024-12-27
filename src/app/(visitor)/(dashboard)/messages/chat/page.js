@@ -10,7 +10,12 @@ import {
   sendChatAction,
   sendRoomChatAction,
 } from "@/redux/dashboard/action";
-import { getChatUserData, getData, getRoomId } from "@/utils/storage";
+import {
+  getChatUserData,
+  getData,
+  getModelChatData,
+  getRoomId,
+} from "@/utils/storage";
 import Image from "next/image";
 import React, { useMemo, useState } from "react";
 import { useEffect, useRef } from "react";
@@ -55,6 +60,7 @@ const Chat = () => {
   const [chatListIsNext, setChatListIsNext] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const userDataForChat = getChatUserData("chat");
+  const chatModelData = getModelChatData("chatId");
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -207,15 +213,18 @@ const Chat = () => {
   const getChatList = async () => {
     setIsLoader(true);
     const userDataForChat = getChatUserData("chat");
-
     const payload = new FormData();
     payload.append("fromUserId", user.data.id);
-    payload.append(
-      "userId",
-      userDataForChat.fromUserId === user.data.id
-        ? userDataForChat.userId
-        : userDataForChat.fromUserId
-    );
+    if (chatModelData) {
+      payload.append("userId", chatModelData.id);
+    } else {
+      payload.append(
+        "userId",
+        userDataForChat.fromUserId === user.data.id
+          ? userDataForChat.userId
+          : userDataForChat.fromUserId
+      );
+    }
     payload.append("perPage", 20);
     payload.append("page", chatListPage);
     payload.append("lastChatId", 0);
@@ -474,7 +483,7 @@ const Chat = () => {
 
   return (
     <>
-      {console.log("userDataForChat", userDataForChat)}
+      {console.log("chatModelData", chatModelData)}
       {isLoader ? (
         <Loader />
       ) : (
@@ -486,12 +495,16 @@ const Chat = () => {
                 <div className="rounded-full h-10 w-10 bg-gray82 flex items-center justify-center">
                   <img
                     className="rounded-full h-full w-full object-cover"
-                    src={userDataForChat?.image}
+                    src={
+                      chatModelData
+                        ? chatModelData.imgUrl
+                        : userDataForChat?.image
+                    }
                     alt="User Profile Picture"
                   />
                 </div>
                 <h1 className="text-xl font-semibold">
-                  {userDataForChat?.uName}
+                  {chatModelData ? chatModelData.name : userDataForChat?.uName}
                 </h1>
               </div>
             </div>

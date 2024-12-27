@@ -30,6 +30,18 @@ const Subscription = () => {
     { id: 2, name: "Quancinco", image: "/images/seeds.png" },
     { id: 3, name: "Vonwill", image: "/images/seeds.png" },
   ]);
+
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  // Detect if the screen size is mobile
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth <= 768);
+    };
+    handleResize(); // Check on mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const dispatch = useDispatch();
   const [isLoader, setIsLoader] = useState(false); // Initialize with null or some default value
   const [badgeList, setBadgeList] = useState([]);
@@ -80,12 +92,14 @@ const Subscription = () => {
   ];
   const [currentPlan, setCurrentPlan] = useState(1);
 
-  const nextPlan = () => {
-    setCurrentPlan((prev) => (prev + 1) % plans.length);
-  };
   const prevPlan = () => {
-    setCurrentPlan((prev) => (prev - 1 + plans.length) % plans.length);
+    setCurrentPlan((prev) => (prev > 0 ? prev - 1 : planList.length - 1));
   };
+
+  const nextPlan = () => {
+    setCurrentPlan((prev) => (prev < planList.length - 1 ? prev + 1 : 0));
+  };
+
   const images = [
     "https://images.unsplash.com/photo-1549989476-69a92fa57c36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
     "https://images.unsplash.com/photo-1549396535-c11d5c55b9df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
@@ -304,7 +318,6 @@ const Subscription = () => {
           className="bg-black06"
         >
           {/* Back Button */}
-
           <button
             onClick={() => {
               setIsPayPalBtnShow(false);
@@ -351,84 +364,109 @@ const Subscription = () => {
         </div>
       ) : (
         <div>
-          <div className="flex justify-center items-center w-full ">
-            <button className="p-2 rounded-md"></button>
-          </div>
-
-          <div className="flex flex-col items-center justify-center min-h-screen bg-black06 p-4">
-            <div className="relative w-full  ">
-              <div className="flex overflow-hidden">
+          {isMobileView ? (
+            <div className="flex flex-col items-center min-h-screen bg-black06 p-4">
+              <div className="flex flex-col space-y-4">
                 {planList.map((plan, index) => (
-                  <div
-                    key={index}
-                    className={`flex-shrink-0 w-full md:w-1/3  text-white overflow-hidden transition-all duration-300 ease-in-out transform ${
-                      index === currentPlan
-                        ? "scale-100 opacity-100"
-                        : "scale-95 opacity-70"
-                    }`}
-                  >
-                    <button
-                      onClick={() => {
-                        setSelectedPlan(planList[currentPlan]);
-                        setSelectedPlaId(planList[currentPlan].planId);
-                        console.log("current Plan", planList[currentPlan]);
-                        if (index === currentPlan) {
-                          setIsPayPalBtnShow(true);
-                        }
-                      }}
-                      className="    hover:bg-yellow absolute mt-[85%]   bg-yellow    text-black26 py-2 px-4 rounded-full w-[45%]  ml-[30%]  "
-                    >
-                      Subscribe
-                    </button>
+                  <div key={index} className="bg-gray6E p-4 rounded-md">
                     <img
-                      draggable={false}
                       src={
-                        index == 0
+                        index === 0
                           ? "/images/plan1.png"
-                          : index == 1
+                          : index === 1
                           ? "/images/plan2.png"
                           : "/images/plan3.png"
                       }
-                    ></img>
+                      alt={`Plan ${index + 1}`}
+                      className="w-full h-40 object-cover rounded-md"
+                    />
+                    <button
+                      onClick={() => {
+                        setSelectedPlan(plan);
+                        setSelectedPlaId(plan.planId);
+                        setIsPayPalBtnShow(true);
+                      }}
+                      className="mt-4 bg-yellow text-black26 py-2 px-4 rounded-full w-full"
+                    >
+                      Subscribe
+                    </button>
                   </div>
                 ))}
               </div>
-              <button
-                variant="ghost"
-                size="icon"
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 text-white bg-black06 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center "
-                onClick={prevPlan}
-              >
-                <img
-                  src="/images/previousArrow.svg"
-                  alt="Filter"
-                  className="w-6 h-6 "
-                />
-              </button>
-              <button
-                variant="ghost"
-                size="icon"
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 text-white bg-black06 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center"
-                onClick={nextPlan}
-              >
-                <img
-                  src="/images/nextArrow.svg"
-                  alt="Filter"
-                  className="w-6 h-6 self-center"
-                />
-              </button>
             </div>
-            <div className="flex mt-4 space-x-2">
-              {plans.map((_, index) => (
-                <div
-                  key={index}
-                  className={`h-2 w-2 rounded-full ${
-                    index === currentPlan ? "bg-white" : "bg-gray82"
-                  }`}
-                />
-              ))}
+          ) : (
+            <div className="flex flex-col items-center justify-center min-h-screen bg-black06 p-4">
+              <div className="relative w-full">
+                <div className="flex overflow-hidden">
+                  {planList.map((plan, index) => (
+                    <div
+                      key={index}
+                      className={`flex-shrink-0 w-full md:w-1/3 text-white overflow-hidden transition-all duration-300 ease-in-out transform ${
+                        index === currentPlan
+                          ? "scale-100 opacity-100"
+                          : "scale-95 opacity-70"
+                      }`}
+                    >
+                      <button
+                        onClick={() => {
+                          setSelectedPlan(planList[currentPlan]);
+                          setSelectedPlaId(planList[currentPlan].planId);
+                          console.log("current Plan", planList[currentPlan]);
+                          if (index === currentPlan) {
+                            setIsPayPalBtnShow(true);
+                          }
+                        }}
+                        className="hover:bg-yellow absolute mt-[85%] bg-yellow text-black26 py-2 px-4 rounded-full w-[45%] ml-[30%]"
+                      >
+                        Subscribe
+                      </button>
+                      <img
+                        draggable={false}
+                        src={
+                          index === 0
+                            ? "/images/plan1.png"
+                            : index === 1
+                            ? "/images/plan2.png"
+                            : "/images/plan3.png"
+                        }
+                        alt={`Plan ${index + 1}`}
+                      ></img>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 text-white bg-black06 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center"
+                  onClick={prevPlan}
+                >
+                  <img
+                    src="/images/previousArrow.svg"
+                    alt="Previous"
+                    className="w-6 h-6"
+                  />
+                </button>
+                <button
+                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 text-white bg-black06 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center"
+                  onClick={nextPlan}
+                >
+                  <img
+                    src="/images/nextArrow.svg"
+                    alt="Next"
+                    className="w-6 h-6"
+                  />
+                </button>
+              </div>
+              <div className="flex mt-4 space-x-2">
+                {plans.map((_, index) => (
+                  <div
+                    key={index}
+                    className={`h-2 w-2 rounded-full ${
+                      index === currentPlan ? "bg-white" : "bg-gray82"
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </div>

@@ -72,6 +72,7 @@ export const API_ROUTER = {
   CHAT_LIST: "/chat/chatlist",
   GET_PROFILE: "/user/",
   GET_DISPUTE_CHAT: "/disputeschat/get-disputes-chat",
+  GET_USER_SEARCH: "/user/get-search-user",
   GAME_LIST: "/games?",
   GAME_BY_CONSOLE: "/gamesbyconsole/",
   UPDATE_PROFILE: "/user/update",
@@ -86,6 +87,8 @@ export const API_ROUTER = {
   GET_BADGE_USER_LIST: "/get-earn-badges-user-list",
   DELETE_MATCH: "/matchrequests/delete-match",
   FP_DELETE_MATCH: "/freeplaymatch/delete-match",
+  challengeFriendApi: "/matchrequests/add-match-challenges",
+  FpchallengeFriendApi: "freeplaymatch/add-match-challenges",
   //
 
   FREE_PLAY_MATCH_REQUEST_CREATE: "/freeplaymatch/create",

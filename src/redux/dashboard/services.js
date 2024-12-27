@@ -238,3 +238,13 @@ export const GetCardPurchase = (data) => {
 export const GetDisputeChat = (data) => {
   return axiosPost(API_ROUTER.GET_DISPUTE_CHAT, data);
 };
+export const PaidPlayChallenge = (data) => {
+  return axiosPost(API_ROUTER.challengeFriendApi, data);
+};
+export const FreePlayChallenge = (data) => {
+  return axiosPost(API_ROUTER.FpchallengeFriendApi, data);
+};
+
+export const GetSearchUser = (data) => {
+  return axiosPost(API_ROUTER.GET_USER_SEARCH, data);
+};

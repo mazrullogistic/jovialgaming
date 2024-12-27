@@ -9,6 +9,7 @@ import {
   DisputesList,
   FPDeleteMatch,
   FreeAvailableMatchJoin,
+  FreePlayChallenge,
   FreePlayMatchReqUpdate,
   FreePlayMatchResult,
   FreePlaySubmitScore,
@@ -48,6 +49,7 @@ import {
   getRegisterUserList,
   GetRoomChatThread,
   GetSearchBadges,
+  GetSearchUser,
   GetSeasonList,
   GetSubscriptionDetail,
   GetTop5Users,
@@ -1178,6 +1180,23 @@ export const getUserPointsAction = createAsyncThunk(
     }
   }
 );
+export const freePlayChallengeAction = createAsyncThunk(
+  "dashboardSlice/freePlayChallengeAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await FreePlayChallenge(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
 export const getBadgeUserListAction = createAsyncThunk(
   "dashboardSlice/getUserPointsAction",
   async (payload, { rejectWithValue }) => {
@@ -1302,6 +1321,24 @@ export const getDisputeChatAction = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const { data, status } = await GetDisputeChat(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
+export const getSearchUserAction = createAsyncThunk(
+  "dashboardSlice/getSearchUserAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await GetSearchUser(payload);
       // console.log("status", status);
       return { data, status };
     } catch (err) {

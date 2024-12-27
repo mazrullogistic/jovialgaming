@@ -29,6 +29,7 @@ import {
   getMatchReqUpdateAction,
   getMatchReqUpdateMultiPlayerAction,
   getMatchRuleAction,
+  getSearchUserAction,
   matchResultAction,
   submitScoreAction,
   updateMatchAction,
@@ -82,7 +83,10 @@ const CreateGame = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [submitScoreDialog, setSubmitScoreDialog] = useState(false);
   const [currentMatchData, setCurrentMatchData] = useState([]);
-
+  //User Search State
+  const [searchTerm, setSearchTerm] = useState("");
+  const [userSearchData, setUserSearchData] = useState([]);
+  console.log("userSearchData", userSearchData);
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const getCurrentTime = () => format(new Date(), "yyyy-MM-dd HH:mm:ss");
   const responsive = {
@@ -838,6 +842,37 @@ const CreateGame = () => {
     getCurrentMatch(amountData, gameMode);
   };
 
+  //UserSearch API
+  const getSearchUserList = async (name) => {
+    const param = new FormData();
+    param.append("name", name);
+
+    try {
+      const res = await dispatch(getSearchUserAction(param));
+
+      if (res.payload.status) {
+        setUserSearchData(res.payload.data.data);
+      } else {
+        setUserSearchData([]);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      // setIsLoader(false);
+    }
+  };
+
+  const onChangeSearch = (e) => {
+    const value = e.target.value.trim();
+    setSearchTerm(value);
+
+    if (value !== "") {
+      getSearchUserList(value);
+    } else {
+      setUserSearchData([]);
+    }
+  };
+
   return (
     <div>
       {isLoader && <Loader />}
@@ -847,7 +882,9 @@ const CreateGame = () => {
           <div className="flex items-center">
             <input
               name="email"
+              value={searchTerm}
               placeholder="Search"
+              onChange={onChangeSearch}
               className="textInput-search"
             />
             <button className="ml-6" onClick={onClickAddItem}>
@@ -861,6 +898,45 @@ const CreateGame = () => {
             </button>
           </div>
         </div>
+        {isLoader ? (
+          <div className="flex justify-center items-center mt-4">
+            Loading...
+          </div>
+        ) : (
+          <div className="mt-4">
+            {
+              userSearchData.length > 0 ? (
+                <ul className="list-none">
+                  {userSearchData.map((user) => (
+                    <div class="flex items-center  text-white rounded-lg p-4   mx-auto ml-10">
+                      {console.log("user", user)}
+
+                      <img
+                        src={user?.image ? user?.image : "/images/logo.png"}
+                        alt="User Image"
+                        class="w-12 h-12 rounded-full object-cover"
+                      />
+
+                      <div class="ml-4 w-[45%] truncate overflow-hidden text-ellipsis whitespace-nowrap">
+                        <p>{user.username}</p>
+                      </div>
+
+                      <button
+                        className="  text-center border-[1px] rounded-lg text-black06 font-inter_tight bg-yellow    px-3 py-2"
+                        onClick={onClickAddItem}
+                      >
+                        Challenge
+                      </button>
+                    </div>
+                  ))}
+                </ul>
+              ) : null
+              /* <div className="text-center text-gray-500 mt-4">
+                No results found.
+              </div> */
+            }
+          </div>
+        )}
         {isModelShow && (
           <Model
             isModelShow={isModelShow}
