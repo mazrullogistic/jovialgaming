@@ -86,6 +86,7 @@ const CreateGame = () => {
   //User Search State
   const [searchTerm, setSearchTerm] = useState("");
   const [userSearchData, setUserSearchData] = useState([]);
+
   console.log("userSearchData", userSearchData);
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const getCurrentTime = () => format(new Date(), "yyyy-MM-dd HH:mm:ss");
@@ -877,7 +878,7 @@ const CreateGame = () => {
     <div>
       {isLoader && <Loader />}
 
-      <div className="h-screen bg-black06">
+      <div className="min-h-screen bg-black06">
         <div className="h-20 bg-black06 ml-8">
           <div className="flex items-center">
             <input
