@@ -2,7 +2,7 @@
 import { useRef, useEffect, useState } from "react";
 import Modal from "react-modal";
 import Image from "next/image";
-import { getData, setModelChatData } from "@/utils/storage";
+import { getData, setChatUserData, setModelChatData } from "@/utils/storage";
 import { useRouter } from "next/navigation";
 import { PATH_DASHBOARD } from "@/routes/paths";
 import Loader from "../Loader";
@@ -73,14 +73,25 @@ const Model = ({
   const handleChangeNext = (item) => {
     console.log("item) =", selectedAmountData);
     console.log("isSubscription", isSubscription);
-    if (isSubscription == 0 && selectedAmountData.amount == "Free Play") {
-      toast.error("Please subscribe to continue.");
-    } else {
-      if (isWageringStop == 0 || selectedAmountData.amount == "Free Play") {
-        setSelectedModelIndex(2);
+    console.log("item", item.amount);
+
+    const userBalance = user.data.balance;
+    const total = selectedAmountData.amount;
+    console.log("userBalance", userBalance);
+    if (userBalance >= total) {
+      if (isSubscription == 0 && selectedAmountData.amount == "Free Play") {
+        toast.error("Please subscribe to continue.");
       } else {
-        toast.error("All wagering is prohibited in this room");
+        if (isWageringStop == 0 || selectedAmountData.amount == "Free Play") {
+          setSelectedModelIndex(2);
+        } else {
+          toast.error("All wagering is prohibited in this room");
+        }
       }
+    } else {
+      toast.error(
+        "You cannot create more matches than the amount in your funds, please delete one match to create this one."
+      );
     }
   };
   const handleChangeStartGame = () => {
@@ -161,7 +172,8 @@ const Model = ({
           ? matchData.host_image
           : matchData.opponent_image
         : "default.png";
-
+      CommonConstant.userDataForChat = "";
+      setChatUserData("chat", "");
       setModelChatData("chatId", {
         id: chatId,
         name: chatName,

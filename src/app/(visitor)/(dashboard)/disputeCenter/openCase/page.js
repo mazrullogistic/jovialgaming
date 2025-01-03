@@ -433,7 +433,7 @@ const openCase = () => {
                   type="userName"
                   name="userName"
                   placeholder="Enter UserName"
-                  className="w-full mt-2 p-4 bg-gray-700 text-black06 rounded-md border border-gray30 focus:outline-none focus:ring-2 focus:ring-yellow"
+                  className="w-full mt-2 p-4 bg-gray-700 text-white rounded-md border border-gray30 focus:outline-none focus:ring-2 focus:ring-yellow "
                 />
               </div>
               <div>
@@ -444,7 +444,7 @@ const openCase = () => {
                   name="email"
                   type="email"
                   placeholder="Enter Email"
-                  className="w-full mt-2 p-4 bg-gray-700 text-black06 rounded-md border border-gray30 focus:outline-none focus:ring-2 focus:ring-yellow"
+                  className="w-full mt-2 p-4 bg-gray-700 text-white rounded-md border border-gray30 focus:outline-none focus:ring-2 focus:ring-yellow"
                 />
               </div>
               <div>
@@ -453,7 +453,7 @@ const openCase = () => {
                 </label>
                 <select
                   onChange={handleSelectChange}
-                  className="w-full mt-2 p-4 bg-gray-700 text-black06 rounded-md border border-gray30 focus:outline-none focus:ring-2 focus:ring-yellow"
+                  className="w-full mt-2 p-4 bg-gray-700 text-white rounded-md border border-gray30 focus:outline-none focus:ring-2 focus:ring-yellow"
                 >
                   <option disabled>Select an item</option>
                   {regardData.map((item) => (
@@ -469,7 +469,7 @@ const openCase = () => {
                 </label>
                 <div
                   onClick={toggleModal}
-                  className="w-full flex items-center p-4 bg-gray-700 text-black06 rounded-md border border-gray30"
+                  className="w-full flex items-center p-4 bg-gray-700 text-white rounded-md border border-gray30"
                 >
                   <img
                     src={selectedGame?.image}
@@ -480,7 +480,7 @@ const openCase = () => {
                     <span className="font-semibold text-white">
                       {selectedGame?.gamename}
                     </span>
-                    <span className="text-sm text-gray82">
+                    <span className="text-sm text-white">
                       Played at{" "}
                       {moment
                         .utc(selectedGame?.createdAt)
@@ -515,7 +515,7 @@ const openCase = () => {
                   name="issue"
                   type="issue"
                   placeholder="Enter Your Issue"
-                  className="w-full mt-2 p-4 bg-gray-700 text-black06 rounded-md border border-gray30 focus:outline-none focus:ring-2 focus:ring-yellow"
+                  className="w-full mt-2 p-4 bg-gray-700 text-white rounded-md border border-gray30 focus:outline-none focus:ring-2 focus:ring-yellow"
                 ></RHFTextInput>
               </div>
               <div>

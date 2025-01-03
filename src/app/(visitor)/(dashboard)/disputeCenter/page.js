@@ -15,14 +15,18 @@ import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
 
 const DisputeCenter = () => {
-  const [tournamentData, setTournamentData] = useState([
-    { id: 1, name: "Juswoo", image: "/images/seeds.png" },
-    { id: 2, name: "Quancinco", image: "/images/seeds.png" },
-    { id: 3, name: "Vonwill", image: "/images/seeds.png" },
-  ]);
+  const [tournamentData, setTournamentData] = useState([]);
   const dispatch = useDispatch();
   const [isLoader, setIsLoader] = useState(false); // Initialize with null or some default value
-  const [disputeList, setDisputeList] = useState([]);
+  const [disputeList, setDisputeList] = useState([
+    {
+      id: 31,
+      user: 0,
+      disputereason: null,
+      match: 18,
+      details: "both user win",
+    },
+  ]);
   const router = useRouter();
 
   useEffect(() => {
@@ -54,7 +58,7 @@ const DisputeCenter = () => {
       {isLoader ? (
         <Loader />
       ) : (
-        <div className="h-full  bg-black06">
+        <div className="min-h-screen  bg-black06">
           <div className="flex  justify-between items-center">
             {/* Title */}
             <p className="text-[24px] sm:text-[40px] text-white font-inter_tight font-[400] ml-[20px] pt-6 sm:pt-12 pb-6 sm:pb-12 text-center sm:text-left">

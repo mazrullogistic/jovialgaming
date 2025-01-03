@@ -9,7 +9,12 @@ import {
   sendRoomChatAction,
   userChatListAction,
 } from "@/redux/dashboard/action";
-import { getData, getRoomId, setChatUserData } from "@/utils/storage";
+import {
+  getData,
+  getRoomId,
+  setChatUserData,
+  setModelChatData,
+} from "@/utils/storage";
 import Image from "next/image";
 import React, { useMemo, useState } from "react";
 import { useEffect, useRef } from "react";
@@ -124,6 +129,7 @@ const Messages = () => {
     //   socket.start();
     //   socket.subscribeUser();
     // }
+
     getChatList();
     return () => {};
   }, [threadId]);
@@ -478,6 +484,9 @@ const Messages = () => {
                   console.log("item ", item);
                   router.push(PATH_DASHBOARD.msgChat);
                   CommonConstant.userDataForChat = item;
+
+                  CommonConstant.userDataForChat = "";
+                  setModelChatData("chatId", "");
                   setChatUserData("chat", item);
                 }}
                 className="bg-black25 p-3 rounded-md flex items-center w-full mb-3"

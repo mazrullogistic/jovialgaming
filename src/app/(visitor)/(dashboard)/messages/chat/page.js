@@ -15,6 +15,8 @@ import {
   getData,
   getModelChatData,
   getRoomId,
+  setChatUserData,
+  setModelChatData,
 } from "@/utils/storage";
 import Image from "next/image";
 import React, { useMemo, useState } from "react";
@@ -27,8 +29,11 @@ import { CommonConstant, EmitterKey, SocketKEY } from "@/constants/keywords";
 import EventEmitter from "@/components/EventEmitter";
 import socket from "@/socket/socket";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { ArrowLeftIcon } from "@heroicons/react/24/solid";
+import { useRouter } from "next/navigation";
 
 const Chat = () => {
+  const router = useRouter();
   const [tournamentData, setTournamentData] = useState([
     { id: 1, name: "Juswoo", image: "/images/seeds.png" },
     { id: 2, name: "Quancinco", image: "/images/seeds.png" },
@@ -77,15 +82,17 @@ const Chat = () => {
       );
     }
   };
-
   useEffect(() => {
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener("scroll", checkIfAtBottom);
-      return () => container.removeEventListener("scroll", checkIfAtBottom);
-    }
-  }, []);
+    // Code to execute when the page is navigated to
 
+    console.log("Screen is focused");
+
+    return () => {
+      // Code to execute when navigating away from the page
+
+      console.log("Screen is unfocused");
+    };
+  }, [router.asPath]); // De
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -214,6 +221,8 @@ const Chat = () => {
     setIsLoader(true);
     const userDataForChat = getChatUserData("chat");
     const payload = new FormData();
+    console.log("userDataForChat", userDataForChat);
+    console.log("chatModelData", chatModelData);
     payload.append("fromUserId", user.data.id);
     if (chatModelData) {
       payload.append("userId", chatModelData.id);
@@ -288,16 +297,21 @@ const Chat = () => {
   const sendChatMessage = async () => {
     try {
       const userDataForChat = getChatUserData("chat");
-
+      console.log("userDataForChat", userDataForChat);
       const payload = new FormData();
 
       payload.append("fromUserId", user.data.id);
-      payload.append(
-        "userId",
-        userDataForChat.fromUserId === user.data.id
-          ? userDataForChat.userId
-          : userDataForChat.fromUserId
-      );
+ 
+      if (chatModelData) {
+        payload.append("userId", chatModelData.id);
+      } else {
+        payload.append(
+          "userId",
+          userDataForChat.fromUserId === user.data.id
+            ? userDataForChat.userId
+            : userDataForChat.fromUserId
+        );
+      }
       payload.append("chatType", "individualchat");
       payload.append("group_id", 0);
       /////
@@ -488,10 +502,16 @@ const Chat = () => {
         <Loader />
       ) : (
         <div className="flex flex-col h-screen bg-black06 text-white">
-          {/* Header Section */}
           <header className="bg-gray-800 p-4 bg-black06 text-white fixed top-0 left-[16%] right-0 flex items-center justify-between">
             <div className="flex-none p-4 bg-gray-900 rounded-lg">
               <div className="flex items-center space-x-4">
+                <button
+                  onClick={() => router.back()}
+                  className="flex items-center space-x-2 text-white bg-gray-900 p-2 rounded-lg hover:bg-gray-700 transition"
+                >
+                  <ArrowLeftIcon className="h-6 w-6 text-white" />
+                  <span className="text-sm font-medium">Back</span>
+                </button>
                 <div className="rounded-full h-10 w-10 bg-gray82 flex items-center justify-center">
                   <img
                     className="rounded-full h-full w-full object-cover"
@@ -508,11 +528,8 @@ const Chat = () => {
                 </h1>
               </div>
             </div>
-
-            {/* Dropdown on the right */}
           </header>
 
-          {/* Main Content Section */}
           <div
             ref={scrollRef}
             onScroll={handleScroll}
@@ -553,9 +570,7 @@ const Chat = () => {
 
                 return (
                   <div key={index}>
-                    <div className="flex flex-col items-center justify-center p-4">
-                      {/* {header && dateHeader(headerText)} */}
-                    </div>
+                    <div className="flex flex-col items-center justify-center p-4"></div>
                     {item?.fromUserId === user.data.id
                       ? renderSenderView(item)
                       : renderReceiverView(item)}
@@ -566,7 +581,6 @@ const Chat = () => {
             <div ref={bottomRef} />
           </div>
 
-          {/* Footer (Input Section) */}
           <footer className="bg-red text-black25 fixed bottom-0 md:left-[16%] right-0">
             {selectedVideoUrl && (
               <div className="relative flex items-center justify-center p-4 bg-black25 rounded-lg mx-4 mb-2">

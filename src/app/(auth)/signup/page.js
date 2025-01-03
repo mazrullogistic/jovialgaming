@@ -178,6 +178,7 @@ const SignupPage = () => {
 
     try {
       const res = await dispatch(checkUserAction(payload));
+      console.log("res 181", res);
       if (!res.payload.status) {
         setIsLoading(false);
         setActiveIndex(2);
@@ -317,7 +318,7 @@ const SignupPage = () => {
 
     try {
       const res = await dispatch(registerAction(payload));
-
+      console.log("res 321", res);
       if (!res.payload.status) {
         setIsLoading(false);
         setActiveIndex(5);
