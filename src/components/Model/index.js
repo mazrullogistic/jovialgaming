@@ -78,20 +78,20 @@ const Model = ({
     const userBalance = user.data.balance;
     const total = selectedAmountData.amount;
     console.log("userBalance", userBalance);
-    if (userBalance >= total) {
-      if (isSubscription == 0 && selectedAmountData.amount == "Free Play") {
-        toast.error("Please subscribe to continue.");
-      } else {
-        if (isWageringStop == 0 || selectedAmountData.amount == "Free Play") {
+    if (isSubscription == 0 && selectedAmountData.amount == "Free Play") {
+      toast.error("Please subscribe to continue.");
+    } else {
+      if (isWageringStop == 0 || selectedAmountData.amount == "Free Play") {
+        if (userBalance >= total || selectedAmountData.amount == "Free Play") {
           setSelectedModelIndex(2);
         } else {
-          toast.error("All wagering is prohibited in this room");
+          toast.error(
+            "You cannot create more matches than the amount in your funds, please delete one match to create this one."
+          );
         }
+      } else {
+        toast.error("All wagering is prohibited in this room");
       }
-    } else {
-      toast.error(
-        "You cannot create more matches than the amount in your funds, please delete one match to create this one."
-      );
     }
   };
   const handleChangeStartGame = () => {
