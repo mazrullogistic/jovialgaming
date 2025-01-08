@@ -26,6 +26,24 @@ module.exports = {
       "piracyapp.s3.us-west-2.amazonaws.com",
     ],
   },
+  webpack: (config) => {
+    // Add rule for .glb and .gltf files
+    config.module.rules.push({
+      test: /\.(glb|gltf)$/,
+      use: [
+        {
+          loader: "file-loader",
+          options: {
+            outputPath: "static/models/",
+            publicPath: "/_next/static/models/",
+            name: "[name].[hash].[ext]",
+          },
+        },
+      ],
+    });
+
+    return config;
+  },
 };
 
 // export default nextConfig;
