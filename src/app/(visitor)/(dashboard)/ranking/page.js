@@ -15,7 +15,7 @@ import React, { useMemo, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useDispatch } from "react-redux";
-import { useEffect, useRef, Suspense } from "react";
+import { useEffect, useRef } from "react";
 import moment from "moment";
 import { getData, setDisputeData } from "@/utils/storage";
 import { PATH_DASHBOARD } from "@/routes/paths";
@@ -23,14 +23,8 @@ import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
 import { toast } from "react-toastify";
 import { TOAST_ALERTS, TOAST_TYPES } from "@/constants/keywords";
-import { Canvas, useLoader } from "@react-three/fiber";
-import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
-import Model from "@/assets/modal/Modal";
-import * as THREE from "three";
-import textureImage from "../../../../assets/modal/texture.jpg";
 
 const Ranking = () => {
-  console.log("Texture", textureImage);
   const [tournamentData, setTournamentData] = useState([]);
   const dispatch = useDispatch();
   const [isLoader, setIsLoader] = useState(false); // Initialize with null or some default value
@@ -61,68 +55,15 @@ const Ranking = () => {
   const [pointsListData, setPointsData] = useState([]);
   const [userListData, setUserListData] = useState([]);
 
-  const [selectedGlb, setSelectedGlb] = useState(null);
-  const [playAnimation, setPlayAnimation] = useState(null);
-  const [isOpenedFinished, setIsOpenedFinished] = useState(false);
-  const [isClosedFinished, setIsClosedFinished] = useState(true);
-  const [isShowOutFinished, setIsShowOutFinished] = useState(false);
-  const [isOpened, setIsOpened] = useState(false);
-  const [scene, setScene] = useState(null);
-
-  console.log("Badges data", badgesData);
-
-  useEffect(() => {
-    const newScene = new THREE.Scene();
-    const textureLoader = new THREE.TextureLoader();
-
-    textureLoader.load(
-      textureImage.src,
-      (texture) => {
-        newScene.background = texture;
-        newScene.backgroundIntensity = 0.3; // Only works with certain extensions
-        setScene(newScene); // Update the state with the scene
-      },
-      undefined,
-      (err) => console.log("Error loading texture:", err)
-    );
-  }, []);
-
-  const cameraRef = useRef();
-
-  useEffect(() => {
-    if (badgesData && badgesData.length) {
-      console.log(currentPlan, "currentPlan");
-      updateBadgeState(currentPlan);
-    }
-  }, [currentPlan]);
-
+  // Logic for moving to the previous item
   const prevPlan = () => {
-    setCurrentPlan((prev) => {
-      const newIndex = prev === 0 ? badgesData.length - 1 : prev - 1;
-      return newIndex;
-    });
+    setCurrentPlan((prev) => (prev === 0 ? badgesData.length - 1 : prev - 1));
   };
 
-  console.log("Loop", badgesData[currentPlan]?.name);
-
+  // Logic for moving to the next item
   const nextPlan = () => {
-    setCurrentPlan((prev) => {
-      const newIndex = prev === badgesData.length - 1 ? 0 : prev + 1;
-      return newIndex;
-    });
+    setCurrentPlan((prev) => (prev === badgesData.length - 1 ? 0 : prev + 1));
   };
-
-  const updateBadgeState = (newIndex) => {
-    setSelectedGlb(badgesData[newIndex]?.image);
-    setPlayAnimation("idle case");
-    setIsOpenedFinished(false);
-    setIsClosedFinished(true);
-    setIsShowOutFinished(false);
-    setIsOpened(false);
-  };
-
-  console.log(selectedGlb, "selectedGlb");
-
   useEffect(() => {
     getUserBadgeList();
     getGameListApi();
@@ -133,7 +74,6 @@ const Ranking = () => {
   useEffect(() => {
     getUserPoint();
   }, [isRanking]);
-
   useEffect(() => {
     console.log("currentPlan", currentPlan);
   }, [currentPlan]);
@@ -152,8 +92,6 @@ const Ranking = () => {
 
       if (res.payload.status) {
         setBadgesData(res.payload.data.data);
-        let badgeData = res.payload.data.data;
-        setSelectedGlb(badgeData[0].image);
         setNoDataFoundText("Create a match to start collecting");
 
         setIsLoader(false);
@@ -335,29 +273,6 @@ const Ranking = () => {
     //alert(`Selected option: ${selectedOption}`);
     toggleModal();
   };
-  useEffect(() => {
-    setPlayAnimation("idle case");
-  }, []);
-
-  const handlePlayOpen = () => {
-    setPlayAnimation("Case open");
-  };
-  const handlePlayShowReward = () => {
-    setIsOpened(true);
-    setIsOpenedFinished(false);
-    setPlayAnimation("Badge coming out");
-  };
-
-  const handlePlayPutBack = () => {
-    setPlayAnimation("Badge going back in");
-    setIsOpened(false);
-  };
-
-  const handlePlayClose = () => {
-    setIsOpenedFinished(false);
-    setPlayAnimation("Case closing and idle");
-    setIsOpened(false);
-  };
 
   function Leaderboard() {
     return (
@@ -506,8 +421,6 @@ const Ranking = () => {
     );
   };
 
-  console.log(badgesData, "badgesData");
-
   function BadgeDialog() {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black06 bg-opacity-50">
@@ -561,8 +474,8 @@ const Ranking = () => {
       ) : (
         <div className="bg-black26 h-full">
           {badgesData.length > 0 ? (
-            <div className="container mx-auto  bg-black26 h-full">
-              {/* <div className="flex justify-between items-center">
+            <div className="container mx-auto p-4 bg-black26 h-full">
+              <div className="flex justify-between items-center">
                 <button
                   onClick={() => {
                     setIsRanking(true);
@@ -573,13 +486,14 @@ const Ranking = () => {
                   </h2>
                 </button>
                 <button onClick={toggleModal} className="mr-8">
+                  {/* Add your filter icon here */}
                   <img
                     src="/images/filter.svg"
                     alt="Filter"
                     className="w-6 h-6"
                   />
                 </button>
-              </div> */}
+              </div>
               {/* {badgesData.map((item, index) => (
               <div
                 key={item.id}
@@ -596,100 +510,50 @@ const Ranking = () => {
 
               {/* {badgesData.length > 0 ? ( */}
               {badgesData.length > 0 ? (
-                <div className="flex flex-col items-center justify-center  bg-red">
+                <div className="flex flex-col items-center justify-center min-h-screen bg-black26 p-4">
                   <div className="relative w-full overflow-hidden">
                     <div
                       className="flex transition-transform duration-500 ease-in-out"
-                      // style={{
-                      //   transform: `translateX(0%)`,
-                      // }}
+                      style={{
+                        transform: `translateX(-${currentPlan * 100}%)`,
+                      }}
                     >
-                      <div
-                        className={`flex-shrink-0  w-full text-white overflow-hidden transition-all duration-300 ease-in-out transform   
+                      {badgesData.map((item, index) => (
+                        <div
+                          key={index}
+                          className={`flex-shrink-0  w-full text-white overflow-hidden transition-all duration-300 ease-in-out transform   
                       }`}
-                      >
-                        <div className="flex justify-center items-center h-full">
+                        >
                           <div
-                            className="object-contain max-w-full max-h-full  shadow-lg  bg-black06   w-[100vw] h-[100vh]"
+                            className="flex justify-center items-center h-full  "
                             onClick={() => {
                               getBadgeUserList();
                               setIsBadgeDialog(true);
                             }}
                           >
-                            <div className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-full h-full">
-                              
-                              <h2 className="absolute left-0 top-20 transform -translate-y-1/2 z-10 text-lg font-semibold ml-4 mt-2">
-                                {badgesData[currentPlan]?.name}
+                            <div className="object-contain max-w-full max-h-full rounded-lg shadow-lg border bg-black06  border-gray82">
+                              {/* <img
+                                draggable={false}
+                                src={item.image}
+                                className="object-contain max-w-full max-h-full  rounded-lg  "
+                              />{" "} */}
+                              <Image
+                                draggable={false}
+                                src={item.image}
+                                height={300}
+                                width={450}
+                                className="object-contain max-w-full max-h-full  rounded-lg  "
+                              />
+                              <h2 className="text-lg font-semibold ml-4 mt-2">
+                                {item.name}
                               </h2>
-                              <p className="absolute left-0 top-28 transform -translate-y-1/2 z-10 text-gray-600 ml-4 mb-2 ">
+                              <p className="text-gray-600 ml-4 mb-6 ">
                                 {user.data.username}
                               </p>
-                              <Canvas
-                                key={
-                                  badgesData[currentPlan]?.image || currentPlan
-                                }
-                                scene={scene}
-                                camera={{ position: [0, 3.6, 3.5] }}
-                                gl={{ physicallyCorrectLights: true }}
-                                onCreated={(state) => {
-                                  const _gl = state.gl.getContext();
-                                  const pixelStorei = _gl.pixelStorei.bind(_gl);
-                                  _gl.pixelStorei = function (...args) {
-                                    const [parameter] = args;
-                                    switch (parameter) {
-                                      case _gl.UNPACK_FLIP_Y_WEBGL:
-                                        return pixelStorei(...args);
-                                    }
-                                  };
-                                  cameraRef.current = state.camera;
-                                }}
-                              >
-                                <OrbitControls
-                                  enablePan={false}
-                                  enabled={isShowOutFinished}
-                                />
-                                <spotLight
-                                  position={[0, 2, 1]}
-                                  intensity={10}
-                                />
-                                <ambientLight intensity={1} />
-                                <Suspense fallback={null}>
-                                  <Environment preset="forest" />
-                                  <Model
-                                    playAnimation={playAnimation}
-                                    setIsOpenedFinished={setIsOpenedFinished}
-                                    setIsClosedFinished={setIsClosedFinished}
-                                    setIsShowOutFinished={setIsShowOutFinished}
-                                    cameraState={cameraRef}
-                                    isOpened={isOpened}
-                                    selectedglbmodal={
-                                      badgesData[currentPlan]?.image
-                                    }
-                                  />
-                                </Suspense>
-                              </Canvas>
                             </div>
                           </div>
-                          <div className="flex mt-4 justify-between items-center absolute  top-6 transform -translate-y-1/2 z-10 w-full">
-                                <button
-                                  onClick={() => {
-                                    setIsRanking(true);
-                                  }}
-                                >
-                                  <h2 className="text-3xl font-semibold mb-2 text-white ml-4">
-                                    Ranking
-                                  </h2>
-                                </button>
-                                <button onClick={toggleModal} className="mr-4">
-                                  <img
-                                    src="/images/filter.svg"
-                                    alt="Filter"
-                                    className="w-6 h-6"
-                                  />
-                                </button>
-                              </div>
                         </div>
-                      </div>
+                      ))}
                     </div>
 
                     {/* Previous button */}
@@ -718,7 +582,7 @@ const Ranking = () => {
                   </div>
 
                   {/* Indicator dots */}
-                  <div className="absolute  bottom-24 transform -translate-y-1/2 z-10 flex mt-4 space-x-2">
+                  <div className="flex mt-4 space-x-2">
                     {badgesData.map((_, index) => (
                       <div
                         key={index}
@@ -727,44 +591,6 @@ const Ranking = () => {
                         }`}
                       />
                     ))}
-                  </div>
-
-                  <div className="absolute  bottom-2 transform -translate-y-1/2 z-10 controls-view ">
-                    {isClosedFinished && (
-                      <button
-                        className="modal-button bg-[#d4d43b] text-[#333232] py-2 px-4 rounded-lg mt-2 hover:bg-purple-400 mx-2"
-                        onClick={handlePlayOpen}
-                      >
-                        Open
-                      </button>
-                    )}
-
-                    {isOpenedFinished && (
-                      <button
-                        className="modal-button bg-[#d4d43b] text-[#333232] py-2 px-4 rounded-lg mt-2 hover:bg-purple-400  mx-2"
-                        onClick={handlePlayClose}
-                      >
-                        Close
-                      </button>
-                    )}
-
-                    {isOpenedFinished && !isShowOutFinished && (
-                      <button
-                        className="modal-button bg-[#d4d43b] text-[#333232] py-2 px-4 rounded-lg mt-2 hover:bg-purple-400  mx-2"
-                        onClick={handlePlayShowReward}
-                      >
-                        Show Reward
-                      </button>
-                    )}
-
-                    {isShowOutFinished && (
-                      <button
-                        className="modal-button bg-[#d4d43b] text-[#333232] py-2 px-4 rounded-lg mt-2 hover:bg-purple-400  mx-2"
-                        onClick={handlePlayPutBack}
-                      >
-                        Put Back
-                      </button>
-                    )}
                   </div>
                 </div>
               ) : (
