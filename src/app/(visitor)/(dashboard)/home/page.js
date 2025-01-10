@@ -5,6 +5,7 @@ import { RHFTextInput } from "@/components/hook-form";
 import {
   CommonConstant,
   EmitterKey,
+  SocketKEY,
   TOAST_ALERTS,
   TOAST_TYPES,
 } from "@/constants/keywords";
@@ -47,6 +48,7 @@ import { onMessage } from "firebase/messaging";
 import { toast } from "react-toastify";
 import dynamic from "next/dynamic";
 import EventEmitter from "@/components/EventEmitter";
+import socket from "@/socket/socket";
 
 const HomePage = ({ Component, pageProps }) => {
   const [isLoader, setIsLoader] = useState(false); // Initialize with null or some default value
@@ -144,7 +146,17 @@ const HomePage = ({ Component, pageProps }) => {
     }
   };
   const [isMobile, setIsMobile] = useState(false);
+  // useEffect(() => {
+  //   connectSock();
+  // }, []);
 
+  // async function connectSock() {
+  //   console.log("SocketKEY.socketConnect", SocketKEY.socketConnect);
+  //   if (SocketKEY.socketConnect === null) {
+  //     socket.start();
+  //     socket.subscribeUser();
+  //   }
+  // }
   useEffect(() => {
     // Function to check if the screen is mobile
     const handleResize = () => {
@@ -779,6 +791,8 @@ const HomePage = ({ Component, pageProps }) => {
         <div className="mt-4 flex items-center space-x-4">
           <button
             onClick={() => {
+              console.log("profileData", profileData);
+              CommonConstant.challengeData = profileData;
               router.push("./createGame");
               setCreate("create", true);
             }}
@@ -828,7 +842,9 @@ const HomePage = ({ Component, pageProps }) => {
               <button
                 className="ml-auto mr-12 hidden md:block"
                 onClick={() => {
-                  EventEmitter.emit(EmitterKey.ShowDialog, "");
+                  router.push("/createGame");
+                  CommonConstant.isModelShow = true;
+                  //EventEmitter.emit(EmitterKey.ShowDialog, "");
                 }}
               >
                 <Image
@@ -1011,6 +1027,7 @@ const HomePage = ({ Component, pageProps }) => {
                                 className=" w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4"
                                 onClick={() => {
                                   CommonConstant.SelectedMatchData = post;
+                                  console.log("post 1014", post);
                                   router.push(PATH_DASHBOARD.createGame);
                                 }}
                               >

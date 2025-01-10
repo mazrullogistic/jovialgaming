@@ -39,12 +39,8 @@ import {
   getConsoleData,
   getCreate,
   getData,
-  getMatchId,
-  getMatchStorageData,
   getRoomData,
   getRoomId,
-  setMatchId,
-  setMatchStorageData,
 } from "@/utils/storage";
 import { setLoading } from "@/redux/dashboard/slice";
 import {
@@ -58,14 +54,11 @@ import { GetMatchReqCreate } from "@/redux/dashboard/services";
 import { format } from "date-fns";
 import socket from "@/socket/socket";
 import AlertDialog from "@/components/AlertDialog";
-import { useRouter } from "next/navigation";
 
 const CreateGame = () => {
   const [isLoader, setIsLoader] = useState(true); // Initialize with null or some default value
   const { toaster } = useToaster();
   const dispatch = useDispatch();
-  const router = useRouter();
-
   const [tournamentData, setTournamentData] = useState([
     { id: 1, name: "Juswoo", image: "/images/seeds.png" },
     { id: 2, name: "Quancinco", image: "/images/seeds.png" },
@@ -132,30 +125,8 @@ const CreateGame = () => {
       socket.subscribeUser();
     }
   }
-  useEffect(() => {
-    console.log("matchData 134", matchData);
-    setMatchStorageData("matchData", matchData);
-  }, [matchData]);
 
   useEffect(() => {
-    // Code to execute when the page is navigated to
-    const matchStorageData = getMatchStorageData("matchData");
-    console.log("matchStorageData", matchStorageData);
-    if (matchStorageData) {
-      CommonConstant.SelectedMatchData = matchStorageData;
-      setIsModelShow(true);
-    }
-    console.log("Screen is focused");
-
-    return () => {
-      // Code to execute when navigating away from the page
-      //setMatchStorageData("matchData", "");
-
-      console.log("Screen is unfocused");
-    };
-  }, [router.asPath]); // De
-  useEffect(() => {
-    console.log("new refresh");
     if (CommonConstant.SelectedMatchData) {
       setIsModelShow(true);
       CommonConstant.FreePlayData = CommonConstant.SelectedMatchData;
@@ -236,31 +207,13 @@ const CreateGame = () => {
   }, [isDataShow]);
 
   const getCurrentMatches = async () => {
-    const matchStorageData = getMatchStorageData("matchData");
-    if (!matchStorageData) {
-      setIsLoader(true);
-    }
+    setIsLoader(true);
 
     try {
       const res = await dispatch(getCurrentMatchesAction());
 
       if (res.payload.statusCode == 200) {
         setCurrentMatchData(res.payload.data);
-
-        const matchId = getMatchId("matchId"); // This is your ID to find
-        // const matchId = 246; // This is your ID to find
-        const foundObject = res.payload.data.find(
-          (item) => item.id === matchId
-        );
-
-        if (foundObject) {
-          console.log("Found Object:", foundObject);
-
-          CommonConstant.SelectedMatchData = foundObject;
-          setMatchStorageData("matchData", foundObject);
-        } else {
-          console.log("No object found with matchId:", matchId);
-        }
         var create = getCreate("create");
         if (create) {
           setIsModelShow(true);
@@ -387,6 +340,7 @@ const CreateGame = () => {
     try {
       const res = await dispatch(getMatchRuleAction(gamId));
 
+      321;
       if (res.payload.data.data.length > 0) {
         setRuleData(res.payload.data.data);
         setIsLoader(false);
@@ -481,15 +435,11 @@ const CreateGame = () => {
 
       const { payload: res } = await dispatch(getMatchReqCreateAction(payload));
       const { data, status } = res;
-      console.log("data.data 467", data.data);
 
-      setMatchId("matchId", data?.data?.id);
       if (status) {
         getCurrentMatches();
         setSelectedModelIndex(3);
         setIsLoader(false);
-        window.location.reload();
-
         toaster(data.message, TOAST_TYPES.SUCCESS);
       } else {
         setSelectedModelIndex(2);
@@ -522,10 +472,6 @@ const CreateGame = () => {
         getFreePlayMatchReqCreateAction(payload)
       );
       const { data, status } = res;
-      console.log("data.data 504", data.data);
-      setMatchId("matchId", data?.data?.id);
-      window.location.reload();
-
       if (status) {
         getCurrentMatches();
         setSelectedModelIndex(3);
@@ -553,9 +499,6 @@ const CreateGame = () => {
 
       const { payload: res } = await dispatch(updateMatchAction(payload));
       const { data, status } = res;
-      window.location.reload();
-      console.log("data.updateMatchStatusApi 534", data.data);
-      setMatchId("matchId", data?.data?.id);
 
       if (status) {
         setSelectedModelIndex(6);
@@ -572,7 +515,7 @@ const CreateGame = () => {
   const freePlayUpdateMatchStatusApi = async () => {
     setIsLoader(true);
     const payload = new FormData();
-    console.log("124546");
+
     try {
       payload.append("game_type", matchData.ismultipleuser);
       payload.append("match_request_id", matchData.match_request_id);
@@ -582,9 +525,6 @@ const CreateGame = () => {
         freePlayUpdateMatchAction(payload)
       );
       const { data, status } = res;
-      console.log("data.updateMatchStatusApi 534", data.data);
-      setMatchId("matchId", data?.data?.id);
-      window.location.reload();
 
       if (status) {
         setSelectedModelIndex(6);
@@ -611,12 +551,7 @@ const CreateGame = () => {
 
       const { payload: res } = await dispatch(updateReadyStatusAction(payload));
       const { data, status } = res;
-      console.log("data.updateReadyStatusApi 588", data.data);
-      window.location.reload();
-
       setIsLoader(false);
-      router.refresh(); // Reloads the current route
-
       if (status) {
         setReadyClick(true);
         setReadyTimer("");
@@ -632,6 +567,7 @@ const CreateGame = () => {
 
   const freePlayUpdateReadyStatusApi = async () => {
     setIsLoader(true);
+
     try {
       const user = getData("user");
 
@@ -644,12 +580,7 @@ const CreateGame = () => {
         freePlayUpdateReadyStatusAction(payload)
       );
       const { data, status } = res;
-      console.log("data.updateReadyStatusApi 620", data.data);
-
       setIsLoader(false);
-      window.location.reload();
-      console.log(" router.refresh");
-
       if (status) {
         setReadyClick(true);
         setReadyTimer("");
@@ -666,6 +597,7 @@ const CreateGame = () => {
     setIsLoader(true);
     try {
       const user = getData("user");
+
       const payload = new FormData();
       payload.append("id", matchData.match_request_id);
       payload.append("user_id", user.data.id);
@@ -674,8 +606,6 @@ const CreateGame = () => {
       const { payload: res } = await dispatch(matchResultAction(payload));
       const { data, status } = res;
       setIsLoader(false);
-      window.location.reload();
-
       if (status) {
         setSelectedModelIndex(8);
       } else {
@@ -702,8 +632,6 @@ const CreateGame = () => {
       );
       const { data, status } = res;
       setIsLoader(false);
-      window.location.reload();
-
       if (status) {
         setSelectedModelIndex(8);
       } else {
@@ -731,8 +659,6 @@ const CreateGame = () => {
       const { payload: res } = await dispatch(submitScoreAction(payload));
       const { data, status } = res;
       setIsLoader(false);
-      window.location.reload();
-
       if (status) {
         setIsSubmitScoreBtn(true);
       } else {
@@ -762,8 +688,6 @@ const CreateGame = () => {
       );
       const { data, status } = res;
       setIsLoader(false);
-      window.location.reload();
-
       if (status) {
         setIsSubmitScoreBtn(true);
       } else {
@@ -826,13 +750,7 @@ const CreateGame = () => {
 
     obj.append("user_id", user.data.id);
     response = await dispatch(getMatchReqUpdateAction(obj));
-    window.location.reload();
-    console.log("response 799", response.payload.data.data.match_request_id);
-    setMatchId("matchId", response.payload.data.data.match_request_id);
-
     setIsLoader(false);
-    window.location.reload();
-
     if (statusParam === "1") {
       setSelectedModelIndex(5);
 
@@ -853,15 +771,6 @@ const CreateGame = () => {
 
     obj.append("user_id", user.data.id);
     response = await dispatch(getFreePlayMatchReqUpdateAction(obj));
-    console.log("response 799", response.payload.data.data.match_request_id);
-
-    setMatchId("matchId", response.payload.data.data.match_request_id);
-
-    // setMatchStorageData("matchData", item);
-    // CommonConstant.SelectedMatchData = item;
-
-    window.location.reload();
-
     setIsLoader(false);
     if (statusParam === "1") {
       setSelectedModelIndex(5);
@@ -888,7 +797,6 @@ const CreateGame = () => {
           getCurrentMatches();
           console.log("data", res);
           toast.success(message);
-          window.location.reload();
 
           if (status) {
           } else {
@@ -927,8 +835,6 @@ const CreateGame = () => {
     setIsModelShow(true);
   };
   const closeModel = () => {
-    setMatchStorageData("matchData", "");
-    window.location.reload();
     setIsModelShow(false);
   };
   const getModelData = (amountData, gameMode) => {
@@ -1120,8 +1026,9 @@ const CreateGame = () => {
                             className="w-[80px] h-[35px] text-center border-[1px] rounded-full text-black06 font-inter_tight bg-yellow mb-4 mt-4"
                             onClick={() => {
                               // socket.start();
+                              socket.subscribeUser();
+
                               CommonConstant.SelectedMatchData = item;
-                              setMatchStorageData("matchData", item);
                               setIsDataShow(!isDataShow);
                             }}
                           >

@@ -13,6 +13,7 @@ import {
   setRoomID,
   getRoomId,
   getRoomData,
+  setMatchStorageData,
 } from "@/utils/storage";
 import { userData } from "@/redux/Auth/AuthSlice";
 import {
@@ -136,12 +137,10 @@ export default function SideMenu({ children }) {
     },
   };
   useEffect(() => {
-    connectSock();
+    // connectSock();
   }, []);
   useEffect(() => {
-    EventEmitter.on(EmitterKey.ShowDialog, (msg) => {
-      onClickAddItem();
-    });
+    console.log("CommonConstant.isFromHome", CommonConstant.isFromHome);
   }, []);
 
   async function connectSock() {
@@ -222,6 +221,8 @@ export default function SideMenu({ children }) {
             setSelectedModelIndex(5);
           } else {
             setSelectedModelIndex(4);
+            setSelectedModelIndex(CommonConstant.selectedMatchIndex);
+
             AvailableForJoinApi();
           }
         }
@@ -855,9 +856,8 @@ export default function SideMenu({ children }) {
     }
   };
   const onClickAddItem = () => {
-    setSelectedModelIndex(1);
-
-    setIsModelShow(true);
+    router.push("/createGame");
+    CommonConstant.isModelShow = true;
   };
 
   const closeModel = () => {
@@ -933,7 +933,15 @@ export default function SideMenu({ children }) {
     { href: "/home", title: "Home", src: "/images/home.svg" },
     { href: "/messages", title: "Messages", src: "/images/chat.svg" },
     { href: "", title: "Notification", src: "/images/notification.svg" },
-    { href: "/createGame", title: "Create", src: "/images/add.svg" },
+    {
+      href: "/createGame",
+      title: "Create",
+      src: "/images/add.svg",
+      onClick: () => {
+        console.log("Create button clicked");
+        // Add your custom logic here
+      },
+    },
     { href: "/ranking", title: "Ranking", src: "/images/trophywhite.svg" },
     {
       href: "/subscription",
@@ -950,7 +958,15 @@ export default function SideMenu({ children }) {
 
   const handleMenuItemClick = (title) => {
     setSelectedItem(title);
+    CommonConstant.isFromHome = false;
+    CommonConstant.isFromChat = false;
+    CommonConstant.challengeData = null;
+    if (title === "Create") {
+      console.log("Create button clicked");
+      setMatchStorageData("matchData", "");
+    }
     if (title === "Create") setCreate("create", "");
+
     if (title === "Notification") setOpenNotificationDialog(true);
     setMenuOpen(false); // Close menu after selecting an item
   };

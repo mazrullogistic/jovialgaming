@@ -211,9 +211,9 @@ const Timer = () => {
 
             <button
               onClick={onPressContinue}
-              className={`w-full py-3 rounded-lg text-lg font-semibold hover:bg-gray-700 transition-colors ${
-                currentMatch ? "bg-gray82" : "bg-yellow"
-              }`}
+              className={`w-full py-3 rounded-lg text-lg font-semibold transition-colors ${
+                matchStatus?.status === 0 ? "bg-gray82" : "bg-yellow"
+              }  ${matchStatus?.status === 0 ? "text-white" : "text-black25"}`}
             >
               Continue
             </button>

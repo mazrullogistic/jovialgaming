@@ -751,7 +751,11 @@ const TournamentModel = ({
             CommonConstant.SelectedMatchData = "";
             // socket.stop();
 
-            route.replace(PATH_DASHBOARD.home);
+            if (CommonConstant?.matchTournamentData?.winnerId !== 0) {
+              route.replace(PATH_DASHBOARD.home);
+            } else {
+              route.back();
+            }
           }}
           className="w-[250px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight bg-yellow absolute left-1/2 transform -translate-x-1/2 bottom-4"
         >

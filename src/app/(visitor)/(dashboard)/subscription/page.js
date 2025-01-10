@@ -364,62 +364,51 @@ const Subscription = () => {
         </div>
       ) : (
         <div>
-          {isMobileView ? (
-            <div className="flex flex-col items-center min-h-screen bg-black06 p-4">
-              <div className="flex flex-col space-y-4">
+          <div className="flex flex-col items-center justify-center min-h-screen bg-black06 p-4">
+            <div className="relative w-full">
+              <div className="flex overflow-hidden">
+                {console.log("currentPlan", currentPlan)}
                 {planList.map((plan, index) => (
-                  <div key={index} className="bg-gray6E p-4 rounded-md">
-                    <img
-                      src={
-                        index === 0
-                          ? "/images/plan1.png"
-                          : index === 1
-                          ? "/images/plan2.png"
-                          : "/images/plan3.png"
-                      }
-                      alt={`Plan ${index + 1}`}
-                      className="w-full h-40 object-cover rounded-md"
-                    />
+                  <div
+                    key={index}
+                    className={`flex-shrink-0 w-full md:w-1/3 text-white overflow-hidden transition-all duration-300 ease-in-out transform ${
+                      index === currentPlan
+                        ? "scale-100 opacity-100"
+                        : !isMobileView
+                        ? "scale-95 opacity-70"
+                        : null
+                    }`}
+                  >
+                    {console.log("index", index)}
                     <button
                       onClick={() => {
-                        setSelectedPlan(plan);
-                        setSelectedPlaId(plan.planId);
-                        setIsPayPalBtnShow(true);
-                      }}
-                      className="mt-4 bg-yellow text-black26 py-2 px-4 rounded-full w-full"
-                    >
-                      Subscribe
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center min-h-screen bg-black06 p-4">
-              <div className="relative w-full">
-                <div className="flex overflow-hidden">
-                  {planList.map((plan, index) => (
-                    <div
-                      key={index}
-                      className={`flex-shrink-0 w-full md:w-1/3 text-white overflow-hidden transition-all duration-300 ease-in-out transform ${
-                        index === currentPlan
-                          ? "scale-100 opacity-100"
-                          : "scale-95 opacity-70"
-                      }`}
-                    >
-                      <button
-                        onClick={() => {
-                          setSelectedPlan(planList[currentPlan]);
-                          setSelectedPlaId(planList[currentPlan].planId);
-                          console.log("current Plan", planList[currentPlan]);
+                        setSelectedPlan(planList[currentPlan]);
+                        setSelectedPlaId(planList[currentPlan].planId);
+                        if (isMobileView) {
+                          setIsPayPalBtnShow(true);
+                        } else {
                           if (index === currentPlan) {
                             setIsPayPalBtnShow(true);
                           }
-                        }}
-                        className="hover:bg-yellow absolute mt-[85%] bg-yellow text-black26 py-2 px-4 rounded-full w-[45%] ml-[30%]"
-                      >
-                        Subscribe
-                      </button>
+                        }
+                      }}
+                      className="hover:bg-yellow absolute mt-[85%] bg-yellow text-black26 py-2 px-4 rounded-full w-[45%] ml-[30%]"
+                    >
+                      Subscribe
+                    </button>
+                    {isMobileView ? (
+                      <img
+                        draggable={false}
+                        src={
+                          currentPlan === 0
+                            ? "/images/plan1.png"
+                            : currentPlan === 1
+                            ? "/images/plan2.png"
+                            : "/images/plan3.png"
+                        }
+                        alt={`Plan ${index + 1}`}
+                      ></img>
+                    ) : (
                       <img
                         draggable={false}
                         src={
@@ -431,42 +420,42 @@ const Subscription = () => {
                         }
                         alt={`Plan ${index + 1}`}
                       ></img>
-                    </div>
-                  ))}
-                </div>
-                <button
-                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 text-white bg-black06 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center"
-                  onClick={prevPlan}
-                >
-                  <img
-                    src="/images/previousArrow.svg"
-                    alt="Previous"
-                    className="w-6 h-6"
-                  />
-                </button>
-                <button
-                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 text-white bg-black06 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center"
-                  onClick={nextPlan}
-                >
-                  <img
-                    src="/images/nextArrow.svg"
-                    alt="Next"
-                    className="w-6 h-6"
-                  />
-                </button>
-              </div>
-              <div className="flex mt-4 space-x-2">
-                {plans.map((_, index) => (
-                  <div
-                    key={index}
-                    className={`h-2 w-2 rounded-full ${
-                      index === currentPlan ? "bg-white" : "bg-gray82"
-                    }`}
-                  />
+                    )}
+                  </div>
                 ))}
               </div>
+              <button
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 text-white bg-black06 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center"
+                onClick={prevPlan}
+              >
+                <img
+                  src="/images/previousArrow.svg"
+                  alt="Previous"
+                  className="w-6 h-6"
+                />
+              </button>
+              <button
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 text-white bg-black06 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center"
+                onClick={nextPlan}
+              >
+                <img
+                  src="/images/nextArrow.svg"
+                  alt="Next"
+                  className="w-6 h-6"
+                />
+              </button>
             </div>
-          )}
+            <div className="flex mt-4 space-x-2">
+              {plans.map((_, index) => (
+                <div
+                  key={index}
+                  className={`h-2 w-2 rounded-full ${
+                    index === currentPlan ? "bg-white" : "bg-gray82"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </div>

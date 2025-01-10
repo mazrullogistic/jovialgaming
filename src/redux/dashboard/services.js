@@ -248,3 +248,9 @@ export const FreePlayChallenge = (data) => {
 export const GetSearchUser = (data) => {
   return axiosPost(API_ROUTER.GET_USER_SEARCH, data);
 };
+export const GetChallengeFriend = (data) => {
+  return axiosPost(API_ROUTER.Challenge_Friend, data);
+};
+export const GetFpChallengeFriend = (data) => {
+  return axiosPost(API_ROUTER.Fp_Challenge_Friend, data);
+};

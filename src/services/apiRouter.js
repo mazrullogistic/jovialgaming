@@ -33,7 +33,8 @@ export const API_ROUTER = {
   UPDATE_READY_TOURNAMENT_STATUS: "/tournament/update-ready-status",
   TOURNAMENT_MATCH_RESULT: "/tournament/match-result",
   TOURNAMENT_SUBMIT_SCORE: "/tournamentscore/add-score",
-
+  Challenge_Friend: "/matchrequests/add-match-challenges",
+  Fp_Challenge_Friend: "/freeplaymatch/add-match-challenges",
   MATCH_RESULT: "/matchrequests/match-result",
   SUBMIT_SCORE: "/score/add-score",
   AVAILABLE_MATCH_JOIN: "/matchrequests/do-match-from-avaliable",

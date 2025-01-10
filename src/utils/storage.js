@@ -236,6 +236,32 @@ export const getIsMobile = (key) => {
     }
   }
 };
+export const setMatchId = (key, value) => {
+  console.log("value", key);
+
+  if (typeof window !== "undefined") {
+    try {
+      const encryptedData = encodeData(value);
+
+      window.localStorage.setItem(key, encryptedData);
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+};
+
+export const getMatchId = (key) => {
+  if (typeof window !== "undefined") {
+    try {
+      const localEncryptedData = window.localStorage.getItem(key);
+      if (localEncryptedData) {
+        return decodeData(localEncryptedData);
+      }
+    } catch (error) {
+      return "";
+    }
+  }
+};
 export const setPaymentData = (key, value) => {
   console.log("value", key);
 
@@ -251,6 +277,33 @@ export const setPaymentData = (key, value) => {
 };
 
 export const getPaymentData = (key) => {
+  if (typeof window !== "undefined") {
+    try {
+      const localEncryptedData = window.localStorage.getItem(key);
+      if (localEncryptedData) {
+        return decodeData(localEncryptedData);
+      }
+    } catch (error) {
+      return "";
+    }
+  }
+};
+
+export const setMatchStorageData = (key, value) => {
+  console.log("value", key);
+
+  if (typeof window !== "undefined") {
+    try {
+      const encryptedData = encodeData(value);
+
+      window.localStorage.setItem(key, encryptedData);
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+};
+
+export const getMatchStorageData = (key) => {
   if (typeof window !== "undefined") {
     try {
       const localEncryptedData = window.localStorage.getItem(key);

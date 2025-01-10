@@ -13,7 +13,9 @@ import Loader from "@/components/Loader";
 import EventEmitter from "@/components/EventEmitter";
 import {
   availableMatchJoinAction,
+  challengeFriendAction,
   deleteMatchAction,
+  fpChallengeFriendAction,
   fPDeleteMatchAction,
   freeAvailableMatchJoinAction,
   freePlayMatchResultAction,
@@ -54,10 +56,13 @@ import { GetMatchReqCreate } from "@/redux/dashboard/services";
 import { format } from "date-fns";
 import socket from "@/socket/socket";
 import AlertDialog from "@/components/AlertDialog";
+import { useRouter } from "next/navigation";
 
 const CreateGame = () => {
   const [isLoader, setIsLoader] = useState(true); // Initialize with null or some default value
   const { toaster } = useToaster();
+  const router = useRouter();
+
   const dispatch = useDispatch();
   const [tournamentData, setTournamentData] = useState([
     { id: 1, name: "Juswoo", image: "/images/seeds.png" },
@@ -83,9 +88,12 @@ const CreateGame = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [submitScoreDialog, setSubmitScoreDialog] = useState(false);
   const [currentMatchData, setCurrentMatchData] = useState([]);
+  const [challengeUserDetail, setChallengeUserDetail] = useState([]);
+  const [isChallenge, setIsChallenge] = useState(false);
   //User Search State
   const [searchTerm, setSearchTerm] = useState("");
   const [userSearchData, setUserSearchData] = useState([]);
+  const [notificationNumber, setNotificationNumber] = useState(0);
 
   console.log("userSearchData", userSearchData);
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -110,22 +118,40 @@ const CreateGame = () => {
     },
   };
   useEffect(() => {
+    if (CommonConstant.challengeData) {
+      setIsChallenge(true);
+      setIsModelShow(true);
+      setChallengeUserDetail(CommonConstant.challengeData);
+    } else {
+      setIsChallenge(false);
+      setChallengeUserDetail(null);
+    }
     getCurrentMatches();
 
     return () => {};
   }, []);
 
+  // useEffect(() => {
+  //   connectSock();
+  // }, []);
+
+  // async function connectSock() {
+  //   if (SocketKEY.socketConnect === null) {
+  //     socket.start();
+  //     socket.subscribeUser();
+  //   }
+  // }
   useEffect(() => {
-    connectSock();
-  }, []);
+    // Code to execute when the page is navigated to
 
-  async function connectSock() {
-    if (SocketKEY.socketConnect === null) {
-      socket.start();
-      socket.subscribeUser();
-    }
-  }
-
+    console.log("Screen is focused 135", CommonConstant.selectedMatchIndex);
+    return () => {
+      // Code to execute when navigating away from the page
+      CommonConstant.isModelShow = false;
+      CommonConstant.challengeData = null;
+      console.log("Screen is unfocused 135");
+    };
+  }, [router.asPath]); // De
   useEffect(() => {
     if (CommonConstant.SelectedMatchData) {
       setIsModelShow(true);
@@ -134,6 +160,7 @@ const CreateGame = () => {
 
       CommonConstant.CurrentGameDetails = CommonConstant.SelectedMatchData;
       setMatchData(CommonConstant.FreePlayData);
+      console.log("matchData 137", CommonConstant.FreePlayData);
       getRuleApi(CommonConstant.SelectedMatchData.game);
 
       if (CommonConstant.SelectedMatchData.host === user.data.id) {
@@ -165,6 +192,10 @@ const CreateGame = () => {
             setSelectedModelIndex(5);
           } else {
             setSelectedModelIndex(4);
+            console.log("selected Index 183");
+            if (CommonConstant.isFromChat) {
+              setSelectedModelIndex(CommonConstant.selectedMatchIndex);
+            }
             AvailableForJoinApi();
           }
         }
@@ -196,6 +227,8 @@ const CreateGame = () => {
           } else if (CommonConstant.SelectedMatchData.status1 === "1") {
             setSelectedModelIndex(5);
           } else {
+            console.log("selected Index 215");
+
             setSelectedModelIndex(4);
             AvailableForJoinApi();
           }
@@ -216,7 +249,7 @@ const CreateGame = () => {
         setCurrentMatchData(res.payload.data);
         var create = getCreate("create");
         if (create) {
-          setIsModelShow(true);
+          //setIsModelShow(true);
         } else {
           //setIsModelShow(false);
         }
@@ -234,7 +267,16 @@ const CreateGame = () => {
   };
   useEffect(() => {}, [selectedModelIndex]);
   useEffect(() => {
+    EventEmitter.on(EmitterKey.ChatReceive, (msg) => {
+      console.log("msg", msg);
+      setNotificationNumber(CommonConstant.notificationCount);
+    });
     EventEmitter.on(EmitterKey.FoundMatch, (response) => {
+      console.log("esponse.message[0] 239", response.message[0]);
+      console.log(
+        "CommonConstant.CurrentGameDetails",
+        CommonConstant.CurrentGameDetails
+      );
       CommonConstant.SelectedMatchData = CommonConstant.CurrentGameDetails;
       if (CommonConstant.CurrentGameDetails) {
         CommonConstant.CurrentGameDetails = response.message[0];
@@ -242,6 +284,8 @@ const CreateGame = () => {
         if (response.message[0]?.matchCompleted) {
           setTimeout(() => {
             setMatchData(response.message[0]);
+            console.log("matchData 246", response.message[0]);
+
             setSelectedModelIndex(9);
           }, 3000);
         } else {
@@ -250,6 +294,8 @@ const CreateGame = () => {
             CommonConstant.SelectedMatchData?.status !== "1"
           ) {
             setMatchData(response.message);
+            console.log("matchData 256", response.message);
+
             CommonConstant.CurrentGameDetails = response.message;
             CommonConstant.SelectedMatchData = response.message;
             setSelectedModelIndex(4);
@@ -258,11 +304,14 @@ const CreateGame = () => {
           }
 
           setMatchData(response.message[0]);
+          console.log("matchData 266", response.message[0]);
 
           setShowAlert(true);
         }
       } else {
         setMatchData(response.message);
+        console.log("matchData 272", response.message);
+
         CommonConstant.CurrentGameDetails = response.message;
         setSelectedModelIndex(4);
       }
@@ -326,7 +375,9 @@ const CreateGame = () => {
         setAmountData(res.payload.data);
         setIsWageringStop(res.payload.isWageringStop);
         setIsSubscription(res.payload.isSubscription);
-
+        if (CommonConstant.isModelShow) {
+          setIsModelShow(true);
+        }
         setIsLoader(false);
       } else {
         setIsLoader(false);
@@ -362,9 +413,17 @@ const CreateGame = () => {
           CommonConstant.FreePlayData.amount == "Free Play" ||
           CommonConstant?.FreePlayData?.amount == "free play"
         ) {
-          freePlayMatchRequestCreateApi(amountData, gameMode);
+          if (isChallenge) {
+            FreePlayChallengeMatchRequestCreateApi(amountData, gameMode);
+          } else {
+            freePlayMatchRequestCreateApi(amountData, gameMode);
+          }
         } else {
-          matchRequestCreateApi(amountData, gameMode);
+          if (isChallenge) {
+            ChallengeMatchRequestCreateApi(amountData, gameMode);
+          } else {
+            matchRequestCreateApi(amountData, gameMode);
+          }
         }
         setIsLoader(false);
       } else {
@@ -439,6 +498,91 @@ const CreateGame = () => {
       if (status) {
         getCurrentMatches();
         setSelectedModelIndex(3);
+        setIsLoader(false);
+        toaster(data.message, TOAST_TYPES.SUCCESS);
+      } else {
+        setSelectedModelIndex(2);
+        setIsLoader(false);
+        toaster(data.message, TOAST_TYPES.ERROR);
+      }
+    } catch (error) {
+      setLoading(false);
+
+      toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+    }
+  };
+
+  const ChallengeMatchRequestCreateApi = async (amountData, gameMode) => {
+    setIsLoader(true);
+    //setSelectedModelIndex(3);
+
+    try {
+      const user = getData("user");
+      const consoleData = getConsoleData("consoleData");
+
+      const payload = new FormData();
+      payload.append("host", user.data.id);
+      payload.append("consoles", consoleData.id);
+      payload.append("game", gameMode.game);
+      payload.append("gamemodes", gameMode.id);
+      payload.append("amount", amountData.amount);
+
+      payload.append("game_type", 0);
+      payload.append("opponent", challengeUserDetail.id);
+
+      payload.append("timezone_name", userTimeZone);
+      payload.append("startTime", getCurrentTime());
+      // payload.append("endTime", getCurrentTime());
+
+      const { payload: res } = await dispatch(challengeFriendAction(payload));
+      const { data, status } = res;
+
+      if (status) {
+        getCurrentMatches();
+        setIsModelShow(false);
+        setIsLoader(false);
+        toaster(data.message, TOAST_TYPES.SUCCESS);
+      } else {
+        setSelectedModelIndex(2);
+        setIsLoader(false);
+        toaster(data.message, TOAST_TYPES.ERROR);
+      }
+    } catch (error) {
+      setLoading(false);
+
+      toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+    }
+  };
+  const FreePlayChallengeMatchRequestCreateApi = async (
+    amountData,
+    gameMode
+  ) => {
+    setIsLoader(true);
+    //  setSelectedModelIndex(3);
+
+    try {
+      const user = getData("user");
+      const consoleData = getConsoleData("consoleData");
+
+      const payload = new FormData();
+      payload.append("host", user.data.id);
+      payload.append("consoles", consoleData.id);
+      payload.append("game", gameMode.game);
+      payload.append("gamemodes", gameMode.id);
+
+      payload.append("game_type", 0);
+      payload.append("opponent", challengeUserDetail.id);
+
+      payload.append("timezone_name", userTimeZone);
+      payload.append("startTime", getCurrentTime());
+      // payload.append("endTime", getCurrentTime());
+
+      const { payload: res } = await dispatch(fpChallengeFriendAction(payload));
+      const { data, status } = res;
+
+      if (status) {
+        getCurrentMatches();
+        setIsModelShow(false);
         setIsLoader(false);
         toaster(data.message, TOAST_TYPES.SUCCESS);
       } else {
@@ -830,7 +974,10 @@ const CreateGame = () => {
     }
   };
   const onClickAddItem = () => {
+    setIsChallenge(false);
     setSelectedModelIndex(1);
+    CommonConstant.isFromChat = false;
+    CommonConstant.challengeData = null;
 
     setIsModelShow(true);
   };
@@ -924,7 +1071,13 @@ const CreateGame = () => {
 
                       <button
                         className="  text-center border-[1px] rounded-lg text-black06 font-inter_tight bg-yellow    px-3 py-2"
-                        onClick={onClickAddItem}
+                        onClick={() => {
+                          setIsChallenge(true);
+                          setChallengeUserDetail(user);
+                          CommonConstant.challengeData = null;
+                          setSelectedModelIndex(1);
+                          setIsModelShow(true);
+                        }}
                       >
                         Challenge
                       </button>
@@ -979,6 +1132,8 @@ const CreateGame = () => {
             submitScoreModel={submitScoreDialog}
             selectedMatchData={CommonConstant.SelectedMatchData}
             isSubscription={isSubscription}
+            notificationNumber={notificationNumber}
+            isChallenge={isChallenge}
           />
         )}
         <div className="mt-16  ml-8">
@@ -1020,18 +1175,33 @@ const CreateGame = () => {
                           </p>
                         </div>
                         <p className="avl-txt">{item.gamename}</p>
-                        <p className="avl-txt">{item.gameModeName}</p>
+                        <div className="flex">
+                          <p className="avl-txt">{item.gameModeName}</p>
+                        </div>
+                        <p
+                          className={`text-xs mt-2 ml-6 ${
+                            item.isChallenges === "1"
+                              ? "text-yellow"
+                              : "text-black25"
+                          }`}
+                        >
+                          {"Challenge By " + item?.host_name}
+                        </p>
+
                         <div className="center-container">
                           <button
                             className="w-[80px] h-[35px] text-center border-[1px] rounded-full text-black06 font-inter_tight bg-yellow mb-4 mt-4"
                             onClick={() => {
                               // socket.start();
+                              //socket.subscribeUser();
+                              CommonConstant.isFromChat = false;
                               CommonConstant.SelectedMatchData = item;
                               setIsDataShow(!isDataShow);
                             }}
                           >
                             Join
                           </button>
+                          {/* Text below the button */}
                         </div>
                       </div>
                     </div>

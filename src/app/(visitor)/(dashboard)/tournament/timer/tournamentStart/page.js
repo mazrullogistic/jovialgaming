@@ -109,6 +109,8 @@ const TournamentStart = () => {
       );
 
       if (response.message[0]?.matchCompleted) {
+        CommonConstant.matchTournamentData = response.message[0];
+
         setTimeout(() => {
           setMatchData(response.message[0]);
           setSelectedModelIndex(9);
@@ -139,7 +141,7 @@ const TournamentStart = () => {
     EventEmitter.on(EmitterKey.ReadyTimerStop, (res) => {
       console.log("res.ReadyTimerStop 126", res.message);
       setSelectedModelIndex(9);
-
+      CommonConstant.matchTournamentData = res.message;
       setReadyTimerData(res.message);
       // setScoreTimeCount(res.message.timer_sec);
     });

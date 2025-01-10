@@ -22,12 +22,14 @@ import {
   GetBadgesList,
   GetBadgeUserList,
   GetCardPurchase,
+  GetChallengeFriend,
   GetChatList,
   GetConsole,
   GetCurrentMatches,
   getCurrentTournamentMatch,
   GetDisputeChat,
   GetEntryAmount,
+  GetFpChallengeFriend,
   GetFreePlayMatchReqCreate,
   GetGameByConsole,
   GetGameHistory,
@@ -679,6 +681,40 @@ export const freePlaySubmitScoreAction = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const { data, status } = await FreePlaySubmitScore(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const challengeFriendAction = createAsyncThunk(
+  "dashboardSlice/challengeFriendAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await GetChallengeFriend(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const fpChallengeFriendAction = createAsyncThunk(
+  "dashboardSlice/fpChallengeFriendAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await GetFpChallengeFriend(payload);
       // console.log("status", status);
       return { data, status };
     } catch (err) {

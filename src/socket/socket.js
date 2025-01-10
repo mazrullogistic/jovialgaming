@@ -1,8 +1,9 @@
 import socketIOClient from "socket.io-client";
 import sailsIOClient from "sails.io.js";
-import { EmitterKey, SocketKEY } from "@/constants/keywords";
+import { CommonConstant, EmitterKey, SocketKEY } from "@/constants/keywords";
 import { getData } from "@/utils/storage";
 import EventEmitter from "@/components/EventEmitter";
+import { usePathname } from "next/navigation";
 
 const axiosDefaults = require("axios");
 
@@ -74,10 +75,18 @@ const start = () => {
     } else if (message.action === "roomGroupchatMessage") {
       EventEmitter.emit(EmitterKey.RoomGroupchatMessage, message);
     } else if (message.action === "ride_request_process_cancelled") {
+      let notificationCount = CommonConstant.notificationCount;
+      console.log("CommonConstant.pathName", CommonConstant.pathName);
+      if (CommonConstant.pathName !== "chat") {
+        notificationCount = notificationCount + 1;
+      }
+      CommonConstant.notificationCount = notificationCount;
       EventEmitter.emit(EmitterKey.ChatReceive, message);
     } else if (message.action === "tournament_start") {
       EventEmitter.emit(EmitterKey.TournamentStart, message);
     } else if (message.action === "tournament_start_by_admin") {
+      EventEmitter.emit(EmitterKey.TournamentStart, message);
+    } else if (message.action === "match_loss") {
       EventEmitter.emit(EmitterKey.TournamentStart, message);
     } else if (message.action === "new_tournament_match") {
       EventEmitter.emit(EmitterKey.TournamentStart, message);
@@ -100,6 +109,7 @@ const stop = () => {
 };
 
 const subscribeUser = async () => {
+  console.log("subscribeUser");
   try {
     await socket.get(
       "/api/v1/chat/subscribeuser1",

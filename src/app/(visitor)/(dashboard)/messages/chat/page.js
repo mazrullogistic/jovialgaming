@@ -86,10 +86,15 @@ const Chat = () => {
     // Code to execute when the page is navigated to
 
     console.log("Screen is focused");
+    CommonConstant.pathName = "chat";
+    CommonConstant.isFromHome = false;
 
     return () => {
       // Code to execute when navigating away from the page
-
+      CommonConstant.pathName = "";
+      CommonConstant.notificationCount = 0;
+      CommonConstant.isFromHome = true;
+      CommonConstant.isFromChat = true;
       console.log("Screen is unfocused");
     };
   }, [router.asPath]); // De
@@ -301,7 +306,7 @@ const Chat = () => {
       const payload = new FormData();
 
       payload.append("fromUserId", user.data.id);
- 
+
       if (chatModelData) {
         payload.append("userId", chatModelData.id);
       } else {

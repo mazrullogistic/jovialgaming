@@ -24,6 +24,8 @@ import { persistor, store } from "@/redux/store";
 import { Provider } from "react-redux";
 import ProtectedPageService from "@/services/protectedPage";
 import { setIsMobile } from "@/utils/storage";
+import { SocketKEY } from "@/constants/keywords";
+import socket from "@/socket/socket";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -61,12 +63,21 @@ export default function RootLayout({ children }) {
     pathname == "/forgotPassword";
 
   useEffect(() => {
+    connectSock();
+
     // Function to check if the screen is mobile
     const handleResize = () => {
       console.log("window.innerWidth <= 768", window.innerWidth <= 768);
       isMobileRes = window.innerWidth <= 768;
       setIsMobile(window.innerWidth <= 768, "mobile"); // Adjust the breakpoint as per your design
     };
+
+    async function connectSock() {
+      if (SocketKEY.socketConnect === null) {
+        socket.start();
+        socket.subscribeUser();
+      }
+    }
     // Set initial value
     handleResize();
 

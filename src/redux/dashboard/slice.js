@@ -90,6 +90,8 @@ import {
   fPDeleteMatchAction,
   getSearchUserAction,
   freePlayChallengeAction,
+  challengeFriendAction,
+  fpChallengeFriendAction,
 } from "./action";
 import { updateProfileAction } from "../Auth/action";
 import { WithdrawAmount } from "./services";
@@ -601,6 +603,28 @@ const DashboardSlice = createSlice({
         state.error = null;
       })
       .addCase(sendChatAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(challengeFriendAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(challengeFriendAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(challengeFriendAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(fpChallengeFriendAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fpChallengeFriendAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(fpChallengeFriendAction.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || "Error fetching user data";
       })

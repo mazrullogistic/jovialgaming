@@ -37,6 +37,8 @@ const Model = ({
   isModelShow,
   isWageringStop,
   isSubscription,
+  notificationNumber,
+  isChallenge,
 }) => {
   const [selectedBox, setSelectedBox] = useState(0);
   const [selectedBoxMatch, setSelectedBoxMatch] = useState(0);
@@ -95,8 +97,11 @@ const Model = ({
     }
   };
   const handleChangeStartGame = () => {
-    setSelectedModelIndex(3);
-
+    if (!isChallenge) {
+      setSelectedModelIndex(3);
+    } else {
+      closeModel();
+    }
     getModelData(selectedAmountData, selectedGameModeData);
   };
   const handleChangePreviuos = () => {
@@ -109,6 +114,8 @@ const Model = ({
     closeModel();
   };
   useEffect(() => {
+    CommonConstant.selectedMatchIndex = selectedModelIndex;
+
     console.log("selectedModelIndex 47", selectedModelIndex);
     return () => {};
   }, []);
@@ -181,8 +188,10 @@ const Model = ({
       });
 
       console.log("chatId", chatId, "imgUrl", imgUrl);
+      CommonConstant.selectedMatchIndex = selectedModelIndex;
 
       router.push(`${PATH_DASHBOARD.msgChat}`);
+      closeModel();
     }
   };
 
@@ -310,9 +319,14 @@ const Model = ({
           <button className="w-full h-full bg-black25 flex flex-col justify-center items-center p-4">
             <button
               onClick={handleRedirect}
-              className="absolute top-4 right-4 flex items-center gap-2 text-white px-3 py-2 bg-blue-500 rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
+              className="absolute top-4 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200"
             >
-              <ChatBubbleLeftEllipsisIcon className="w-6 h-6" />
+              <ChatBubbleLeftEllipsisIcon className="w-5 h-5 md:w-6 md:h-6" />
+              {notificationNumber > 0 && (
+                <span className="absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  {notificationNumber}
+                </span>
+              )}
             </button>
             <div className="flex justify-center items-center mb-4">
               <img src="/images/dollar.svg" className="h-[125px] w-[125px]" />
@@ -385,6 +399,7 @@ const Model = ({
 
   function renderMatchUsers() {
     console.log("matchData 307", matchData);
+    console.log("user.data.id 307", user.data.id);
     return (
       <div className="max-h-[800px] relative">
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
@@ -481,12 +496,16 @@ const Model = ({
           </button>
         )}
 
-        {/* Message Button in Top-Right Corner */}
         <button
           onClick={handleRedirect}
-          className="absolute top-4 right-16 flex items-center gap-2 text-white px-3 py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200"
+          className="absolute top-4 right-16 md:right-16 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200"
         >
-          <ChatBubbleLeftEllipsisIcon className="w-6 h-6" />
+          <ChatBubbleLeftEllipsisIcon className="w-5 h-5 md:w-6 md:h-6" />
+          {notificationNumber > 0 && (
+            <span className="absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+              {notificationNumber}
+            </span>
+          )}
         </button>
       </div>
     );
@@ -518,13 +537,6 @@ const Model = ({
               {readyTimes}
             </p>
           ) : null}
-
-          <button
-            onClick={handleRedirect}
-            className="absolute top-4 right-4 flex items-center gap-2 text-white px-3 py-2 bg-blue-500 rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
-          >
-            <ChatBubbleLeftEllipsisIcon className="w-6 h-6" />
-          </button>
         </div>
 
         <div className="flex max-h-[700px]">
@@ -559,6 +571,17 @@ const Model = ({
           className="w-[200px] h-[40px] text-black text-center font-[400] rounded-xl font-inter_tight bg-grayA4 absolute left-1/2 transform -translate-x-1/2 bottom-4"
         >
           {"Score Submitted"}
+        </button>
+        <button
+          onClick={handleRedirect}
+          className="absolute top-4 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200"
+        >
+          <ChatBubbleLeftEllipsisIcon className="w-5 h-5 md:w-6 md:h-6" />
+          {notificationNumber > 0 && (
+            <span className="absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+              {notificationNumber}
+            </span>
+          )}
         </button>
       </div>
     );
@@ -622,9 +645,14 @@ const Model = ({
         {/* Message Icon in Top-Right Corner */}
         <button
           onClick={handleRedirect}
-          className="absolute top-4 right-4 flex items-center gap-2 text-white px-3 py-2  rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
+          className="absolute top-4 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200"
         >
-          <ChatBubbleLeftEllipsisIcon className="w-6 h-6" />
+          <ChatBubbleLeftEllipsisIcon className="w-5 h-5 md:w-6 md:h-6" />
+          {notificationNumber > 0 && (
+            <span className="absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+              {notificationNumber}
+            </span>
+          )}
         </button>
 
         {iWonLossModelDialog && renderWonLost()}
@@ -938,7 +966,8 @@ const Model = ({
 
       {selectedModelIndex == 1
         ? renderAmount()
-        : selectedModelIndex == 2
+        : /* ? renderAmount() */
+        selectedModelIndex == 2
         ? renderGameMode()
         : selectedModelIndex == 3
         ? renderFindingMatch()

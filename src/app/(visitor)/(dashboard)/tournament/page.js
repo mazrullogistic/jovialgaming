@@ -65,6 +65,8 @@ const Tournament = () => {
       setIsLoader(false);
 
       if (status) {
+        router.push("tournament/timer");
+
         getTournamentRuleApi();
       } else {
         setIsLoader(false);
@@ -86,6 +88,7 @@ const Tournament = () => {
       if (res.payload.data.data.length > 0) {
         setRuleData(res.payload.data.data);
         setIsMember(res.payload.data.isMember);
+
         setIsLoader(false);
       } else {
         setIsLoader(false);
