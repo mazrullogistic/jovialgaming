@@ -613,7 +613,7 @@ const Ranking = () => {
                             className="object-contain max-w-full max-h-full  shadow-lg  bg-black06   w-[100vw] h-[100vh]"
                             onClick={() => {
                               getBadgeUserList();
-                              setIsBadgeDialog(true);
+                              // setIsBadgeDialog(true);
                             }}
                           >
                             <div className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-full h-full">
@@ -666,6 +666,14 @@ const Ranking = () => {
                                     }
                                   />
                                 </Suspense>
+                                <ContactShadows
+                                  position={[0, isOpened ? -6 : 0, -0.5]}
+                                  opacity={0.5}
+                                  width={1}
+                                  height={1}
+                                  blur={3}
+                                  far={2}
+                                />
                               </Canvas>
                             </div>
                           </div>
