@@ -92,6 +92,10 @@ import {
   freePlayChallengeAction,
   challengeFriendAction,
   fpChallengeFriendAction,
+  getTournamentChatListAction,
+  sendGroupChatAction,
+  getTourPersonalChatAction,
+  getSendTourPersonalChatApiAction,
 } from "./action";
 import { updateProfileAction } from "../Auth/action";
 import { WithdrawAmount } from "./services";
@@ -284,6 +288,17 @@ const DashboardSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message || "Error fetching user data";
       })
+      .addCase(getTournamentChatListAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getTournamentChatListAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getTournamentChatListAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
       .addCase(sendRoomChatAction.pending, (state) => {
         state.isLoading = true;
       })
@@ -391,6 +406,39 @@ const DashboardSlice = createSlice({
         state.error = null;
       })
       .addCase(getMatchRuleAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(sendGroupChatAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendGroupChatAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(sendGroupChatAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(getTourPersonalChatAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getTourPersonalChatAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getTourPersonalChatAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(getSendTourPersonalChatApiAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getSendTourPersonalChatApiAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getSendTourPersonalChatApiAction.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || "Error fetching user data";
       })

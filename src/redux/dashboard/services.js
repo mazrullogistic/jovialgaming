@@ -136,6 +136,9 @@ export const CreateDisputes = (data) => {
 export const RoomChat = (data) => {
   return axiosGet(API_ROUTER.ROOM_CHAT, data);
 };
+export const SendGroupChat = (data) => {
+  return axiosPost(API_ROUTER.SEND_GROUP_CHAT, data);
+};
 export const getCurrentTournamentMatch = (data) => {
   return axiosGet(API_ROUTER.GET_CURRENT_TOURNAMENT_MATCH, data);
 };
@@ -175,6 +178,9 @@ export const GetBadges = (data) => {
 export const GetGameByConsole = (data) => {
   return axiosGet(API_ROUTER.GAME_BY_CONSOLE + data, null);
 };
+export const GetTournamentChatList = (data) => {
+  return axiosGet(API_ROUTER.Tournament_Chat_List + data, null);
+};
 export const GetTournamentRules = (data) => {
   return axiosGet(API_ROUTER.TOURNAMENT_RULES + data, null);
 };
@@ -183,6 +189,12 @@ export const GetProfileData = (data) => {
 };
 export const GetBadgesData = (data) => {
   return axiosPost(API_ROUTER.GET_BADGES, data);
+};
+export const TourPersonalChat = (data) => {
+  return axiosPost(API_ROUTER.GetTourPersonalChat, data);
+};
+export const SendTourPersonalChatApi = (data) => {
+  return axiosPost(API_ROUTER.SendTourPersonalChat, data);
 };
 export const DeleteMatch = (data) => {
   return axiosPost(API_ROUTER.DELETE_MATCH, data);

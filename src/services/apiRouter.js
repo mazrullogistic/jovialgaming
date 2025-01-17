@@ -51,6 +51,8 @@ export const API_ROUTER = {
   ROOM_CHAT: "/room/groupchat/message-list?",
   SEND_ROOM_CHAT: "/room/groupchat/send-message-topic",
   SEND_CHAT: "/chat/create-chat",
+  SEND_GROUP_CHAT: "/tournament/groupchat/send-message-topic",
+
   SEND_DISPUTE_CHAT: "/disputeschat/create-disputes-chat",
   UPDATE_START_MATCH: "/tournament/update-start-match-status",
 
@@ -76,6 +78,10 @@ export const API_ROUTER = {
   GET_USER_SEARCH: "/user/get-search-user",
   GAME_LIST: "/games?",
   GAME_BY_CONSOLE: "/gamesbyconsole/",
+  Tournament_Chat_List: "/tournament/groupchat/message-list?",
+  GetTourPersonalChat: "/tournament/tmatchchat/get-match-chat",
+  SendTourPersonalChat: "/tournament/tmatchchat/create-match-chat",
+
   UPDATE_PROFILE: "/user/update",
   PAYPAL_PLAN_LIST: "/payment/paypal-charges-details",
   CARD_PURCHASE: "/payment/card-purchase-new",

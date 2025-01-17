@@ -12,6 +12,7 @@ import { PATH_DASHBOARD } from "@/routes/paths";
 import Loader from "../Loader";
 import { CommonConstant } from "@/constants/keywords";
 import socket from "@/socket/socket";
+import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/solid";
 
 const TournamentModel = ({
   amountData,
@@ -36,6 +37,8 @@ const TournamentModel = ({
   submitScoreModel,
   selectedMatchData,
 }) => {
+  const router = useRouter();
+
   const [gameDetails, setGameDetails] = useState(null);
   const [tourRoundDetails, setTourRoundDetails] = useState(null);
   const [selectedBox, setSelectedBox] = useState(0);
@@ -127,7 +130,9 @@ const TournamentModel = ({
     setSelectionMatchData(selectedMatchData);
     return () => {};
   }, [selectedMatchData]);
-
+  const handleRedirect = () => {
+    router.push("/tournament/timer/tournamentStart/chat");
+  };
   // function sendMessage() {
   //   router.push(PATH_DASHBOARD.messages);
   // }
@@ -331,6 +336,17 @@ const TournamentModel = ({
     console.log("matchData 307", matchData);
     return (
       <div className="max-h-[800px] relative">
+        <button
+          onClick={handleRedirect}
+          className="absolute top-4 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200"
+        >
+          <ChatBubbleLeftEllipsisIcon className="w-5 h-5 md:w-6 md:h-6" />
+          {-1 > 0 && (
+            <span className="absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+              {1}
+            </span>
+          )}
+        </button>
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
           <p className="text-[18px] text-white font-inter_tight font-[300] text-center ">
             {currentTourRoundDetails?.userCount == 3 ||
@@ -379,7 +395,6 @@ const TournamentModel = ({
             </div>
           </div>
         </div>
-
         {readyClick ? (
           <button className="w-[300px] h-[40px] text-white text-center font-[300] rounded-xl font-inter_tight bg-gray30 absolute left-1/2 transform -translate-x-1/2 bottom-4">
             {"Your opponent is not ready"}
@@ -459,6 +474,17 @@ const TournamentModel = ({
   function renderMatchUsersScore() {
     return (
       <div className="max-h-[800px] relative">
+        <button
+          onClick={handleRedirect}
+          className="absolute top-4 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200"
+        >
+          <ChatBubbleLeftEllipsisIcon className="w-5 h-5 md:w-6 md:h-6" />
+          {-1 > 0 && (
+            <span className="absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+              {1}
+            </span>
+          )}
+        </button>
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
           <p className="text-[18px] text-white font-inter_tight font-[300] text-center ">
             {currentTourRoundDetails?.userCount == 3 ||

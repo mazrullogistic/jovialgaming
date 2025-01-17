@@ -322,6 +322,7 @@ const CreateGame = () => {
       setSelectedModelIndex(1);
       setIsModelShow(false);
       toaster(TOAST_ALERTS.OpponentDeclineMatchRequest, TOAST_TYPES.ERROR);
+      getCurrentMatches();
     });
   }, []);
   useEffect(() => {
@@ -900,6 +901,8 @@ const CreateGame = () => {
 
       //Actions.push(ScreenName.RuleScreen, { gameRules: true });
     } else if (statusParam === "2") {
+      getCurrentMatches();
+
       setSelectedModelIndex(1);
       setIsModelShow(false);
     }
@@ -919,6 +922,8 @@ const CreateGame = () => {
     if (statusParam === "1") {
       setSelectedModelIndex(5);
     } else if (statusParam === "2") {
+      getCurrentMatches();
+
       setSelectedModelIndex(1);
       setIsModelShow(false);
     }

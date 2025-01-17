@@ -32,6 +32,7 @@ import { useRouter } from "next/navigation";
 import socket from "@/socket/socket";
 import EventEmitter from "@/components/EventEmitter";
 import { format } from "date-fns";
+import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/solid";
 
 const Timer = () => {
   const [isLoader, setIsLoader] = useState(true); // Initialize with null or some default value
@@ -174,6 +175,9 @@ const Timer = () => {
     }
   };
 
+  const handleRedirect = () => {
+    router.push("/tournament/timer/chat");
+  };
   return (
     <>
       {isLoader ? (
@@ -181,15 +185,15 @@ const Timer = () => {
       ) : (
         <div className="flex justify-center items-center min-h-screen bg-black26 text-white relative">
           <button className="absolute top-4 right-4">
-            {/* <img
-              src={"/images/chat.svg"}
-              className="w-6 h-6"
-              style={{
-                filter:
-                  "brightness(0) saturate(100%) invert(92%) sepia(100%) saturate(646%) hue-rotate(1deg) brightness(106%) contrast(106%)",
-              }}
-              alt="Chat Icon"
-            /> */}
+            <button
+              onClick={handleRedirect}
+              className="absolute top-4 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200"
+            >
+              <ChatBubbleLeftEllipsisIcon className="w-5 h-5 md:w-6 md:h-6" />
+              {-2 > 0 && (
+                <span className="absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"></span>
+              )}
+            </button>
           </button>
           <div className="w-full max-w-md p-6 relative">
             {/* Chat Icon */}

@@ -760,7 +760,7 @@ const Ranking = () => {
                         className="modal-button bg-[#d4d43b] text-[#333232] py-2 px-4 rounded-lg mt-2 hover:bg-purple-400  mx-2"
                         onClick={handlePlayShowReward}
                       >
-                        Show Reward
+                        Remove
                       </button>
                     )}
 
@@ -769,7 +769,7 @@ const Ranking = () => {
                         className="modal-button bg-[#d4d43b] text-[#333232] py-2 px-4 rounded-lg mt-2 hover:bg-purple-400  mx-2"
                         onClick={handlePlayPutBack}
                       >
-                        Put Back
+                        Return
                       </button>
                     )}
                   </div>

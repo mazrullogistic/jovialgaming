@@ -75,7 +75,7 @@ export default function RootLayout({ children }) {
     async function connectSock() {
       if (SocketKEY.socketConnect === null) {
         socket.start();
-        socket.subscribeUser();
+        // socket.subscribeUser();
       }
     }
     // Set initial value

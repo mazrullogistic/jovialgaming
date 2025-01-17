@@ -1020,8 +1020,16 @@ const HomePage = ({ Component, pageProps }) => {
                               </p>
                             </div>
                             <p className="avl-txt">{post.gamename}</p>
-
-                            <p className="avl-txt">{post.gameModeName}</p>
+                            <p className="avl-txt">{post.gameModeName}</p>{" "}
+                            <p
+                              className={`text-xs mt-2 ml-6 ${
+                                post?.isChallenges === "1"
+                                  ? "text-yellow"
+                                  : "text-black25"
+                              }`}
+                            >
+                              {"Challenge By " + post?.host_name}
+                            </p>
                             <div className="center-container">
                               <button
                                 className=" w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4"
@@ -1071,6 +1079,15 @@ const HomePage = ({ Component, pageProps }) => {
                             <p className="avl-txt">{item.gamename}</p>
 
                             <p className="avl-txt">{item.gameModeName}</p>
+                            <p
+                              className={`text-xs mt-2 ml-6 ${
+                                item.isChallenges === "1"
+                                  ? "text-yellow"
+                                  : "text-black25"
+                              }`}
+                            >
+                              {"Challenge By " + item?.host_name}
+                            </p>
                             <div className="center-container">
                               <button
                                 className=" w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4"

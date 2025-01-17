@@ -41,6 +41,7 @@ const Tournament = () => {
   const [IsMember, setIsMember] = useState(false);
 
   useEffect(() => {
+    console.log("tournamentNewData", tournamentNewData);
     getTournamentRuleApi();
   }, []);
 
@@ -57,11 +58,14 @@ const Tournament = () => {
       const object = {
         tour_id: tournamentNewData.id,
         user_id: user.data.id,
+        // devicetype: "web",
       };
 
       const { payload: res } = await dispatch(tournamentRegisterAction(object));
 
       const { data, status } = res;
+      console.log("object ", object);
+      console.log("res 65", res);
       setIsLoader(false);
 
       if (status) {
@@ -69,6 +73,8 @@ const Tournament = () => {
 
         getTournamentRuleApi();
       } else {
+        router.push("tournament/timer");
+
         setIsLoader(false);
         toast.error(data.message);
       }

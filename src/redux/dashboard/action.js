@@ -55,6 +55,7 @@ import {
   GetSeasonList,
   GetSubscriptionDetail,
   GetTop5Users,
+  GetTournamentChatList,
   GetTournamentList,
   GetTournamentRules,
   GetUserPoints,
@@ -67,12 +68,15 @@ import {
   SelectRoom,
   SendChat,
   SendDisputeChat,
+  SendGroupChat,
   SendRoomChat,
+  SendTourPersonalChatApi,
   SubmitScore,
   TestNotification,
   TournamentMatchResult,
   TournamentRegister,
   TournamentSubmitScore,
+  TourPersonalChat,
   UpdateMatchStatus,
   UpdateProfile,
   UpdateReadyStatus,
@@ -794,6 +798,22 @@ export const sendChatAction = createAsyncThunk(
     }
   }
 );
+export const sendGroupChatAction = createAsyncThunk(
+  "dashboardSlice/sendGroupChatAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await SendGroupChat(payload);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
 export const sendDisputeChatAction = createAsyncThunk(
   "dashboardSlice/sendDisputeChatAction",
   async (payload, { rejectWithValue }) => {
@@ -1340,6 +1360,57 @@ export const getChatListAction = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const { data, status } = await GetChatList(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const getTournamentChatListAction = createAsyncThunk(
+  "dashboardSlice/getTournamentChatListAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await GetTournamentChatList(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const getTourPersonalChatAction = createAsyncThunk(
+  "dashboardSlice/getTourPersonalChatAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await TourPersonalChat(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+export const getSendTourPersonalChatApiAction = createAsyncThunk(
+  "dashboardSlice/getSendTourPersonalChatApiAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await SendTourPersonalChatApi(payload);
       // console.log("status", status);
       return { data, status };
     } catch (err) {

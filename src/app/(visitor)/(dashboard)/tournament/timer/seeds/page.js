@@ -14,6 +14,8 @@ import "react-multi-carousel/lib/styles.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import Loader from "@/components/Loader";
+import { ArrowLeftIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const Seeds = () => {
   const [tournamentData, setTournamentData] = useState([
@@ -26,6 +28,7 @@ const Seeds = () => {
   const dispatch = useDispatch();
   const [userList, setUserList] = useState([]);
   const [isLoader, setIsLoader] = useState(true); // Initialize with null or some default value
+  const router = useRouter();
 
   useEffect(() => {
     RegisterUserList();
@@ -70,6 +73,13 @@ const Seeds = () => {
         <Loader />
       ) : (
         <div className="h-screen bg-black06">
+          <button
+            onClick={() => router.back()}
+            className="flex items-center space-x-2 text-white bg-gray-900 p-2 rounded-lg hover:bg-gray-700 transition  pt-8 pl-8"
+          >
+            <ArrowLeftIcon className="h-6 w-6 text-white" />
+            <span className="text-sm font-medium">Back</span>
+          </button>
           <div className="center-container">
             <p className="medium-txt-seeds">Seeds</p>
           </div>

@@ -45,8 +45,9 @@ const start = () => {
   }
 
   socket.on("connect", () => {
-    console.log("socket connect success");
+    console.log("socket connect success 48");
     SocketKEY.socketConnect = socketIO;
+    subscribeUser();
   });
 
   socket.on("user", (message) => {
@@ -74,6 +75,8 @@ const start = () => {
       EventEmitter.emit(EmitterKey.AfterSubmit, message);
     } else if (message.action === "roomGroupchatMessage") {
       EventEmitter.emit(EmitterKey.RoomGroupchatMessage, message);
+    } else if (message.action === "tournament_message") {
+      EventEmitter.emit(EmitterKey.GroupchatMessage, message);
     } else if (message.action === "ride_request_process_cancelled") {
       let notificationCount = CommonConstant.notificationCount;
       console.log("CommonConstant.pathName", CommonConstant.pathName);
@@ -92,6 +95,10 @@ const start = () => {
       EventEmitter.emit(EmitterKey.TournamentStart, message);
     } else if (message.action === "new_tournament_match_by_disqualify") {
       EventEmitter.emit(EmitterKey.TournamentStart, message);
+    } else if (message.action === "new_tournament_match_by_disqualify") {
+      EventEmitter.emit(EmitterKey.TmatchChat, message);
+    } else if (message.action === "unread_message") {
+      EventEmitter.emit(EmitterKey.TmatchChat, message);
     }
   });
 
