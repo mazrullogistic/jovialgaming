@@ -568,11 +568,11 @@ const HomePage = ({ Component, pageProps }) => {
 
   function ScoreBoard() {
     return (
-      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[80%] md:w-[50%]">
-        <div className="bg-black p-4 rounded-lg shadow-lg  ">
-          <ul className="list-none space-y-2">
+      <div className='flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[80%] md:w-[50%]'>
+        <div className='bg-black p-4 rounded-lg shadow-lg  '>
+          <ul className='list-none space-y-2'>
             {gameWinLoss.map((game, index) => (
-              <button key={index} className="flex justify-between w-[95%]">
+              <button key={index} className='flex justify-between w-[95%]'>
                 <span>{game.gamename}</span>
                 <span>
                   {game.win} - {game.loss}
@@ -582,12 +582,11 @@ const HomePage = ({ Component, pageProps }) => {
           </ul>
         </div>
         <button
-          className="mt-4 bg-yellow  hover:bg-yellow text-black26 py-2 px-4 rounded-xl w-[25%]   self-center"
+          className='mt-4 bg-yellow  hover:bg-yellow text-black26 py-2 px-4 rounded-xl w-[25%]   self-center'
           onClick={() => {
             setScoreBoardModel(false);
             setIsProfileCard(true);
-          }}
-        >
+          }}>
           close
         </button>
       </div>
@@ -595,25 +594,24 @@ const HomePage = ({ Component, pageProps }) => {
   }
   function BCBoard() {
     return (
-      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[85%] md:w-[25%]">
-        <span className="text-[22px]  font-[400] pl-4">{"Badges"}</span>
+      <div className='flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[85%] md:w-[25%]'>
+        <span className='text-[22px]  font-[400] pl-4'>{"Badges"}</span>
 
-        <div className="bg-black p-4 rounded-lg shadow-lg  ">
-          <ul className="list-none space-y-2">
+        <div className='bg-black p-4 rounded-lg shadow-lg  '>
+          <ul className='list-none space-y-2'>
             {gameWinLoss.map((game, index) => (
-              <button key={index} className="flex justify-between">
+              <button key={index} className='flex justify-between'>
                 <span>{game.name}</span>
               </button>
             ))}
           </ul>
         </div>
         <button
-          className="mt-4 bg-yellow  hover:bg-yellow text-black26 py-2 px-4 rounded-xl w-[25%]   self-center"
+          className='mt-4 bg-yellow  hover:bg-yellow text-black26 py-2 px-4 rounded-xl w-[25%]   self-center'
           onClick={() => {
             setBcModel(false);
             setIsProfileCard(true);
-          }}
-        >
+          }}>
           close
         </button>
       </div>
@@ -621,27 +619,26 @@ const HomePage = ({ Component, pageProps }) => {
   }
   function TWBoard() {
     return (
-      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[75%] md:w-[25%]">
-        <span className="text-[22px]  font-[400] pl-4">
+      <div className='flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[75%] md:w-[25%]'>
+        <span className='text-[22px]  font-[400] pl-4'>
           {"Tournament Wins"}
         </span>
 
-        <div className="bg-black p-4 rounded-lg shadow-lg  ">
-          <ul className="list-none space-y-2">
+        <div className='bg-black p-4 rounded-lg shadow-lg  '>
+          <ul className='list-none space-y-2'>
             {gameWinLoss.map((game, index) => (
-              <button key={index} className="flex justify-between">
+              <button key={index} className='flex justify-between'>
                 <span>{game.tname}</span>
               </button>
             ))}
           </ul>
         </div>
         <button
-          className="mt-4 bg-yellow  hover:bg-yellow text-black26 py-2 px-4 rounded-xl w-[25%]   self-center"
+          className='mt-4 bg-yellow  hover:bg-yellow text-black26 py-2 px-4 rounded-xl w-[25%]   self-center'
           onClick={() => {
             setTwModel(false);
             setIsProfileCard(true);
-          }}
-        >
+          }}>
           close
         </button>
       </div>
@@ -649,33 +646,31 @@ const HomePage = ({ Component, pageProps }) => {
   }
   function SeasonModel() {
     return (
-      <div className="flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[80%] md:w-[25%]">
-        <span className="text-[22px]  font-[400] pl-4">{"Season"}</span>
+      <div className='flex flex-col   justify-center   bg-black26 text-white rounded p-4 w-[80%] md:w-[25%]'>
+        <span className='text-[22px]  font-[400] pl-4'>{"Season"}</span>
 
-        <div className="bg-black p-4 rounded-lg shadow-lg  ">
-          <ul className="list-none space-y-2">
+        <div className='bg-black p-4 rounded-lg shadow-lg  '>
+          <ul className='list-none space-y-2'>
             {seasonList.map((game, index) => (
               <button
                 key={index}
-                className="flex justify-between"
+                className='flex justify-between'
                 onClick={() => {
                   setSeasonId(game.id);
                   setSeasonModel(false);
                   setIsProfileCard(true);
-                }}
-              >
+                }}>
                 <span>{game.name}</span>
               </button>
             ))}
           </ul>
         </div>
         <button
-          className="mt-4 bg-yellow  hover:bg-yellow text-black26 py-2 px-4 rounded-xl w-[25%]   self-center"
+          className='mt-4 bg-yellow  hover:bg-yellow text-black26 py-2 px-4 rounded-xl w-[25%]   self-center'
           onClick={() => {
             setSeasonModel(false);
             setIsProfileCard(true);
-          }}
-        >
+          }}>
           close
         </button>
       </div>
@@ -683,101 +678,97 @@ const HomePage = ({ Component, pageProps }) => {
   }
   function ProfileCard({ item, onClose }) {
     return (
-      <div className="bg-black26 text-white rounded-lg shadow-lg p-6 w-96 mx-auto">
-        <div className="flex">
+      <div className='bg-black26 text-white rounded-lg shadow-lg p-6 w-96 mx-auto'>
+        <div className='flex'>
           <button
-            className="text-white text-xl mb-4 w-[100%] flex items-center"
+            className='text-white text-xl mb-4 w-[100%] flex items-center'
             onClick={() => {
               setIsProfileCard(false);
               setSeasonModel(true);
-            }}
-          >
+            }}>
             Profile Card
-            <i className="fas fa-chevron-down ml-2">
-              <Image src="/images/dropdown.png" width={15} height={15} />
+            <i className='fas fa-chevron-down ml-2'>
+              <Image src='/images/dropdown.png' width={15} height={15} />
             </i>
             {/* Add this for the down arrow */}
           </button>
-          <button className="text-xl mb-4 text-gray-400" onClick={onClose}>
+          <button className='text-xl mb-4 text-gray-400' onClick={onClose}>
             ✕
           </button>
         </div>
-        <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-4">
+        <div className='flex justify-between items-center'>
+          <div className='flex items-center space-x-4'>
             {/* Profile Image */}
             <img
               src={profileData?.image}
-              alt="Profile"
-              className="w-24 h-24 rounded-full border-2 border-gray82"
+              alt='Profile'
+              className='w-24 h-24 rounded-full border-2 border-gray82'
             />
             <div>
-              <h2 className="text-xl font-bold">{profileData?.username}</h2>
-              <div className="flex space-x-6 text-white mt-1">
+              <h2 className='text-xl font-bold'>{profileData?.username}</h2>
+              <div className='flex space-x-6 text-white mt-1'>
                 <button
-                  className="flex items-center"
+                  className='flex items-center'
                   onClick={() => {
                     setIsProfileCard(false);
                     getGameWinLoss();
-                  }}
-                >
+                  }}>
                   <div>
-                    <p className="text-sm mb-1">W/L</p>
-                    <p className="font-semibold">
+                    <p className='text-sm mb-1'>W/L</p>
+                    <p className='font-semibold'>
                       {profileData?.win}-{profileData?.loss}
                     </p>
                   </div>
-                  <i className="fas fa-chevron-down ml-2 mt-2">
+                  <i className='fas fa-chevron-down ml-2 mt-2'>
                     <Image
-                      src="/images/dropdown.png"
+                      src='/images/dropdown.png'
                       width={15}
                       height={15}
-                      alt="dropdown"
+                      alt='dropdown'
                     />
                   </i>
                 </button>
 
                 <button
-                  className="flex items-center"
+                  className='flex items-center'
                   onClick={() => {
                     setIsProfileCard(false);
                     setBcModel(true);
                     getUserBadgeList();
-                  }}
-                >
+                  }}>
                   <div>
-                    <p className="text-sm mb-1">BC</p>
-                    <p className="font-semibold">{profileData?.badgeCount}</p>
+                    <p className='text-sm mb-1'>BC</p>
+                    <p className='font-semibold'>{profileData?.badgeCount}</p>
                   </div>
-                  <i className="fas fa-chevron-down ml-2 mt-2">
+                  <i className='fas fa-chevron-down ml-2 mt-2'>
                     <Image
-                      src="/images/dropdown.png"
+                      src='/images/dropdown.png'
                       width={15}
                       height={15}
-                      alt="dropdown"
+                      alt='dropdown'
                     />
                   </i>
                 </button>
 
                 <button
-                  className="flex items-center"
+                  className='flex items-center'
                   onClick={() => {
                     setIsProfileCard(false);
                     setTwModel(true);
                     getTourGameWinLoss();
-                  }}
-                >
+                  }}>
                   <div>
-                    <p className="text-sm mb-1">TW</p>
-                    <p className="font-semibold">
+                    <p className='text-sm mb-1'>TW</p>
+                    <p className='font-semibold'>
                       {profileData?.tournamentWin}
                     </p>
                   </div>
-                  <i className="fas fa-chevron-down ml-2 mt-2">
+                  <i className='fas fa-chevron-down ml-2 mt-2'>
                     <Image
-                      src="/images/dropdown.png"
+                      src='/images/dropdown.png'
                       width={15}
                       height={15}
-                      alt="dropdown"
+                      alt='dropdown'
                     />
                   </i>
                 </button>
@@ -788,7 +779,7 @@ const HomePage = ({ Component, pageProps }) => {
         </div>
 
         {/* Challenge Button */}
-        <div className="mt-4 flex items-center space-x-4">
+        <div className='mt-4 flex items-center space-x-4'>
           <button
             onClick={() => {
               console.log("profileData", profileData);
@@ -796,16 +787,15 @@ const HomePage = ({ Component, pageProps }) => {
               router.push("./createGame");
               setCreate("create", true);
             }}
-            className="bg-yellow hover:bg-yellow text-black06   py-2 px-4 rounded"
-          >
+            className='bg-yellow hover:bg-yellow text-black06   py-2 px-4 rounded'>
             + Challenge
           </button>
         </div>
         {/* recentMatches */}
         {/* Recent Matches */}
-        <div className="mt-6">
-          <h3 className="text-lg font-bold">Recents</h3>
-          <ul className="mt-2">
+        <div className='mt-6'>
+          <h3 className='text-lg font-bold'>Recents</h3>
+          <ul className='mt-2'>
             {profileData?.recentMatches.map((item) => {
               return (
                 <li
@@ -813,13 +803,12 @@ const HomePage = ({ Component, pageProps }) => {
                     item.winLossStatus === 0 || item.winLossStatus === 2
                       ? "text-red"
                       : "text-green"
-                  }`}
-                >
+                  }`}>
                   {item.winLossStatus === 0 || item.winLossStatus === 2
                     ? "L"
                     : "W"}
 
-                  <li className="text-white ml-4">{item.userString}</li>
+                  <li className='text-white ml-4'>{item.userString}</li>
                 </li>
               );
             })}
@@ -833,26 +822,25 @@ const HomePage = ({ Component, pageProps }) => {
       {isLoader ? (
         <Loader />
       ) : (
-        <div className="flex bg-black06  ">
-          <div className=" w-[100%] bg-black06">
-            <div className="flex items-center justify-between w-full">
-              <p className="header-home-txt">
+        <div className='flex bg-black06  '>
+          <div className=' w-[100%] bg-black06'>
+            <div className='flex items-center justify-between w-full'>
+              <p className='header-home-txt'>
                 Welcome {user?.data?.username} ,
               </p>
               <button
-                className="ml-auto mr-12 hidden md:block"
+                className='ml-auto mr-12 hidden md:block'
                 onClick={() => {
                   router.push("/createGame");
                   CommonConstant.isModelShow = true;
                   //EventEmitter.emit(EmitterKey.ShowDialog, "");
-                }}
-              >
+                }}>
                 <Image
-                  src="/images/plus.png"
-                  className="plus-img"
+                  src='/images/plus.png'
+                  className='plus-img'
                   width={30}
                   height={30}
-                  alt="Logo"
+                  alt='Logo'
                 />
               </button>
             </div>
@@ -868,24 +856,23 @@ const HomePage = ({ Component, pageProps }) => {
               src={user?.roomDetails?.image}
               width={400} // Adjust as needed for your design
               height={300} // Adjust as needed for your design
-              className="w-[93%] h-auto max-h-[430px] ml-4 rounded-xl mt-2 object-center bg-gray30"
+              className='w-[93%] h-auto max-h-[430px] ml-4 rounded-xl mt-2 object-center bg-gray30'
               // Adjust as needed for your design
-              alt="Room Details"
+              alt='Room Details'
             />
 
             {isMobile ? (
-              <div className="flex flex-row mt-4 gap-4 ml-4">
+              <div className='flex flex-row mt-4 gap-4 ml-4'>
                 {/* Console Dropdown */}
-                <div className="bg-black25 w-full sm:w-20 rounded-3xl h-8 flex items-center justify-center relative">
+                <div className='bg-black25 w-full sm:w-20 rounded-3xl h-8 flex items-center justify-center relative'>
                   <select
-                    className="bg-black25 text-white text-[12px] text-center rounded-3xl h-full px-2 appearance-none pr-6 w-full sm:w-auto"
+                    className='bg-black25 text-white text-[12px] text-center rounded-3xl h-full px-2 appearance-none pr-6 w-full sm:w-auto'
                     onChange={handleChangeConsole}
                     style={{
                       WebkitAppearance: "none",
                       MozAppearance: "none",
                       appearance: "none",
-                    }}
-                  >
+                    }}>
                     {consoleList.map((option, index) => (
                       <option key={index} value={JSON.stringify(option)}>
                         {option.consolename}
@@ -895,15 +882,15 @@ const HomePage = ({ Component, pageProps }) => {
 
                   {/* Custom arrow */}
                   <img
-                    className="absolute right-4 pointer-events-none"
+                    className='absolute right-4 pointer-events-none'
                     style={{
                       top: "50%",
                       transform: "translateY(-50%)",
                       width: "0.6rem",
                       height: "1rem",
                     }}
-                    src="/images/arrowDown.svg"
-                    alt="Dropdown arrow"
+                    src='/images/arrowDown.svg'
+                    alt='Dropdown arrow'
                   />
                 </div>
 
@@ -912,34 +899,31 @@ const HomePage = ({ Component, pageProps }) => {
                   onClick={() => {
                     router.push(PATH_DASHBOARD.chat);
                   }}
-                  className="w-full sm:w-20 bg-black25 text-white text-[12px] text-center rounded-3xl h-8"
-                >
+                  className='w-full sm:w-20 bg-black25 text-white text-[12px] text-center rounded-3xl h-8'>
                   Chat
                 </button>
 
                 {/* Discord Button */}
-                <div className="w-full sm:w-20 bg-black25 text-white text-[12px] text-center rounded-3xl h-8 flex items-center justify-center">
+                <div className='w-full sm:w-20 bg-black25 text-white text-[12px] text-center rounded-3xl h-8 flex items-center justify-center'>
                   <a
-                    target="_blank"
-                    href="https://discord.gg/CtVr3pAnqs"
-                    rel="noopener noreferrer"
-                  >
+                    target='_blank'
+                    href='https://discord.gg/CtVr3pAnqs'
+                    rel='noopener noreferrer'>
                     Discord
                   </a>
                 </div>
               </div>
             ) : (
-              <div className="flex mt-4">
-                <div className="bg-black25 w-16 sm:w-20 rounded-3xl h-6 sm:h-8 flex items-center justify-center mt-2 ml-2 sm:ml-4 relative">
+              <div className='flex mt-4'>
+                <div className='bg-black25 w-16 sm:w-20 rounded-3xl h-6 sm:h-8 flex items-center justify-center mt-2 ml-2 sm:ml-4 relative'>
                   <select
-                    className="bg-black25 text-white text-[10px] sm:text-[12px] text-center rounded-3xl h-full px-2 appearance-none pr-6" // Add `appearance-none` and padding-right for space
+                    className='bg-black25 text-white text-[10px] sm:text-[12px] text-center rounded-3xl h-full px-2 appearance-none pr-6' // Add `appearance-none` and padding-right for space
                     onChange={handleChangeConsole}
                     style={{
                       WebkitAppearance: "none",
                       MozAppearance: "none",
                       appearance: "none",
-                    }}
-                  >
+                    }}>
                     {consoleList.map((option, index) => (
                       <option key={index} value={JSON.stringify(option)}>
                         {option.consolename}
@@ -949,31 +933,29 @@ const HomePage = ({ Component, pageProps }) => {
 
                   {/* Custom arrow */}
                   <img
-                    className="absolute right-2 pointer-events-none"
+                    className='absolute right-2 pointer-events-none'
                     style={{
                       top: "50%",
                       transform: "translateY(-50%)",
                       width: "0.6rem", // Adjust as needed for your design
                       height: "1rem", // Adjust as needed for your design
                     }}
-                    src="/images/arrowDown.svg"
-                    alt="Dropdown arrow"
+                    src='/images/arrowDown.svg'
+                    alt='Dropdown arrow'
                   />
                 </div>
                 <button
                   onClick={() => {
                     router.push(PATH_DASHBOARD.chat);
                   }}
-                  className="w-20 bg-black25 text-white text-[12px]  text-center   rounded-3xl ml-4 mt-2 h-8 "
-                >
+                  className='w-20 bg-black25 text-white text-[12px]  text-center   rounded-3xl ml-4 mt-2 h-8 '>
                   Chat
                 </button>
-                <div className="w-full sm:w-20 bg-black25 text-white text-[12px] text-center rounded-3xl h-8 ml-4 mt-2 flex items-center justify-center">
+                <div className='w-full sm:w-20 bg-black25 text-white text-[12px] text-center rounded-3xl h-8 ml-4 mt-2 flex items-center justify-center'>
                   <a
-                    target="_blank"
-                    href="https://discord.gg/CtVr3pAnqs"
-                    rel="noopener noreferrer"
-                  >
+                    target='_blank'
+                    href='https://discord.gg/CtVr3pAnqs'
+                    rel='noopener noreferrer'>
                     Discord
                   </a>
                 </div>
@@ -988,8 +970,7 @@ const HomePage = ({ Component, pageProps }) => {
                     ? "w-[180px] md:w-[160px]"
                     : "w-[240px] md:w-[210px]"
                 }`}
-                onChange={handleChange}
-              >
+                onChange={handleChange}>
                 {matchesDropDown.map((option) => (
                   <option>{option.name}</option>
                 ))}
@@ -997,48 +978,38 @@ const HomePage = ({ Component, pageProps }) => {
             </div>
 
             {dropDownSelection == "Available" && (
-              <div className="match-small-carousel  ">
+              <div className='match-small-carousel  '>
                 {availableData.length > 0 ? (
                   <Carousel
                     responsive={responsive}
-                    itemClass="carousel-item-padding-40-px"
-                    containerClass="ml-4  "
-                  >
+                    itemClass='carousel-item-padding-40-px'
+                    containerClass='ml-4  '>
                     {availableData.map((post) => {
                       return (
-                        <div className="  w-64       bg-black25 rounded-2xl pt-[1px]">
-                          <div className="mt-[5%]">
-                            <div className="flex">
+                        <div className='  w-64       bg-black25 rounded-2xl pt-[1px]'>
+                          <div className='mt-[5%]'>
+                            <div className='flex'>
                               <Image
                                 src={post.game_image}
-                                className="h-[40px] w-[40px] rounded-full  ml-4"
+                                className='h-[40px] w-[40px] rounded-full  ml-4'
                                 width={40}
                                 height={40}
                               />
-                              <p className="text-[18px] text-white  font-inter_tight font-[600] ml-14 mt-2  ">
+                              <p className='text-[18px] text-white  font-inter_tight font-[600] ml-14 mt-2  '>
                                 {post.amount}
                               </p>
                             </div>
-                            <p className="avl-txt">{post.gamename}</p>
-                            <p className="avl-txt">{post.gameModeName}</p>{" "}
-                            <p
-                              className={`text-xs mt-2 ml-6 ${
-                                post?.isChallenges === "1"
-                                  ? "text-yellow"
-                                  : "text-black25"
-                              }`}
-                            >
-                              {"Challenge By " + post?.host_name}
-                            </p>
-                            <div className="center-container">
+                            <p className='avl-txt'>{post.gamename}</p>
+
+                            <p className='avl-txt'>{post.gameModeName}</p>
+                            <div className='center-container'>
                               <button
-                                className=" w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4"
+                                className=' w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4'
                                 onClick={() => {
                                   CommonConstant.SelectedMatchData = post;
                                   console.log("post 1014", post);
                                   router.push(PATH_DASHBOARD.createGame);
-                                }}
-                              >
+                                }}>
                                 Join
                               </button>
                             </div>
@@ -1048,54 +1019,43 @@ const HomePage = ({ Component, pageProps }) => {
                     })}
                   </Carousel>
                 ) : (
-                  <p className="avl-txt"> No Matches Available</p>
+                  <p className='avl-txt'> No Matches Available</p>
                 )}
               </div>
             )}
 
             {dropDownSelection == "My Matches" && (
-              <div className="match-small-carousel  ">
+              <div className='match-small-carousel  '>
                 {currentMatchData.length > 0 ? (
                   <Carousel
                     responsive={responsive}
-                    itemClass="carousel-item-padding-40-px"
-                    containerClass="ml-4  "
-                  >
+                    itemClass='carousel-item-padding-40-px'
+                    containerClass='ml-4  '>
                     {currentMatchData.map((item) => {
                       return (
-                        <div className="  w-64       bg-black25 rounded-2xl pt-[1px]">
-                          <div className="mt-[5%]">
-                            <div className="flex">
+                        <div className='  w-64       bg-black25 rounded-2xl pt-[1px]'>
+                          <div className='mt-[5%]'>
+                            <div className='flex'>
                               <Image
                                 src={item.game_image}
-                                className="h-[40px] w-[40px] rounded-full  ml-4"
+                                className='h-[40px] w-[40px] rounded-full  ml-4'
                                 width={40}
                                 height={40}
                               />
-                              <p className="text-[18px] text-white  font-inter_tight font-[600] ml-14 mt-2  ">
+                              <p className='text-[18px] text-white  font-inter_tight font-[600] ml-14 mt-2  '>
                                 {item.amount}
                               </p>
                             </div>
-                            <p className="avl-txt">{item.gamename}</p>
+                            <p className='avl-txt'>{item.gamename}</p>
 
-                            <p className="avl-txt">{item.gameModeName}</p>
-                            <p
-                              className={`text-xs mt-2 ml-6 ${
-                                item.isChallenges === "1"
-                                  ? "text-yellow"
-                                  : "text-black25"
-                              }`}
-                            >
-                              {"Challenge By " + item?.host_name}
-                            </p>
-                            <div className="center-container">
+                            <p className='avl-txt'>{item.gameModeName}</p>
+                            <div className='center-container'>
                               <button
-                                className=" w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4"
+                                className=' w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4'
                                 onClick={() => {
                                   CommonConstant.SelectedMatchData = item;
                                   router.push(PATH_DASHBOARD.createGame);
-                                }}
-                              >
+                                }}>
                                 Join
                               </button>
                             </div>
@@ -1105,43 +1065,42 @@ const HomePage = ({ Component, pageProps }) => {
                     })}
                   </Carousel>
                 ) : (
-                  <p className="avl-txt">No Matches Available</p>
+                  <p className='avl-txt'>No Matches Available</p>
                 )}
               </div>
             )}
 
             {dropDownSelection == "My Tournaments" && (
-              <div className="match-small-carousel  ">
+              <div className='match-small-carousel  '>
                 {myTournaments.length > 0 ? (
                   <Carousel
                     responsive={responsive}
-                    itemClass="carousel-item-padding-40-px"
-                    containerClass="ml-4  "
-                  >
+                    itemClass='carousel-item-padding-40-px'
+                    containerClass='ml-4  '>
                     {myTournaments.map((post) => {
                       return (
-                        <div className="  w-64    bg-black25 rounded-2xl pt-[1px]">
-                          <div className="mt-[5%]">
-                            <div className="flex">
+                        <div className='  w-64    bg-black25 rounded-2xl pt-[1px]'>
+                          <div className='mt-[5%]'>
+                            <div className='flex'>
                               <Image
                                 src={post.image}
-                                className="h-[40px] w-[40px] rounded-full  ml-4"
+                                className='h-[40px] w-[40px] rounded-full  ml-4'
                                 width={40}
                                 height={40}
                               />
 
-                              <p className="text-[18px] text-white  font-inter_tight font-[600] ml-14 mt-2  ">
+                              <p className='text-[18px] text-white  font-inter_tight font-[600] ml-14 mt-2  '>
                                 {post.tournament_fees}
                               </p>
                             </div>
-                            <p className="avl-txt">{post.tname}</p>
+                            <p className='avl-txt'>{post.tname}</p>
 
-                            <p className="avl-txt">
+                            <p className='avl-txt'>
                               {moment(post.startdate).format("MMM Do, YYYY")}
                             </p>
-                            <div className="center-container">
+                            <div className='center-container'>
                               <button
-                                className=" w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4"
+                                className=' w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4'
                                 onClick={() => {
                                   setTournamentId("id", post);
                                   if (post.status == 2 && post.winnerId != 0) {
@@ -1155,8 +1114,7 @@ const HomePage = ({ Component, pageProps }) => {
                                       router.push("./tournament");
                                     }
                                   }
-                                }}
-                              >
+                                }}>
                                 Join
                               </button>
                             </div>
@@ -1166,11 +1124,13 @@ const HomePage = ({ Component, pageProps }) => {
                     })}
                   </Carousel>
                 ) : (
-                  <p className="avl-txt">No Tournament Available</p>
+                  <p className='avl-txt'>No Tournament Available</p>
                 )}
               </div>
             )}
-            <p className="text-[22px] text-white  font-inter_tight font-[600] ml-6 mt-2">
+            {/* Hide Recent Earners */}
+
+            {/* <p className="text-[22px] text-white  font-inter_tight font-[600] ml-6 mt-2">
               Recent Earners
             </p>
             <div className="small-carousel ml-6 mt-6">
@@ -1213,10 +1173,10 @@ const HomePage = ({ Component, pageProps }) => {
                   );
                 })}
               </Carousel>
-            </div>
+            </div> */}
             {/* Profile Card Modal */}
             {selectedEarner && (
-              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'>
                 {isProfileCardModel && (
                   <ProfileCard
                     earner={selectedEarner}
@@ -1229,14 +1189,13 @@ const HomePage = ({ Component, pageProps }) => {
                 {seasonModel && <SeasonModel />}
               </div>
             )}
-            <p className="  text-[22px] text-white  font-inter_tight font-[600] ml-6 mb-4">
+            <p className='  text-[22px] text-white  font-inter_tight font-[600] ml-6 mb-4'>
               Tournaments
             </p>
             <Carousel
               responsive={responsive}
-              itemClass="carousel-item-padding-40-px"
-              containerClass="ml-4 mt-6"
-            >
+              itemClass='carousel-item-padding-40-px'
+              containerClass='ml-4 mt-6'>
               {tournamentListData.map((item) => {
                 return (
                   <div
@@ -1254,67 +1213,60 @@ const HomePage = ({ Component, pageProps }) => {
                         }
                       }
                     }}
-                    className="h-48 w-24 mt-6"
-                  >
+                    className='h-48 w-24 mt-6'>
                     <Image
                       src={item.image}
-                      layout="fill"
-                      className="rounded-3xl"
-                    ></Image>
+                      layout='fill'
+                      className='rounded-3xl'></Image>
                   </div>
                 );
               })}
             </Carousel>
 
-            <p className="text-[22px] text-white  font-inter_tight font-[600] ml-6 mb-6 mt-6">
+            <p className='text-[22px] text-white  font-inter_tight font-[600] ml-6 mb-6 mt-6'>
               Jovial News
             </p>
             <Carousel
               responsive={responsive}
-              itemClass="carousel-item-padding-40-px"
-              containerClass="ml-4 mt-4"
-            >
+              itemClass='carousel-item-padding-40-px'
+              containerClass='ml-4 mt-4'>
               {newsData.map((post) => {
                 return (
                   <div
                     onClick={() => {
                       window.location.href = post.url; // Redirect to the URL
                     }}
-                    className="h-48 w-24 mt-6"
-                  >
+                    className='h-48 w-24 mt-6'>
                     <Image
                       src={post.newsImg}
-                      layout="fill"
-                      className="rounded-3xl"
-                    ></Image>
+                      layout='fill'
+                      className='rounded-3xl'></Image>
                   </div>
                 );
               })}
             </Carousel>
-            <p className="text-[22px] text-white  font-inter_tight font-[600] ml-6  mt-6">
+            <p className='text-[22px] text-white  font-inter_tight font-[600] ml-6  mt-6'>
               Elite 5
             </p>
-            <div className="elite-small-carousel  ">
+            <div className='elite-small-carousel  '>
               {top5users.length > 0 && (
                 <Carousel
                   responsive={responsive}
-                  itemClass="carousel-item-padding-40-px"
-                  className="flex flex-row  mt-2 "
-                >
+                  itemClass='carousel-item-padding-40-px'
+                  className='flex flex-row  mt-2 '>
                   {top5users.map((post) => {
                     return (
-                      <div className="h-28 w-28    mt-2 relative ml-6 rounded-full">
+                      <div className='h-28 w-28    mt-2 relative ml-6 rounded-full'>
                         {post?.userData?.image ? (
                           <Image
-                            className="rounded-full"
+                            className='rounded-full'
                             src={
                               post.userData.image.startsWith("http") ||
                               post.userData.image.startsWith("/")
                                 ? post.userData.image
                                 : `/images/logo.png` // Fallback for invalid image paths
                             }
-                            layout="fill"
-                          ></Image>
+                            layout='fill'></Image>
                         ) : null}
                       </div>
                     );

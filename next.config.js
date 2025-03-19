@@ -28,6 +28,7 @@ module.exports = {
   },
   webpack: (config) => {
     // Add rule for .glb and .gltf files
+
     config.module.rules.push({
       test: /\.(glb|gltf)$/,
       use: [
@@ -43,6 +44,11 @@ module.exports = {
     });
 
     return config;
+  },
+  i18n: {
+    locales: ["en"], // Specify the supported locales (e.g., 'en', 'fr')
+    defaultLocale: "en", // Set the default locale
+    localeDetection: false, // Disable automatic locale detection to prevent redirects
   },
 };
 

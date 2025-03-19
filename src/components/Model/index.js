@@ -198,18 +198,17 @@ const Model = ({
   function renderGameMode() {
     return (
       <div>
-        <div className="model-txt">Select Game Mode</div>
+        <div className='model-txt'>Select Game Mode</div>
 
-        <div className="ml-[14%] md:ml-[32%]">
+        <div className='ml-[14%] md:ml-[32%]'>
           {gameModes.map((item, index) => (
             // <div className="border border-x-white border-">
             <button onClick={() => handleBoxClickMatch(index, item)}>
               <div
                 className={`w-56  h-10 mt-6 bg-black25 rounded-xl pt-[1px] border   items-center justify-center ${
                   selectedBoxMatch === index ? "border-yellow" : "border-white"
-                }`}
-              >
-                <div className="text-center text-white mt-[2.3%]">
+                }`}>
+                <div className='text-center text-white mt-[2.3%]'>
                   {item.name}
                 </div>
               </div>
@@ -217,12 +216,12 @@ const Model = ({
           ))}
         </div>
         <div>
-          <div className="center-container space-x-3 mt-8">
-            <button className="btn-challenge " onClick={handleChangePreviuos}>
+          <div className='center-container space-x-3 mt-8'>
+            <button className='btn-challenge ' onClick={handleChangePreviuos}>
               {"Close"}
             </button>
 
-            <button className="btn-challenge" onClick={handleChangeStartGame}>
+            <button className='btn-challenge' onClick={handleChangeStartGame}>
               {"Start Match"}
             </button>
           </div>
@@ -233,25 +232,22 @@ const Model = ({
   function renderAmount() {
     return (
       <div>
-        <div className="model-txt">Choose an entry amount</div>
+        <div className='model-txt'>Choose an entry amount</div>
 
-        <div className="grid grid-cols-3 md:ml-24 ml-8 mt-4">
+        <div className='grid grid-cols-3 md:ml-24 ml-8 mt-4'>
           {amountData.map((item, index) => (
             <button
               key={index}
-              className="mt-6 mb-2"
-              onClick={() => handleBoxClick(index, item)}
-            >
+              className='mt-6 mb-2'
+              onClick={() => handleBoxClick(index, item)}>
               <div
                 className={`rounded-xl h-16 w-16 flex items-center justify-center ${
                   selectedBox === index ? "bg-yellow" : "bg-black06"
-                }`}
-              >
+                }`}>
                 <div
                   className={`text-center text-[16px] font-[400]  ${
                     selectedBox === index ? "text-black06" : "text-white"
-                  }`}
-                >
+                  }`}>
                   {item.amount}
                   {item.amount == "Free Play" || item.amount == "free play"
                     ? ""
@@ -262,12 +258,12 @@ const Model = ({
           ))}
         </div>
         <div>
-          <div className="center-container space-x-3 mt-8">
-            <button className="btn-challenge " onClick={closeModel}>
+          <div className='center-container space-x-3 mt-8'>
+            <button className='btn-challenge ' onClick={closeModel}>
               {"Close"}
             </button>
 
-            <button className="btn-challenge" onClick={handleChangeNext}>
+            <button className='btn-challenge' onClick={handleChangeNext}>
               {"Next"}
             </button>
           </div>
@@ -277,33 +273,32 @@ const Model = ({
   }
   function renderFindingMatch() {
     return (
-      <div className="flex justify-center items-center h-full">
-        <div className="w-full max-w-[56rem] p-4">
-          <button className="w-full">
-            <div className="w-full bg-black25 p-4 flex flex-col justify-center items-center rounded-md">
-              <div className="flex justify-center items-center mb-4">
+      <div className='flex justify-center items-center h-full'>
+        <div className='w-full max-w-[56rem] p-4'>
+          <button className='w-full'>
+            <div className='w-full bg-black25 p-4 flex flex-col justify-center items-center rounded-md'>
+              <div className='flex justify-center items-center mb-4'>
                 <img
-                  src="/images/dollar.svg"
-                  className="h-[125px] w-[125px] md:h-[150px] md:w-[150px]"
+                  src='/images/dollar.svg'
+                  className='h-[125px] w-[125px] md:h-[150px] md:w-[150px]'
                 />
               </div>
 
-              <div className="text-center text-white text-[16px] md:text-[18px] font-inter_tight font-[200] animate-blink mb-4">
+              <div className='text-center text-white text-[16px] md:text-[18px] font-inter_tight font-[200] animate-blink mb-4'>
                 {"Finding a match ..."}
               </div>
 
               <Image
-                src="/images/search.png"
-                className="mt-6 mb-4"
+                src='/images/search.png'
+                className='mt-6 mb-4'
                 width={25}
                 height={25}
-                alt="Logo"
+                alt='Logo'
               />
 
               <button
-                className="btn-challenge w-full  mt-6 bg-blue-500 text-white rounded-md"
-                onClick={handleChangeSearching}
-              >
+                className='btn-challenge w-full  mt-6 bg-blue-500 text-white rounded-md'
+                onClick={handleChangeSearching}>
                 {"Close"}
               </button>
             </div>
@@ -314,38 +309,35 @@ const Model = ({
   }
   function renderFoundMatch() {
     return (
-      <div className="flex justify-center items-center">
-        <div className="w-full md:w-2/3 lg:w-1/3 xl:w-1/4 h-72">
-          <button className="w-full h-full bg-black25 flex flex-col justify-center items-center p-4">
+      <div className='flex justify-center items-center'>
+        <div className='w-full md:w-2/3 lg:w-1/3 xl:w-1/4 h-72'>
+          <button className='w-full h-full bg-black25 flex flex-col justify-center items-center p-4'>
             <button
               onClick={handleRedirect}
-              className="absolute top-4 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200"
-            >
-              <ChatBubbleLeftEllipsisIcon className="w-5 h-5 md:w-6 md:h-6" />
+              className='absolute top-4 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200'>
+              <ChatBubbleLeftEllipsisIcon className='w-5 h-5 md:w-6 md:h-6' />
               {notificationNumber > 0 && (
-                <span className="absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                <span className='absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center'>
                   {notificationNumber}
                 </span>
               )}
             </button>
-            <div className="flex justify-center items-center mb-4">
-              <img src="/images/dollar.svg" className="h-[125px] w-[125px]" />
+            <div className='flex justify-center items-center mb-4'>
+              <img src='/images/dollar.svg' className='h-[125px] w-[125px]' />
             </div>
-            <div className="text-center text-white mt-4 text-[20px] font-inter_tight font-[300]">
+            <div className='text-center text-white mt-4 text-[20px] font-inter_tight font-[300]'>
               {"Found a match "}
             </div>
-            <div className="flex justify-around mt-4">
+            <div className='flex justify-around mt-4'>
               <button
-                className="btn-accept bg-green-500 text-white rounded-md"
-                onClick={onPressAccept}
-              >
+                className='btn-accept bg-green-500 text-white rounded-md'
+                onClick={onPressAccept}>
                 {"Accept"}
               </button>
             </div>
             <button
-              className="btn-Decline px-4 py-2 bg-red-500 text-white rounded-md"
-              onClick={onPressDecline}
-            >
+              className='btn-Decline px-4 py-2 bg-red-500 text-white rounded-md'
+              onClick={onPressDecline}>
               {"Decline"}
             </button>
           </button>
@@ -357,38 +349,38 @@ const Model = ({
   function renderMatchRule() {
     return (
       <div>
-        <div className="model-txt text-center">Rules</div>
+        <div className='model-txt text-center'>Rules</div>
 
         <div>
-          <div className="overflow-y-auto max-h-[400px]">
+          <div className='overflow-y-auto max-h-[400px]'>
             {ruleData.length > 0 ? (
               ruleData.map((item, index) => (
                 <button
                   key={index}
                   onClick={() => handleBoxClickMatch(index, item)}
-                  className="w-full" // Ensure the button takes full width
+                  className='w-full' // Ensure the button takes full width
                 >
-                  <div className="mt-6  rounded-xl mb-2 bg-gray30  mr-2 p-4 w-full">
-                    <div className="text-white text-left">{item.title}</div>
-                    <hr className="my-divider" />
+                  <div className='mt-6  rounded-xl mb-2 bg-gray30  mr-2 p-4 w-full'>
+                    <div className='text-white text-left'>{item.title}</div>
+                    <hr className='my-divider' />
 
-                    <div className="text-white text-left">
+                    <div className='text-white text-left'>
                       {item.descriptions}
                     </div>
                   </div>
                 </button>
               ))
             ) : (
-              <div className=" h-[250px]  ">
-                <p className="text-[18px] text-white  font-inter_tight font-[600] text-center pt-[110px]">
+              <div className=' h-[250px]  '>
+                <p className='text-[18px] text-white  font-inter_tight font-[600] text-center pt-[110px]'>
                   No data Found
                 </p>
               </div>
             )}
           </div>
 
-          <div className="center-container space-x-3 mt-8">
-            <button className="btn-accept-rules" onClick={onPressAcceptRules}>
+          <div className='center-container space-x-3 mt-8'>
+            <button className='btn-accept-rules' onClick={onPressAcceptRules}>
               {"Accept Rules"}
             </button>
           </div>
@@ -401,34 +393,34 @@ const Model = ({
     console.log("matchData 307", matchData);
     console.log("user.data.id 307", user.data.id);
     return (
-      <div className="max-h-[800px] relative">
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
-          <p className="text-[18px] text-white font-inter_tight font-[300] text-center ">
+      <div className='max-h-[800px] relative'>
+        <div className='absolute top-4 left-1/2 transform -translate-x-1/2'>
+          <p className='text-[18px] text-white font-inter_tight font-[300] text-center '>
             {"GAME RULES 3"}
           </p>
 
-          <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2 ">
+          <p className='text-[16px] text-white font-inter_tight font-[300] text-center mt-2 '>
             Add opponent as friend on console. <br />
             Match creator send game invite
             <br />
             Submit scores when finished.
           </p>
-          <p className="text-[20px] text-white font-inter_tight font-[300] text-center mt-16 ">
+          <p className='text-[20px] text-white font-inter_tight font-[300] text-center mt-16 '>
             {"GAME TIME "}
           </p>
 
           {readyTimes ? (
-            <p className="text-[16px] text-white font-inter_tight font-[300] text-center   ">
+            <p className='text-[16px] text-white font-inter_tight font-[300] text-center   '>
               {readyTimes}
             </p>
           ) : null}
         </div>
 
-        <div className="flex max-h-[700px]  ">
-          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] pl-[5%] md:pt-[42%] pt-[102%] max-h-[700px]">
-            <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
+        <div className='flex max-h-[700px]  '>
+          <div className='w-[50%] bg-black06 h-screen md:pl-[15%] pl-[5%] md:pt-[42%] pt-[102%] max-h-[700px]'>
+            <div className='rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4'>
               <img
-                className="rounded-full h-full w-full object-cover"
+                className='rounded-full h-full w-full object-cover'
                 src={
                   matchData
                     ? user.data.id !== matchData.host_user_id
@@ -440,11 +432,11 @@ const Model = ({
                       : "/images/logo.png"
                     : "/images/logo.png"
                 }
-                alt="Profile Picture"
+                alt='Profile Picture'
               />
             </div>
-            <div className="w-32">
-              <p className="userName-txt">
+            <div className='w-32'>
+              <p className='userName-txt'>
                 {matchData
                   ? user.data.id !== matchData.host_user_id
                     ? matchData.host_name
@@ -453,10 +445,10 @@ const Model = ({
               </p>
             </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%]   max-h-[700px]">
-            <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
+          <div className='w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%]   max-h-[700px]'>
+            <div className='rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4'>
               <img
-                className="rounded-full h-full w-full object-cover"
+                className='rounded-full h-full w-full object-cover'
                 src={
                   matchData
                     ? user.data.id === matchData.host_user_id
@@ -468,11 +460,11 @@ const Model = ({
                       : "/images/logo.png"
                     : "/images/logo.png"
                 }
-                alt="Profile Picture"
+                alt='Profile Picture'
               />
             </div>
-            <div className="w-32">
-              <p className="userName-txt">
+            <div className='w-32'>
+              <p className='userName-txt'>
                 {matchData
                   ? user.data.id === matchData.host_user_id
                     ? matchData.host_name
@@ -484,25 +476,23 @@ const Model = ({
         </div>
 
         {readyClick ? (
-          <button className="w-[300px] h-[40px] text-white text-center font-[300] rounded-xl font-inter_tight bg-gray30 absolute left-1/2 transform -translate-x-1/2 bottom-4">
+          <button className='w-[300px] h-[40px] text-white text-center font-[300] rounded-xl font-inter_tight bg-gray30 absolute left-1/2 transform -translate-x-1/2 bottom-4'>
             {"Your opponent is not ready"}
           </button>
         ) : (
           <button
             onClick={onPressReady}
-            className="w-[150px] h-[40px] text-white text-center font-[500] rounded-full font-inter_tight bg-blueF0 absolute left-1/2 transform -translate-x-1/2 bottom-4"
-          >
+            className='w-[150px] h-[40px] text-white text-center font-[500] rounded-full font-inter_tight bg-blueF0 absolute left-1/2 transform -translate-x-1/2 bottom-4'>
             {"READY"}
           </button>
         )}
 
         <button
           onClick={handleRedirect}
-          className="absolute top-4 right-16 md:right-16 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200"
-        >
-          <ChatBubbleLeftEllipsisIcon className="w-5 h-5 md:w-6 md:h-6" />
+          className='absolute top-4 right-16 md:right-16 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200'>
+          <ChatBubbleLeftEllipsisIcon className='w-5 h-5 md:w-6 md:h-6' />
           {notificationNumber > 0 && (
-            <span className="absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+            <span className='absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center'>
               {notificationNumber}
             </span>
           )}
@@ -514,71 +504,69 @@ const Model = ({
     console.log("matchData 373", matchData);
 
     return (
-      <div className="max-h-[800px] relative">
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
-          <p className="text-[18px] text-white font-inter_tight font-[300] text-center">
+      <div className='max-h-[800px] relative'>
+        <div className='absolute top-4 left-1/2 transform -translate-x-1/2'>
+          <p className='text-[18px] text-white font-inter_tight font-[300] text-center'>
             {"GAME RULES 2"}
           </p>
 
-          <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2">
+          <p className='text-[16px] text-white font-inter_tight font-[300] text-center mt-2'>
             Add opponent as friend on console. <br />
             Match creator send game invite
             <br />
             Submit scores when finished.
           </p>
 
-          <p className="text-[20px] text-white font-inter_tight font-[300] text-center mt-16">
+          <p className='text-[20px] text-white font-inter_tight font-[300] text-center mt-16'>
             {"GAME TIME"}
           </p>
 
           {/* Message Icon Button */}
           {readyTimes ? (
-            <p className="text-[16px] text-white font-inter_tight font-[300] text-center">
+            <p className='text-[16px] text-white font-inter_tight font-[300] text-center'>
               {readyTimes}
             </p>
           ) : null}
         </div>
 
-        <div className="flex max-h-[700px]">
-          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] pl-[5%] md:pt-[42%] pt-[102%] max-h-[700px]">
-            <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
+        <div className='flex max-h-[700px]'>
+          <div className='w-[50%] bg-black06 h-screen md:pl-[15%] pl-[5%] md:pt-[42%] pt-[102%] max-h-[700px]'>
+            <div className='rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4'>
               <img
-                className="rounded-full h-full w-full object-cover"
+                className='rounded-full h-full w-full object-cover'
                 src={matchData.opponent_image}
-                alt="Profile Picture"
+                alt='Profile Picture'
               />
             </div>
-            <div className="w-32">
-              <p className="userName-txt">{matchData.opponent_name}</p>
+            <div className='w-32'>
+              <p className='userName-txt'>{matchData.opponent_name}</p>
             </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
-            <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
+          <div className='w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]'>
+            <div className='rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4'>
               <img
-                className="rounded-full h-full w-full object-cover"
+                className='rounded-full h-full w-full object-cover'
                 src={matchData.host_image}
-                alt="Profile Picture"
+                alt='Profile Picture'
               />
             </div>
-            <div className="w-32">
-              <p className="userName-txt">{matchData.host_name}</p>
+            <div className='w-32'>
+              <p className='userName-txt'>{matchData.host_name}</p>
             </div>
           </div>
         </div>
 
         <button
           onClick={onPressReady}
-          className="w-[200px] h-[40px] text-black text-center font-[400] rounded-xl font-inter_tight bg-grayA4 absolute left-1/2 transform -translate-x-1/2 bottom-4"
-        >
+          className='w-[200px] h-[40px] text-black text-center font-[400] rounded-xl font-inter_tight bg-grayA4 absolute left-1/2 transform -translate-x-1/2 bottom-4'>
           {"Score Submitted"}
         </button>
         <button
           onClick={handleRedirect}
-          className="absolute top-4 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200"
-        >
-          <ChatBubbleLeftEllipsisIcon className="w-5 h-5 md:w-6 md:h-6" />
+          className='absolute top-4 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200'>
+          <ChatBubbleLeftEllipsisIcon className='w-5 h-5 md:w-6 md:h-6' />
           {notificationNumber > 0 && (
-            <span className="absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+            <span className='absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center'>
               {notificationNumber}
             </span>
           )}
@@ -588,47 +576,47 @@ const Model = ({
   }
   function renderMatchUsersScore() {
     return (
-      <div className="max-h-[800px] relative">
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
-          <p className="text-[18px] text-white font-inter_tight font-[300] text-center ">
+      <div className='max-h-[800px] relative'>
+        <div className='absolute top-4 left-1/2 transform -translate-x-1/2'>
+          <p className='text-[18px] text-white font-inter_tight font-[300] text-center '>
             {"GAME RULES"}
           </p>
 
-          <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2 ">
+          <p className='text-[16px] text-white font-inter_tight font-[300] text-center mt-2 '>
             Add opponent as friend on console. <br />
             Match creator send game invite
             <br />
             Submit scores when finished.
           </p>
         </div>
-        <div className="flex max-h-[700px]">
-          <div className="w-[50%] bg-black06 h-screen md:pl-[15%] pl-[5%] md:pt-[42%] pt-[102%] max-h-[700px]">
-            <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
+        <div className='flex max-h-[700px]'>
+          <div className='w-[50%] bg-black06 h-screen md:pl-[15%] pl-[5%] md:pt-[42%] pt-[102%] max-h-[700px]'>
+            <div className='rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4'>
               <img
-                className="rounded-full h-full w-full object-cover"
+                className='rounded-full h-full w-full object-cover'
                 src={matchData.opponent_image}
-                alt="Profile Picture"
+                alt='Profile Picture'
               />
             </div>
-            <div className="w-32">
-              <p className="userName-txt">{matchData.opponent_name}</p>
+            <div className='w-32'>
+              <p className='userName-txt'>{matchData.opponent_name}</p>
             </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%]   max-h-[700px]">
-            <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
+          <div className='w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%]   max-h-[700px]'>
+            <div className='rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4'>
               <img
-                className="rounded-full h-full w-full object-cover"
+                className='rounded-full h-full w-full object-cover'
                 src={matchData.host_image}
-                alt="Profile Picture"
+                alt='Profile Picture'
               />
             </div>
-            <div className="w-32">
-              <p className="userName-txt">{matchData.host_name}</p>
+            <div className='w-32'>
+              <p className='userName-txt'>{matchData.host_name}</p>
             </div>
           </div>
         </div>
-        <div className="absolute left-1/2 transform -translate-x-1/2 bottom-4">
-          <p className="text-[16px] text-white font-inter_tight font-[300] text-center mb-4">
+        <div className='absolute left-1/2 transform -translate-x-1/2 bottom-4'>
+          <p className='text-[16px] text-white font-inter_tight font-[300] text-center mb-4'>
             Submit scores when finished. <br />
             Good Luck!'
           </p>
@@ -636,8 +624,7 @@ const Model = ({
             onClick={() => {
               setIWonLossModelDialog(true);
             }}
-            className="w-[200px] h-[40px] text-black06 text-center font-[400] rounded-xl font-inter_tight bg-yellow "
-          >
+            className='w-[200px] h-[40px] text-black06 text-center font-[400] rounded-xl font-inter_tight bg-yellow '>
             Submit Score
           </button>
         </div>
@@ -645,11 +632,10 @@ const Model = ({
         {/* Message Icon in Top-Right Corner */}
         <button
           onClick={handleRedirect}
-          className="absolute top-4 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200"
-        >
-          <ChatBubbleLeftEllipsisIcon className="w-5 h-5 md:w-6 md:h-6" />
+          className='absolute top-4 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200'>
+          <ChatBubbleLeftEllipsisIcon className='w-5 h-5 md:w-6 md:h-6' />
           {notificationNumber > 0 && (
-            <span className="absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+            <span className='absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center'>
               {notificationNumber}
             </span>
           )}
@@ -664,37 +650,35 @@ const Model = ({
   function renderWonLost() {
     return (
       <div>
-        <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[0.5px]  w-full h-[700px] transparent-style"></div>
-        <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[0.5px]  w-full h-[700px]  ">
-          <div className="w-full  h-[60%] "></div>
-          <div className="bg-black25 h-[40%] rounded-t-lg ml-2 mr-2 flex flex-col items-center">
-            <div className="flex  w-full">
-              <p className="text-[18px] text-white font-inter_tight font-[300] text-center   pt-6 w-[88%]  ml-[6%]">
+        <div className='absolute left-1/2 transform -translate-x-1/2 bottom-[0.5px]  w-full h-[700px] transparent-style'></div>
+        <div className='absolute left-1/2 transform -translate-x-1/2 bottom-[0.5px]  w-full h-[700px]  '>
+          <div className='w-full  h-[60%] '></div>
+          <div className='bg-black25 h-[40%] rounded-t-lg ml-2 mr-2 flex flex-col items-center'>
+            <div className='flex  w-full'>
+              <p className='text-[18px] text-white font-inter_tight font-[300] text-center   pt-6 w-[88%]  ml-[6%]'>
                 How was the match?
               </p>
               <button
-                className="  w-[3%] mr-[3%] mt-[2%]"
+                className='  w-[3%] mr-[3%] mt-[2%]'
                 onClick={() => {
                   setIWonLossModelDialog(false);
-                }}
-              >
+                }}>
                 <Image
-                  src="/images/close.svg"
-                  alt="close"
+                  src='/images/close.svg'
+                  alt='close'
                   width={22}
                   height={22}
                 />
               </button>
             </div>
-            <div className=" flex flex-col space-y-4 mt-[10%]">
+            <div className=' flex flex-col space-y-4 mt-[10%]'>
               <button
                 onClick={() => {
                   setIWonLossModelDialog(false);
                   setSubmitScoreDialog(true);
                   matchResultApi(1);
                 }}
-                className="w-[150px] h-[40px] text-black06 text-center font-[400] rounded-xl font-inter_tight bg-green"
-              >
+                className='w-[150px] h-[40px] text-black06 text-center font-[400] rounded-xl font-inter_tight bg-green'>
                 I Won 😎
               </button>
               <button
@@ -704,8 +688,7 @@ const Model = ({
                   setSubmitScoreDialog(true);
                   matchResultApi(0);
                 }}
-                className="w-[150px] h-[40px] text-black06 text-center font-[400] rounded-xl font-inter_tight bg-red "
-              >
+                className='w-[150px] h-[40px] text-black06 text-center font-[400] rounded-xl font-inter_tight bg-red '>
                 I Lost 😒
               </button>
             </div>
@@ -718,33 +701,32 @@ const Model = ({
   function renderSubmitScore() {
     return (
       <div>
-        <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[0.5px]  w-full h-[700px] transparent-style"></div>
-        <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[0.5px]  w-full h-[700px]  ">
-          <div className="w-full  h-[60%] " />
-          <div className="bg-black25 h-[40%] rounded-t-lg ml-2 mr-2 flex flex-col items-center">
-            <div className="flex  w-full">
-              <p className="text-[18px] text-white font-inter_tight font-[300] text-center   pt-6 w-[88%]  ml-[6%]">
+        <div className='absolute left-1/2 transform -translate-x-1/2 bottom-[0.5px]  w-full h-[700px] transparent-style'></div>
+        <div className='absolute left-1/2 transform -translate-x-1/2 bottom-[0.5px]  w-full h-[700px]  '>
+          <div className='w-full  h-[60%] ' />
+          <div className='bg-black25 h-[40%] rounded-t-lg ml-2 mr-2 flex flex-col items-center'>
+            <div className='flex  w-full'>
+              <p className='text-[18px] text-white font-inter_tight font-[300] text-center   pt-6 w-[88%]  ml-[6%]'>
                 Enter your score
               </p>
               <button
-                className="  w-[3%] mr-[3%] mt-[2%]"
+                className='  w-[3%] mr-[3%] mt-[2%]'
                 onClick={() => {
                   setSubmitScoreDialog(false);
-                }}
-              >
+                }}>
                 <Image
-                  src="/images/close.svg"
-                  alt="close"
+                  src='/images/close.svg'
+                  alt='close'
                   width={22}
                   height={22}
                 />
               </button>
             </div>
-            <div className=" flex    mt-[8%] w-[100%]">
-              <div className="  flex flex-col items-center justify-center w-[50%]">
-                <div className="rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center border-white border-2">
+            <div className=' flex    mt-[8%] w-[100%]'>
+              <div className='  flex flex-col items-center justify-center w-[50%]'>
+                <div className='rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center border-white border-2'>
                   <img
-                    className="rounded-full h-full w-full object-cover"
+                    className='rounded-full h-full w-full object-cover'
                     //  src={matchData.opponent_image}
 
                     src={
@@ -758,25 +740,25 @@ const Model = ({
                           : "/images/logo.png"
                         : "/images/logo.png"
                     }
-                    alt="Profile Picture"
+                    alt='Profile Picture'
                   />
                 </div>
-                <p className="text-[16px] text-white font-inter_tight font-[200] text-center pt-2 w-[20%]">
+                <p className='text-[16px] text-white font-inter_tight font-[200] text-center pt-2 w-[20%]'>
                   {matchData && user.data.id !== matchData.host_user_id
                     ? matchData.host_name
                     : matchData.opponent_name}
                 </p>
-                <p className="text-[16px] text-white font-inter_tight font-[200] text-center pt-2 w-[20%] h-8">
+                <p className='text-[16px] text-white font-inter_tight font-[200] text-center pt-2 w-[20%] h-8'>
                   {matchData.opponent_score_count
                     ? matchData.opponent_score_count
                     : 0}
                   {/* {matchData.opponent_score_count} */}
                 </p>
               </div>
-              <div className="  flex flex-col items-center justify-center w-[60%]">
-                <div className="rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center border-white border-2">
+              <div className='  flex flex-col items-center justify-center w-[60%]'>
+                <div className='rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center border-white border-2'>
                   <img
-                    className="rounded-full h-full w-full object-cover"
+                    className='rounded-full h-full w-full object-cover'
                     src={
                       matchData
                         ? user.data.id === matchData.host_user_id
@@ -788,10 +770,10 @@ const Model = ({
                           : "/images/logo.png"
                         : "/images/logo.png"
                     }
-                    alt="Profile Picture"
+                    alt='Profile Picture'
                   />
                 </div>
-                <p className="text-[16px] text-white font-inter_tight font-[300] text-center pt-2 w-[20%]">
+                <p className='text-[16px] text-white font-inter_tight font-[300] text-center pt-2 w-[20%]'>
                   {matchData && user.data.id === matchData.host_user_id
                     ? matchData.host_name
                     : matchData.opponent_name}
@@ -805,8 +787,8 @@ const Model = ({
                   }}
                 /> */}
                 <input
-                  placeholder="Enter Score"
-                  className="w-[100px]       text-[14px] h-8 mt-2 rounded-xl text-white bg-gray82 outline-none pl-2"
+                  placeholder='Enter Score'
+                  className='w-[100px]       text-[14px] h-8 mt-2 rounded-xl text-white bg-gray82 outline-none pl-2'
                   onChange={(event) => {
                     setScoreText(event.target.value);
                   }}
@@ -815,18 +797,17 @@ const Model = ({
             </div>
 
             {isSubmitScoreBtn ? (
-              <p className="text-[14px] text-white font-inter_tight font-[200] text-center   pt-2 w-[88%]   ">
+              <p className='text-[14px] text-white font-inter_tight font-[200] text-center   pt-2 w-[88%]   '>
                 Please wait for opponent to <br /> enter score!
                 <br />
                 {scoreTimeCount}
               </p>
             ) : (
               <button
-                className="    w-[140px]  text-center border-[1px] rounded-xl   text-black06 font-inter_tight bg-yellow mb-2 p-2 mt-2"
+                className='    w-[140px]  text-center border-[1px] rounded-xl   text-black06 font-inter_tight bg-yellow mb-2 p-2 mt-2'
                 onClick={() => {
                   submitScoreApi(scoreText);
-                }}
-              >
+                }}>
                 {"Submit"}
               </button>
             )}
@@ -840,37 +821,39 @@ const Model = ({
     var amount = readyTimerData ? readyTimerData.amount : matchData.amountCal;
 
     return (
-      <div className="max-h-[800px] relative flex justify-center items-center">
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center w-full  ">
+      <div className='max-h-[800px] relative flex justify-center items-center'>
+        <div className='absolute top-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center w-full  '>
           {/* {!CommonConstant?.FreePlayData?.amount !== "Free Play" && (
             <p className="w-full h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-green ">
               {"$ " + amount + " has been added to your funds"}
             </p>
           )}  */}
-          {!["Free Play", "free play"].includes(
+
+          {/* FreePlay Changes */}
+          {/* {!["Free Play", "free play"].includes(
             CommonConstant?.FreePlayData?.amount
           ) && (
-            <p className="w-full md:h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-green ">
+            <p className='w-full md:h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-green '>
               {"$ " + amount + " has been added to your funds"}
             </p>
-          )}
+          )} */}
           <Image
-            src="/images/cup.svg"
+            src='/images/cup.svg'
             width={125}
             height={125}
-            alt="Logo"
-            className="mt-12"
+            alt='Logo'
+            className='mt-12'
           />
-          <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4 mt-24">
+          <div className='rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4 mt-24'>
             <img
-              className="rounded-full h-full w-full object-cover"
+              className='rounded-full h-full w-full object-cover'
               src={user.data.image}
             />
           </div>
         </div>
-        <div className="flex max-h-[700px] w-full">
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]"></div>
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]"></div>
+        <div className='flex max-h-[700px] w-full'>
+          <div className='w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]'></div>
+          <div className='w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]'></div>
         </div>
 
         <button
@@ -882,8 +865,7 @@ const Model = ({
             closeModel();
             route.replace(PATH_DASHBOARD.home);
           }}
-          className="w-[250px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight bg-yellow absolute left-1/2 transform -translate-x-1/2 bottom-4"
-        >
+          className='w-[250px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight bg-yellow absolute left-1/2 transform -translate-x-1/2 bottom-4'>
           {"Find another match"}
         </button>
       </div>
@@ -892,26 +874,28 @@ const Model = ({
   function renderRematch() {
     var amount = readyTimerData ? readyTimerData.amount : matchData.amount;
     return (
-      <div className="max-h-[800px] relative flex justify-center items-center">
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center w-full  ">
-          {!["Free Play", "free play"].includes(
+      <div className='max-h-[800px] relative flex justify-center items-center'>
+        <div className='absolute top-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center w-full  '>
+          {/* FreePlay Changes */}
+
+          {/* {!["Free Play", "free play"].includes(
             CommonConstant?.FreePlayData?.amount
           ) && (
-            <p className="w-full md:h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-red">
+            <p className='w-full md:h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-red'>
               {"$ " + amount + " has been deducted from your funds"}
             </p>
-          )}
+          )} */}
           <Image
-            src="/images/cross.svg"
+            src='/images/cross.svg'
             width={100}
             height={100}
-            alt="Logo"
-            className="mt-12"
+            alt='Logo'
+            className='mt-12'
           />
 
-          <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4 mt-24">
+          <div className='rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4 mt-24'>
             <img
-              className="rounded-full h-full w-full object-cover"
+              className='rounded-full h-full w-full object-cover'
               src={user.data.image}
             />
           </div>
@@ -924,11 +908,10 @@ const Model = ({
 
               route.replace(PATH_DASHBOARD.home);
             }}
-            className="w-[200px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight bg-grayA4  mt-16  "
-          >
+            className='w-[200px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight bg-grayA4  mt-16  '>
             {"Rematch"}
           </button>
-          <p className="text-[18px] text-white font-inter_tight font-[300] text-center   pt-6 w-[88%]  ">
+          <p className='text-[18px] text-white font-inter_tight font-[300] text-center   pt-6 w-[88%]  '>
             Feel like you been cheated? Contact us
           </p>
           <a
@@ -936,31 +919,29 @@ const Model = ({
               console.log("test");
               route.replace(PATH_DASHBOARD.home);
             }}
-            href="#"
-            className="text-[18px] text-white font-inter_tight font-[300] text-center w-[88%] underline"
-          >
+            href='#'
+            className='text-[18px] text-white font-inter_tight font-[300] text-center w-[88%] underline'>
             Dispute Center
           </a>
         </div>
-        <div className="flex max-h-[700px] w-full">
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]"></div>
-          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]"></div>
+        <div className='flex max-h-[700px] w-full'>
+          <div className='w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]'></div>
+          <div className='w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]'></div>
         </div>
       </div>
     );
   }
   return (
     <Modal
-      className="modal-common-block-send"
+      className='modal-common-block-send'
       isOpen={modelVisible}
       // onRequestClose={closeModal}
       style={customStyles}
-      contentLabel="Example Modal"
-    >
+      contentLabel='Example Modal'>
       {console.log("isLoader", isLoader)}
       {isLoader && (
-        <div className="small-loader">
-          <div className="spinner"></div>
+        <div className='small-loader'>
+          <div className='spinner'></div>
         </div>
       )}
 

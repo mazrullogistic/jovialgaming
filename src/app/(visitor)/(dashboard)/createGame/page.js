@@ -73,7 +73,7 @@ const CreateGame = () => {
   const [amountData, setAmountData] = useState([]); // Initialize with null or some default value
   const [isModelShow, setIsModelShow] = useState(false); // Initialize with null or some default value
   const [roomData, setRoomData] = useState([]); // Initialize with null or some default value
-  const [selectedModelIndex, setSelectedModelIndex] = useState(1);
+  const [selectedModelIndex, setSelectedModelIndex] = useState(2);
   const [matchData, setMatchData] = useState("");
   const [ruleData, setRuleData] = useState("");
   const [readyTimes, setReadyTimer] = useState("");
@@ -319,7 +319,7 @@ const CreateGame = () => {
   }, []);
   useEffect(() => {
     EventEmitter.on(EmitterKey.DeclineMatch, (message) => {
-      setSelectedModelIndex(1);
+      setSelectedModelIndex(2);
       setIsModelShow(false);
       toaster(TOAST_ALERTS.OpponentDeclineMatchRequest, TOAST_TYPES.ERROR);
       getCurrentMatches();
@@ -405,27 +405,34 @@ const CreateGame = () => {
     }
   };
   const getCurrentMatch = async (amountData, gameMode) => {
+    console.log("amountData", amountData);
+
     setIsLoader(true);
     try {
       const res = await dispatch(getGameModeCurrentMatchAction());
 
       if (res.payload.statusCode == 200) {
-        if (
-          CommonConstant.FreePlayData.amount == "Free Play" ||
-          CommonConstant?.FreePlayData?.amount == "free play"
-        ) {
-          if (isChallenge) {
-            FreePlayChallengeMatchRequestCreateApi(amountData, gameMode);
-          } else {
-            freePlayMatchRequestCreateApi(amountData, gameMode);
-          }
+        if (isChallenge) {
+          FreePlayChallengeMatchRequestCreateApi(amountData, gameMode);
         } else {
-          if (isChallenge) {
-            ChallengeMatchRequestCreateApi(amountData, gameMode);
-          } else {
-            matchRequestCreateApi(amountData, gameMode);
-          }
+          freePlayMatchRequestCreateApi(amountData, gameMode);
         }
+        // if (
+        //   CommonConstant.FreePlayData.amount == "Free Play" ||
+        //   CommonConstant?.FreePlayData?.amount == "free play"
+        // ) {
+        //   if (isChallenge) {
+        //     FreePlayChallengeMatchRequestCreateApi(amountData, gameMode);
+        //   } else {
+        //     freePlayMatchRequestCreateApi(amountData, gameMode);
+        //   }
+        // } else {
+        //   if (isChallenge) {
+        //     ChallengeMatchRequestCreateApi(amountData, gameMode);
+        //   } else {
+        //     matchRequestCreateApi(amountData, gameMode);
+        //   }
+        // }
         setIsLoader(false);
       } else {
         setIsLoader(false);
@@ -454,9 +461,12 @@ const CreateGame = () => {
       payload.append("is_old_delete", 0);
       payload.append("endTime", getCurrentTime());
       const { payload: res } = await dispatch(
-        CommonConstant.SelectedMatchData.amount == "free play"
-          ? freeAvailableMatchJoinAction(payload)
-          : availableMatchJoinAction(payload)
+        freeAvailableMatchJoinAction(payload)
+        //Freeplay Changes
+
+        // CommonConstant.SelectedMatchData.amount == "free play"
+        //   ? freeAvailableMatchJoinAction(payload)
+        //   : availableMatchJoinAction(payload)
       );
 
       const { data, status } = res;
@@ -725,6 +735,8 @@ const CreateGame = () => {
         freePlayUpdateReadyStatusAction(payload)
       );
       const { data, status } = res;
+      console.log("freePlayUpdateReadyStatusApi status", status);
+
       setIsLoader(false);
       if (status) {
         setReadyClick(true);
@@ -777,6 +789,8 @@ const CreateGame = () => {
       );
       const { data, status } = res;
       setIsLoader(false);
+      console.log("freePlayMatchResultApi status", status);
+
       if (status) {
         setSelectedModelIndex(8);
       } else {
@@ -833,6 +847,8 @@ const CreateGame = () => {
       );
       const { data, status } = res;
       setIsLoader(false);
+      console.log("freePlaySubmitScoreApi status", status);
+
       if (status) {
         setIsSubmitScoreBtn(true);
       } else {
@@ -847,41 +863,49 @@ const CreateGame = () => {
   };
 
   function onPressAccept() {
-    if (
-      CommonConstant.FreePlayData?.amount == "free play" ||
-      CommonConstant.SelectedMatchData?.amount == "free play" ||
-      CommonConstant.FreePlayData?.amount == "Free Play" ||
-      CommonConstant.SelectedMatchData?.amount == "Free Play"
-    ) {
-      freePlayRequestUpdateCall(matchData.match_request_id, "1");
-    } else {
-      requestUpdateCall(matchData.match_request_id, "1");
-    }
+    freePlayRequestUpdateCall(matchData.match_request_id, "1");
+
+    //FreePlay Changes
+    // if (
+    //   CommonConstant.FreePlayData?.amount == "free play" ||
+    //   CommonConstant.SelectedMatchData?.amount == "free play" ||
+    //   CommonConstant.FreePlayData?.amount == "Free Play" ||
+    //   CommonConstant.SelectedMatchData?.amount == "Free Play"
+    // ) {
+    //   freePlayRequestUpdateCall(matchData.match_request_id, "1");
+    // } else {
+    //   requestUpdateCall(matchData.match_request_id, "1");
+    // }
   }
   function onPressAcceptRules() {
     setIsMatchStart(true);
-    if (
-      CommonConstant.FreePlayData?.amount == "free play" ||
-      CommonConstant.SelectedMatchData?.amount == "free play" ||
-      CommonConstant.FreePlayData?.amount == "Free Play" ||
-      CommonConstant.SelectedMatchData?.amount == "Free Play"
-    ) {
-      freePlayUpdateMatchStatusApi();
-    } else {
-      updateMatchStatusApi();
-    }
+    freePlayUpdateMatchStatusApi();
+    //Freeplay Changes
+
+    // if (
+    //   CommonConstant.FreePlayData?.amount == "free play" ||
+    //   CommonConstant.SelectedMatchData?.amount == "free play" ||
+    //   CommonConstant.FreePlayData?.amount == "Free Play" ||
+    //   CommonConstant.SelectedMatchData?.amount == "Free Play"
+    // ) {
+    //   freePlayUpdateMatchStatusApi();
+    // } else {
+    //   updateMatchStatusApi();
+    // }
   }
   function onPressDecline() {
-    if (
-      CommonConstant.FreePlayData?.amount == "free play" ||
-      CommonConstant.SelectedMatchData?.amount == "free play" ||
-      CommonConstant.FreePlayData?.amount == "Free Play" ||
-      CommonConstant.SelectedMatchData?.amount == "Free Play"
-    ) {
-      freePlayRequestUpdateCall(matchData.match_request_id, "2");
-    } else {
-      requestUpdateCall(matchData.match_request_id, "2");
-    }
+    freePlayRequestUpdateCall(matchData.match_request_id, "2");
+
+    // if (
+    //   CommonConstant.FreePlayData?.amount == "free play" ||
+    //   CommonConstant.SelectedMatchData?.amount == "free play" ||
+    //   CommonConstant.FreePlayData?.amount == "Free Play" ||
+    //   CommonConstant.SelectedMatchData?.amount == "Free Play"
+    // ) {
+    //   freePlayRequestUpdateCall(matchData.match_request_id, "2");
+    // } else {
+    //   requestUpdateCall(matchData.match_request_id, "2");
+    // }
   }
 
   async function requestUpdateCall(idParam, statusParam) {
@@ -901,9 +925,7 @@ const CreateGame = () => {
 
       //Actions.push(ScreenName.RuleScreen, { gameRules: true });
     } else if (statusParam === "2") {
-      getCurrentMatches();
-
-      setSelectedModelIndex(1);
+      setSelectedModelIndex(2);
       setIsModelShow(false);
     }
   }
@@ -922,65 +944,88 @@ const CreateGame = () => {
     if (statusParam === "1") {
       setSelectedModelIndex(5);
     } else if (statusParam === "2") {
-      getCurrentMatches();
-
-      setSelectedModelIndex(1);
+      setSelectedModelIndex(2);
       setIsModelShow(false);
     }
   }
 
   const handleDelete = async (item) => {
     console.log("item", item);
+    if (item) {
+      try {
+        const user = getData("user");
 
-    if (item.amount == "free play" || item.amount == "Free Play") {
-      if (item) {
-        try {
-          const user = getData("user");
+        const payload = new FormData();
+        payload.append("game_type", item.ismultipleuser);
+        payload.append("matchCommonId", item.matchCommonId);
 
-          const payload = new FormData();
-          payload.append("game_type", item.ismultipleuser);
-          payload.append("matchCommonId", item.matchCommonId);
+        const { payload: res } = await dispatch(fPDeleteMatchAction(payload));
+        const { data, status, message } = res;
+        getCurrentMatches();
+        console.log("data", res);
+        toast.success(message);
 
-          const { payload: res } = await dispatch(fPDeleteMatchAction(payload));
-          const { data, status, message } = res;
-          getCurrentMatches();
-          console.log("data", res);
-          toast.success(message);
-
-          if (status) {
-          } else {
-            toast.error(TOAST_ALERTS.OPPONENT_NOT_READY);
-          }
-        } catch (error) {
-          toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+        if (status) {
+        } else {
+          toast.error(TOAST_ALERTS.OPPONENT_NOT_READY);
         }
-      }
-    } else {
-      if (item) {
-        try {
-          const user = getData("user");
-
-          const payload = new FormData();
-          payload.append("game_type", item.ismultipleuser);
-          payload.append("matchCommonId", item.matchCommonId);
-
-          const { payload: res } = await dispatch(deleteMatchAction(payload));
-          const { data, status, message } = res;
-          getCurrentMatches();
-          console.log("data", data);
-          if (status) {
-          } else {
-            toast.error(TOAST_ALERTS.OPPONENT_NOT_READY);
-          }
-        } catch (error) {
-          toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-        }
+      } catch (error) {
+        toast.error(TOAST_ALERTS.ERROR_MESSAGE);
       }
     }
+    //Freeplay Changes
+
+    // if (item.amount == "free play" || item.amount == "Free Play") {
+    //   if (item) {
+    //     try {
+    //       const user = getData("user");
+
+    //       const payload = new FormData();
+    //       payload.append("game_type", item.ismultipleuser);
+    //       payload.append("matchCommonId", item.matchCommonId);
+
+    //       const { payload: res } = await dispatch(fPDeleteMatchAction(payload));
+    //       const { data, status, message } = res;
+    //       getCurrentMatches();
+    //       console.log("data", res);
+    //       toast.success(message);
+
+    //       if (status) {
+    //       } else {
+    //         toast.error(TOAST_ALERTS.OPPONENT_NOT_READY);
+    //       }
+    //     } catch (error) {
+    //       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+    //     }
+    //   }
+    // }
+
+    // else {
+    //   if (item) {
+    //     try {
+    //       const user = getData("user");
+
+    //       const payload = new FormData();
+    //       payload.append("game_type", item.ismultipleuser);
+    //       payload.append("matchCommonId", item.matchCommonId);
+
+    //       const { payload: res } = await dispatch(deleteMatchAction(payload));
+    //       const { data, status, message } = res;
+    //       getCurrentMatches();
+    //       console.log("data", data);
+    //       if (status) {
+    //       } else {
+    //         toast.error(TOAST_ALERTS.OPPONENT_NOT_READY);
+    //       }
+    //     } catch (error) {
+    //       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+    //     }
+    //   }
+    // }
   };
   const onClickAddItem = () => {
     setIsChallenge(false);
-    setSelectedModelIndex(1);
+    setSelectedModelIndex(2);
     CommonConstant.isFromChat = false;
     CommonConstant.challengeData = null;
 
@@ -1030,60 +1075,59 @@ const CreateGame = () => {
     <div>
       {isLoader && <Loader />}
 
-      <div className="min-h-screen bg-black06">
-        <div className="h-20 bg-black06 ml-8">
-          <div className="flex items-center">
+      <div className='min-h-screen bg-black06'>
+        <div className='h-20 bg-black06 ml-8'>
+          <div className='flex items-center'>
             <input
-              name="email"
+              name='email'
               value={searchTerm}
-              placeholder="Search"
+              placeholder='Search'
               onChange={onChangeSearch}
-              className="textInput-search"
+              className='textInput-search'
             />
-            <button className="ml-6" onClick={onClickAddItem}>
+            <button className='ml-6' onClick={onClickAddItem}>
               <Image
-                src="/images/plus.png"
-                className="plus-img"
+                src='/images/plus.png'
+                className='plus-img'
                 width={30}
                 height={30}
-                alt="Logo"
+                alt='Logo'
               />
             </button>
           </div>
         </div>
         {isLoader ? (
-          <div className="flex justify-center items-center mt-4">
+          <div className='flex justify-center items-center mt-4'>
             Loading...
           </div>
         ) : (
-          <div className="mt-4">
+          <div className='mt-4'>
             {
               userSearchData.length > 0 ? (
-                <ul className="list-none">
+                <ul className='list-none'>
                   {userSearchData.map((user) => (
-                    <div class="flex items-center  text-white rounded-lg p-4   mx-auto ml-10">
+                    <div class='flex items-center  text-white rounded-lg p-4   mx-auto ml-10'>
                       {console.log("user", user)}
 
                       <img
                         src={user?.image ? user?.image : "/images/logo.png"}
-                        alt="User Image"
-                        class="w-12 h-12 rounded-full object-cover"
+                        alt='User Image'
+                        class='w-12 h-12 rounded-full object-cover'
                       />
 
-                      <div class="ml-4 w-[45%] truncate overflow-hidden text-ellipsis whitespace-nowrap">
+                      <div class='ml-4 w-[45%] truncate overflow-hidden text-ellipsis whitespace-nowrap'>
                         <p>{user.username}</p>
                       </div>
 
                       <button
-                        className="  text-center border-[1px] rounded-lg text-black06 font-inter_tight bg-yellow    px-3 py-2"
+                        className='  text-center border-[1px] rounded-lg text-black06 font-inter_tight bg-yellow    px-3 py-2'
                         onClick={() => {
                           setIsChallenge(true);
                           setChallengeUserDetail(user);
                           CommonConstant.challengeData = null;
-                          setSelectedModelIndex(1);
+                          setSelectedModelIndex(2);
                           setIsModelShow(true);
-                        }}
-                      >
+                        }}>
                         Challenge
                       </button>
                     </div>
@@ -1110,25 +1154,35 @@ const CreateGame = () => {
             onPressDecline={onPressDecline}
             onPressAcceptRules={onPressAcceptRules}
             onPressReady={
-              CommonConstant?.FreePlayData?.amount == "free play" ||
-              CommonConstant?.FreePlayData?.amount == "Free Play"
-                ? freePlayUpdateReadyStatusApi
-                : updateReadyStatusApi
+              freePlayUpdateReadyStatusApi
+
+              //Freeplay Changes
+
+              // CommonConstant?.FreePlayData?.amount == "free play" ||
+              // CommonConstant?.FreePlayData?.amount == "Free Play"
+              //   ? freePlayUpdateReadyStatusApi
+              //   : updateReadyStatusApi
             }
             ruleData={ruleData}
             readyTimes={readyTimes}
             readyClick={readyClick}
             matchResultApi={
-              CommonConstant?.FreePlayData?.amount == "free play" ||
-              CommonConstant?.FreePlayData?.amount == "Free Play"
-                ? freePlayMatchResultApi
-                : matchResultApi
+              freePlayMatchResultApi
+              //Freeplay Changes
+
+              // CommonConstant?.FreePlayData?.amount == "free play" ||
+              // CommonConstant?.FreePlayData?.amount == "Free Play"
+              //   ? freePlayMatchResultApi
+              //   : matchResultApi
             }
             submitScoreApi={
-              CommonConstant?.FreePlayData?.amount == "free play" ||
-              CommonConstant?.FreePlayData?.amount == "Free Play"
-                ? freePlaySubmitScoreApi
-                : submitScoreApi
+              freePlaySubmitScoreApi
+              //Freeplay Changes
+
+              // CommonConstant?.FreePlayData?.amount == "free play" ||
+              // CommonConstant?.FreePlayData?.amount == "Free Play"
+              //   ? freePlaySubmitScoreApi
+              //   : submitScoreApi
             }
             scoreTimeCount={scoreTimeCount}
             isSubmitScoreBtn={isSubmitScoreBtn}
@@ -1141,69 +1195,66 @@ const CreateGame = () => {
             isChallenge={isChallenge}
           />
         )}
-        <div className="mt-16  ml-8">
-          <div className="match-small-carousel  ">
+        <div className='mt-16  ml-8'>
+          <div className='match-small-carousel  '>
             {currentMatchData.length > 0 ? (
               <Carousel
                 responsive={responsive}
-                itemClass="carousel-item-padding-40-px"
-                containerClass="ml-4  "
-              >
+                itemClass='carousel-item-padding-40-px'
+                containerClass='ml-4  '>
                 {currentMatchData.map((item) => {
                   return (
-                    <div className="relative w-64 bg-black25 rounded-2xl pt-[1px]">
+                    <div className='relative w-64 bg-black25 rounded-2xl pt-[1px]'>
                       {/* Delete Icon */}
                       <button
-                        className="absolute top-2 right-2 p-1 bg-red-500 rounded-full hover:bg-red-600"
+                        className='absolute top-2 right-2 p-1 bg-red-500 rounded-full hover:bg-red-600'
                         onClick={() => handleDelete(item)} // Replace with your delete function
                       >
                         <Image
-                          src="/images/delete.svg" // Replace with your delete icon path
+                          src='/images/delete.svg' // Replace with your delete icon path
                           width={20}
                           height={20}
-                          alt="Delete"
+                          alt='Delete'
                         />
                       </button>
 
                       {/* Card Content */}
-                      <div className="mt-[5%]">
-                        <div className="flex">
+                      <div className='mt-[5%]'>
+                        <div className='flex'>
                           <Image
                             src={item.game_image}
-                            className="h-[40px] w-[40px] rounded-full ml-4"
+                            className='h-[40px] w-[40px] rounded-full ml-4'
                             width={40}
                             height={40}
                             alt={item.gamename}
                           />
-                          <p className="text-[18px] text-white font-inter_tight font-[600] ml-14 mt-2">
+                          <p className='text-[18px] text-white font-inter_tight font-[600] ml-14 mt-2'>
                             {item.amount}
                           </p>
                         </div>
-                        <p className="avl-txt">{item.gamename}</p>
-                        <div className="flex">
-                          <p className="avl-txt">{item.gameModeName}</p>
+                        <p className='avl-txt'>{item.gamename}</p>
+                        <div className='flex'>
+                          <p className='avl-txt'>{item.gameModeName}</p>
                         </div>
                         <p
                           className={`text-xs mt-2 ml-6 ${
                             item.isChallenges === "1"
                               ? "text-yellow"
                               : "text-black25"
-                          }`}
-                        >
+                          }`}>
                           {"Challenge By " + item?.host_name}
                         </p>
 
-                        <div className="center-container">
+                        <div className='center-container'>
                           <button
-                            className="w-[80px] h-[35px] text-center border-[1px] rounded-full text-black06 font-inter_tight bg-yellow mb-4 mt-4"
+                            className='w-[80px] h-[35px] text-center border-[1px] rounded-full text-black06 font-inter_tight bg-yellow mb-4 mt-4'
                             onClick={() => {
                               // socket.start();
                               //socket.subscribeUser();
                               CommonConstant.isFromChat = false;
                               CommonConstant.SelectedMatchData = item;
                               setIsDataShow(!isDataShow);
-                            }}
-                          >
+                            }}>
                             Join
                           </button>
                           {/* Text below the button */}
@@ -1214,7 +1265,7 @@ const CreateGame = () => {
                 })}
               </Carousel>
             ) : (
-              <p className="avl-txt">No Matches Available</p>
+              <p className='avl-txt'>No Matches Available</p>
             )}
           </div>
           {/* {tournamentData.map((item) => {
@@ -1241,7 +1292,7 @@ const CreateGame = () => {
       {/* )} */}
       {showAlert && (
         <AlertDialog
-          title="Jovial Gaming"
+          title='Jovial Gaming'
           message={matchData?.display_message}
           onConfirm={() => {
             setMatchData("");
@@ -1250,7 +1301,7 @@ const CreateGame = () => {
             // socket.stop();
             getCurrentMatches();
 
-            setSelectedModelIndex(1);
+            setSelectedModelIndex(2);
             setIsModelShow(false);
             setShowAlert(false);
           }}

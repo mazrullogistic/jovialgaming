@@ -42,9 +42,9 @@ export const SocketKEY = {
   socketConnect: null,
 
   baseURL: "https://admin.jovialgaming.com/api/v1",
-  // baseURL: "http://52.32.200.186:1337/api/v1",
+  // baseURL: "https://staging-new.jovialgaming.com:1337//api/v1",
   socketUrl: "https://admin.jovialgaming.com",
-  // socketUrl: "http://52.32.200.186:1337",
+  // socketUrl: "https://staging-new.jovialgaming.com:1337/",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",

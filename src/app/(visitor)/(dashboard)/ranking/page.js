@@ -247,12 +247,14 @@ const Ranking = () => {
     const object = {
       state: filters.state,
       pincode: filters.local,
-      badgeId: badgesData[currentPlan]?.id,
+      //badgeId: badgesData[currentPlan]?.id,
       radius: Math.round(sliderValue),
+      gameId: user?.roomDetails?.id,
     };
     console.log("object 314", object);
 
     try {
+      console.log("Object ---> ", object);
       const res = await dispatch(getUserPointsAction(object));
 
       console.log("res--> 371", res.payload.data);
@@ -261,6 +263,12 @@ const Ranking = () => {
         // setProfileData(res.payload.data.data);
         // setIsProfileCard(true);
         setPointsData(res.payload.data.data);
+
+        setLocalRank(response.data.localRank)
+        setStateRank(response.data.stateRank)
+        setNationalRank(response.data.nationalRank)
+        setDevision(response.data.devision)
+
         setIsLoader(false);
       } else {
         console.log("res--> 133");
@@ -379,6 +387,34 @@ const Ranking = () => {
             <h1 className="text-2xl font-medium text-center">
               {badgesData[currentPlan]?.name}
             </h1>
+          </div>
+          {/* Rankings */}
+          <div className='px-4 py-6' style={{ display: "flex" }}>
+            <div>
+              <Image
+                className="rounded-full"
+                src={
+                  user.data.image.startsWith("http") ||
+                    user.data.image.startsWith("/")
+                    ? user.data.image
+                    : `/images/logo.png` // Fallback for invalid image paths
+                }
+                layout="fill"
+              ></Image>
+            </div>
+
+            <div>
+                <span>Local</span> <br/>
+                <span>#{localRank}</span>
+            </div>
+            <div>
+                <span>State</span> <br/>
+                <span>#{stateRank}</span>
+            </div>
+            <div>
+                <span>Local</span> <br/>
+                <span>N/A</span>
+            </div>
           </div>
           {/* Leaderboard */}
           <div className="px-4 py-6">

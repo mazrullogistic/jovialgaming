@@ -54,21 +54,47 @@ const Chat = () => {
   const [chatList, setChatList] = useState([]);
   const [chatReverseList, setChatReverseList] = useState([]);
   const [chatData, setChatData] = useState([]);
-
+  const [threadList, setThreadList] = useState([]);
+  const [isHeader, setIsHeader] = useState(false);
   const [messageTxt, setMessageTxt] = useState("");
   const user = getData("user");
+  const roomId = getRoomId("roomId");
   const bottomRef = useRef(null);
+  const bottomRef1 = useRef(null);
   const [threadId, setThreadId] = useState(0);
-
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
   const [selectedVideoUrl, setSelectedVideoUrl] = useState(null);
+  const chatContainerRef = useRef(null);
   const scrollRef = useRef(null); // Ref for the scroll container
   const [chatListIsNext, setChatListIsNext] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const userDataForChat = getChatUserData("chat");
   const chatModelData = getModelChatData("chatId");
   var tourDetailData = getCurrentTourDetailsData("tourDetailData");
+  var tournamentNewData = getCurrentTourRoundDetailsData("tournamentData");
 
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+  let prevDate, oldDate;
+  const [isAtBottom, setIsAtBottom] = useState(false);
+  const containerRef = useRef(null);
+
+  const checkIfAtBottom = () => {
+    const container = containerRef.current;
+    if (container) {
+      setIsAtBottom(
+        container.scrollHeight - container.scrollTop === container.clientHeight
+      );
+    }
+  };
   useEffect(() => {
+    // Code to execute when the page is navigated to
+    console.log("tournamentNewData", tournamentNewData);
+    console.log("tourDetailData", tourDetailData);
     console.log("Screen is focused");
 
     return () => {
@@ -99,24 +125,44 @@ const Chat = () => {
   }, []);
 
   const handleScrollToBottom = () => {
+    // Your method call when scrolled to the bottom
     console.log("Scrolled to the bottom");
   };
 
   useEffect(() => {
+    // if (SocketKEY.socketConnect === null) {
+    //   socket.start();
+    //   socket.subscribeUser();
+    // }
+    //getChatList();
+    // getThreadList();
     getUserMessagesEvent();
     return () => {};
   }, []);
   useEffect(() => {
-    //
+    // if (SocketKEY.socketConnect === null) {
+    //   socket.start();
+    //   socket.subscribeUser();
+    // }
     getChatList();
     return () => {};
   }, [threadId]);
   useEffect(() => {
     if (chatListIsNext) {
       getChatList();
+      // GroupTourReadMessage(true);
     }
   }, [chatListPage]);
   useEffect(() => {
+    // bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    // const container = bottomRef.current?.parentNode;
+    // if (container) {
+    //   const halfScroll = container.scrollHeight / 10;
+    //   container.scrollTo({
+    //     top: halfScroll,
+    //     behavior: "smooth",
+    //   });
+    // }
     if (chatListPage == 1) {
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     } else {
@@ -133,11 +179,22 @@ const Chat = () => {
   }, [chatData]);
 
   function getUserMessagesEvent() {
+    // EventEmitter.on(EmitterKey.DrawerClick, (msg) => {
+    //   setChatListPage(1);
+    //   setThreadId(msg.id);
+    //   threadIdValue = msg.id;
+    // });
+
     EventEmitter.on(EmitterKey.TmatchChat, (msg) => {
       console.log("msg", msg);
       // addMsgDetails(msg.message);
       getChatList();
     });
+    // EventEmitter.on(EmitterKey.ReloadWeb, (msg) => {
+    //   console.log("Event received:128", msg);
+    //   getChatList();
+    //   // GroupTourReadMessage(true);
+    // });
   }
 
   const handleFileChange = (event) => {
@@ -171,6 +228,7 @@ const Chat = () => {
   };
   const getChatList = async () => {
     setIsLoader(true);
+    const userDataForChat = getChatUserData("chat");
     const payload = new FormData();
 
     payload.append("matchId", tourDetailData?.match_request_id);
@@ -441,6 +499,16 @@ const Chat = () => {
     );
   }
 
+  function dateHeader(res) {
+    return (
+      <div class="mt-2">
+        <span class="text-sm text-gray-400"> {res || oldDate}</span>
+      </div>
+    );
+  }
+  const onEndReach = async () => {
+    console.log("onEndReach");
+  };
   const handleScroll = () => {
     if (scrollRef.current.scrollTop === 0) {
       loadMore();
@@ -472,17 +540,17 @@ const Chat = () => {
                   <img
                     className="rounded-full h-full w-full object-cover"
                     src={
-                      user?.data?.id == tourDetailData?.host_user_id
-                        ? tourDetailData?.opponent_image
-                        : tourDetailData?.host_image
+                      user.data.id == tourDetailData.host_user_id
+                        ? tourDetailData.opponent_image
+                        : tourDetailData.host_image
                     }
                     alt="User Profile Picture"
                   />
                 </div>
                 <h1 className="text-xl font-semibold">
-                  {user?.data?.id == tourDetailData?.host_user_id
-                    ? tourDetailData?.opponent_name
-                    : tourDetailData?.host_name}
+                  {user.data.id == tourDetailData.host_user_id
+                    ? tourDetailData.opponent_name
+                    : tourDetailData.host_name}
                 </h1>
               </div>
             </div>
@@ -495,7 +563,7 @@ const Chat = () => {
             style={{ height: "80vh" }}
           >
             <div className="flex-grow p-4 bg-black06">
-              {chatReverseList?.map((item, index) => {
+              {chatReverseList.map((item, index) => {
                 let header = false;
                 let chatMsgDate = item.createdAt;
                 let headerText;
