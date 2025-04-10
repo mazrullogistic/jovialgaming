@@ -26,6 +26,7 @@ import ProtectedPageService from "@/services/protectedPage";
 import { setIsMobile } from "@/utils/storage";
 import { SocketKEY } from "@/constants/keywords";
 import socket from "@/socket/socket";
+import Script from "next/script";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -92,6 +93,12 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5381942317128703"
+        crossOrigin="anonymous"
+        strategy="afterInteractive"
+      />
       <body
         className={`${inter.className} ${open_sans.className} ${archivo.variable}  ${inter_tight.variable}`}
       >
