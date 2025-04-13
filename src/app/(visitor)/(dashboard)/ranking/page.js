@@ -271,7 +271,7 @@ const Ranking = () => {
         // setIsProfileCard(true);
         setPointsData(res.payload.data.data);
 
-        setUserState(response.payload.data.userState);
+        setUserState(res.payload.data.userState);
         setLocalRank(res.payload.data.localRank);
         setStateRank(res.payload.data.stateRank);
         setNationalRank(res.payload.data.nationalRank);
@@ -421,7 +421,7 @@ const Ranking = () => {
             </div>
             <div>
               <span>National</span> <br />
-              <span>N/A</span>
+              <span>{nationalRank}</span>
             </div>
           </div>
           {/* Leaderboard */}
