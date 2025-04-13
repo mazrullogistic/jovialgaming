@@ -145,11 +145,11 @@ export default function SideMenu({ children }) {
       title: "Ranking",
       src: "/images/trophywhite.svg",
     },
-    // {
-    //   href: "/historyBook",
-    //   title: "History Book",
-    //   src: "/images/agenda.svg",
-    // },
+    {
+      href: "/historyBook",
+      title: "Tracker",
+      src: "/images/agenda.svg",
+    },
     {
       href: "/subscription",
       title: "Subscriptions",

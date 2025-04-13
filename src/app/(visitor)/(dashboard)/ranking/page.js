@@ -421,7 +421,7 @@ const Ranking = () => {
             </div>
             <div>
               <span>National</span> <br />
-              <span>{nationalRank}</span>
+              <span>#{nationalRank}</span>
             </div>
           </div>
           {/* Leaderboard */}
