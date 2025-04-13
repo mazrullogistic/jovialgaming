@@ -61,6 +61,7 @@ import {
   GetUserPoints,
   LeaveRoom,
   MatchHistoryList,
+  TrackerList,
   MatchReqUpdate,
   MatchReqUpdateMultiPlayer,
   MatchResult,
@@ -901,6 +902,24 @@ export const matchHistoryListAction = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const { data, status } = await MatchHistoryList(payload);
+      // console.log("status", status);
+      return { data, status };
+    } catch (err) {
+      console.log("🚀 ~ err:", err);
+      toast.error(err?.response?.data?.message || err.message);
+      if (err instanceof AxiosError) {
+        return rejectWithValue(err?.response?.data?.message);
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
+export const trackerListAction = createAsyncThunk(
+  "dashboardSlice/trackerListAction",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data, status } = await TrackerList(payload);
       // console.log("status", status);
       return { data, status };
     } catch (err) {

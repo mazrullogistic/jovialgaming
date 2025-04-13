@@ -146,7 +146,7 @@ export default function SideMenu({ children }) {
       src: "/images/trophywhite.svg",
     },
     {
-      href: "/historyBook",
+      href: "/tracker",
       title: "Tracker",
       src: "/images/agenda.svg",
     },
