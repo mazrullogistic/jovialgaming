@@ -144,8 +144,8 @@ const Tracker = () => {
                                             height: '100px'
                                         }}
                                         src={
-                                            user.data.image.startsWith("http") ||
-                                                user.data.image.startsWith("/")
+                                            user?.data.image.startsWith("http") ||
+                                                user?.data.image.startsWith("/")
                                                 ? user.data.image
                                                 : `/images/logo.png` // Fallback for invalid image paths
                                         }
@@ -153,7 +153,7 @@ const Tracker = () => {
                                 </div>
                                 <div style={styles.nameStyle}>
                                     <span className="text-lg text-white">
-                                        {user.data ? user.data.username : ''}
+                                        {user?.data ? user.data.username : ''}
                                     </span>
                                 </div>
                                 <div style={styles.divisionStyle}>
