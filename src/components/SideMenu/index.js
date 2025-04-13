@@ -147,7 +147,7 @@ export default function SideMenu({ children }) {
     },
     {
       href: "/tracker",
-      title: "Tracker",
+      title: "Tracker", 
       src: "/images/agenda.svg",
     },
     {
