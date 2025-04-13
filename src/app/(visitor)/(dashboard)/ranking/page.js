@@ -401,7 +401,7 @@ const Ranking = () => {
           <div className='px-4 py-6' style={{ display: "flex", justifyContent: "space-around" }}>
             <div>
               <Image
-                className="rounded-full" style={{ width: "100px", height: "100px" }}
+                className="rounded-full" width={100} height={100} alt="Avator" style={{ width: "100px", height: "100px" }}
                 src={
                   user.data.image.startsWith("http") ||
                     user.data.image.startsWith("/")
