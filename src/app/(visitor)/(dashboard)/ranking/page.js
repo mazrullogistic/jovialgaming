@@ -827,7 +827,7 @@ const Ranking = () => {
           {isOpen && (
             <div className="fixed inset-0 flex items-center justify-center bg-black06 bg-opacity-50">
               <div className="bg-black26 text-white p-6 rounded shadow-lg max-w-md w-full">
-                <h2 className="text-xl font-semibold mb-4">Select Game</h2>
+                <h2 className="text-xl font-semibold mb-4">Select Game New</h2>
 
                 {/* Single select dropdown */}
                 <select
