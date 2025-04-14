@@ -28,6 +28,7 @@ import socket from "@/socket/socket";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/navigation";
 import { PATH_DASHBOARD } from "@/routes/paths";
+import MessagesAdsHorizontal from "@/components/Ads/adsense/MessagesAdsHorizontal";
 
 const Messages = () => {
   const [tournamentData, setTournamentData] = useState([
@@ -122,7 +123,7 @@ const Messages = () => {
     //getChatList();
     getThreadList();
     getUserMessagesEvent();
-    return () => {};
+    return () => { };
   }, []);
   useEffect(() => {
     // if (SocketKEY.socketConnect === null) {
@@ -131,7 +132,7 @@ const Messages = () => {
     // }
 
     getChatList();
-    return () => {};
+    return () => { };
   }, [threadId]);
   useEffect(() => {
     if (chatListIsNext) {
@@ -161,7 +162,7 @@ const Messages = () => {
         });
       }
     }
-    return () => {};
+    return () => { };
   }, [chatData]);
 
   function getUserMessagesEvent() {
@@ -468,6 +469,7 @@ const Messages = () => {
 
   return (
     <>
+      <MessagesAdsHorizontal />
       {isLoader ? (
         <Loader />
       ) : (

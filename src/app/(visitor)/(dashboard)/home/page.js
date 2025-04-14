@@ -49,6 +49,10 @@ import { toast } from "react-toastify";
 import dynamic from "next/dynamic";
 import EventEmitter from "@/components/EventEmitter";
 import socket from "@/socket/socket";
+import AvailableMatchAdsHorizontal from "@/components/Ads/adsense/home/AvailableMatchAdsHorizontal";
+import HomeAdsHorizontal from "@/components/Ads/adsense/home/HomeAdsHorizontal";
+import MyMatchesAdsHorizontal from "@/components/Ads/adsense/home/MyMatchesAdsHorizontal";
+import MyTournamentsAdsHorizontal from "@/components/Ads/adsense/home/MyTournamentsAdsHorizontal";
 
 const HomePage = ({ Component, pageProps }) => {
   const [isLoader, setIsLoader] = useState(false); // Initialize with null or some default value
@@ -202,7 +206,7 @@ const HomePage = ({ Component, pageProps }) => {
           handleShowNotification(payload); // Pass payload here
         }
       });
-    } catch (error) {}
+    } catch (error) { }
   }, []);
 
   useEffect(() => {
@@ -212,7 +216,7 @@ const HomePage = ({ Component, pageProps }) => {
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
           .register("/firebase-messaging-sw.js")
-          .then((registration) => {})
+          .then((registration) => { })
           .catch((error) => {
             console.error("Service Worker registration failed:", error);
           });
@@ -799,11 +803,10 @@ const HomePage = ({ Component, pageProps }) => {
             {profileData?.recentMatches.map((item) => {
               return (
                 <li
-                  className={`flex mt-2 ${
-                    item.winLossStatus === 0 || item.winLossStatus === 2
-                      ? "text-red"
-                      : "text-green"
-                  }`}>
+                  className={`flex mt-2 ${item.winLossStatus === 0 || item.winLossStatus === 2
+                    ? "text-red"
+                    : "text-green"
+                    }`}>
                   {item.winLossStatus === 0 || item.winLossStatus === 2
                     ? "L"
                     : "W"}
@@ -961,15 +964,19 @@ const HomePage = ({ Component, pageProps }) => {
                 </div>
               </div>
             )}
+
+            {/* // Home top ad */}
+            <HomeAdsHorizontal />
+
+
             <div>
               <select
-                className={` text-[22px] mb-2 h-12 text-white bg-black06 ml-6 mt-6 outline-none font-[600] ${
-                  dropDownSelection == "Available"
-                    ? "w-[150px] md:w-[130px]"
-                    : dropDownSelection == "My Matches"
+                className={` text-[22px] mb-2 h-12 text-white bg-black06 ml-6 mt-6 outline-none font-[600] ${dropDownSelection == "Available"
+                  ? "w-[150px] md:w-[130px]"
+                  : dropDownSelection == "My Matches"
                     ? "w-[180px] md:w-[160px]"
                     : "w-[240px] md:w-[210px]"
-                }`}
+                  }`}
                 onChange={handleChange}>
                 {matchesDropDown.map((option) => (
                   <option>{option.name}</option>
@@ -977,8 +984,10 @@ const HomePage = ({ Component, pageProps }) => {
               </select>
             </div>
 
+
             {dropDownSelection == "Available" && (
               <div className='match-small-carousel  '>
+                <AvailableMatchAdsHorizontal />
                 {availableData.length > 0 ? (
                   <Carousel
                     responsive={responsive}
@@ -1026,6 +1035,7 @@ const HomePage = ({ Component, pageProps }) => {
 
             {dropDownSelection == "My Matches" && (
               <div className='match-small-carousel  '>
+                <MyMatchesAdsHorizontal />
                 {currentMatchData.length > 0 ? (
                   <Carousel
                     responsive={responsive}
@@ -1072,6 +1082,7 @@ const HomePage = ({ Component, pageProps }) => {
 
             {dropDownSelection == "My Tournaments" && (
               <div className='match-small-carousel  '>
+                <MyTournamentsAdsHorizontal />
                 {myTournaments.length > 0 ? (
                   <Carousel
                     responsive={responsive}
@@ -1262,7 +1273,7 @@ const HomePage = ({ Component, pageProps }) => {
                             className='rounded-full'
                             src={
                               post.userData.image.startsWith("http") ||
-                              post.userData.image.startsWith("/")
+                                post.userData.image.startsWith("/")
                                 ? post.userData.image
                                 : `/images/logo.png` // Fallback for invalid image paths
                             }

@@ -13,6 +13,7 @@ import { setDisputeData } from "@/utils/storage";
 import { PATH_DASHBOARD } from "@/routes/paths";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
+import DisputeCenterAdsHorizontal from "@/components/Ads/adsense/DisputeCenterAdsHorizontal";
 
 const DisputeCenter = () => {
   const [tournamentData, setTournamentData] = useState([]);
@@ -76,6 +77,10 @@ const DisputeCenter = () => {
               Open Case
             </button>
           </div>
+
+          {/* Dispute center ads */}
+          <DisputeCenterAdsHorizontal />
+
           <div className="bg-black06 pb-4">
             {disputeList.map((item) => {
               return (
@@ -109,19 +114,19 @@ const DisputeCenter = () => {
                         item.status === "0"
                           ? "btn-complete-red text-xs"
                           : item.status === "1"
-                          ? "btn-complete-yellow text-xs"
-                          : item.status === "2"
-                          ? "btn-complete-green text-xs"
-                          : "btn-complete-red text-xs"
+                            ? "btn-complete-yellow text-xs"
+                            : item.status === "2"
+                              ? "btn-complete-green text-xs"
+                              : "btn-complete-red text-xs"
                       }
                     >
                       {item.status === "0"
                         ? "Pending"
                         : item.status === "1"
-                        ? "In Review"
-                        : item.status === "2"
-                        ? "Completed"
-                        : "Rejected"}
+                          ? "In Review"
+                          : item.status === "2"
+                            ? "Completed"
+                            : "Rejected"}
                     </button>
                   </div>
                 </div>
