@@ -154,6 +154,9 @@ export const DisputesList = (data) => {
 export const MatchHistoryList = (data) => {
   return axiosPost(API_ROUTER.MATCH_HISTORY, data);
 };
+export const TrackerList = (data) => {
+  return axiosPost(API_ROUTER.TRACKER_DATA, data);
+};
 export const UpdateProfile = (data) => {
   return axiosPost(API_ROUTER.UPDATE_PROFILE, data);
 };

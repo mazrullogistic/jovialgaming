@@ -69,6 +69,13 @@ const Ranking = () => {
   const [isOpened, setIsOpened] = useState(false);
   const [scene, setScene] = useState(null);
 
+
+  const [localRank, setLocalRank] = useState(0)
+  const [stateRank, setStateRank] = useState(0)
+  const [nationalRank, setNationalRank] = useState(0)
+  const [devision, setDevision] = useState("")
+  const [userState, setUserState] = useState("")
+
   console.log("Badges data", badgesData);
 
   useEffect(() => {
@@ -264,10 +271,11 @@ const Ranking = () => {
         // setIsProfileCard(true);
         setPointsData(res.payload.data.data);
 
-        setLocalRank(response.data.localRank)
-        setStateRank(response.data.stateRank)
-        setNationalRank(response.data.nationalRank)
-        setDevision(response.data.devision)
+        setUserState(res.payload.data.userState);
+        setLocalRank(res.payload.data.localRank);
+        setStateRank(res.payload.data.stateRank);
+        setNationalRank(res.payload.data.nationalRank);
+        setDevision(res.payload.data.devision);
 
         setIsLoader(false);
       } else {
@@ -369,63 +377,63 @@ const Ranking = () => {
 
   function Leaderboard() {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-black06 bg-opacity-50">
-        <div className="bg-black26 text-white p-6 rounded shadow-lg max-w-md w-full">
+      <div className='fixed inset-0 flex items-center justify-center bg-black06 bg-opacity-50' style={{zIndex: 10000000000000}}>
+        <div className='bg-black26 text-white p-6 rounded shadow-lg max-w-md w-full'>
           {/* Status Bar */}
           {/* Header */}
-          <div className="flex items-center justify-center px-4 py-2 relative">
+          <div className='flex items-center justify-center px-4 py-2 relative' style={{justifyContent: "space-between"}}>
             <button
               onClick={() => {
                 setIsFilter(true);
                 setIsRanking(false);
               }}
-              className="absolute left-4"
+              className='left-4'
             >
               {/* Add your filter icon here */}
-              <img src="/images/filter.svg" alt="Filter" className="w-6 h-6" />
+              <img src='/images/filter.svg' alt='Filter' className='w-6 h-6' />
             </button>
-            <h1 className="text-2xl font-medium text-center">
-              {badgesData[currentPlan]?.name}
+            <h1 className='text-2xl font-medium text-center'>
+              {user?.roomDetails?.gamename}
             </h1>
+            <h1>{devision}</h1>
           </div>
           {/* Rankings */}
-          <div className='px-4 py-6' style={{ display: "flex" }}>
+          <div className='px-4 py-6' style={{ display: "flex", justifyContent: "space-around" }}>
             <div>
               <Image
-                className="rounded-full"
+                className="rounded-full" width={100} height={100} alt="Avator" style={{ width: "100px", height: "100px" }}
                 src={
                   user.data.image.startsWith("http") ||
                     user.data.image.startsWith("/")
                     ? user.data.image
                     : `/images/logo.png` // Fallback for invalid image paths
                 }
-                layout="fill"
               ></Image>
             </div>
 
             <div>
-                <span>Local</span> <br/>
-                <span>#{localRank}</span>
+              <span>Local</span> <br />
+              <span>#{localRank}</span>
             </div>
             <div>
-                <span>State</span> <br/>
-                <span>#{stateRank}</span>
+              <span>State</span> <br />
+              <span>#{stateRank}</span>
             </div>
             <div>
-                <span>Local</span> <br/>
-                <span>N/A</span>
+              <span>National</span> <br />
+              <span>#{nationalRank}</span>
             </div>
           </div>
           {/* Leaderboard */}
-          <div className="px-4 py-6">
-            <div className="flex justify-between mb-4">
-              <div className="text-xl">UserName</div>
-              <div className="text-xl">Ranking points</div>
+          <div className='px-4 py-6' style={{ height: "500px", overflowY: "scroll", marginBottom : "10px" }}>
+            <div className='flex justify-between mb-4'>
+              <div className='text-xl'>UserName</div>
+              <div className='text-xl'>Ranking points</div>
             </div>
             {pointsListData.map((item, i) => (
-              <div key={i} className="flex justify-between py-2">
-                <div className="text-xl">{item.username}</div>
-                <div className="text-xl">{item.allpoints}</div>
+              <div key={i} className='flex justify-between py-2'>
+                <div className='text-xl'>{item.username}</div>
+                <div className='text-xl'>{item.allpoints}</div>
               </div>
             ))}
           </div>
@@ -444,7 +452,7 @@ const Ranking = () => {
               });
               setSliderValue(0);
             }}
-            className="bg-yellow text-black06 w-full py-2 rounded-lg hover:bg-yellow-500"
+            className='bg-yellow text-black06 w-full py-2 rounded-lg hover:bg-yellow-500'
           >
             Close
           </button>

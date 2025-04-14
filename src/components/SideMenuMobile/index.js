@@ -944,6 +944,11 @@ export default function SideMenu({ children }) {
     },
     { href: "/ranking", title: "Ranking", src: "/images/trophywhite.svg" },
     {
+      href: "/tracker",
+      title: "Tracker",
+      src: "/images/agenda.svg",
+    },
+    {
       href: "/subscription",
       title: "Subscriptions",
       src: "/images/payment.svg",

@@ -50,6 +50,7 @@ import {
   sendRoomChatAction,
   disputesListAction,
   matchHistoryListAction,
+  trackerListAction,
   getProfileCardAction,
   getSeasonListAction,
   getGameWinLossAction,
@@ -340,6 +341,17 @@ const DashboardSlice = createSlice({
         state.error = null;
       })
       .addCase(matchHistoryListAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Error fetching user data";
+      })
+      .addCase(trackerListAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(trackerListAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(trackerListAction.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || "Error fetching user data";
       })

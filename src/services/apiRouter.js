@@ -59,6 +59,7 @@ export const API_ROUTER = {
   //
   DISPUTES_LIST: "/disputes",
   MATCH_HISTORY: "/games/get-completed-game",
+  TRACKER_DATA: "/games/get-tracker-data",
   GET_PROFILE_CARD: "/user/get-user-profile-card?",
   GET_SEASON_LIST: "/get-season-list",
   CREATE_DISPUTES: "/disputes/create",
