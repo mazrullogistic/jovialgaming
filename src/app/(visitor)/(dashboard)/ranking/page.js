@@ -432,7 +432,7 @@ const Ranking = () => {
             </div>
             {pointsListData.map((item, i) => (
               <div key={i} className='flex justify-between py-2'>
-                <div className='text-xl'>{item.username}</div>
+                <div className='text-xl'> <span style={{marginRight: 7}}> {i+1} </span> {item.username}</div>
                 <div className='text-xl'>{item.allpoints}</div>
               </div>
             ))}

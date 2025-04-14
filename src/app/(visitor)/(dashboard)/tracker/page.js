@@ -30,13 +30,7 @@ const styles = {
         display: 'flex',
         alignItems: 'center',
     },
-    imageStyle: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '15%',
-        width: '15%',
-        borderRadius: '7.5%',
-    },
+
 
     nameStyle: {
         justifyContent: 'center',
@@ -49,30 +43,8 @@ const styles = {
         paddingLeft: '3%',
         width: '20%',
     },
-    statsStyle: {
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        width: '95%',
-        alignSelf: 'center',
-        flexDirection: 'row',
-        verticalAlign: 'middle',
-        marginBottom: '10px',
-        display: 'flex',
-        gap: '20px'
-    },
-    statBox: {
-        width: '180px',
-        backgroundColor: '#262626',
-        flexDirection: 'column',
-        alignItems: 'center',
-        borderRadius: '3%',
-        marginHorizontal: '2%',
-        marginVertical: '3%',
-        textAlign: 'center',
-        borderRadius: '10px',
-        position: 'relative',
-        padding: '30px',
-    },
+
+ 
     statHead: { marginBottom: 7, display: 'block' },
     statText: { marginBottom: 7, color: '#e6d500', display: 'block' },
 
@@ -138,11 +110,9 @@ const Tracker = () => {
                     <div className="space-y-4">
                         <div style={{ width: '100%' }}>
                             <div style={styles.innerStyle}>
-                                <div style={styles.imageStyle}>
+                                <div className="imageStyle">
                                     <Image
-                                        className="rounded-full" width={100} height={100} style={{
-                                            height: '100px'
-                                        }}
+                                        className="rounded-full avator-img" width={100} height={100}
                                         src={
                                             user?.data.image.startsWith("http") ||
                                                 user?.data.image.startsWith("/")
@@ -167,20 +137,20 @@ const Tracker = () => {
                             </div>
 
 
-                            <div style={styles.statsStyle}>
-                                <div style={styles.statBox}>
+                            <div className="statsStyle">
+                                <div className="statBox">
                                     <span className="text-sm text-white" style={styles.statHead}>MP</span>
                                     <span className="text-xl" style={styles.statText}>{matchedPlayed}</span>
                                 </div>
-                                <div style={styles.statBox}>
+                                <div className="statBox">
                                     <span className="text-sm text-white" style={styles.statHead}>Wins</span>
                                     <span className="text-xl" style={styles.statText}>{matchesWon}</span>
                                 </div>
-                                <div style={styles.statBox}>
+                                <div className="statBox">
                                     <span className="text-sm text-white" style={styles.statHead}>WR</span>
                                     <span className="text-xl" style={styles.statText}>{winRate.toFixed(0)}%</span>
                                 </div>
-                                <div style={styles.statBox}>
+                                <div className="statBox">
                                     <span className="text-sm text-white" style={styles.statHead}>RP</span>
                                     <span className="text-xl" style={styles.statText}>{ratingPoints}</span>
                                 </div>
@@ -190,8 +160,8 @@ const Tracker = () => {
                                 <span className="text-xl text-white" style={{ textAlign: 'center' }}>{nextDivisionCriteria ? nextDivisionCriteria.nextDivision : '...'}</span>
                             </div>
 
-                            <div style={styles.statsStyle}>
-                                <div style={styles.statBox}>
+                            <div className="statsStyle">
+                                <div className="statBox">
                                     {nextDivisionCriteria ?
                                         nextDivisionCriteria.criteria.matchesPlayed.met ?
                                             <Image src="/images/tick.png" width={30} height={30} style={styles.menuIcon} /> :
@@ -201,7 +171,7 @@ const Tracker = () => {
                                     <span className="text-xl" style={styles.statText}>{nextDivisionCriteria ? nextDivisionCriteria.criteria.matchesPlayed.required : '...'}</span>
                                 </div>
 
-                                <div style={styles.statBox}>
+                                <div className="statBox">
                                     {nextDivisionCriteria ?
                                         nextDivisionCriteria.criteria.winRate.met ?
                                             <Image src="/images/tick.png" width={30} height={30} style={styles.menuIcon} /> :
@@ -212,7 +182,7 @@ const Tracker = () => {
                                 </div>
 
 
-                                <div style={styles.statBox}>
+                                <div className="statBox">
                                     {nextDivisionCriteria ?
                                         nextDivisionCriteria.criteria.winRate.met ?
                                             <Image src="/images/tick.png" width={30} height={30} style={styles.menuIcon} /> :
@@ -222,7 +192,7 @@ const Tracker = () => {
                                     <span className="text-xl" style={styles.statText}>{nextDivisionCriteria ? nextDivisionCriteria.criteria.winRate.required : '...'}</span>
                                 </div>
 
-                                <div style={styles.statBox}>
+                                <div className="statBox">
                                     {nextDivisionCriteria ?
                                         nextDivisionCriteria.criteria.ratingPoints.met ?
                                             <Image src="/images/tick.png" width={30} height={30} style={styles.menuIcon} /> :
