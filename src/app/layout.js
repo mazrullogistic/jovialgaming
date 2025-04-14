@@ -93,12 +93,25 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+
+      {/* google ads script */}
       <Script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5381942317128703"
         crossOrigin="anonymous"
         strategy="afterInteractive"
       />
+
+      {/* propellerads scripts Interstitial script */}
+      {/* <Script
+        id="propellerads-script"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9201656,document.createElement('script'))`
+        }}
+      /> */}
+
+
       <body
         className={`${inter.className} ${open_sans.className} ${archivo.variable}  ${inter_tight.variable}`}
       >

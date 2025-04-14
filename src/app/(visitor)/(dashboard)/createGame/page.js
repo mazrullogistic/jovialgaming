@@ -57,6 +57,7 @@ import { format } from "date-fns";
 import socket from "@/socket/socket";
 import AlertDialog from "@/components/AlertDialog";
 import { useRouter } from "next/navigation";
+import CreateGameAdsHorizontal from "@/components/Ads/adsense/CreateGameAdsHorizontal";
 
 const CreateGame = () => {
   const [isLoader, setIsLoader] = useState(true); // Initialize with null or some default value
@@ -128,7 +129,7 @@ const CreateGame = () => {
     }
     getCurrentMatches();
 
-    return () => {};
+    return () => { };
   }, []);
 
   // useEffect(() => {
@@ -236,7 +237,7 @@ const CreateGame = () => {
       }
     }
 
-    return () => {};
+    return () => { };
   }, [isDataShow]);
 
   const getCurrentMatches = async () => {
@@ -265,7 +266,7 @@ const CreateGame = () => {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
     }
   };
-  useEffect(() => {}, [selectedModelIndex]);
+  useEffect(() => { }, [selectedModelIndex]);
   useEffect(() => {
     EventEmitter.on(EmitterKey.ChatReceive, (msg) => {
       console.log("msg", msg);
@@ -1140,6 +1141,9 @@ const CreateGame = () => {
             }
           </div>
         )}
+
+      <CreateGameAdsHorizontal />
+
         {isModelShow && (
           <Model
             isModelShow={isModelShow}
@@ -1237,11 +1241,10 @@ const CreateGame = () => {
                           <p className='avl-txt'>{item.gameModeName}</p>
                         </div>
                         <p
-                          className={`text-xs mt-2 ml-6 ${
-                            item.isChallenges === "1"
+                          className={`text-xs mt-2 ml-6 ${item.isChallenges === "1"
                               ? "text-yellow"
                               : "text-black25"
-                          }`}>
+                            }`}>
                           {"Challenge By " + item?.host_name}
                         </p>
 

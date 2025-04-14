@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
 import { getData, getRoomId } from "@/utils/storage";
 import { PATH_AUTH, PATH_DASHBOARD } from "@/routes/paths";
+import Head from "next/head";
 
 const Home = () => {
   const route = useRouter();
@@ -29,6 +30,10 @@ const Home = () => {
   // States
   return (
     <>
+      {/* <Head>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5381942317128703"
+          crossOrigin="anonymous"></script>
+      </Head> */}
       <Loader />
     </>
   );

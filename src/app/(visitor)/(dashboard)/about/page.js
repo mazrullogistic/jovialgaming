@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
 import { toast } from "react-toastify";
 import { TOAST_ALERTS, TOAST_TYPES } from "@/constants/keywords";
+import AboutHorizontalAds from "@/components/Ads/adsense/AboutHorizontalAds";
 
 const About = () => {
   const [tournamentData, setTournamentData] = useState([]);
@@ -174,6 +175,8 @@ const About = () => {
             <h1 className="text-3xl font-semibold">About</h1>
             <div></div> {/* Placeholder for centering the title */}
           </header>
+
+          <AboutHorizontalAds />
 
           {/* List items */}
           <ul className="text-[16px] sm:text-[22px] flex flex-col items-center m-8 sm:m-52">
