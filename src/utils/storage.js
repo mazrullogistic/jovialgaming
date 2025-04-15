@@ -422,5 +422,5 @@ export const removeAll = () => {
 export const getSubscribeInfo = () => {
 
   const user = getData('user');
-  return user.isSubscribe == 1;
+  return user?.isSubscribe == 1;
 }
