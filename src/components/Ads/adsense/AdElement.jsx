@@ -1,7 +1,10 @@
+import { getSubscribeInfo } from '@/utils/storage';
 import React from 'react'
 
 const AdElement = ({ adSlotId = '', adName = "" }) => {
 
+    const isSubscribed = getSubscribeInfo();
+    if (isSubscribed) return null;
     const isProduction = process.env.NODE_ENV === 'production';
 
     return (

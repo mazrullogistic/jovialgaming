@@ -1,8 +1,13 @@
 import React, { useEffect } from 'react';
 import AdElement from '../AdElement';
+import { getSubscribeInfo } from '@/utils/storage';
 
 const MyTournamentsAdsHorizontal = () => {
   useEffect(() => {
+
+    const isSubscribed = getSubscribeInfo();
+    if (isSubscribed) return null;
+
     // Load the AdSense script
     const loadAdSense = () => {
       try {

@@ -1,7 +1,10 @@
+import { getSubscribeInfo } from "@/utils/storage";
 import React, { useEffect } from "react";
 
 const TestAdsHorizontal = () => {
   useEffect(() => {
+    const isSubscribed = getSubscribeInfo();
+    if (isSubscribed) return null;
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch (err) {

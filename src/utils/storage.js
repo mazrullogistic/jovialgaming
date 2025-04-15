@@ -33,7 +33,7 @@ export const setChatUserData = (key, value) => {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) {}
+    } catch (error) { }
   }
 };
 
@@ -56,7 +56,7 @@ export const setModelChatData = (key, value) => {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) {}
+    } catch (error) { }
   }
 };
 
@@ -79,7 +79,7 @@ export const setDisputeData = (key, value) => {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) {}
+    } catch (error) { }
   }
 };
 
@@ -101,7 +101,7 @@ export const setConsoleData = (key, value) => {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) {}
+    } catch (error) { }
   }
 };
 
@@ -123,7 +123,7 @@ export const setTournamentId = (key, value) => {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) {}
+    } catch (error) { }
   }
 };
 
@@ -145,7 +145,7 @@ export const setRoomData = (key, value) => {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) {}
+    } catch (error) { }
   }
 };
 
@@ -167,7 +167,7 @@ export const setCreate = (key, value) => {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) {}
+    } catch (error) { }
   }
 };
 
@@ -398,7 +398,7 @@ export const removeData = (key) => {
   if (typeof window !== "undefined") {
     try {
       window.localStorage.removeItem(key);
-    } catch (error) {}
+    } catch (error) { }
   }
 };
 
@@ -407,7 +407,7 @@ export const updateData = (key, value) => {
     try {
       removeData(key);
       saveData(key, value);
-    } catch (error) {}
+    } catch (error) { }
   }
 };
 
@@ -415,6 +415,12 @@ export const removeAll = () => {
   if (typeof window !== "undefined") {
     try {
       window.localStorage.clear();
-    } catch (error) {}
+    } catch (error) { }
   }
 };
+
+export const getSubscribeInfo = () => {
+
+  const user = getData('user');
+  return user.isSubscribe == 1;
+}

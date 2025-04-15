@@ -1,9 +1,14 @@
 // components/AdScript.js
+import { getSubscribeInfo } from '@/utils/storage';
 import { useEffect } from 'react';
 
 const InterstitialScript = () => {
     
   useEffect(() => {
+
+    const isSubscribed = getSubscribeInfo();
+    if (isSubscribed) return null;
+
     // Create script element
     const script = document.createElement('script');
     script.id = 'propellerads-script';

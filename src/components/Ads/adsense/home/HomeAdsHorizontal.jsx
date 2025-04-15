@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import AdElement from '../AdElement';
+import { getSubscribeInfo } from '@/utils/storage';
 
 const HomeAdsHorizontal = () => {
   useEffect(() => {
+    const isSubscribed = getSubscribeInfo();
+    if (isSubscribed) return;
     // Load the AdSense script
     const loadAdSense = () => {
       try {
@@ -25,13 +28,14 @@ const HomeAdsHorizontal = () => {
         script.async = true;
         script.crossOrigin = 'anonymous';
         document.head.appendChild(script);
-        
+
         script.onload = loadAdSense;
       } else {
         loadAdSense();
       }
     }
   }, []);
+
 
 
 

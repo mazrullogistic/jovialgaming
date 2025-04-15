@@ -61,6 +61,7 @@ const Subscription = () => {
   const [selectedPlanId, setSelectedPlaId] = useState("");
   const [isPayPalBtnShow, setIsPayPalBtnShow] = useState(false);
   const [paypalDetail, setPaypalDetail] = useState(null);
+  console.log('paypalDetail: ', paypalDetail);
   const [subscriptionDetails, setSubscriptionDetails] = useState(null);
   const plans = [
     {
