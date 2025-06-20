@@ -23,7 +23,7 @@ import StyledJsxRegistry from "./registry";
 import { persistor, store } from "@/redux/store";
 import { Provider } from "react-redux";
 import ProtectedPageService from "@/services/protectedPage";
-import { setIsMobile } from "@/utils/storage";
+import { getData, setIsMobile } from "@/utils/storage";
 import { SocketKEY } from "@/constants/keywords";
 import socket from "@/socket/socket";
 import Script from "next/script";
@@ -63,22 +63,28 @@ export default function RootLayout({ children }) {
     pathname == "/resetPassword" ||
     pathname == "/forgotPassword";
 
+
   useEffect(() => {
-    connectSock();
+    const user = getData("user");
+
+    if (user?.token && !SocketKEY.socketConnect) {
+      socket.start();
+    } else {
+      console.warn("User not found yet. Will retry socket connection later.");
+    }
+  }, [!isLoginPage]);
+
+
+  useEffect(() => {
 
     // Function to check if the screen is mobile
     const handleResize = () => {
-      console.log("window.innerWidth <= 768", window.innerWidth <= 768);
+      // console.log("window.innerWidth <= 768", window.innerWidth <= 768);
       isMobileRes = window.innerWidth <= 768;
       setIsMobile(window.innerWidth <= 768, "mobile"); // Adjust the breakpoint as per your design
     };
 
-    async function connectSock() {
-      if (SocketKEY.socketConnect === null) {
-        socket.start();
-        // socket.subscribeUser();
-      }
-    }
+
     // Set initial value
     handleResize();
 
@@ -93,6 +99,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+
 
       {/* google ads script */}
       <Script

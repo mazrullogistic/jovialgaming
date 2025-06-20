@@ -18,17 +18,16 @@ import {
   getDisputeData,
   getRoomId,
 } from "@/utils/storage";
-import Image from "next/image";
 import React, { useMemo, useState } from "react";
 import { useEffect, useRef } from "react";
-import Carousel from "react-multi-carousel";
+// import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 import { CommonConstant, EmitterKey, SocketKEY } from "@/constants/keywords";
 import EventEmitter from "@/components/EventEmitter";
-import socket from "@/socket/socket";
-import InfiniteScroll from "react-infinite-scroll-component";
+// import socket from "@/socket/socket";
+// import InfiniteScroll from "react-infinite-scroll-component";
 
 const Chat = () => {
   const [tournamentData, setTournamentData] = useState([
@@ -368,11 +367,11 @@ const Chat = () => {
           <div className="flex items-center space-x-2">
             <img
               className="h-12 w-12 rounded-lg"
-              src={dispute?.gameData.image}
+              src={dispute?.gameData?.image}
               alt="Warzone 2"
             />
             <div>
-              <p>{dispute?.gameData.gamename}</p>
+              <p>{dispute?.gameData?.gamename}</p>
               <p className="text-gray82 text-sm">
                 Played at
                 {` ${moment

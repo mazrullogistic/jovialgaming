@@ -7,12 +7,12 @@ if (typeof window !== "undefined") {
 }
 export async function upload(file, folderName, extension, contentType) {
   try {
-    console.log("extension", extension);
-    console.log("contentType", contentType);
-    console.log("file 11", file);
-    console.log("folderName", folderName);
-    console.log("ACCESS_KEY_ID", process.env.ACCESS_KEY_ID);
-    console.log("SECRET_KEY_ID", process.env.SECRET_KEY_ID);
+    // console.log("extension", extension);
+    // console.log("contentType", contentType);
+    // console.log("file 11", file);
+    // console.log("folderName", folderName);
+    // console.log("ACCESS_KEY_ID", process.env.ACCESS_KEY_ID);
+    // console.log("SECRET_KEY_ID", process.env.SECRET_KEY_ID);
     const s3 = new AWS.S3({
       accessKeyId: process.env.ACCESS_KEY_ID,
       secretAccessKey: process.env.SECRET_KEY_ID,
@@ -26,9 +26,9 @@ export async function upload(file, folderName, extension, contentType) {
       ACL: "public-read",
     };
 
-    console.log("Params->", params);
+    // console.log("Params->", params);
     var response = await s3.upload(params).promise();
-    console.log("response->", response);
+    // console.log("response->", response);
 
     return response;
   } catch (error) {

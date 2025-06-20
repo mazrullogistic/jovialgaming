@@ -123,7 +123,7 @@ const Messages = () => {
     //getChatList();
     getThreadList();
     getUserMessagesEvent();
-    return () => { };
+    return () => {};
   }, []);
   useEffect(() => {
     // if (SocketKEY.socketConnect === null) {
@@ -132,7 +132,7 @@ const Messages = () => {
     // }
 
     getChatList();
-    return () => { };
+    return () => {};
   }, [threadId]);
   useEffect(() => {
     if (chatListIsNext) {
@@ -162,7 +162,7 @@ const Messages = () => {
         });
       }
     }
-    return () => { };
+    return () => {};
   }, [chatData]);
 
   function getUserMessagesEvent() {
@@ -173,13 +173,13 @@ const Messages = () => {
     });
 
     EventEmitter.on(EmitterKey.RoomGroupchatMessage, (msg) => {
-      console.log("msg", msg);
+      // console.log("msg", msg);
       if (threadIdValue == msg.message.threadId) {
         addMsgDetails(msg.message);
       }
     });
     EventEmitter.on(EmitterKey.ReloadWeb, (msg) => {
-      console.log("Event received:128", msg);
+      // console.log("Event received:128", msg);
       getChatList();
       // GroupTourReadMessage(true);
     });
@@ -201,7 +201,7 @@ const Messages = () => {
         };
         reader.readAsDataURL(file);
       }
-      console.log("file 97", file);
+      // console.log("file 97", file);
       setSelectedImage(file);
       setSelectedVideoUrl(null); // Clear any selected video URL
     }
@@ -225,7 +225,7 @@ const Messages = () => {
       const res = await dispatch(userChatListAction(object));
 
       setIsLoader(false);
-      console.log("res 219", res.payload.data);
+      // console.log("res 219", res.payload.data);
       if (res.payload.status) {
         // setChatList(res.payload.data);
 
@@ -241,7 +241,7 @@ const Messages = () => {
         // });
         // setChatData(newObj);
 
-        console.log("res--> 2451", res.payload.data.data);
+        // console.log("res--> 2451", res.payload.data.data);
       } else {
         console.log("res--> 133");
       }
@@ -257,7 +257,7 @@ const Messages = () => {
       const res = await dispatch(getRoomChatThreadAction());
 
       setIsLoader(false);
-      console.log("res--> 244", res.payload.data);
+      // console.log("res--> 244", res.payload.data);
 
       if (res.payload.status) {
         setThreadList(res.payload.data?.data);
@@ -268,7 +268,7 @@ const Messages = () => {
         // tempArray = tempArray.reverse();
         // setChatReverseList(tempArray);
 
-        console.log("res--> 2451", res.payload.data.data);
+        // console.log("res--> 2451", res.payload.data.data);
       } else {
         console.log("res--> 133");
       }
@@ -483,7 +483,7 @@ const Messages = () => {
             return (
               <button
                 onClick={() => {
-                  console.log("item ", item);
+                  // console.log("item ", item);
                   router.push(PATH_DASHBOARD.msgChat);
                   CommonConstant.userDataForChat = item;
 

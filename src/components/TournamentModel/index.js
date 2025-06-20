@@ -88,7 +88,7 @@ const TournamentModel = ({
   };
   useEffect(() => {
     console.log("selectedModelIndex 47", selectedModelIndex);
-    return () => { };
+    return () => {};
   }, []);
   const customStyles = {
     content: {
@@ -121,15 +121,15 @@ const TournamentModel = ({
     setGameDetails(currentTourDetails);
     setTourRoundDetails(currentTourRoundDetails);
     setSelectedModelIndex(selectedIndex);
-    return () => { };
+    return () => {};
   }, [selectedIndex]);
   useEffect(() => {
     setSubmitScoreDialog(submitScoreModel);
-    return () => { };
+    return () => {};
   }, [submitScoreModel]);
   useEffect(() => {
     setSelectionMatchData(selectedMatchData);
-    return () => { };
+    return () => {};
   }, [selectedMatchData]);
   const handleRedirect = () => {
     router.push("/tournament/timer/tournamentStart/chat");
@@ -148,8 +148,9 @@ const TournamentModel = ({
             // <div className="border border-x-white border-">
             <button onClick={() => handleBoxClickMatch(index, item)}>
               <div
-                className={`w-56  h-10 mt-6 bg-black25 rounded-xl pt-[1px] border   items-center justify-center ${selectedBoxMatch === index ? "border-yellow" : "border-white"
-                  }`}
+                className={`w-56  h-10 mt-6 bg-black25 rounded-xl pt-[1px] border   items-center justify-center ${
+                  selectedBoxMatch === index ? "border-yellow" : "border-white"
+                }`}
               >
                 <div className="text-center text-white mt-[2.3%]">
                   {item.name}
@@ -185,12 +186,14 @@ const TournamentModel = ({
               onClick={() => handleBoxClick(index, item)}
             >
               <div
-                className={`rounded-xl h-16 w-16 flex items-center justify-center ${selectedBox === index ? "bg-yellow" : "bg-black06"
-                  }`}
+                className={`rounded-xl h-16 w-16 flex items-center justify-center ${
+                  selectedBox === index ? "bg-yellow" : "bg-black06"
+                }`}
               >
                 <div
-                  className={`text-center text-[16px] font-[400]  ${selectedBox === index ? "text-black06" : "text-white"
-                    }`}
+                  className={`text-center text-[16px] font-[400]  ${
+                    selectedBox === index ? "text-black06" : "text-white"
+                  }`}
                 >
                   {item.amount}
                   {item.amount == "Free Play" || item.amount == "free play"
@@ -331,7 +334,7 @@ const TournamentModel = ({
   }
 
   function renderMatchUsers() {
-    console.log("matchData 307", matchData);
+    // console.log("matchData 307", matchData);
     return (
       <div className="max-h-[800px] relative">
         <button
@@ -348,11 +351,11 @@ const TournamentModel = ({
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
           <p className="text-[18px] text-white font-inter_tight font-[300] text-center ">
             {currentTourRoundDetails?.userCount == 3 ||
-              currentTourRoundDetails?.userCount == 4
+            currentTourRoundDetails?.userCount == 4
               ? "Semi Final "
               : currentTourRoundDetails?.userCount == 2
-                ? "Final"
-                : `Round ${currentTourRoundDetails?.round}`}
+              ? "Final"
+              : `Round ${currentTourRoundDetails?.round}`}
           </p>
           <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2 ">
             <br />
@@ -486,11 +489,11 @@ const TournamentModel = ({
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
           <p className="text-[18px] text-white font-inter_tight font-[300] text-center ">
             {currentTourRoundDetails?.userCount == 3 ||
-              currentTourRoundDetails?.userCount == 4
+            currentTourRoundDetails?.userCount == 4
               ? "Semi Final "
               : currentTourRoundDetails?.userCount == 2
-                ? "Final"
-                : `Round ${currentTourRoundDetails?.round}`}
+              ? "Final"
+              : `Round ${currentTourRoundDetails?.round}`}
           </p>
           <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2 "></p>
         </div>
@@ -638,8 +641,8 @@ const TournamentModel = ({
                             ? gameDetails.host_image
                             : "/images/logo.png"
                           : gameDetails.opponent_image !== ""
-                            ? gameDetails.opponent_image
-                            : "/images/logo.png"
+                          ? gameDetails.opponent_image
+                          : "/images/logo.png"
                         : "/images/logo.png"
                     }
                     alt="Profile Picture"
@@ -677,8 +680,8 @@ const TournamentModel = ({
                             ? gameDetails.host_image
                             : "/images/logo.png"
                           : gameDetails.opponent_image !== ""
-                            ? gameDetails.opponent_image
-                            : "/images/logo.png"
+                          ? gameDetails.opponent_image
+                          : "/images/logo.png"
                         : "/images/logo.png"
                     }
                     alt="Profile Picture"
@@ -735,15 +738,15 @@ const TournamentModel = ({
   function renderFindAnotherMatch() {
     var amount = readyTimerData ? readyTimerData.amount : matchData.amountCal;
 
-    // Show the ad when this view renders
-    const [adShown, setAdShown] = useState(false);
+     // Show the ad when this view renders
+     const [adShown, setAdShown] = useState(false);
 
-    useEffect(() => {
-      // Set a flag to only show the ad once
-      if (!adShown) {
-        setAdShown(true);
-      }
-    }, []);
+     useEffect(() => {
+       // Set a flag to only show the ad once
+       if (!adShown) {
+         setAdShown(true);
+       }
+     }, []);
 
     return (
       <div className="max-h-[800px] relative flex justify-center items-center">
@@ -759,10 +762,10 @@ const TournamentModel = ({
           {!["Free Play", "free play"].includes(
             CommonConstant?.FreePlayData?.amount
           ) && (
-              <p className="w-full md:h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-green ">
-                {"$ " + amount + " has been added to your funds"}
-              </p>
-            )}
+            <p className="w-full md:h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-green ">
+              {"$ " + amount + " has been added to your funds"}
+            </p>
+          )}
           <Image
             src="/images/cup.svg"
             width={125}
@@ -824,10 +827,10 @@ const TournamentModel = ({
           {!["Free Play", "free play"].includes(
             CommonConstant?.FreePlayData?.amount
           ) && (
-              <p className="w-full md:h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-red">
-                {"$ " + amount + " has been deducted from your funds"}
-              </p>
-            )}
+            <p className="w-full md:h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-red">
+              {"$ " + amount + " has been deducted from your funds"}
+            </p>
+          )}
           <Image
             src="/images/cross.svg"
             width={100}
@@ -882,7 +885,7 @@ const TournamentModel = ({
       style={customStyles}
       contentLabel="Example Modal"
     >
-      {console.log("isLoader", isLoader)}
+      {/* {console.log("isLoader", isLoader)} */}
       {isLoader && (
         <div className="small-loader">
           <div className="spinner"></div>
@@ -892,26 +895,26 @@ const TournamentModel = ({
       {selectedModelIndex == 1
         ? renderAmount()
         : selectedModelIndex == 2
-          ? renderGameMode()
-          : selectedModelIndex == 3
-            ? renderFindingMatch()
-            : selectedModelIndex == 4
-              ? renderFoundMatch()
-              : selectedModelIndex == 5
-                ? renderMatchRule()
-                : selectedModelIndex == 6
-                  ? renderMatchUsers()
-                  : readyTimerData
-                    ? readyTimerData.win_status
-                      ? renderFindAnotherMatch()
-                      : renderRematch()
-                    : selectedModelIndex == 9
-                      ? matchData.winstatus
-                        ? renderFindAnotherMatch()
-                        : renderRematch()
-                      : selectedModelIndex == 11
-                        ? renderScoreSubmit()
-                        : renderMatchUsersScore()}
+        ? renderGameMode()
+        : selectedModelIndex == 3
+        ? renderFindingMatch()
+        : selectedModelIndex == 4
+        ? renderFoundMatch()
+        : selectedModelIndex == 5
+        ? renderMatchRule()
+        : selectedModelIndex == 6
+        ? renderMatchUsers()
+        : readyTimerData
+        ? readyTimerData.win_status
+          ? renderFindAnotherMatch()
+          : renderRematch()
+        : selectedModelIndex == 9
+        ? matchData.winstatus
+          ? renderFindAnotherMatch()
+          : renderRematch()
+        : selectedModelIndex == 11
+        ? renderScoreSubmit()
+        : renderMatchUsersScore()}
       {/* {renderScoreSubmit()} */}
     </Modal>
   );

@@ -183,11 +183,11 @@ const Chat = () => {
     });
 
     EventEmitter.on(EmitterKey.ChatReceive, (msg) => {
-      console.log("msg", msg);
+      // console.log("msg", msg);
       addMsgDetails(msg.message);
     });
     EventEmitter.on(EmitterKey.ReloadWeb, (msg) => {
-      console.log("Event received:128", msg);
+      // console.log("Event received:128", msg);
       getChatList();
       // GroupTourReadMessage(true);
     });
@@ -429,7 +429,7 @@ const Chat = () => {
   }
 
   function renderSenderView(item) {
-    console.log("item.", item);
+    // console.log("item.", item);
     return (
       <div class="flex flex-col items-end space-y-2">
         {item.mediaExt === "image" ? (

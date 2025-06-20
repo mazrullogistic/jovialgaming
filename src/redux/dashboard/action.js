@@ -932,6 +932,7 @@ export const trackerListAction = createAsyncThunk(
     }
   }
 );
+
 export const getProfileCardAction = createAsyncThunk(
   "dashboardSlice/getProfileCardAction",
   async (payload, { rejectWithValue }) => {

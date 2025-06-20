@@ -295,6 +295,7 @@ const TournamentStart = () => {
       );
       const { data, status } = res;
       // console.log("res--> 137", status);
+      console.log("🚀 ~ freePlayMatchRequestCreateApi ~ data:", data)
 
       if (status) {
         console.log("status 137", status);

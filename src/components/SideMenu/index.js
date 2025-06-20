@@ -77,7 +77,7 @@ export default function SideMenu({ children }) {
 
       //const res = await dispatch(getGameByConsoleAction(param));
       const res = await dispatch(getProfileDataAction(storedUser?.data?.id));
-      console.log("res.payload.data 72", res.payload.data);
+      // console.log("res.payload.data 72", res.payload.data);
       if (res.payload.status) {
         setProfileData(res.payload.data);
       } else {
@@ -146,9 +146,9 @@ export default function SideMenu({ children }) {
       src: "/images/trophywhite.svg",
     },
     {
-      href: "/tracker",
-      title: "Tracker", 
-      src: "/images/agenda.svg",
+       href: "/tracker",
+       title: "Tracker",
+       src: "/images/agenda.svg",
     },
     {
       href: "/subscription",

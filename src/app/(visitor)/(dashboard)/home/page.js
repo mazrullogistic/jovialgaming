@@ -42,7 +42,7 @@ import { useDispatch } from "react-redux";
 import Loader from "@/components/Loader";
 import { messaging, getToken } from "../../../../../public/firebase-config";
 import { PATH_DASHBOARD } from "@/routes/paths";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import moment from "moment";
 import { onMessage } from "firebase/messaging";
 import { toast } from "react-toastify";
@@ -68,6 +68,7 @@ const HomePage = ({ Component, pageProps }) => {
   const { toaster } = useToaster();
   const dispatch = useDispatch();
   const router = useRouter();
+  const pathname= usePathname();
   // const user = getData("user");
   const [SeasonId, setSeasonId] = useState();
   const [profileData, setProfileData] = useState([]);
@@ -184,7 +185,7 @@ const HomePage = ({ Component, pageProps }) => {
         const token = await getToken(messaging, {
           vapidKey: process.env.V_API_KEY,
         });
-        console.log("token", token);
+        // console.log("token", token);
         if (token) {
           updateDeviceToken(token);
 
@@ -202,11 +203,11 @@ const HomePage = ({ Component, pageProps }) => {
     try {
       onMessage(messaging, (payload) => {
         if (payload.notification) {
-          console.log("payload.notification", payload.notification);
+          // console.log("payload.notification", payload.notification);
           handleShowNotification(payload); // Pass payload here
         }
       });
-    } catch (error) { }
+    } catch (error) {}
   }, []);
 
   useEffect(() => {
@@ -216,7 +217,7 @@ const HomePage = ({ Component, pageProps }) => {
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
           .register("/firebase-messaging-sw.js")
-          .then((registration) => { })
+          .then((registration) => {})
           .catch((error) => {
             console.error("Service Worker registration failed:", error);
           });
@@ -232,7 +233,18 @@ const HomePage = ({ Component, pageProps }) => {
     setUser(storedUser);
   }, []);
 
+
+  useEffect(()=>{
+    getCurrentMatches();
+  },[pathname])
+
   useEffect(() => {
+
+    EventEmitter.on(EmitterKey.FoundMatch, (response) => {
+    //  console.log("🚀 ~ EventEmitter.on ~ response:", response)
+     getCurrentMatches();
+    })
+
     getAvailableMatches();
     getCurrentMatches();
     getMyTournament();
@@ -248,14 +260,14 @@ const HomePage = ({ Component, pageProps }) => {
   const updateDeviceToken = async (token) => {
     setIsLoader(true);
     const payload = new FormData();
-    console.log("payload", payload);
+    // console.log("payload", payload);
 
     try {
       payload.append("devicetype", "web");
       payload.append("devicetoken", token);
 
       const res = await dispatch(addDeviceTokenAction(payload));
-      console.log("res", res);
+      // console.log("res", res);
     } catch (error) {
       setIsLoader(false);
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
@@ -786,7 +798,7 @@ const HomePage = ({ Component, pageProps }) => {
         <div className='mt-4 flex items-center space-x-4'>
           <button
             onClick={() => {
-              console.log("profileData", profileData);
+              // console.log("profileData", profileData);
               CommonConstant.challengeData = profileData;
               router.push("./createGame");
               setCreate("create", true);
@@ -803,10 +815,11 @@ const HomePage = ({ Component, pageProps }) => {
             {profileData?.recentMatches.map((item) => {
               return (
                 <li
-                  className={`flex mt-2 ${item.winLossStatus === 0 || item.winLossStatus === 2
-                    ? "text-red"
-                    : "text-green"
-                    }`}>
+                  className={`flex mt-2 ${
+                    item.winLossStatus === 0 || item.winLossStatus === 2
+                      ? "text-red"
+                      : "text-green"
+                  }`}>
                   {item.winLossStatus === 0 || item.winLossStatus === 2
                     ? "L"
                     : "W"}
@@ -965,25 +978,26 @@ const HomePage = ({ Component, pageProps }) => {
               </div>
             )}
 
+
             {/* // Home top ad */}
             <HomeAdsHorizontal />
 
 
             <div>
               <select
-                className={` text-[22px] mb-2 h-12 text-white bg-black06 ml-6 mt-6 outline-none font-[600] ${dropDownSelection == "Available"
-                  ? "w-[150px] md:w-[130px]"
-                  : dropDownSelection == "My Matches"
+                className={` text-[22px] mb-2 h-12 text-white bg-black06 ml-6 mt-6 outline-none font-[600] ${
+                  dropDownSelection == "Available"
+                    ? "w-[150px] md:w-[130px]"
+                    : dropDownSelection == "My Matches"
                     ? "w-[180px] md:w-[160px]"
                     : "w-[240px] md:w-[210px]"
-                  }`}
+                }`}
                 onChange={handleChange}>
                 {matchesDropDown.map((option) => (
                   <option>{option.name}</option>
                 ))}
               </select>
             </div>
-
 
             {dropDownSelection == "Available" && (
               <div className='match-small-carousel  '>
@@ -1016,7 +1030,7 @@ const HomePage = ({ Component, pageProps }) => {
                                 className=' w-[80px] h-[35px]   text-center border-[1px] rounded-full   text-black06 font-inter_tight bg-yellow mb-4 mt-4'
                                 onClick={() => {
                                   CommonConstant.SelectedMatchData = post;
-                                  console.log("post 1014", post);
+                                  // console.log("post 1014", post);
                                   router.push(PATH_DASHBOARD.createGame);
                                 }}>
                                 Join
@@ -1273,7 +1287,7 @@ const HomePage = ({ Component, pageProps }) => {
                             className='rounded-full'
                             src={
                               post.userData.image.startsWith("http") ||
-                                post.userData.image.startsWith("/")
+                              post.userData.image.startsWith("/")
                                 ? post.userData.image
                                 : `/images/logo.png` // Fallback for invalid image paths
                             }

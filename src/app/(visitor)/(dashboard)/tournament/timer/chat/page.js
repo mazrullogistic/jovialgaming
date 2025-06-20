@@ -434,7 +434,7 @@ const Chat = () => {
   }
 
   function renderSenderView(item) {
-    console.log("item. 444", item);
+    // console.log("item. 444", item);
     return (
       <div class="flex flex-col items-end space-y-2">
         {item.messageType === "image" ? (

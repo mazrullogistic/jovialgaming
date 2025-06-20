@@ -375,7 +375,93 @@ const Ranking = () => {
     setIsOpened(false);
   };
 
-  function Leaderboard() {
+//   function Leaderboard() {
+//     return (
+//       <div className="fixed inset-0 flex items-center justify-center bg-black06 bg-opacity-50">
+//         <div className="bg-black26 text-white p-6 rounded shadow-lg max-w-md w-full">
+//           {/* Status Bar */}
+//           {/* Header */}
+//           <div className="flex items-center justify-center px-4 py-2 relative">
+//             <button
+//               onClick={() => {
+//                 setIsFilter(true);
+//                 setIsRanking(false);
+//               }}
+//               className="absolute left-4"
+//             >
+//               {/* Add your filter icon here */}
+//               <img src="/images/filter.svg" alt="Filter" className="w-6 h-6" />
+//             </button>
+//             <h1 className="text-2xl font-medium text-center">
+//               {badgesData[currentPlan]?.name}
+//             </h1>
+//           </div>
+//           {/* Rankings */}
+//           <div className='px-4 py-6' style={{ display: "flex" }}>
+//             <div>
+//               <Image
+//                 className="rounded-full"
+//                 src={
+//                   user.data.image.startsWith("http") ||
+//                     user.data.image.startsWith("/")
+//                     ? user.data.image
+//                     : `/images/logo.png` // Fallback for invalid image paths
+//                 }
+//                 layout="fill"
+//               ></Image>
+//             </div>
+
+//             <div>
+//                 <span>Local</span> <br/>
+//                 <span>#{localRank}</span>
+//             </div>
+//             <div>
+//                 <span>State</span> <br/>
+//                 <span>#{stateRank}</span>
+//             </div>
+//             <div>
+//                 <span>Local</span> <br/>
+//                 <span>N/A</span>
+//             </div>
+//           </div>
+//           {/* Leaderboard */}
+//           <div className="px-4 py-6">
+//             <div className="flex justify-between mb-4">
+//               <div className="text-xl">UserName</div>
+//               <div className="text-xl">Ranking points</div>
+//             </div>
+//             {pointsListData.map((item, i) => (
+//               <div key={i} className="flex justify-between py-2">
+//                 <div className="text-xl">{item.username}</div>
+//                 <div className="text-xl">{item.allpoints}</div>
+//               </div>
+//             ))}
+//           </div>
+//           {/* Close Button */}
+//           {/* <button className="w-full bg-yellow hover:bg-yellow-500 text-black text-lg rounded-lg py-6">
+//             Close
+//           </button> */}
+
+//           <button
+//             onClick={() => {
+//               setIsRanking(false);
+//               setFilters({
+//                 all: false,
+//                 local: false,
+//                 state: false,
+//               });
+//               setSliderValue(0);
+//             }}
+//             className="bg-yellow text-black06 w-full py-2 rounded-lg hover:bg-yellow-500"
+//           >
+//             Close
+//           </button>
+//         </div>
+//       </div>
+//     );
+//   }
+
+function Leaderboard() {
     return (
       <div className='fixed inset-0 flex items-center justify-center bg-black06 bg-opacity-50' style={{zIndex: 10000000000000}}>
         <div className='bg-black26 text-white p-6 rounded shadow-lg max-w-md w-full'>
@@ -649,7 +735,7 @@ const Ranking = () => {
                       // }}
                     >
                       <div
-                        className={`flex-shrink-0  w-full text-white overflow-hidden transition-all duration-300 ease-in-out transform   
+                        className={`flex-shrink-0  w-full text-white overflow-hidden transition-all duration-300 ease-in-out transform
                       }`}
                       >
                         <div className="flex justify-center items-center h-full">

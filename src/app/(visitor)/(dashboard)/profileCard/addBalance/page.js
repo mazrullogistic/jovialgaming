@@ -76,7 +76,7 @@ const AddBalance = () => {
   const [selectedAmount, setSelectedAmount] = useState("");
   const [fees, setFees] = useState("");
   useEffect(() => {
-    console.log("user 68", user.data);
+    // console.log("user 68", user.data);
     getPlanList();
   }, []);
 

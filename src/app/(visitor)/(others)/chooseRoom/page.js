@@ -63,8 +63,8 @@ const ChooseRoom = () => {
     try {
       const res = await dispatch(getRoomList());
 
-      console.log("res-->", res);
-      console.log("statusCode-->", res.payload.statusCode);
+      // console.log("res-->", res);
+      // console.log("statusCode-->", res.payload.statusCode);
 
       if (res.payload.statusCode == 200) {
         setIsLoading(false);
@@ -84,9 +84,9 @@ const ChooseRoom = () => {
 
   const selectRoomApi = (item) => async () => {
     setIsLoading(true);
-    console.log("item", item);
+    // console.log("item", item);
     const user = getData("user");
-    console.log("user", JSON.stringify(user));
+    // console.log("user", JSON.stringify(user));
 
     const updatedData = { ...user, roomDetails: item };
     saveData("user", updatedData);
@@ -96,11 +96,11 @@ const ChooseRoom = () => {
       payload.append("roomId", item.id);
       const res = await dispatch(selectRoomAction(payload));
 
-      console.log("res--> 86", res);
+      // console.log("res--> 86", res);
 
       if (res.payload.status) {
         setRoomID("roomId", item.id);
-        console.log("item", item);
+        // console.log("item", item);
         setRoomData("roomData", item);
 
         router.replace(PATH_DASHBOARD.home);

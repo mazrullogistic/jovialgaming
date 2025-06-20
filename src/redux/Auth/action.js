@@ -21,7 +21,7 @@ export const registerAction = createAsyncThunk(
     try {
       console.log("🚀 ~ payload:", payload);
       const { data, status } = await RegisterUser(payload);
-      console.log("data=====>", data);
+      // console.log("data=====>", data);
 
       if (data.token) {
         // localStorage.setItem("user", JSON.stringify(data));
@@ -45,7 +45,7 @@ export const checkUserAction = createAsyncThunk(
     try {
       console.log("🚀 ~ payload:", payload);
       const { data, status } = await CheckUserNameExist(payload);
-      console.log("data=====>", data);
+      // console.log("data=====>", data);
       return data;
     } catch (err) {
       console.log("🚀 ~ err:", err);
@@ -63,7 +63,7 @@ export const forgotAction = createAsyncThunk(
     try {
       console.log("🚀 ~ payload:", payload);
       const { data, status } = await forgotPassword(payload);
-      console.log("data=====>", data);
+      // console.log("data=====>", data);
       return data;
     } catch (err) {
       console.log("🚀 ~ err:", err);
@@ -81,7 +81,7 @@ export const updateProfileAction = createAsyncThunk(
     try {
       console.log("🚀 ~ payload:", payload);
       const { data, status } = await UpdateProfile(payload);
-      console.log("data=====>", data);
+      // console.log("data=====>", data);
       return data;
     } catch (err) {
       console.log("🚀 ~ err:", err);
@@ -98,7 +98,7 @@ export const verifyRegisterAction = createAsyncThunk(
     try {
       console.log("🚀 ~ payload:", payload);
       const { data, status } = await VerifyRegisterCode(payload);
-      console.log("data=====>", data);
+      // console.log("data=====>", data);
       return data;
     } catch (err) {
       console.log("🚀 ~ err:", err);
@@ -117,7 +117,7 @@ export const loginAction = createAsyncThunk(
       console.log("🚀 ~ payload:", payload);
       const { data, status } = await LoginUser(payload);
       console.log("data=====>", data);
-      console.log("data.token=====>", data.token);
+      // console.log("data.token=====>", data.token);
       if (data.token) {
         // localStorage.setItem("user", JSON.stringify(data));
         saveData("user", data);

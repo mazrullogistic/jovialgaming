@@ -39,6 +39,7 @@ const Model = ({
   isSubscription,
   notificationNumber,
   isChallenge,
+  getCurrentMatches
 }) => {
   const [selectedBox, setSelectedBox] = useState(0);
   const [selectedBoxMatch, setSelectedBoxMatch] = useState(0);
@@ -73,9 +74,9 @@ const Model = ({
     setSelectedBoxMatch(index);
   };
   const handleChangeNext = (item) => {
-    console.log("item) =", selectedAmountData);
-    console.log("isSubscription", isSubscription);
-    console.log("item", item.amount);
+    // console.log("item) =", selectedAmountData);
+    // console.log("isSubscription", isSubscription);
+    // console.log("item", item.amount);
 
     const userBalance = user.data.balance;
     const total = selectedAmountData.amount;
@@ -110,6 +111,7 @@ const Model = ({
     setSelectedModelIndex(1);
   };
   const handleChangeSearching = () => {
+    getCurrentMatches();
     setSelectedModelIndex(1);
     closeModel();
   };
@@ -390,8 +392,8 @@ const Model = ({
   }
 
   function renderMatchUsers() {
-    console.log("matchData 307", matchData);
-    console.log("user.data.id 307", user.data.id);
+    // console.log("matchData 307", matchData);
+    // console.log("user.data.id 307", user.data.id);
     return (
       <div className='max-h-[800px] relative'>
         <div className='absolute top-4 left-1/2 transform -translate-x-1/2'>
@@ -938,7 +940,7 @@ const Model = ({
       // onRequestClose={closeModal}
       style={customStyles}
       contentLabel='Example Modal'>
-      {console.log("isLoader", isLoader)}
+      {/* {console.log("isLoader", isLoader)} */}
       {isLoader && (
         <div className='small-loader'>
           <div className='spinner'></div>

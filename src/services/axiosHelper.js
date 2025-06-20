@@ -10,7 +10,7 @@ export const axiosPost = async (
   const user = getData("user");
   const userData = getDataSignUpData("signUp");
   const userToken = user?.token ? user?.token : userData?.token;
-  console.log("userToken 13", userToken);
+  // console.log("userToken 13", userToken);
   try {
     const result = await axiosInstance.post(url, data, {
       headers: {
@@ -18,7 +18,7 @@ export const axiosPost = async (
         Authorization: userToken ? `Bearer ${userToken}` : null,
       },
     });
-    console.log("🚀 ~ result:", result);
+    // console.log("🚀 ~ result:", result);
     response.data = result?.data || result?.data?.data;
     response.status = result?.status;
   } catch (e) {

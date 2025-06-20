@@ -45,7 +45,7 @@ const DisputeCenter = () => {
       if (res.payload.status) {
         setDisputeList(res.payload.data.data);
         //setChatData([...res.payload.data.data].reverse());
-        console.log("res--> 2451", res.payload.data.data);
+        // console.log("res--> 2451", res.payload.data.data);
       } else {
         console.log("res--> 133");
       }
@@ -114,19 +114,19 @@ const DisputeCenter = () => {
                         item.status === "0"
                           ? "btn-complete-red text-xs"
                           : item.status === "1"
-                            ? "btn-complete-yellow text-xs"
-                            : item.status === "2"
-                              ? "btn-complete-green text-xs"
-                              : "btn-complete-red text-xs"
+                          ? "btn-complete-yellow text-xs"
+                          : item.status === "2"
+                          ? "btn-complete-green text-xs"
+                          : "btn-complete-red text-xs"
                       }
                     >
                       {item.status === "0"
                         ? "Pending"
                         : item.status === "1"
-                          ? "In Review"
-                          : item.status === "2"
-                            ? "Completed"
-                            : "Rejected"}
+                        ? "In Review"
+                        : item.status === "2"
+                        ? "Completed"
+                        : "Rejected"}
                     </button>
                   </div>
                 </div>

@@ -96,7 +96,7 @@ const CreateGame = () => {
   const [userSearchData, setUserSearchData] = useState([]);
   const [notificationNumber, setNotificationNumber] = useState(0);
 
-  console.log("userSearchData", userSearchData);
+  // console.log("userSearchData", userSearchData);
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const getCurrentTime = () => format(new Date(), "yyyy-MM-dd HH:mm:ss");
   const responsive = {
@@ -129,7 +129,7 @@ const CreateGame = () => {
     }
     getCurrentMatches();
 
-    return () => { };
+    return () => {};
   }, []);
 
   // useEffect(() => {
@@ -145,12 +145,12 @@ const CreateGame = () => {
   useEffect(() => {
     // Code to execute when the page is navigated to
 
-    console.log("Screen is focused 135", CommonConstant.selectedMatchIndex);
+    // console.log("Screen is focused 135", CommonConstant.selectedMatchIndex);
     return () => {
       // Code to execute when navigating away from the page
       CommonConstant.isModelShow = false;
       CommonConstant.challengeData = null;
-      console.log("Screen is unfocused 135");
+      // console.log("Screen is unfocused 135");
     };
   }, [router.asPath]); // De
   useEffect(() => {
@@ -161,7 +161,7 @@ const CreateGame = () => {
 
       CommonConstant.CurrentGameDetails = CommonConstant.SelectedMatchData;
       setMatchData(CommonConstant.FreePlayData);
-      console.log("matchData 137", CommonConstant.FreePlayData);
+      // console.log("matchData 137", CommonConstant.FreePlayData);
       getRuleApi(CommonConstant.SelectedMatchData.game);
 
       if (CommonConstant.SelectedMatchData.host === user.data.id) {
@@ -193,7 +193,7 @@ const CreateGame = () => {
             setSelectedModelIndex(5);
           } else {
             setSelectedModelIndex(4);
-            console.log("selected Index 183");
+            // console.log("selected Index 183");
             if (CommonConstant.isFromChat) {
               setSelectedModelIndex(CommonConstant.selectedMatchIndex);
             }
@@ -201,12 +201,13 @@ const CreateGame = () => {
           }
         }
       } else {
+
         if (!CommonConstant.SelectedMatchData.host_user_id) {
           setSelectedModelIndex(3);
         } else {
           if (CommonConstant.SelectedMatchData.start_match1 === 1) {
             if (
-              CommonConstant.SelectedMatchData.opponent_ready_status === "1"
+              CommonConstant.SelectedMatchData.opponent_ready_status === "1" || CommonConstant.SelectedMatchData.host_ready_status === "0"
             ) {
               if (CommonConstant.SelectedMatchData.host_ready_status === "0") {
                 setReadyClick(true);
@@ -228,7 +229,7 @@ const CreateGame = () => {
           } else if (CommonConstant.SelectedMatchData.status1 === "1") {
             setSelectedModelIndex(5);
           } else {
-            console.log("selected Index 215");
+            // console.log("selected Index 215");
 
             setSelectedModelIndex(4);
             AvailableForJoinApi();
@@ -237,7 +238,7 @@ const CreateGame = () => {
       }
     }
 
-    return () => { };
+    return () => {};
   }, [isDataShow]);
 
   const getCurrentMatches = async () => {
@@ -266,18 +267,19 @@ const CreateGame = () => {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
     }
   };
-  useEffect(() => { }, [selectedModelIndex]);
+  useEffect(() => {}, [selectedModelIndex]);
   useEffect(() => {
     EventEmitter.on(EmitterKey.ChatReceive, (msg) => {
-      console.log("msg", msg);
+      // console.log("msg", msg);
       setNotificationNumber(CommonConstant.notificationCount);
     });
     EventEmitter.on(EmitterKey.FoundMatch, (response) => {
-      console.log("esponse.message[0] 239", response.message[0]);
-      console.log(
-        "CommonConstant.CurrentGameDetails",
-        CommonConstant.CurrentGameDetails
-      );
+      getCurrentMatches();
+      // console.log("esponse.message[0] 239", response.message[0]);
+      // console.log(
+      //   "CommonConstant.CurrentGameDetails",
+      //   CommonConstant.CurrentGameDetails
+      // );
       CommonConstant.SelectedMatchData = CommonConstant.CurrentGameDetails;
       if (CommonConstant.CurrentGameDetails) {
         CommonConstant.CurrentGameDetails = response.message[0];
@@ -285,7 +287,7 @@ const CreateGame = () => {
         if (response.message[0]?.matchCompleted) {
           setTimeout(() => {
             setMatchData(response.message[0]);
-            console.log("matchData 246", response.message[0]);
+            // console.log("matchData 246", response.message[0]);
 
             setSelectedModelIndex(9);
           }, 3000);
@@ -295,7 +297,7 @@ const CreateGame = () => {
             CommonConstant.SelectedMatchData?.status !== "1"
           ) {
             setMatchData(response.message);
-            console.log("matchData 256", response.message);
+            // console.log("matchData 256", response.message);
 
             CommonConstant.CurrentGameDetails = response.message;
             CommonConstant.SelectedMatchData = response.message;
@@ -305,19 +307,20 @@ const CreateGame = () => {
           }
 
           setMatchData(response.message[0]);
-          console.log("matchData 266", response.message[0]);
+          // console.log("matchData 266", response.message[0]);
 
           setShowAlert(true);
         }
       } else {
         setMatchData(response.message);
-        console.log("matchData 272", response.message);
+        // console.log("matchData 272", response.message);
 
         CommonConstant.CurrentGameDetails = response.message;
         setSelectedModelIndex(4);
       }
     });
   }, []);
+
   useEffect(() => {
     EventEmitter.on(EmitterKey.DeclineMatch, (message) => {
       setSelectedModelIndex(2);
@@ -326,22 +329,26 @@ const CreateGame = () => {
       getCurrentMatches();
     });
   }, []);
+
   useEffect(() => {
     EventEmitter.on(EmitterKey.TimerStart, (res) => {
       setReadyTimer(res.message.timer_sec);
       setReadyClick(res.message.ready_status === "0" ? false : true);
     });
   }, []);
+
   useEffect(() => {
     EventEmitter.on(EmitterKey.ReadySuccess, (res) => {
       setSelectedModelIndex(7);
     });
   }, []);
+
   useEffect(() => {
     EventEmitter.on(EmitterKey.ScoreWaitingTimer, (res) => {
       setScoreTimeCount(res.message.timer_sec);
     });
   }, []);
+
   useEffect(() => {
     EventEmitter.on(EmitterKey.ReadyTimerStop, (res) => {
       setSelectedModelIndex(9);
@@ -350,6 +357,7 @@ const CreateGame = () => {
       // setScoreTimeCount(res.message.timer_sec);
     });
   }, []);
+
   useEffect(() => {
     EventEmitter.on(EmitterKey.AfterSubmit, (res) => {
       setIsModelShow(false);
@@ -362,6 +370,7 @@ const CreateGame = () => {
       // setReadyTimerData(res.message);
     });
   }, []);
+
   useEffect(() => {
     const roomData = getRoomData("roomData");
     setRoomData(roomData);
@@ -406,7 +415,7 @@ const CreateGame = () => {
     }
   };
   const getCurrentMatch = async (amountData, gameMode) => {
-    console.log("amountData", amountData);
+    // console.log("amountData", amountData);
 
     setIsLoader(true);
     try {
@@ -627,6 +636,7 @@ const CreateGame = () => {
       const { payload: res } = await dispatch(
         getFreePlayMatchReqCreateAction(payload)
       );
+      // socket.matchRequest(payload)
       const { data, status } = res;
       if (status) {
         getCurrentMatches();
@@ -644,30 +654,30 @@ const CreateGame = () => {
     }
   };
 
-  const updateMatchStatusApi = async () => {
-    setIsLoader(true);
-    const payload = new FormData();
+//   const updateMatchStatusApi = async () => {
+//     setIsLoader(true);
+//     const payload = new FormData();
 
-    try {
-      payload.append("game_type", matchData.ismultipleuser);
-      payload.append("match_request_id", matchData.match_request_id);
-      payload.append("endTime", getCurrentTime());
+//     try {
+//       payload.append("game_type", matchData.ismultipleuser);
+//       payload.append("match_request_id", matchData.match_request_id);
+//       payload.append("endTime", getCurrentTime());
 
-      const { payload: res } = await dispatch(updateMatchAction(payload));
-      const { data, status } = res;
+//       const { payload: res } = await dispatch(updateMatchAction(payload));
+//       const { data, status } = res;
 
-      if (status) {
-        setSelectedModelIndex(6);
-        setIsLoader(false);
-      } else {
-        setSelectedModelIndex(5);
-        setIsLoader(false);
-      }
-    } catch (error) {
-      setIsLoader(false);
-      toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-    }
-  };
+//       if (status) {
+//         setSelectedModelIndex(6);
+//         setIsLoader(false);
+//       } else {
+//         setSelectedModelIndex(5);
+//         setIsLoader(false);
+//       }
+//     } catch (error) {
+//       setIsLoader(false);
+//       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+//     }
+//   };
   const freePlayUpdateMatchStatusApi = async () => {
     setIsLoader(true);
     const payload = new FormData();
@@ -681,7 +691,7 @@ const CreateGame = () => {
         freePlayUpdateMatchAction(payload)
       );
       const { data, status } = res;
-
+      CommonConstant.SelectedMatchData= {...CommonConstant?.SelectedMatchData, ...data?.data}
       if (status) {
         setSelectedModelIndex(6);
         setIsLoader(false);
@@ -694,32 +704,32 @@ const CreateGame = () => {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
     }
   };
-  const updateReadyStatusApi = async () => {
-    setIsLoader(true);
+//   const updateReadyStatusApi = async () => {
+//     setIsLoader(true);
 
-    try {
-      const user = getData("user");
+//     try {
+//       const user = getData("user");
 
-      const payload = new FormData();
-      payload.append("id", matchData.match_request_id);
-      payload.append("user_id", user.data.id);
-      payload.append("ready_status", 1);
+//       const payload = new FormData();
+//       payload.append("id", matchData.match_request_id);
+//       payload.append("user_id", user.data.id);
+//       payload.append("ready_status", 1);
 
-      const { payload: res } = await dispatch(updateReadyStatusAction(payload));
-      const { data, status } = res;
-      setIsLoader(false);
-      if (status) {
-        setReadyClick(true);
-        setReadyTimer("");
-      } else {
-        setLoading(false);
-        toast.error(TOAST_ALERTS.OPPONENT_NOT_READY);
-      }
-    } catch (error) {
-      setIsLoader(false);
-      toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-    }
-  };
+//       const { payload: res } = await dispatch(updateReadyStatusAction(payload));
+//       const { data, status } = res;
+//       setIsLoader(false);
+//       if (status) {
+//         setReadyClick(true);
+//         setReadyTimer("");
+//       } else {
+//         setLoading(false);
+//         toast.error(TOAST_ALERTS.OPPONENT_NOT_READY);
+//       }
+//     } catch (error) {
+//       setIsLoader(false);
+//       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+//     }
+//   };
 
   const freePlayUpdateReadyStatusApi = async () => {
     setIsLoader(true);
@@ -736,7 +746,6 @@ const CreateGame = () => {
         freePlayUpdateReadyStatusAction(payload)
       );
       const { data, status } = res;
-      console.log("freePlayUpdateReadyStatusApi status", status);
 
       setIsLoader(false);
       if (status) {
@@ -751,31 +760,31 @@ const CreateGame = () => {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
     }
   };
-  const matchResultApi = async (winLosStatus) => {
-    setIsLoader(true);
-    try {
-      const user = getData("user");
+//   const matchResultApi = async (winLosStatus) => {
+//     setIsLoader(true);
+//     try {
+//       const user = getData("user");
 
-      const payload = new FormData();
-      payload.append("id", matchData.match_request_id);
-      payload.append("user_id", user.data.id);
-      payload.append("result", winLosStatus);
+//       const payload = new FormData();
+//       payload.append("id", matchData.match_request_id);
+//       payload.append("user_id", user.data.id);
+//       payload.append("result", winLosStatus);
 
-      const { payload: res } = await dispatch(matchResultAction(payload));
-      const { data, status } = res;
-      setIsLoader(false);
-      if (status) {
-        setSelectedModelIndex(8);
-      } else {
-        setSelectedModelIndex(7);
-        setIsLoader(false);
-        toast.error(TOAST_ALERTS.OPPONENT_NOT_READY);
-      }
-    } catch (error) {
-      setIsLoader(false);
-      toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-    }
-  };
+//       const { payload: res } = await dispatch(matchResultAction(payload));
+//       const { data, status } = res;
+//       setIsLoader(false);
+//       if (status) {
+//         setSelectedModelIndex(8);
+//       } else {
+//         setSelectedModelIndex(7);
+//         setIsLoader(false);
+//         toast.error(TOAST_ALERTS.OPPONENT_NOT_READY);
+//       }
+//     } catch (error) {
+//       setIsLoader(false);
+//       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+//     }
+//   };
   const freePlayMatchResultApi = async (winLosStatus) => {
     setIsLoader(true);
     try {
@@ -790,7 +799,7 @@ const CreateGame = () => {
       );
       const { data, status } = res;
       setIsLoader(false);
-      console.log("freePlayMatchResultApi status", status);
+      // console.log("freePlayMatchResultApi status", status);
 
       if (status) {
         setSelectedModelIndex(8);
@@ -848,7 +857,7 @@ const CreateGame = () => {
       );
       const { data, status } = res;
       setIsLoader(false);
-      console.log("freePlaySubmitScoreApi status", status);
+      // console.log("freePlaySubmitScoreApi status", status);
 
       if (status) {
         setIsSubmitScoreBtn(true);
@@ -946,12 +955,13 @@ const CreateGame = () => {
       setSelectedModelIndex(5);
     } else if (statusParam === "2") {
       setSelectedModelIndex(2);
+      getCurrentMatches();
       setIsModelShow(false);
     }
   }
 
   const handleDelete = async (item) => {
-    console.log("item", item);
+    // console.log("item", item);
     if (item) {
       try {
         const user = getData("user");
@@ -1108,7 +1118,7 @@ const CreateGame = () => {
                 <ul className='list-none'>
                   {userSearchData.map((user) => (
                     <div class='flex items-center  text-white rounded-lg p-4   mx-auto ml-10'>
-                      {console.log("user", user)}
+                      {/* {console.log("user", user)} */}
 
                       <img
                         src={user?.image ? user?.image : "/images/logo.png"}
@@ -1142,7 +1152,7 @@ const CreateGame = () => {
           </div>
         )}
 
-      <CreateGameAdsHorizontal />
+     <CreateGameAdsHorizontal />
 
         {isModelShow && (
           <Model
@@ -1197,6 +1207,7 @@ const CreateGame = () => {
             isSubscription={isSubscription}
             notificationNumber={notificationNumber}
             isChallenge={isChallenge}
+            getCurrentMatches={getCurrentMatches}
           />
         )}
         <div className='mt-16  ml-8'>
@@ -1241,10 +1252,11 @@ const CreateGame = () => {
                           <p className='avl-txt'>{item.gameModeName}</p>
                         </div>
                         <p
-                          className={`text-xs mt-2 ml-6 ${item.isChallenges === "1"
+                          className={`text-xs mt-2 ml-6 ${
+                            item.isChallenges === "1"
                               ? "text-yellow"
                               : "text-black25"
-                            }`}>
+                          }`}>
                           {"Challenge By " + item?.host_name}
                         </p>
 

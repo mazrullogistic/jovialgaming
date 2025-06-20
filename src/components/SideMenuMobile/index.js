@@ -139,9 +139,9 @@ export default function SideMenu({ children }) {
   useEffect(() => {
     // connectSock();
   }, []);
-  useEffect(() => {
-    console.log("CommonConstant.isFromHome", CommonConstant.isFromHome);
-  }, []);
+  // useEffect(() => {
+  //   console.log("CommonConstant.isFromHome", CommonConstant.isFromHome);
+  // }, []);
 
   async function connectSock() {
     if (SocketKEY.socketConnect === null) {
@@ -807,7 +807,7 @@ export default function SideMenu({ children }) {
   }
 
   const handleDelete = async (item) => {
-    console.log("item", item);
+    // console.log("item", item);
 
     if (item.amount == "free play" || item.amount == "Free Play") {
       if (item) {
@@ -891,7 +891,7 @@ export default function SideMenu({ children }) {
 
       //const res = await dispatch(getGameByConsoleAction(param));
       const res = await dispatch(getProfileDataAction(storedUser?.data?.id));
-      console.log("res.payload.data 72", res.payload.data);
+      // console.log("res.payload.data 72", res.payload.data);
       if (res.payload.status) {
         setProfileData(res.payload.data);
       } else {

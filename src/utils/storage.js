@@ -2,7 +2,7 @@
 import { decodeData, encodeData } from "./jwt";
 
 export const setRoomID = (key, value) => {
-  console.log("value", key);
+  // console.log("value", key);
 
   if (typeof window !== "undefined") {
     try {
@@ -33,7 +33,7 @@ export const setChatUserData = (key, value) => {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) { }
+    } catch (error) {}
   }
 };
 
@@ -56,7 +56,7 @@ export const setModelChatData = (key, value) => {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) { }
+    } catch (error) {}
   }
 };
 
@@ -79,7 +79,7 @@ export const setDisputeData = (key, value) => {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) { }
+    } catch (error) {}
   }
 };
 
@@ -101,7 +101,7 @@ export const setConsoleData = (key, value) => {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) { }
+    } catch (error) {}
   }
 };
 
@@ -123,7 +123,7 @@ export const setTournamentId = (key, value) => {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) { }
+    } catch (error) {}
   }
 };
 
@@ -145,7 +145,7 @@ export const setRoomData = (key, value) => {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) { }
+    } catch (error) {}
   }
 };
 
@@ -167,7 +167,7 @@ export const setCreate = (key, value) => {
       const encryptedData = encodeData(value);
 
       window.localStorage.setItem(key, encryptedData);
-    } catch (error) { }
+    } catch (error) {}
   }
 };
 
@@ -185,7 +185,7 @@ export const getCreate = (key) => {
 };
 
 export const saveData = (key, value) => {
-  console.log("value", key);
+  // console.log("value", key);
 
   if (typeof window !== "undefined") {
     try {
@@ -211,7 +211,7 @@ export const getData = (key) => {
   }
 };
 export const setIsMobile = (key, value) => {
-  console.log("value", key);
+  // console.log("value", key);
 
   if (typeof window !== "undefined") {
     try {
@@ -237,7 +237,7 @@ export const getIsMobile = (key) => {
   }
 };
 export const setMatchId = (key, value) => {
-  console.log("value", key);
+  // console.log("value", key);
 
   if (typeof window !== "undefined") {
     try {
@@ -263,7 +263,7 @@ export const getMatchId = (key) => {
   }
 };
 export const setPaymentData = (key, value) => {
-  console.log("value", key);
+  // console.log("value", key);
 
   if (typeof window !== "undefined") {
     try {
@@ -290,7 +290,7 @@ export const getPaymentData = (key) => {
 };
 
 export const setMatchStorageData = (key, value) => {
-  console.log("value", key);
+  // console.log("value", key);
 
   if (typeof window !== "undefined") {
     try {
@@ -316,7 +316,7 @@ export const getMatchStorageData = (key) => {
   }
 };
 export const setCurrentTourDetailsData = (key, value) => {
-  console.log("value", key);
+  // console.log("value", key);
 
   if (typeof window !== "undefined") {
     try {
@@ -342,7 +342,7 @@ export const getCurrentTourDetailsData = (key) => {
   }
 };
 export const setCurrentTourRoundDetailsData = (key, value) => {
-  console.log("value", key);
+  // console.log("value", key);
 
   if (typeof window !== "undefined") {
     try {
@@ -368,7 +368,7 @@ export const getCurrentTourRoundDetailsData = (key) => {
   }
 };
 export const saveSignUpData = (key, value) => {
-  console.log("value", key);
+  // console.log("value", key);
 
   if (typeof window !== "undefined") {
     try {
@@ -398,7 +398,7 @@ export const removeData = (key) => {
   if (typeof window !== "undefined") {
     try {
       window.localStorage.removeItem(key);
-    } catch (error) { }
+    } catch (error) {}
   }
 };
 
@@ -407,7 +407,7 @@ export const updateData = (key, value) => {
     try {
       removeData(key);
       saveData(key, value);
-    } catch (error) { }
+    } catch (error) {}
   }
 };
 
@@ -415,7 +415,7 @@ export const removeAll = () => {
   if (typeof window !== "undefined") {
     try {
       window.localStorage.clear();
-    } catch (error) { }
+    } catch (error) {}
   }
 };
 
