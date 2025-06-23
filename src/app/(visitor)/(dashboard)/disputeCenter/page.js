@@ -13,7 +13,7 @@ import { setDisputeData } from "@/utils/storage";
 import { PATH_DASHBOARD } from "@/routes/paths";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
-import DisputeCenterAdsHorizontal from "@/components/Ads/adsense/DisputeCenterAdsHorizontal";
+// import DisputeCenterAdsHorizontal from "@/components/Ads/adsense/DisputeCenterAdsHorizontal";
 
 const DisputeCenter = () => {
   const [tournamentData, setTournamentData] = useState([]);
@@ -79,7 +79,7 @@ const DisputeCenter = () => {
           </div>
 
           {/* Dispute center ads */}
-          <DisputeCenterAdsHorizontal />
+          {/* <DisputeCenterAdsHorizontal /> */}
 
           <div className="bg-black06 pb-4">
             {disputeList.map((item) => {

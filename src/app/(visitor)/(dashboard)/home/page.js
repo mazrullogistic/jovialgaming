@@ -32,6 +32,7 @@ import {
   setConsoleData,
   setCreate,
   setTournamentId,
+  getConsoleData
 } from "@/utils/storage";
 import Image from "next/image";
 import React, { useMemo, useState, useEffect } from "react";
@@ -49,10 +50,10 @@ import { toast } from "react-toastify";
 import dynamic from "next/dynamic";
 import EventEmitter from "@/components/EventEmitter";
 import socket from "@/socket/socket";
-import AvailableMatchAdsHorizontal from "@/components/Ads/adsense/home/AvailableMatchAdsHorizontal";
-import HomeAdsHorizontal from "@/components/Ads/adsense/home/HomeAdsHorizontal";
-import MyMatchesAdsHorizontal from "@/components/Ads/adsense/home/MyMatchesAdsHorizontal";
-import MyTournamentsAdsHorizontal from "@/components/Ads/adsense/home/MyTournamentsAdsHorizontal";
+// import AvailableMatchAdsHorizontal from "@/components/Ads/adsense/home/AvailableMatchAdsHorizontal";
+// import HomeAdsHorizontal from "@/components/Ads/adsense/home/HomeAdsHorizontal";
+// import MyMatchesAdsHorizontal from "@/components/Ads/adsense/home/MyMatchesAdsHorizontal";
+// import MyTournamentsAdsHorizontal from "@/components/Ads/adsense/home/MyTournamentsAdsHorizontal";
 
 const HomePage = ({ Component, pageProps }) => {
   const [isLoader, setIsLoader] = useState(false); // Initialize with null or some default value
@@ -417,13 +418,18 @@ const HomePage = ({ Component, pageProps }) => {
       const res = await dispatch(getConsoleAction(object));
 
       if (res.payload.statusCode == 200) {
-        setConsoleData("consoleData", res.payload.data[0]);
-        setConsoleList(res.payload.data);
+        const selectedData=getConsoleData("consoleData")
+        if(!selectedData){
+           setConsoleData("consoleData", res.payload.data[0]);
+        }
+        const data=res?.payload?.data?.map((i)=> (i?.id === selectedData?.id ? {...i, isSelected:true}: {...i, isSelected:false}))
+        setConsoleList(data);
       } else {
         setIsLoader(false);
         toaster(res.payload.message, TOAST_TYPES.ERROR);
       }
     } catch (error) {
+        console.log('error', error)
       setIsLoader(false);
 
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
@@ -890,7 +896,7 @@ const HomePage = ({ Component, pageProps }) => {
                       appearance: "none",
                     }}>
                     {consoleList.map((option, index) => (
-                      <option key={index} value={JSON.stringify(option)}>
+                      <option key={index} value={JSON.stringify(option)} selected={option?.isSelected}>
                         {option.consolename}
                       </option>
                     ))}
@@ -941,7 +947,7 @@ const HomePage = ({ Component, pageProps }) => {
                       appearance: "none",
                     }}>
                     {consoleList.map((option, index) => (
-                      <option key={index} value={JSON.stringify(option)}>
+                      <option key={index} value={JSON.stringify(option)} selected={option?.isSelected}>
                         {option.consolename}
                       </option>
                     ))}
@@ -980,7 +986,7 @@ const HomePage = ({ Component, pageProps }) => {
 
 
             {/* // Home top ad */}
-            <HomeAdsHorizontal />
+            {/* <HomeAdsHorizontal /> */}
 
 
             <div>
@@ -1001,7 +1007,7 @@ const HomePage = ({ Component, pageProps }) => {
 
             {dropDownSelection == "Available" && (
               <div className='match-small-carousel  '>
-                <AvailableMatchAdsHorizontal />
+                {/* <AvailableMatchAdsHorizontal /> */}
                 {availableData.length > 0 ? (
                   <Carousel
                     responsive={responsive}
@@ -1049,7 +1055,7 @@ const HomePage = ({ Component, pageProps }) => {
 
             {dropDownSelection == "My Matches" && (
               <div className='match-small-carousel  '>
-                <MyMatchesAdsHorizontal />
+                {/* <MyMatchesAdsHorizontal /> */}
                 {currentMatchData.length > 0 ? (
                   <Carousel
                     responsive={responsive}
@@ -1096,7 +1102,7 @@ const HomePage = ({ Component, pageProps }) => {
 
             {dropDownSelection == "My Tournaments" && (
               <div className='match-small-carousel  '>
-                <MyTournamentsAdsHorizontal />
+                {/* <MyTournamentsAdsHorizontal /> */}
                 {myTournaments.length > 0 ? (
                   <Carousel
                     responsive={responsive}

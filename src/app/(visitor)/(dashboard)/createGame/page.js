@@ -57,7 +57,7 @@ import { format } from "date-fns";
 import socket from "@/socket/socket";
 import AlertDialog from "@/components/AlertDialog";
 import { useRouter } from "next/navigation";
-import CreateGameAdsHorizontal from "@/components/Ads/adsense/CreateGameAdsHorizontal";
+// import CreateGameAdsHorizontal from "@/components/Ads/adsense/CreateGameAdsHorizontal";
 
 const CreateGame = () => {
   const [isLoader, setIsLoader] = useState(true); // Initialize with null or some default value
@@ -1152,7 +1152,7 @@ const CreateGame = () => {
           </div>
         )}
 
-     <CreateGameAdsHorizontal />
+     {/* <CreateGameAdsHorizontal /> */}
 
         {isModelShow && (
           <Model

@@ -23,7 +23,7 @@ import { ArrowLeft, ChevronDown, Edit2, Plus, Minus } from "lucide-react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { TOAST_ALERTS, TOAST_TYPES } from "@/constants/keywords";
-import SubscriptionsAdsSquare from "@/components/Ads/adsense/SubscriptionsAdsSquare";
+// import SubscriptionsAdsSquare from "@/components/Ads/adsense/SubscriptionsAdsSquare";
 
 const Subscription = () => {
   const [tournamentData, setTournamentData] = useState([
@@ -306,7 +306,7 @@ const Subscription = () => {
   };
   return (
     <div className="bg-black06 text-white min-h-screen p-4">
-      <SubscriptionsAdsSquare />
+      {/* <SubscriptionsAdsSquare /> */}
       {/* Header */}
       {isPayPalBtnShow ? (
         <div
