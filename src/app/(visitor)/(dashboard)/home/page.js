@@ -246,6 +246,10 @@ const HomePage = ({ Component, pageProps }) => {
      getCurrentMatches();
     })
 
+    EventEmitter.on(EmitterKey.DeclineMatch, (message) => {
+      getCurrentMatches();
+    });
+
     getAvailableMatches();
     getCurrentMatches();
     getMyTournament();

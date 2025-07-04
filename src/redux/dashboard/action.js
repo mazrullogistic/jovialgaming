@@ -157,6 +157,7 @@ export const getCurrentMatchesAction = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const { data, status } = await GetCurrentMatches(payload);
+      console.log("🚀 ~ data:---------))", data)
       return data;
     } catch (err) {
       console.log("🚀 ~ err:", err);

@@ -136,6 +136,7 @@ const Chat = () => {
     getUserMessagesEvent();
     return () => {};
   }, []);
+
   useEffect(() => {
     // if (SocketKEY.socketConnect === null) {
     //   socket.start();
@@ -144,12 +145,14 @@ const Chat = () => {
     getChatList();
     return () => {};
   }, [threadId]);
+
   useEffect(() => {
     if (chatListIsNext) {
       getChatList();
       // GroupTourReadMessage(true);
     }
   }, [chatListPage]);
+
   useEffect(() => {
     // bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     // const container = bottomRef.current?.parentNode;
@@ -219,15 +222,17 @@ const Chat = () => {
     setSelectedImage(null);
     setSelectedImageUrl(null);
   };
+
   const removeSelectedVideo = () => {
     setSelectedVideoUrl(null);
   };
+
   const getChatList = async () => {
     setIsLoader(true);
     const userDataForChat = getChatUserData("chat");
     const payload = new FormData();
-    console.log("userDataForChat", userDataForChat);
-    console.log("chatModelData", chatModelData);
+    // console.log("userDataForChat", userDataForChat);
+    // console.log("chatModelData", chatModelData);
     payload.append("fromUserId", user.data.id);
     if (chatModelData) {
       payload.append("userId", chatModelData.id);
@@ -250,7 +255,7 @@ const Chat = () => {
 
       if (res.payload.status) {
         setChatList(res.payload.data);
-        console.log("res.payload.data.isNextPage", res.payload.data.isNextPage);
+        // console.log("res.payload.data.isNextPage", res.payload.data.isNextPage);
         setChatData([...chatData, ...res.payload.data.data]);
         setChatListIsNext(res.payload.data.isNextPage);
         var tempArray = [...chatData, ...res.payload.data.data];
@@ -263,7 +268,7 @@ const Chat = () => {
         // });
         // setChatData(newObj);
 
-        console.log("res--> 2451", res.payload.data.data);
+        // console.log("res--> 2451", res.payload.data.data);
       } else {
         console.log("res--> 133");
       }
@@ -272,6 +277,7 @@ const Chat = () => {
       console.log("Error", error);
     }
   };
+
   const getThreadList = async () => {
     setIsLoader(true);
 
@@ -299,10 +305,10 @@ const Chat = () => {
       console.log("Error", error);
     }
   };
+
   const sendChatMessage = async () => {
     try {
       const userDataForChat = getChatUserData("chat");
-      console.log("userDataForChat", userDataForChat);
       const payload = new FormData();
 
       payload.append("fromUserId", user.data.id);
@@ -338,6 +344,11 @@ const Chat = () => {
         setSelectedImageUrl(null);
         setSelectedImage(null);
         addMsgDetails(res.data.result);
+
+        // ✅ Scroll to bottom
+      setTimeout(() => {
+        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100); // slight delay ensures new message is rendered
       } else {
       }
     } catch (error) {
@@ -352,6 +363,7 @@ const Chat = () => {
     setChatReverseList((oldArray) => [...oldArray, msg]);
     setChatData((oldArray) => [...oldArray, msg]);
   }
+
   const handleImageClick = (item) => {
     setSelectedItem(item);
     setIsPreviewOpen(true);
@@ -382,6 +394,7 @@ const Chat = () => {
       </div>
     );
   }
+
   function renderReceiverView(item) {
     return (
       <>
@@ -487,29 +500,32 @@ const Chat = () => {
       </div>
     );
   }
+
   const onEndReach = async () => {
     console.log("onEndReach");
   };
+
   const handleScroll = () => {
     if (scrollRef.current.scrollTop === 0) {
       loadMore();
-      console.log("onEndReach");
+      // console.log("onEndReach");
     }
   };
+
   function loadMore() {
     setChatListPage((abovePage) => abovePage + 1);
   }
 
   return (
     <>
-      {console.log("chatModelData", chatModelData)}
+      {/* {console.log("chatModelData", chatModelData)} */}
       {isLoader ? (
         <Loader />
       ) : (
         <div className="flex flex-col h-screen bg-black06 text-white">
-          <header className="bg-gray-800 p-4 bg-black06 text-white fixed top-0 left-[16%] right-0 flex items-center justify-between">
-            <div className="flex-none p-4 bg-gray-900 rounded-lg">
-              <div className="flex items-center space-x-4">
+          <header className="bg-gray-800 p-4 bg-black06 text-white max-md:fixed top-0 md:left-[16%] right-0 flex items-center justify-between w-full">
+            <div className="flex-none p-4 bg-gray-900 rounded-lg w-full">
+              <div className="flex items-center space-x-4 justify-between">
                 <button
                   onClick={() => router.back()}
                   className="flex items-center space-x-2 text-white bg-gray-900 p-2 rounded-lg hover:bg-gray-700 transition"
@@ -517,6 +533,7 @@ const Chat = () => {
                   <ArrowLeftIcon className="h-6 w-6 text-white" />
                   <span className="text-sm font-medium">Back</span>
                 </button>
+                <div className="flex gap-5">
                 <div className="rounded-full h-10 w-10 bg-gray82 flex items-center justify-center">
                   <img
                     className="rounded-full h-full w-full object-cover"
@@ -531,6 +548,7 @@ const Chat = () => {
                 <h1 className="text-xl font-semibold">
                   {chatModelData ? chatModelData.name : userDataForChat?.uName}
                 </h1>
+                </div>
               </div>
             </div>
           </header>
@@ -541,7 +559,7 @@ const Chat = () => {
             className="flex-1 overflow-y-auto p-4 space-y-4 mt-24"
             style={{ height: "80vh" }}
           >
-            <div className="flex-grow p-4 bg-black06">
+            <div className="flex-grow p-4 bg-black06 mb-12">
               {chatReverseList.map((item, index) => {
                 let header = false;
                 let chatMsgDate = item.createdAt;
@@ -586,7 +604,7 @@ const Chat = () => {
             <div ref={bottomRef} />
           </div>
 
-          <footer className="bg-red text-black25 fixed bottom-0 md:left-[16%] right-0">
+          <footer className="bg-red text-black25 max-md:fixed bottom-0 md:left-[16%] right-0 w-full">
             {selectedVideoUrl && (
               <div className="relative flex items-center justify-center p-4 bg-black25 rounded-lg mx-4 mb-2">
                 <video
