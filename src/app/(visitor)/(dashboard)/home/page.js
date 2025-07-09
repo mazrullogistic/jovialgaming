@@ -1032,6 +1032,7 @@ const HomePage = ({ Component, pageProps }) => {
                                 {post.amount}
                               </p>
                             </div>
+                            <p className='avl-txt'>{post.consolename}</p>
                             <p className='avl-txt'>{post.gamename}</p>
 
                             <p className='avl-txt'>{post.gameModeName}</p>
@@ -1080,8 +1081,8 @@ const HomePage = ({ Component, pageProps }) => {
                                 {item.amount}
                               </p>
                             </div>
+                            <p className='avl-txt'>{item.consolename}</p>
                             <p className='avl-txt'>{item.gamename}</p>
-
                             <p className='avl-txt'>{item.gameModeName}</p>
                             <div className='center-container'>
                               <button

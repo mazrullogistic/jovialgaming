@@ -58,6 +58,7 @@ export const API_ROUTER = {
 
   //
   DISPUTES_LIST: "/disputes",
+  FREE_PLAY_DISPUTES_LIST: "/freeplaydisputes",
   MATCH_HISTORY: "/games/get-completed-game",
   TRACKER_DATA: "/games/get-tracker-data",
   GET_PROFILE_CARD: "/user/get-user-profile-card?",

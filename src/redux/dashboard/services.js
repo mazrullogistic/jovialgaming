@@ -149,7 +149,7 @@ export const GetSeasonList = (data) => {
   return axiosGet(API_ROUTER.GET_SEASON_LIST, data);
 };
 export const DisputesList = (data) => {
-  return axiosGet(API_ROUTER.DISPUTES_LIST, data);
+  return axiosGet(API_ROUTER.FREE_PLAY_DISPUTES_LIST, data);
 };
 export const MatchHistoryList = (data) => {
   return axiosPost(API_ROUTER.MATCH_HISTORY, data);

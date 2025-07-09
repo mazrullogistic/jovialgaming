@@ -119,6 +119,7 @@ const CreateGame = () => {
     },
   };
   useEffect(() => {
+    // console.log('CommonConstant.challengeData-->', CommonConstant.challengeData)
     if (CommonConstant.challengeData) {
       setIsChallenge(true);
       setIsModelShow(true);
@@ -154,6 +155,7 @@ const CreateGame = () => {
     };
   }, [router.asPath]); // De
   useEffect(() => {
+    console.log('CommonConstant.SelectedMatchData-->', CommonConstant.SelectedMatchData)
     if (CommonConstant.SelectedMatchData) {
       setIsModelShow(true);
       CommonConstant.FreePlayData = CommonConstant.SelectedMatchData;
@@ -173,7 +175,7 @@ const CreateGame = () => {
               if (
                 CommonConstant.SelectedMatchData.opponent_ready_status === "0"
               ) {
-                setReadyClick(true);
+                // setReadyClick(true);
                 setSelectedModelIndex(6);
               } else {
                 if (CommonConstant.SelectedMatchData.isScoreAddedHost) {
@@ -210,7 +212,7 @@ const CreateGame = () => {
               CommonConstant.SelectedMatchData.opponent_ready_status === "1" || CommonConstant.SelectedMatchData.host_ready_status === "0"
             ) {
               if (CommonConstant.SelectedMatchData.host_ready_status === "0") {
-                setReadyClick(true);
+                // setReadyClick(true);
                 setSelectedModelIndex(6);
               } else {
                 if (CommonConstant.SelectedMatchData.isScoreAddedOpponent) {
@@ -957,6 +959,7 @@ const CreateGame = () => {
       setSelectedModelIndex(2);
       getCurrentMatches();
       setIsModelShow(false);
+      CommonConstant.SelectedMatchData=""
     }
   }
 

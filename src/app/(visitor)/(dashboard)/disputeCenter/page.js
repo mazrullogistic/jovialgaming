@@ -20,13 +20,13 @@ const DisputeCenter = () => {
   const dispatch = useDispatch();
   const [isLoader, setIsLoader] = useState(false); // Initialize with null or some default value
   const [disputeList, setDisputeList] = useState([
-    {
-      id: 31,
-      user: 0,
-      disputereason: null,
-      match: 18,
-      details: "both user win",
-    },
+    // {
+    //   id: 31,
+    //   user: 0,
+    //   disputereason: null,
+    //   match: 18,
+    //   details: "both user win",
+    // },
   ]);
   const router = useRouter();
 
