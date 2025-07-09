@@ -51,35 +51,26 @@ const Tournament = () => {
 
   const RegisterApi = async () => {
     setIsLoader(true);
-
     try {
       const user = getData("user");
-
       const object = {
         tour_id: tournamentNewData.id,
         user_id: user.data.id,
-        // devicetype: "web",
       };
 
       const { payload: res } = await dispatch(tournamentRegisterAction(object));
-
       const { data, status } = res;
-      console.log("object ", object);
-      console.log("res 65", res);
       setIsLoader(false);
 
       if (status) {
         router.push("tournament/timer");
-
         getTournamentRuleApi();
       } else {
         router.push("tournament/timer");
-
-        setIsLoader(false);
         toast.error(data.message);
       }
     } catch (error) {
-      setLoading(false);
+      dispatch(setLoading(false));
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
     }
   };
@@ -88,19 +79,17 @@ const Tournament = () => {
     setIsLoader(true);
     try {
       const tournamentId = getTournamentId("id");
-
       const res = await dispatch(getTournamentRulesAction(tournamentId.id));
 
       if (res.payload.data.data.length > 0) {
         setRuleData(res.payload.data.data);
         setIsMember(res.payload.data.isMember);
-
-        setIsLoader(false);
       } else {
-        setIsLoader(false);
         setRuleData([]);
       }
     } catch (error) {
+      // Optionally toast error here
+    } finally {
       setIsLoader(false);
     }
   };
@@ -111,7 +100,15 @@ const Tournament = () => {
   };
 
   return (
-    <div className="h-screen bg-black06">
+    <div className="h-screen bg-black06 relative">
+      {/* 🆕 View Bracket Button */}
+      <button
+        className="absolute top-4 right-4 bg-gray82 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-700 transition"
+        onClick={() => router.push(`/tournament/bracket/${tournamentNewData?.id}`)}
+      >
+        View Bracket
+      </button>
+
       {isLoader ? (
         <Loader />
       ) : (
