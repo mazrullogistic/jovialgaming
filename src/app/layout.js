@@ -63,7 +63,6 @@ export default function RootLayout({ children }) {
     pathname == "/resetPassword" ||
     pathname == "/forgotPassword";
 
-
   useEffect(() => {
     const user = getData("user");
 
@@ -74,16 +73,13 @@ export default function RootLayout({ children }) {
     }
   }, [!isLoginPage]);
 
-
   useEffect(() => {
-
     // Function to check if the screen is mobile
     const handleResize = () => {
       // console.log("window.innerWidth <= 768", window.innerWidth <= 768);
       isMobileRes = window.innerWidth <= 768;
       setIsMobile(window.innerWidth <= 768, "mobile"); // Adjust the breakpoint as per your design
     };
-
 
     // Set initial value
     handleResize();
@@ -99,8 +95,6 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-
-
       {/* google ads script */}
       <Script
         async
@@ -118,7 +112,6 @@ export default function RootLayout({ children }) {
         }}
       /> */}
 
-
       <body
         className={`${inter.className} ${open_sans.className} ${archivo.variable}  ${inter_tight.variable}`}
       >
@@ -130,31 +123,5 @@ export default function RootLayout({ children }) {
         </Provider>
       </body>
     </html>
-    /* <html lang="en">
-      <body className={`${inter.className} ${open_sans.className}`}>
-        <Provider store={store}>
-          <GoogleOAuthProvider clientId="598913711908-ps1ud5pqp6diuci99laprr35pkbqffoa.apps.googleusercontent.com">
-            <ProtectedPageService />
-            <ToastWrapper />
-            <div>
-              <div>
-                {!isLoginPage && isSidebarOpen && (
-                  <Stepbardiv $isvisible={isSidebarOpen}>
-                    <Sidebar />
-                  </Stepbardiv>
-                )}
-                <MainDiv $isvisible={isSidebarOpen}>
-                  <Header
-                    onToggleSidebar={toggleSidebar}
-                    isSidebarOpen={isSidebarOpen}
-                  />
-                  <StyledJsxRegistry>{children}</StyledJsxRegistry>
-                </MainDiv>
-              </div>
-            </div>
-          </GoogleOAuthProvider>
-        </Provider>
-      </body>
-    </html> */
   );
 }
