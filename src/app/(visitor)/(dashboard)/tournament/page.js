@@ -101,14 +101,6 @@ const Tournament = () => {
 
   return (
     <div className="h-screen bg-black06 relative">
-      {/* 🆕 View Bracket Button */}
-      <button
-        className="absolute top-4 right-4 bg-gray82 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-700 transition"
-        onClick={() => router.push(`/tournament/bracket/${tournamentNewData?.id}`)}
-      >
-        View Bracket
-      </button>
-
       {isLoader ? (
         <Loader />
       ) : (
