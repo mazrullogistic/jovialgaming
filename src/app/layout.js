@@ -95,7 +95,6 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      {/* google ads script */}
       <Script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5381942317128703"
