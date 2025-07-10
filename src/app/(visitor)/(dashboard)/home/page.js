@@ -152,9 +152,6 @@ const HomePage = ({ Component, pageProps }) => {
     }
   };
   const [isMobile, setIsMobile] = useState(false);
-  // useEffect(() => {
-  //   connectSock();
-  // }, []);
 
   // async function connectSock() {
   //   console.log("SocketKEY.socketConnect", SocketKEY.socketConnect);
