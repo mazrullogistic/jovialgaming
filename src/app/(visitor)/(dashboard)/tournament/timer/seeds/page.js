@@ -3,6 +3,7 @@
 import { RHFTextInput } from "@/components/hook-form";
 import { TOAST_ALERTS } from "@/constants/keywords";
 import {
+  getCurrentTournamentMatchAction,
   getRegisterUserListAction,
   getUpdateStartMatchAction,
 } from "@/redux/dashboard/action";
@@ -28,10 +29,12 @@ const Seeds = () => {
   const dispatch = useDispatch();
   const [userList, setUserList] = useState([]);
   const [isLoader, setIsLoader] = useState(true); // Initialize with null or some default value
+  const [matchStatus, setMatchStatus] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     RegisterUserList();
+    getCurrentMatchStatus();
   }, []);
 
   const RegisterUserList = async () => {
@@ -67,18 +70,51 @@ const Seeds = () => {
     }
   };
 
+  const getCurrentMatchStatus = async () => {
+    try {
+      const object = {
+        tour_id: tournamentNewData.id,
+      };
+
+      const { payload: res } = await dispatch(
+        getCurrentTournamentMatchAction(object)
+      );
+
+      const { data, status } = res;
+      if (status) {
+        setMatchStatus(data?.tournamentData);
+      }
+    } catch (error) {
+      console.log("Error fetching match status", error);
+    }
+  };
+
   return (
     <>
       {isLoader ? (
         <Loader />
       ) : (
-        <div className="h-screen bg-black06">
+        <div className="h-screen bg-black06 relative">
+          {/* Back Button */}
           <button
             onClick={() => router.back()}
             className="flex items-center space-x-2 text-white bg-gray-900 p-2 rounded-lg hover:bg-gray-700 transition  pt-8 pl-8"
           >
             <ArrowLeftIcon className="h-6 w-6 text-white" />
             <span className="text-sm font-medium">Back</span>
+          </button>
+
+          {/* View Bracket Button - Disabled until tournament starts - Top right corner */}
+          <button
+            className={`absolute top-4 right-4 px-4 py-2 rounded-lg text-sm font-semibold transition ${
+              matchStatus?.status === 0 
+                ? "bg-gray82 text-gray-400 cursor-not-allowed" 
+                : "bg-gray82 text-white hover:bg-gray-700 cursor-pointer"
+            }`}
+            onClick={matchStatus?.status !== 0 ? () => router.push(`/tournament/bracket/${tournamentNewData?.id}`) : undefined}
+            disabled={matchStatus?.status === 0}
+          >
+            View Bracket
           </button>
           <div className="center-container">
             <p className="medium-txt-seeds">Seeds</p>

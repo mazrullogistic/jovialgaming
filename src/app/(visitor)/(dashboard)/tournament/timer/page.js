@@ -176,6 +176,8 @@ const Timer = () => {
   };
 
   const handleRedirect = () => {
+    // Clear any potential caching issues
+    console.log("Navigating to chat page");
     router.push("/tournament/timer/chat");
   };
   return (
@@ -184,16 +186,28 @@ const Timer = () => {
         <Loader />
       ) : (
         <div className="flex justify-center items-center min-h-screen bg-black26 text-white relative">
-          <button className="absolute top-4 right-4">
-            <button
-              onClick={handleRedirect}
-              className="absolute top-4 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200"
-            >
-              <ChatBubbleLeftEllipsisIcon className="w-5 h-5 md:w-6 md:h-6" />
-              {-2 > 0 && (
-                <span className="absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"></span>
-              )}
-            </button>
+          {/* Chat Button */}
+          <button
+            onClick={handleRedirect}
+            className="absolute top-4 right-4 flex items-center gap-2 text-white px-2 py-1 md:px-3 md:py-2 bg-green-500 rounded-lg shadow-md hover:bg-green-600 transition duration-200"
+          >
+            <ChatBubbleLeftEllipsisIcon className="w-5 h-5 md:w-6 md:h-6" />
+            {-2 > 0 && (
+              <span className="absolute -top-2 -right-2 bg-white text-black06 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"></span>
+            )}
+          </button>
+
+          {/* View Bracket Button - Disabled until tournament starts - Below chat icon */}
+          <button
+            className={`absolute top-20 right-4 px-4 py-2 rounded-lg text-sm font-semibold transition ${
+              matchStatus?.status === 0 
+                ? "bg-gray82 text-gray-400 cursor-not-allowed" 
+                : "bg-gray82 text-white hover:bg-gray-700 cursor-pointer"
+            }`}
+            onClick={matchStatus?.status !== 0 ? () => router.push(`/tournament/bracket/${tournamentNewData?.id}`) : undefined}
+            disabled={matchStatus?.status === 0}
+          >
+            View Bracket
           </button>
           <div className="w-full max-w-md p-6 relative">
             {/* Chat Icon */}

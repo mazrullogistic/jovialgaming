@@ -18,6 +18,7 @@ import {
   freePlaySubmitScoreAction,
   freePlayUpdateMatchAction,
   freePlayUpdateReadyStatusAction,
+  getCurrentTournamentMatchAction,
   getEntryAmountAction,
   getFreePlayMatchReqCreateAction,
   getFreePlayMatchReqUpdateAction,
@@ -41,6 +42,7 @@ import {
   getData,
   getRoomData,
   getRoomId,
+  getTournamentId,
 } from "@/utils/storage";
 import { setLoading } from "@/redux/dashboard/slice";
 import {
@@ -54,11 +56,13 @@ import { GetMatchReqCreate } from "@/redux/dashboard/services";
 import { format } from "date-fns";
 import socket from "@/socket/socket";
 import AlertDialog from "@/components/AlertDialog";
+import { useRouter } from "next/navigation";
 
 const TournamentStart = () => {
   const [isLoader, setIsLoader] = useState(false); // Initialize with null or some default value
   const { toaster } = useToaster();
   const dispatch = useDispatch();
+  const router = useRouter();
   const [tournamentData, setTournamentData] = useState([
     { id: 1, name: "Juswoo", image: "/images/seeds.png" },
     { id: 2, name: "Quancinco", image: "/images/seeds.png" },
@@ -81,16 +85,19 @@ const TournamentStart = () => {
   const [submitScoreDialog, setSubmitScoreDialog] = useState(false);
   const [gameDetails, setGameDetails] = useState(null);
   const [tourRoundDetails, setTourRoundDetails] = useState(null);
+  const [matchStatus, setMatchStatus] = useState("");
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const getCurrentTime = () => format(new Date(), "yyyy-MM-dd HH:mm:ss");
   var currentTourDetails = getCurrentTourDetailsData("tourDetailData");
   var currentTourRoundDetails =
     getCurrentTourRoundDetailsData("tournamentData");
+  var tournamentNewData = getTournamentId("id");
   useEffect(() => {
     // Connect to the server
     // 54321
     setGameDetails(currentTourDetails);
     setTourRoundDetails(currentTourRoundDetails);
+    getCurrentMatchStatus();
     if (SocketKEY.socketConnect === null) {
       socket.start();
       socket.subscribeUser();
@@ -596,6 +603,25 @@ const TournamentStart = () => {
 
     console.log("stateCode");
   };
+  const getCurrentMatchStatus = async () => {
+    try {
+      const object = {
+        tour_id: tournamentNewData.id,
+      };
+
+      const { payload: res } = await dispatch(
+        getCurrentTournamentMatchAction(object)
+      );
+
+      const { data, status } = res;
+      if (status) {
+        setMatchStatus(data?.tournamentData);
+      }
+    } catch (error) {
+      console.log("Error fetching match status", error);
+    }
+  };
+
   const getEntryAmountApi = () => {};
   const getModelData = (amountData, gameMode) => {
     console.log("amountData", amountData);
@@ -610,7 +636,19 @@ const TournamentStart = () => {
       {/* {isLoader ? (
         <Loader />
       ) : ( */}
-      <div className="h-screen bg-black06">
+      <div className="h-screen bg-black06 relative">
+        {/* View Bracket Button - Disabled until tournament starts - Top right corner */}
+        <button
+          className={`absolute top-4 right-4 px-4 py-2 rounded-lg text-sm font-semibold transition z-50 ${
+            matchStatus?.status === 0 
+              ? "bg-gray82 text-gray-400 cursor-not-allowed" 
+              : "bg-gray82 text-white hover:bg-gray-700 cursor-pointer"
+          }`}
+          onClick={matchStatus?.status !== 0 ? () => router.push(`/tournament/bracket/${tournamentNewData?.id}`) : undefined}
+          disabled={matchStatus?.status === 0}
+        >
+          View Bracket
+        </button>
         {isModelShow && (
           <TournamentModel
             isLoader={isLoader}
