@@ -239,15 +239,16 @@ const HomePage = ({ Component, pageProps }) => {
     getCurrentMatches();
   },[pathname])
 
+
   useEffect(() => {
 
     EventEmitter.on(EmitterKey.FoundMatch, (response) => {
-    //  console.log("🚀 ~ EventEmitter.on ~ response:", response)
      getCurrentMatches();
     })
 
     EventEmitter.on(EmitterKey.DeclineMatch, (message) => {
       getCurrentMatches();
+      CommonConstant.SelectedMatchData=null
     });
 
     getAvailableMatches();

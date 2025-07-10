@@ -154,8 +154,8 @@ const CreateGame = () => {
       // console.log("Screen is unfocused 135");
     };
   }, [router.asPath]); // De
+  
   useEffect(() => {
-    console.log('CommonConstant.SelectedMatchData-->', CommonConstant.SelectedMatchData)
     if (CommonConstant.SelectedMatchData) {
       setIsModelShow(true);
       CommonConstant.FreePlayData = CommonConstant.SelectedMatchData;
@@ -277,11 +277,7 @@ const CreateGame = () => {
     });
     EventEmitter.on(EmitterKey.FoundMatch, (response) => {
       getCurrentMatches();
-      // console.log("esponse.message[0] 239", response.message[0]);
-      // console.log(
-      //   "CommonConstant.CurrentGameDetails",
-      //   CommonConstant.CurrentGameDetails
-      // );
+      
       CommonConstant.SelectedMatchData = CommonConstant.CurrentGameDetails;
       if (CommonConstant.CurrentGameDetails) {
         CommonConstant.CurrentGameDetails = response.message[0];
