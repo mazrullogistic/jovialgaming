@@ -154,7 +154,7 @@ const start = () => {
     });
 
     socket.on("user", (message) => {
-    console.log("Received user event--------->", message);
+    console.log("Received user event--------->", message.action);
     if (message.action === "match_request_success") {
       EventEmitter.emit(EmitterKey.FoundMatch, message);
     } else if (message.action === "match_request_decline") {
@@ -220,6 +220,7 @@ const stop = () => {
 
 const subscribeUser = async () => {
   try {
+    const user = getData("user");
     await socket.get(
       "/api/v1/chat/subscribeuser1",
       { id: user.data.id },
