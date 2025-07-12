@@ -1,4 +1,3 @@
-// components/Model.js
 import { useRef, useEffect, useState } from "react";
 import Modal from "react-modal";
 import Image from "next/image";
@@ -52,9 +51,9 @@ const TournamentModel = ({
   const [selectionMatchData, setSelectionMatchData] =
     useState(selectedMatchData);
   const [selectedGameModeData, setSelectedGameModeData] = useState([]);
-  // const [selectedGameModeData, setSelectedGameModeData] = useState(
-  //   gameModes[0]
-  // );
+  // Moved adShown state to top level
+  const [adShown, setAdShown] = useState(false);
+
   var currentTourDetails = getCurrentTourDetailsData("tourDetailData");
   var currentTourRoundDetails =
     getCurrentTourRoundDetailsData("tournamentData");
@@ -62,34 +61,50 @@ const TournamentModel = ({
 
   const user = getData("user");
 
+  // Moved useEffect for adShown to top level
+  useEffect(() => {
+    if (
+      (readyTimerData && readyTimerData.win_status) ||
+      (selectedModelIndex === 9 && matchData.winstatus)
+    ) {
+      if (!adShown) {
+        setAdShown(true);
+      }
+    }
+  }, [readyTimerData, selectedModelIndex, matchData, adShown]);
+
   const handleBoxClick = (index, item) => {
     setSelectedAmountData(item);
-
     setSelectedBox(index);
   };
+
   const handleBoxClickMatch = (index, item) => {
     setSelectedGameModeData(item);
-
     setSelectedBoxMatch(index);
   };
+
   const handleChangeNext = (item) => {
     setSelectedModelIndex(2);
   };
+
   const handleChangeStartGame = () => {
     setSelectedModelIndex(3);
-
     getModelData(selectedAmountData, selectedGameModeData);
   };
+
   const handleChangePreviuos = () => {
     setSelectedModelIndex(1);
   };
+
   const handleChangeSearching = () => {
     setSelectedModelIndex(2);
   };
+
   useEffect(() => {
     console.log("selectedModelIndex 47", selectedModelIndex);
     return () => {};
   }, []);
+
   const customStyles = {
     content: {
       top: "50%",
@@ -116,39 +131,39 @@ const TournamentModel = ({
       },
     },
   };
+
   const [modalIsOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
     setGameDetails(currentTourDetails);
     setTourRoundDetails(currentTourRoundDetails);
     setSelectedModelIndex(selectedIndex);
     return () => {};
   }, [selectedIndex]);
+
   useEffect(() => {
     setSubmitScoreDialog(submitScoreModel);
     return () => {};
   }, [submitScoreModel]);
+
   useEffect(() => {
     setSelectionMatchData(selectedMatchData);
     return () => {};
   }, [selectedMatchData]);
+
   const handleRedirect = () => {
     router.push("/tournament/timer/tournamentStart/chat");
   };
-  // function sendMessage() {
-  //   router.push(PATH_DASHBOARD.messages);
-  // }
 
   function renderGameMode() {
     return (
       <div>
         <div className="model-txt">Select Game Mode</div>
-
         <div className="ml-[32%]">
           {gameModes.map((item, index) => (
-            // <div className="border border-x-white border-">
             <button onClick={() => handleBoxClickMatch(index, item)}>
               <div
-                className={`w-56  h-10 mt-6 bg-black25 rounded-xl pt-[1px] border   items-center justify-center ${
+                className={`w-56 h-10 mt-6 bg-black25 rounded-xl pt-[1px] border items-center justify-center ${
                   selectedBoxMatch === index ? "border-yellow" : "border-white"
                 }`}
               >
@@ -161,10 +176,9 @@ const TournamentModel = ({
         </div>
         <div>
           <div className="center-container space-x-3 mt-8">
-            <button className="btn-challenge " onClick={handleChangePreviuos}>
+            <button className="btn-challenge" onClick={handleChangePreviuos}>
               {"Previuos"}
             </button>
-
             <button className="btn-challenge" onClick={handleChangeStartGame}>
               {"Start Match"}
             </button>
@@ -173,11 +187,11 @@ const TournamentModel = ({
       </div>
     );
   }
+
   function renderAmount() {
     return (
       <div>
         <div className="model-txt">Choose an entry amount</div>
-
         <div className="grid grid-cols-3 ml-24 mt-4">
           {amountData.map((item, index) => (
             <button
@@ -191,7 +205,7 @@ const TournamentModel = ({
                 }`}
               >
                 <div
-                  className={`text-center text-[16px] font-[400]  ${
+                  className={`text-center text-[16px] font-[400] ${
                     selectedBox === index ? "text-black06" : "text-white"
                   }`}
                 >
@@ -206,10 +220,9 @@ const TournamentModel = ({
         </div>
         <div>
           <div className="center-container space-x-3 mt-8">
-            <button className="btn-challenge " onClick={closeModel}>
+            <button className="btn-challenge" onClick={closeModel}>
               {"Close"}
             </button>
-
             <button className="btn-challenge" onClick={handleChangeNext}>
               {"Next"}
             </button>
@@ -218,13 +231,14 @@ const TournamentModel = ({
       </div>
     );
   }
+
   function renderFindingMatch() {
     return (
       <div>
         <div className="ml-[32%] h-72">
           <button>
             <div
-              className={`w-56  h-10  bg-black25    items-center justify-center`}
+              className={`w-56 h-10 bg-black25 items-center justify-center`}
             >
               <Image
                 src="/images/dollar.svg"
@@ -233,8 +247,8 @@ const TournamentModel = ({
                 height={125}
                 alt="Logo"
               />
-              <div className="text-center text-white mt-[2.3%] text-[16px]  font-inter_tight  font-[200] animate-blink">
-                {"Finding a match ..."}{" "}
+              <div className="text-center text-white mt-[2.3%] text-[16px] font-inter_tight font-[200] animate-blink">
+                {"Finding a match ..."}
               </div>
               <Image
                 src="/images/search.png"
@@ -244,7 +258,7 @@ const TournamentModel = ({
                 alt="Logo"
               />
               <button
-                className="btn-challenge "
+                className="btn-challenge"
                 onClick={handleChangeSearching}
               >
                 {"Previuos"}
@@ -256,13 +270,14 @@ const TournamentModel = ({
       </div>
     );
   }
+
   function renderFoundMatch() {
     return (
       <div>
         <div className="ml-[32%] h-72">
           <button>
             <div
-              className={`w-56  h-10  bg-black25    items-center justify-center`}
+              className={`w-56 h-10 bg-black25 items-center justify-center`}
             >
               <Image
                 src="/images/dollar.svg"
@@ -271,10 +286,9 @@ const TournamentModel = ({
                 height={125}
                 alt="Logo"
               />
-              <div className="text-center text-white mt-[10%] text-[20px]  mb-4  font-inter_tight  font-[300]   ">
-                {"Found a match "}
+              <div className="text-center text-white mt-[10%] text-[20px] mb-4 font-inter_tight font-[300]">
+                {"Found a match"}
               </div>
-
               <button className="btn-accept" onClick={onPressAccept}>
                 {"Accept"}
               </button>
@@ -294,7 +308,6 @@ const TournamentModel = ({
     return (
       <div>
         <div className="model-txt text-center">Rules</div>
-
         <div>
           <div className="overflow-y-auto max-h-[400px]">
             {ruleData.length > 0 ? (
@@ -302,12 +315,11 @@ const TournamentModel = ({
                 <button
                   key={index}
                   onClick={() => handleBoxClickMatch(index, item)}
-                  className="w-full" // Ensure the button takes full width
+                  className="w-full"
                 >
-                  <div className="mt-6  rounded-xl mb-2 bg-gray30  mr-2 p-4 w-full">
+                  <div className="mt-6 rounded-xl mb-2 bg-gray30 mr-2 p-4 w-full">
                     <div className="text-white text-left">{item.title}</div>
                     <hr className="my-divider" />
-
                     <div className="text-white text-left">
                       {item.descriptions}
                     </div>
@@ -315,14 +327,13 @@ const TournamentModel = ({
                 </button>
               ))
             ) : (
-              <div className=" h-[250px]  ">
-                <p className="text-[18px] text-white  font-inter_tight font-[600] text-center pt-[110px]">
+              <div className="h-[250px]">
+                <p className="text-[18px] text-white font-inter_tight font-[600] text-center pt-[110px]">
                   No data Found
                 </p>
               </div>
             )}
           </div>
-
           <div className="center-container space-x-3 mt-8">
             <button className="btn-accept-rules" onClick={onPressAcceptRules}>
               {"Accept Rules"}
@@ -334,7 +345,6 @@ const TournamentModel = ({
   }
 
   function renderMatchUsers() {
-    // console.log("matchData 307", matchData);
     return (
       <div className="max-h-[800px] relative">
         <button
@@ -349,23 +359,23 @@ const TournamentModel = ({
           )}
         </button>
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
-          <p className="text-[18px] text-white font-inter_tight font-[300] text-center ">
+          <p className="text-[18px] text-white font-inter_tight font-[300] text-center">
             {currentTourRoundDetails?.userCount == 3 ||
             currentTourRoundDetails?.userCount == 4
-              ? "Semi Final "
+              ? "Semi Final"
               : currentTourRoundDetails?.userCount == 2
               ? "Final"
               : `Round ${currentTourRoundDetails?.round}`}
           </p>
-          <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2 ">
+          <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2">
             <br />
           </p>
-          <p className="text-[20px] text-white font-inter_tight font-[300] text-center mt-16 ">
+          <p className="text-[20px] text-white font-inter_tight font-[300] text-center mt-16">
             {"GAME TIME"}
           </p>
           {console.log("readyTimes", readyTimes)}
           {readyTimes ? (
-            <p className="text-[16px] text-white font-inter_tight font-[300] text-center   ">
+            <p className="text-[16px] text-white font-inter_tight font-[300] text-center">
               {readyTimes}
             </p>
           ) : null}
@@ -383,7 +393,7 @@ const TournamentModel = ({
               <p className="userName-txt">{gameDetails?.opponent_name}</p>
             </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%]   max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -411,27 +421,27 @@ const TournamentModel = ({
       </div>
     );
   }
+
   function renderScoreSubmit() {
     console.log("matchData 373", matchData);
-
     return (
       <div className="max-h-[800px] relative">
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
-          <p className="text-[18px] text-white font-inter_tight font-[300] text-center ">
+          <p className="text-[18px] text-white font-inter_tight font-[300] text-center">
             {"GAME RULES"}
           </p>
-          <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2 ">
+          <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2">
             Add opponent as friend on console. <br />
             Match creator send game invite
             <br />
             Submit scores when finished.
           </p>
-          <p className="text-[20px] text-white font-inter_tight font-[300] text-center mt-16 ">
+          <p className="text-[20px] text-white font-inter_tight font-[300] text-center mt-16">
             {"GAME TIME"}
           </p>
           {console.log("readyTimes", readyTimes)}
           {readyTimes ? (
-            <p className="text-[16px] text-white font-inter_tight font-[300] text-center   ">
+            <p className="text-[16px] text-white font-inter_tight font-[300] text-center">
               {readyTimes}
             </p>
           ) : null}
@@ -449,7 +459,7 @@ const TournamentModel = ({
               <p className="userName-txt">{matchData.opponent_name}</p>
             </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%]   max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -462,7 +472,6 @@ const TournamentModel = ({
             </div>
           </div>
         </div>
-
         <button
           onClick={onPressReady}
           className="w-[200px] h-[40px] text-black text-center font-[400] rounded-xl font-inter_tight bg-grayA4 absolute left-1/2 transform -translate-x-1/2 bottom-4"
@@ -472,6 +481,7 @@ const TournamentModel = ({
       </div>
     );
   }
+
   function renderMatchUsersScore() {
     return (
       <div className="max-h-[800px] relative">
@@ -487,15 +497,15 @@ const TournamentModel = ({
           )}
         </button>
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
-          <p className="text-[18px] text-white font-inter_tight font-[300] text-center ">
+          <p className="text-[18px] text-white font-inter_tight font-[300] text-center">
             {currentTourRoundDetails?.userCount == 3 ||
             currentTourRoundDetails?.userCount == 4
-              ? "Semi Final "
+              ? "Semi Final"
               : currentTourRoundDetails?.userCount == 2
               ? "Final"
               : `Round ${currentTourRoundDetails?.round}`}
           </p>
-          <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2 "></p>
+          <p className="text-[16px] text-white font-inter_tight font-[300] text-center mt-2"></p>
         </div>
         <div className="flex max-h-[700px]">
           <div className="w-[50%] bg-black06 h-screen md:pl-[15%] pl-[5%] md:pt-[42%] pt-[102%] max-h-[700px]">
@@ -510,7 +520,7 @@ const TournamentModel = ({
               <p className="userName-txt">{gameDetails?.opponent_name}</p>
             </div>
           </div>
-          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%]   max-h-[700px]">
+          <div className="w-[50%] bg-black06 h-screen pl-[8%] md:pl-[15%] md:pt-[42%] pt-[102%] max-h-[700px]">
             <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4">
               <img
                 className="rounded-full h-full w-full object-cover"
@@ -526,13 +536,13 @@ const TournamentModel = ({
         <div className="absolute left-1/2 transform -translate-x-1/2 bottom-4">
           <p className="text-[16px] text-white font-inter_tight font-[300] text-center mb-4">
             Submit scores when finished. <br />
-            Good Luck!'
+            Good Luck!
           </p>
           <button
             onClick={() => {
               setIWonLossModelDialog(true);
             }}
-            className="w-[200px] h-[40px] text-black06 text-center font-[400] rounded-xl font-inter_tight bg-yellow "
+            className="w-[200px] h-[40px] text-black06 text-center font-[400] rounded-xl font-inter_tight bg-yellow"
           >
             Submit Score
           </button>
@@ -543,19 +553,20 @@ const TournamentModel = ({
       </div>
     );
   }
+
   function renderWonLost() {
     return (
       <div>
-        <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[0.5px]  w-full h-[700px] transparent-style"></div>
-        <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[0.5px]  w-full h-[700px]  ">
-          <div className="w-full  h-[60%] "></div>
+        <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[0.5px] w-full h-[700px] transparent-style"></div>
+        <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[0.5px] w-full h-[700px]">
+          <div className="w-full h-[60%]"></div>
           <div className="bg-black25 h-[40%] rounded-t-lg ml-2 mr-2 flex flex-col items-center">
-            <div className="flex  w-full">
-              <p className="text-[18px] text-white font-inter_tight font-[300] text-center   pt-6 w-[88%]  ml-[6%]">
+            <div className="flex w-full">
+              <p className="text-[18px] text-white font-inter_tight font-[300] text-center pt-6 w-[88%] ml-[6%]">
                 How was the match?
               </p>
               <button
-                className="  w-[3%] mr-[3%] mt-[2%]"
+                className="w-[3%] mr-[3%] mt-[2%]"
                 onClick={() => {
                   setIWonLossModelDialog(false);
                 }}
@@ -568,7 +579,7 @@ const TournamentModel = ({
                 />
               </button>
             </div>
-            <div className=" flex flex-col space-y-4 mt-[10%]">
+            <div className="flex flex-col space-y-4 mt-[10%]">
               <button
                 onClick={() => {
                   setIWonLossModelDialog(false);
@@ -582,11 +593,10 @@ const TournamentModel = ({
               <button
                 onClick={() => {
                   setIWonLossModelDialog(false);
-
                   setSubmitScoreDialog(true);
                   matchResultApi(0);
                 }}
-                className="w-[150px] h-[40px] text-black06 text-center font-[400] rounded-xl font-inter_tight bg-red "
+                className="w-[150px] h-[40px] text-black06 text-center font-[400] rounded-xl font-inter_tight bg-red"
               >
                 I Lost 😒
               </button>
@@ -600,16 +610,16 @@ const TournamentModel = ({
   function renderSubmitScore() {
     return (
       <div>
-        <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[0.5px]  w-full h-[700px] transparent-style"></div>
-        <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[0.5px]  w-full h-[700px]  ">
-          <div className="w-full  h-[60%] " />
+        <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[0.5px] w-full h-[700px] transparent-style"></div>
+        <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[0.5px] w-full h-[700px]">
+          <div className="w-full h-[60%]" />
           <div className="bg-black25 h-[40%] rounded-t-lg ml-2 mr-2 flex flex-col items-center">
-            <div className="flex  w-full">
-              <p className="text-[18px] text-white font-inter_tight font-[300] text-center   pt-6 w-[88%]  ml-[6%]">
+            <div className="flex w-full">
+              <p className="text-[18px] text-white font-inter_tight font-[300] text-center pt-6 w-[88%] ml-[6%]">
                 Enter your score
               </p>
               <button
-                className="  w-[3%] mr-[3%] mt-[2%]"
+                className="w-[3%] mr-[3%] mt-[2%]"
                 onClick={() => {
                   setSubmitScoreDialog(false);
                 }}
@@ -622,18 +632,11 @@ const TournamentModel = ({
                 />
               </button>
             </div>
-            <div className=" flex    mt-[8%] w-[100%]">
-              <div className="  flex flex-col items-center justify-center w-[50%]">
+            <div className="flex mt-[8%] w-[100%]">
+              <div className="flex flex-col items-center justify-center w-[50%]">
                 <div className="rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center border-white border-2">
-                  {/* <img
-                    className="rounded-full h-full w-full object-cover"
-                    src={gameDetails.opponent_image}
-                    alt="Profile Picture"
-                  /> */}
                   <img
                     className="rounded-full h-full w-full object-cover"
-                    //  src={matchData.opponent_image}
-
                     src={
                       gameDetails
                         ? user.data.id !== gameDetails.host_user_id
@@ -648,10 +651,6 @@ const TournamentModel = ({
                     alt="Profile Picture"
                   />
                 </div>
-                {/* <p className="text-[16px] text-white font-inter_tight font-[200] text-center pt-2 w-[20%]">
-                  {gameDetails.opponent_name}
-                </p> */}
-
                 <p className="text-[16px] text-white font-inter_tight font-[200] text-center pt-2 w-[20%]">
                   {gameDetails && user.data.id !== gameDetails.host_user_id
                     ? gameDetails.host_name
@@ -661,16 +660,10 @@ const TournamentModel = ({
                   {gameDetails.opponent_score_count
                     ? gameDetails.opponent_score_count
                     : 0}
-                  {/* {matchData.opponent_score_count} */}
                 </p>
               </div>
-              <div className="  flex flex-col items-center justify-center w-[50%]">
+              <div className="flex flex-col items-center justify-center w-[50%]">
                 <div className="rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center border-white border-2">
-                  {/* <img
-                    className="rounded-full h-full w-full object-cover"
-                    src={gameDetails.host_image}
-                    alt="Profile Picture"
-                  /> */}
                   <img
                     className="rounded-full h-full w-full object-cover"
                     src={
@@ -687,34 +680,22 @@ const TournamentModel = ({
                     alt="Profile Picture"
                   />
                 </div>
-                {/* <p className="text-[16px] text-white font-inter_tight font-[300] text-center pt-2 w-[20%]">
-                  {gameDetails.host_name}
-                </p> */}
                 <p className="text-[16px] text-white font-inter_tight font-[300] text-center pt-2 w-[20%]">
                   {gameDetails && user.data.id === gameDetails.host_user_id
                     ? gameDetails.host_name
                     : gameDetails.opponent_name}
                 </p>
-                {/* <input
-                  placeholder="Enter Score"
-                  className="w-[30%] text-[14px]   h-8 mt-2    rounded-xl text-white bg-gray6E outline-none    pl-2"
-                  onChange={(event) => {
-                    console.log("test" + event.target.value);
-                    setScoreText(event.target.value);
-                  }}
-                /> */}
                 <input
                   placeholder="Enter Score"
-                  className="w-[100px]       text-[14px] h-8 mt-2 rounded-xl text-white bg-gray82 outline-none pl-2"
+                  className="w-[100px] text-[14px] h-8 mt-2 rounded-xl text-white bg-gray82 outline-none pl-2"
                   onChange={(event) => {
                     setScoreText(event.target.value);
                   }}
                 />
               </div>
             </div>
-
             {isSubmitScoreBtn ? (
-              <p className="text-[14px] text-white font-inter_tight font-[200] text-center   pt-2 w-[88%]   ">
+              <p className="text-[14px] text-white font-inter_tight font-[200] text-center pt-2 w-[88%]">
                 Please wait for opponent to <br /> enter score!
                 <br />
                 {scoreTimeCount}
@@ -738,31 +719,14 @@ const TournamentModel = ({
   function renderFindAnotherMatch() {
     var amount = readyTimerData ? readyTimerData.amount : matchData.amountCal;
 
-     // Show the ad when this view renders
-     const [adShown, setAdShown] = useState(false);
-
-     useEffect(() => {
-       // Set a flag to only show the ad once
-       if (!adShown) {
-         setAdShown(true);
-       }
-     }, []);
-
     return (
       <div className="max-h-[800px] relative flex justify-center items-center">
-
         {adShown && <InterstitialScript />}
-
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center w-full  ">
-          {/* {!CommonConstant?.FreePlayData?.amount !== "Free Play" && (
-            <p className="w-full h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-green ">
-              {"$ " + amount + " has been added to your funds"}
-            </p>
-          )}  */}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center w-full">
           {!["Free Play", "free play"].includes(
             CommonConstant?.FreePlayData?.amount
           ) && (
-            <p className="w-full md:h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-green ">
+            <p className="w-full md:h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-green">
               {"$ " + amount + " has been added to your funds"}
             </p>
           )}
@@ -784,13 +748,10 @@ const TournamentModel = ({
           <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]"></div>
           <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]"></div>
         </div>
-
         <button
           onClick={() => {
             CommonConstant.CurrentGameDetails = "";
             CommonConstant.SelectedMatchData = "";
-            // socket.stop();
-
             if (CommonConstant?.matchTournamentData?.winnerId !== 0) {
               route.replace(PATH_DASHBOARD.home);
             } else {
@@ -804,26 +765,14 @@ const TournamentModel = ({
       </div>
     );
   }
+
   function renderRematch() {
     var amount = readyTimerData ? readyTimerData.amount : matchData.amount;
 
-    // Show the ad when this view renders
-    const [adShown, setAdShown] = useState(false);
-
-    useEffect(() => {
-      // Set a flag to only show the ad once
-      if (!adShown) {
-        setAdShown(true);
-      }
-    }, []);
-
-
     return (
       <div className="max-h-[800px] relative flex justify-center items-center">
-
         {adShown && <InterstitialScript />}
-
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center w-full  ">
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center w-full">
           {!["Free Play", "free play"].includes(
             CommonConstant?.FreePlayData?.amount
           ) && (
@@ -838,7 +787,6 @@ const TournamentModel = ({
             alt="Logo"
             className="mt-12"
           />
-
           <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4 mt-24">
             <img
               className="rounded-full h-full w-full object-cover"
@@ -849,14 +797,13 @@ const TournamentModel = ({
             onClick={() => {
               CommonConstant.CurrentGameDetails = "";
               CommonConstant.SelectedMatchData = "";
-              //socket.stop();
               route.replace(PATH_DASHBOARD.home);
             }}
-            className="w-[200px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight bg-grayA4  mt-16  "
+            className="w-[200px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight bg-grayA4 mt-16"
           >
             {"Continue"}
           </button>
-          <p className="text-[18px] text-white font-inter_tight font-[300] text-center   pt-6 w-[88%]  ">
+          <p className="text-[18px] text-white font-inter_tight font-[300] text-center pt-6 w-[88%]">
             Feel like you been cheated? Contact us
           </p>
           <a
@@ -877,21 +824,19 @@ const TournamentModel = ({
       </div>
     );
   }
+
   return (
     <Modal
       className="modal-common-block-send"
       isOpen={true}
-      // onRequestClose={closeModal}
       style={customStyles}
       contentLabel="Example Modal"
     >
-      {/* {console.log("isLoader", isLoader)} */}
       {isLoader && (
         <div className="small-loader">
           <div className="spinner"></div>
         </div>
       )}
-
       {selectedModelIndex == 1
         ? renderAmount()
         : selectedModelIndex == 2
@@ -915,7 +860,6 @@ const TournamentModel = ({
         : selectedModelIndex == 11
         ? renderScoreSubmit()
         : renderMatchUsersScore()}
-      {/* {renderScoreSubmit()} */}
     </Modal>
   );
 };
