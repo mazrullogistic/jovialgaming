@@ -718,6 +718,10 @@ const TournamentModel = ({
 
   function renderFindAnotherMatch() {
     var amount = readyTimerData ? readyTimerData.amount : matchData.amountCal;
+    var isTournamentMatch = matchData?.tournament || matchData?.tourCommonId;
+    var isFinalTournamentWin = CommonConstant?.matchTournamentData?.winnerId !== 0 && CommonConstant?.matchTournamentData?.winnerId;
+    var shouldShowAmount = (!isTournamentMatch && amount && amount > 0) || isFinalTournamentWin;
+
 
     return (
       <div className="max-h-[800px] relative flex justify-center items-center">
@@ -725,9 +729,11 @@ const TournamentModel = ({
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center w-full">
           {!["Free Play", "free play"].includes(
             CommonConstant?.FreePlayData?.amount
-          ) && (
+          ) && shouldShowAmount && (
             <p className="w-full md:h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-green">
-              {"$ " + amount + " has been added to your funds"}
+              {isFinalTournamentWin 
+                ? `$ ${CommonConstant?.matchTournamentData?.tournament_price || amount} has been added to your funds` 
+                : `$ ${amount} has been added to your funds`}
             </p>
           )}
           <Image
@@ -768,6 +774,9 @@ const TournamentModel = ({
 
   function renderRematch() {
     var amount = readyTimerData ? readyTimerData.amount : matchData.amount;
+    var isTournamentMatch = matchData?.tournament || matchData?.tourCommonId;
+    var shouldShowAmount = !isTournamentMatch && amount && amount > 0;
+
 
     return (
       <div className="max-h-[800px] relative flex justify-center items-center">
@@ -775,7 +784,7 @@ const TournamentModel = ({
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center w-full">
           {!["Free Play", "free play"].includes(
             CommonConstant?.FreePlayData?.amount
-          ) && (
+          ) && shouldShowAmount && (
             <p className="w-full md:h-10 pt-1 rounded-sm text-[18px] text-white font-inter_tight font-[300] text-center bg-red">
               {"$ " + amount + " has been deducted from your funds"}
             </p>
