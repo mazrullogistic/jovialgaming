@@ -1,11 +1,6 @@
 // firebase-config.js
 import { initializeApp } from "firebase/app";
-import {
-  getMessaging,
-  getToken,
-  onMessage,
-  isSupported,
-} from "firebase/messaging";
+import { getMessaging, getToken, onMessage, isSupported } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
@@ -19,16 +14,15 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-// Check if messaging is supported before initializing
-let messaging = null;
-if (typeof window !== "undefined") {
-  isSupported()
-    .then((supported) => {
-      if (supported) {
-        messaging = getMessaging(app);
-      }
-    })
-    .catch((error) => console.error("Messaging is not supported:", error));
-}
+// Function to initialize messaging
+const initializeMessaging = async () => {
+  if (typeof window !== "undefined") {
+    const supported = await isSupported();
+    if (supported) {
+      return getMessaging(app);
+    }
+  }
+  return null;
+};
 
-export { messaging, getToken, onMessage };
+export { initializeMessaging, getToken, onMessage };
