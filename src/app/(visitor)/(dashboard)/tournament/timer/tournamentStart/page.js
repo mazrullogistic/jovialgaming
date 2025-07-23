@@ -10,6 +10,7 @@ import useToaster from "@/hooks/useToaster";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import Loader from "@/components/Loader";
+import TournamentBracketModal from "@/components/TournamentBracket/bracketModel";
 import EventEmitter from "@/components/EventEmitter";
 import {
   availableMatchJoinAction,
@@ -631,6 +632,8 @@ const TournamentStart = () => {
     getCurrentMatch(amountData, gameMode);
   };
 
+  const [showBracketModal, setShowBracketModal] = useState(false);
+
   return (
     <div>
       {/* {isLoader ? (
@@ -644,11 +647,17 @@ const TournamentStart = () => {
               ? "bg-gray82 text-gray-400 cursor-not-allowed" 
               : "bg-gray82 text-white hover:bg-gray-700 cursor-pointer"
           }`}
-          onClick={matchStatus?.status !== 0 ? () => router.push(`/tournament/bracket/${tournamentNewData?.id}`) : undefined}
+          onClick={matchStatus?.status !== 0 ? () => setShowBracketModal(true) : undefined}
           disabled={matchStatus?.status === 0}
         >
           View Bracket
         </button>
+        {showBracketModal && (
+          <TournamentBracketModal
+            tournamentId={tournamentNewData?.id}
+            onClose={() => setShowBracketModal(false)}
+          />
+        )}
         {isModelShow && (
           <TournamentModel
             isLoader={isLoader}
