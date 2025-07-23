@@ -41,7 +41,7 @@ import "react-multi-carousel/lib/styles.css";
 import useToaster from "@/hooks/useToaster";
 import { useDispatch } from "react-redux";
 import Loader from "@/components/Loader";
-import { messaging, getToken } from "../../../../../public/firebase-config";
+import { initializeMessaging, getToken } from "../../../../../public/firebase-config";
 import { PATH_DASHBOARD } from "@/routes/paths";
 import { usePathname, useRouter } from "next/navigation";
 import moment from "moment";
@@ -152,6 +152,9 @@ const HomePage = ({ Component, pageProps }) => {
     }
   };
   const [isMobile, setIsMobile] = useState(false);
+  // useEffect(() => {
+  //   connectSock();
+  // }, []);
 
   // async function connectSock() {
   //   console.log("SocketKEY.socketConnect", SocketKEY.socketConnect);
@@ -177,25 +180,59 @@ const HomePage = ({ Component, pageProps }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  useEffect(() => {
-    const requestPermission = async () => {
-      try {
-        const token = await getToken(messaging, {
-          vapidKey: process.env.V_API_KEY,
-        });
-        // console.log("token", token);
-        if (token) {
-          updateDeviceToken(token);
-
-          // You can now send this token to your server to subscribe for notifications
+useEffect(() => {
+  const requestPermission = async () => {
+    if (typeof window !== "undefined" && "Notification" in window && "serviceWorker" in navigator) {
+      const currentPermission = Notification.permission;
+      if (currentPermission === "granted") {
+        const registration = await navigator.serviceWorker.ready;
+        console.log("Service Worker ready:", registration);
+        if (registration.active) {
+          const messaging = await initializeMessaging();
+          if (messaging) {
+            try {
+              const token = await getToken(messaging, { vapidKey: process.env.NEXT_PUBLIC_V_API_KEY });
+              if (token) {
+                updateDeviceToken(token);
+              }
+            } catch (error) {
+              console.log("Failed to get token", error);
+            }
+          } else {
+            console.error("Messaging is not supported or failed to initialize");
+          }
         }
-      } catch (error) {
-        console.log("error", error);
+      } else if (currentPermission === "denied") {
+        console.log("Notification permission is denied. Please enable it in browser settings.");
+      } else if (currentPermission === "default") {
+        const permission = await Notification.requestPermission();
+        if (permission === "granted") {
+          const registration = await navigator.serviceWorker.ready;
+          if (registration.active) {
+            const messaging = await initializeMessaging();
+            if (messaging) {
+              try {
+                const token = await getToken(messaging, { vapidKey: process.env.NEXT_PUBLIC_V_API_KEY });
+                console.log("token", token);
+                if (token) {
+                  updateDeviceToken(token);
+                }
+              } catch (error) {
+                console.log("Failed to get token", error);
+              }
+            } else {
+              console.error("Messaging is not supported or failed to initialize");
+            }
+          }
+        } else {
+          console.log("Notification permission denied:", permission);
+        }
       }
-    };
+    }
+  };
 
-    requestPermission();
-  }, []);
+  requestPermission();
+}, []);
 
   useEffect(() => {
     try {

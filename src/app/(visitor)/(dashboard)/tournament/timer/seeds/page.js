@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import Loader from "@/components/Loader";
 import { ArrowLeftIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import TournamentBracketModal from '@/components/TournamentBracket/bracketModel';
 
 const Seeds = () => {
   const [tournamentData, setTournamentData] = useState([
@@ -31,6 +32,7 @@ const Seeds = () => {
   const [isLoader, setIsLoader] = useState(true); // Initialize with null or some default value
   const [matchStatus, setMatchStatus] = useState("");
   const router = useRouter();
+  const [showBracketModal, setShowBracketModal] = useState(false);
 
   useEffect(() => {
     RegisterUserList();
@@ -111,11 +113,17 @@ const Seeds = () => {
                 ? "bg-gray82 text-gray-400 cursor-not-allowed" 
                 : "bg-gray82 text-white hover:bg-gray-700 cursor-pointer"
             }`}
-            onClick={matchStatus?.status !== 0 ? () => router.push(`/tournament/bracket/${tournamentNewData?.id}`) : undefined}
+            onClick={matchStatus?.status !== 0 ? () => setShowBracketModal(true) : undefined}
             disabled={matchStatus?.status === 0}
           >
             View Bracket
           </button>
+          {showBracketModal && (
+            <TournamentBracketModal
+              tournamentId={tournamentNewData?.id}
+              onClose={() => setShowBracketModal(false)}
+            />
+          )}
           <div className="center-container">
             <p className="medium-txt-seeds">Seeds</p>
           </div>

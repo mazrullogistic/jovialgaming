@@ -33,6 +33,7 @@ import socket from "@/socket/socket";
 import EventEmitter from "@/components/EventEmitter";
 import { format } from "date-fns";
 import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/solid";
+import TournamentBracketModal from '@/components/TournamentBracket/bracketModel';
 
 const Timer = () => {
   const [isLoader, setIsLoader] = useState(true); // Initialize with null or some default value
@@ -60,6 +61,7 @@ const Timer = () => {
   const [checkStatus, setCheckStatus] = useState({});
   const [currentMatch, setCurrentMatch] = useState({});
   const getCurrentTime = () => format(new Date(), "yyyy-MM-dd HH:mm:ss");
+  const [showBracketModal, setShowBracketModal] = useState(false);
 
   useEffect(() => {
     // Connect to the server
@@ -204,11 +206,17 @@ const Timer = () => {
                 ? "bg-gray82 text-gray-400 cursor-not-allowed" 
                 : "bg-gray82 text-white hover:bg-gray-700 cursor-pointer"
             }`}
-            onClick={matchStatus?.status !== 0 ? () => router.push(`/tournament/bracket/${tournamentNewData?.id}`) : undefined}
+            onClick={matchStatus?.status !== 0 ? () => setShowBracketModal(true) : undefined}
             disabled={matchStatus?.status === 0}
           >
             View Bracket
           </button>
+          {showBracketModal && (
+            <TournamentBracketModal
+              tournamentId={tournamentNewData?.id}
+              onClose={() => setShowBracketModal(false)}
+            />
+          )}
           <div className="w-full max-w-md p-6 relative">
             {/* Chat Icon */}
 
