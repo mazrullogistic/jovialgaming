@@ -29,8 +29,8 @@ const Seeds = () => {
   var tournamentNewData = getTournamentId("id");
   const dispatch = useDispatch();
   const [userList, setUserList] = useState([]);
-  const [isLoader, setIsLoader] = useState(true); // Initialize with null or some default value
-  const [matchStatus, setMatchStatus] = useState("");
+  const [isLoader, setIsLoader] = useState(true); 
+  const [matchStatus, setMatchStatus] = useState({ status: 0 });
   const router = useRouter();
   const [showBracketModal, setShowBracketModal] = useState(false);
 
@@ -77,17 +77,16 @@ const Seeds = () => {
       const object = {
         tour_id: tournamentNewData.id,
       };
-
-      const { payload: res } = await dispatch(
-        getCurrentTournamentMatchAction(object)
-      );
-
+      const { payload: res } = await dispatch(getCurrentTournamentMatchAction(object));
       const { data, status } = res;
-      if (status) {
-        setMatchStatus(data?.tournamentData);
+      if (status && data?.tournamentData) {
+        setMatchStatus(data.tournamentData);
+      } else {
+        setMatchStatus({ status: 0 });
       }
     } catch (error) {
-      console.log("Error fetching match status", error);
+      setMatchStatus({ status: 0 });
+      console.log('Error fetching match status', error);
     }
   };
 
@@ -106,15 +105,15 @@ const Seeds = () => {
             <span className="text-sm font-medium">Back</span>
           </button>
 
-          {/* View Bracket Button - Disabled until tournament starts - Top right corner */}
+          {/* View Bracket Button - Disabled until tournament starts  */}
           <button
-            className={`absolute top-4 right-4 px-4 py-2 rounded-lg text-sm font-semibold transition ${
-              matchStatus?.status === 0 
-                ? "bg-gray82 text-gray-400 cursor-not-allowed" 
-                : "bg-gray82 text-white hover:bg-gray-700 cursor-pointer"
+            className={`absolute top-4 right-4 px-4 py-2 rounded-lg text-sm font-semibold transition z-50 ${
+              matchStatus?.status === 1
+                ? "bg-gray82 text-white hover:bg-gray-700 cursor-pointer"
+                : "bg-gray82 text-gray-400 cursor-not-allowed"
             }`}
-            onClick={matchStatus?.status !== 0 ? () => setShowBracketModal(true) : undefined}
-            disabled={matchStatus?.status === 0}
+            onClick={matchStatus?.status === 1 ? () => setShowBracketModal(true) : undefined}
+            disabled={matchStatus?.status !== 1}
           >
             View Bracket
           </button>
