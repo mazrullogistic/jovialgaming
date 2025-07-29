@@ -152,7 +152,9 @@ const start = () => {
     socket.on("disconnect", () => {
       console.log("❌ Socket disconnected");
     });
-
+    socket.on("ready_success",(data)=>
+    console.log("Received ready_success",data));
+    
     socket.on("user", (message) => {
     console.log("Received user event--------->", message.action);
     if (message.action === "match_request_success") {
@@ -169,12 +171,15 @@ const start = () => {
       console.log("ready_timer_success");
       EventEmitter.emit(EmitterKey.TimerStart, message);
     } else if (message.action === "ready_success") {
+      console.log ("ready success event being listened")
       EventEmitter.emit(EmitterKey.ReadySuccess, message);
     } else if (message.action === "scoreWaitingTimer") {
+      console.log("scoreWaitingTimer");
       EventEmitter.emit(EmitterKey.ScoreWaitingTimer, message);
     } else if (message.action === "ready_timer_stop") {
       EventEmitter.emit(EmitterKey.ReadyTimerStop, message);
     } else if (message.action === "afterSubmit") {
+      console.log("afterSubmit");
       EventEmitter.emit(EmitterKey.AfterSubmit, message);
     } else if (message.action === "roomGroupchatMessage") {
       EventEmitter.emit(EmitterKey.RoomGroupchatMessage, message);
@@ -189,10 +194,12 @@ const start = () => {
       CommonConstant.notificationCount = notificationCount;
       EventEmitter.emit(EmitterKey.ChatReceive, message);
     } else if (message.action === "tournament_start") {
+      console.log("tournament_start");
       EventEmitter.emit(EmitterKey.TournamentStart, message);
     } else if (message.action === "tournament_start_by_admin") {
       EventEmitter.emit(EmitterKey.TournamentStart, message);
     } else if (message.action === "match_loss") {
+      console.log("match_loss");
       EventEmitter.emit(EmitterKey.TournamentStart, message);
     } else if (message.action === "new_tournament_match") {
       EventEmitter.emit(EmitterKey.TournamentStart, message);
@@ -202,6 +209,15 @@ const start = () => {
       EventEmitter.emit(EmitterKey.TmatchChat, message);
     } else if (message.action === "unread_message") {
       EventEmitter.emit(EmitterKey.TmatchChat, message);
+    } else if (message.action === "disqualify_by_admin") {
+      console.log("disqualify_by_admin event received:", message);
+      EventEmitter.emit(EmitterKey.DisqualifyByAdmin, message);
+    } else if (message.action === "win_by_admin") {
+      console.log("win_by_admin event received:", message);
+      EventEmitter.emit(EmitterKey.WinByAdmin, message);
+    } else if (message.action === "disqualify_from_match") {
+      console.log("disqualify_from_match event received:", message);
+      EventEmitter.emit(EmitterKey.DisqualifyFromMatch, message);
     }
   });
   }
