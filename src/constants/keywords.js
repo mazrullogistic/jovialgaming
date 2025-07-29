@@ -71,4 +71,6 @@ export const EmitterKey = {
   isModelShow: "isModelShow",
 
   DrawerClick: "DrawerClick",
+  DisqualifyByAdmin: "DisqualifyByAdmin",
+  WinByAdmin: "WinByAdmin",
 };

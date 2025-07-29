@@ -156,18 +156,30 @@ const TournamentStart = () => {
   }, []);
   useEffect(() => {
     EventEmitter.on(EmitterKey.AfterSubmit, (res) => {
+      console.log("AfterSubmit event received:", res.message);
       console.log("res.ReadyTimerStop 126", res.message);
-
-      // setIsModelShow(false);
-
-      setTimeout(() => {
-        toaster(res.message.message, TOAST_TYPES.ERROR);
-      }, 500);
-      // setSelectedModelIndex(9);
-
-      // setReadyTimerData(res.message);
+      // Store the result message and show result card
+      setResultMessage(res.message.message);
+      setSelectedModelIndex(10);
     });
   }, []);
+
+  useEffect(() => {
+    EventEmitter.on(EmitterKey.DisqualifyByAdmin, (res) => {
+      console.log("DisqualifyByAdmin event received:", res.message);
+      CommonConstant.adminTournamentData = res.message;
+      setSelectedModelIndex(12);
+    });
+  }, []);
+
+  useEffect(() => {
+    EventEmitter.on(EmitterKey.WinByAdmin, (res) => {
+      console.log("WinByAdmin event received:", res.message);
+      CommonConstant.adminTournamentData = res.message;
+      setSelectedModelIndex(13);
+    });
+  }, []);
+
   useEffect(() => {}, []);
 
   const getRuleApi = async (gamId) => {
@@ -615,6 +627,7 @@ const TournamentStart = () => {
       );
 
       const { data, status } = res;
+      console.log("data?.response?.data?.data", data?.tournamentData);
       if (status) {
         setMatchStatus(data?.tournamentData);
       }
@@ -633,6 +646,7 @@ const TournamentStart = () => {
   };
 
   const [showBracketModal, setShowBracketModal] = useState(false);
+  const [resultMessage, setResultMessage] = useState("");
 
   return (
     <div>
@@ -681,6 +695,7 @@ const TournamentStart = () => {
             readyTimerData={readyTimerData}
             submitScoreModel={submitScoreDialog}
             selectedMatchData={CommonConstant.SelectedMatchData}
+            resultMessage={resultMessage}
           />
         )}
         <div className="  ml-8">

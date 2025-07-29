@@ -36,6 +36,7 @@ const TournamentModel = ({
   isLoader,
   submitScoreModel,
   selectedMatchData,
+  resultMessage,
 }) => {
   const router = useRouter();
 
@@ -834,6 +835,155 @@ const TournamentModel = ({
     );
   }
 
+  function renderResultCard() {
+    const isWinner = resultMessage && (
+      resultMessage.toLowerCase().includes('you win') ||
+      resultMessage.toLowerCase().includes('win by forfeit') ||
+      resultMessage.toLowerCase().includes('winner') ||
+      resultMessage.toLowerCase().includes('congratulations') ||
+      resultMessage.toLowerCase().includes('victory')
+    );
+
+    return (
+      <div className="max-h-[800px] relative flex justify-center items-center">
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center w-full">
+          <Image
+            src={isWinner ? "/images/cup.svg" : "/images/cross.svg"}
+            width={125}
+            height={125}
+            alt={isWinner ? "Trophy" : "Cross"}
+            className="mt-12"
+          />
+          <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4 mt-24">
+            <img
+              className="rounded-full h-full w-full object-cover"
+              src={user.data.image}
+            />
+          </div>
+          <div className="mt-8 text-center">
+            <p className="text-[24px] text-white font-inter_tight font-[600] mb-4">
+              Match Result
+            </p>
+            <p className="text-[18px] text-white font-inter_tight font-[400] px-8 leading-relaxed">
+              {resultMessage}
+            </p>
+          </div>
+          <button
+            onClick={() => {
+              CommonConstant.CurrentGameDetails = "";
+              CommonConstant.SelectedMatchData = "";
+              route.replace(PATH_DASHBOARD.home);
+            }}
+            className={`w-[200px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight mt-8 ${
+              isWinner ? "bg-yellow" : "bg-grayA4"
+            }`}
+          >
+            {"Continue"}
+          </button>
+        </div>
+        <div className="flex max-h-[700px] w-full">
+          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]"></div>
+          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]"></div>
+        </div>
+      </div>
+    );
+  }
+
+  function renderLoserCard() {
+    return (
+      <div className="max-h-[800px] relative flex justify-center items-center">
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center w-full">
+          <Image
+            src="/images/cross.svg"
+            width={125}
+            height={125}
+            alt="Cross"
+            className="mt-12"
+          />
+          <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4 mt-24">
+            <img
+              className="rounded-full h-full w-full object-cover"
+              src={user.data.image}
+            />
+          </div>
+          <div className="mt-8 text-center">
+            <p className="text-[24px] text-white font-inter_tight font-[600] mb-4">
+              Disqualified
+            </p>
+            <p className="text-[18px] text-white font-inter_tight font-[400] px-8 leading-relaxed">
+              You have been disqualified from the tournament by admin.
+            </p>
+          </div>
+          <button
+            onClick={() => {
+              CommonConstant.CurrentGameDetails = "";
+              CommonConstant.SelectedMatchData = "";
+              route.replace(PATH_DASHBOARD.home);
+            }}
+            className="w-[200px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight mt-8 bg-grayA4"
+          >
+            {"Loser"}
+          </button>
+        </div>
+        <div className="flex max-h-[700px] w-full">
+          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]"></div>
+          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]"></div>
+        </div>
+      </div>
+    );
+  }
+
+  function renderWinnerCard() {
+    return (
+      <div className="max-h-[800px] relative flex justify-center items-center">
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center w-full">
+          <Image
+            src="/images/cup.svg"
+            width={125}
+            height={125}
+            alt="Trophy"
+            className="mt-12"
+          />
+          <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4 mt-24">
+            <img
+              className="rounded-full h-full w-full object-cover"
+              src={user.data.image}
+            />
+          </div>
+          <div className="mt-8 text-center">
+            <p className="text-[24px] text-white font-inter_tight font-[600] mb-4">
+              Winner
+            </p>
+            <p className="text-[18px] text-white font-inter_tight font-[400] px-8 leading-relaxed">
+              You have won the match by admin decision!
+            </p>
+          </div>
+          <button
+            onClick={() => {
+              CommonConstant.CurrentGameDetails = "";
+              CommonConstant.SelectedMatchData = "";
+              const adminTournamentData = CommonConstant.adminTournamentData;
+              if (adminTournamentData && adminTournamentData.status === 2) {
+                // Tournament completed, redirect to home
+                route.replace(PATH_DASHBOARD.home);
+              } else {
+                // Tournament not completed, redirect to tournament start
+                route.back();
+              }
+            }}
+            className="w-[200px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight mt-8 bg-yellow"
+          >
+            {"Winner"}
+          </button>
+        </div>
+        <div className="flex max-h-[700px] w-full">
+          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]"></div>
+          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]"></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <Modal
       className="modal-common-block-send"
@@ -866,8 +1016,14 @@ const TournamentModel = ({
         ? matchData.winstatus
           ? renderFindAnotherMatch()
           : renderRematch()
+        : selectedModelIndex == 10
+        ? renderResultCard()
         : selectedModelIndex == 11
         ? renderScoreSubmit()
+        : selectedModelIndex == 12
+        ? renderLoserCard()
+        : selectedModelIndex == 13
+        ? renderWinnerCard()
         : renderMatchUsersScore()}
     </Modal>
   );
