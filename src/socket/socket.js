@@ -219,6 +219,9 @@ const start = () => {
       console.log("disqualify_from_match event received:", message);
       EventEmitter.emit(EmitterKey.DisqualifyFromMatch, message);
     }
+    else if (message.action === 'tournament_over'){
+      EventEmitter.emit(EmitterKey.TournamentOver,message);
+    }
   });
   }
 

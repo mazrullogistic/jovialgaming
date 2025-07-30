@@ -6,6 +6,8 @@ import useToaster from "@/hooks/useToaster";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import Loader from "@/components/Loader";
+import Image from "next/image";
+import { PATH_DASHBOARD } from "@/routes/paths";
 import {
   getCurrentTournamentMatchAction,
   getTournamentRulesAction,
@@ -62,7 +64,7 @@ const Timer = () => {
   const [currentMatch, setCurrentMatch] = useState({});
   const getCurrentTime = () => format(new Date(), "yyyy-MM-dd HH:mm:ss");
   const [showBracketModal, setShowBracketModal] = useState(false);
-
+  const [showDisqualificationModal, setShowDisqualificationModal] = useState(false);
   useEffect(() => {
     // Connect to the server
     // 54321
@@ -169,6 +171,22 @@ const Timer = () => {
       console.log("Error", error);
     }
   };
+  useEffect(() => {
+    EventEmitter.on(EmitterKey.DisqualifyFromMatch, (res) => {
+      console.log("DisqualifyFromMatch event received:", res.message);
+      setShowDisqualificationModal(true);
+    });
+
+  }, []);
+
+   useEffect(()=>{
+    EventEmitter.on(EmitterKey.TournamentOver,(res)=>{ 
+      toast.error("Tournament Over");
+      setTimeout(() => {
+        router.replace(PATH_DASHBOARD.home);
+      }, 10000);
+    });
+  },[]);
 
   const onPressContinue = async () => {
     if (currentMatch) {
@@ -244,6 +262,49 @@ const Timer = () => {
               Continue
             </button>
           </div>
+
+          {/* Disqualification Modal */}
+          {showDisqualificationModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="w-full max-w-lg mx-4 relative flex justify-center items-center bg-black06 rounded-lg p-6 aspect-square">
+              <div className="flex flex-col items-center w-full">
+                <Image
+                  src="/images/cross.svg"
+                  width={100}
+                  height={100}
+                  alt="Cross"
+                  className="mt-2"
+                />
+                <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4 mt-6">
+                  <img
+                    className="rounded-full h-full w-full object-cover"
+                    src={getData("user")?.data?.image || "/images/profile.png"}
+                  />
+                </div>
+                <div className="mt-6 text-center">
+                  <p className="text-[24px] text-white font-inter_tight font-[600] mb-3">
+                    Disqualified
+                  </p>
+                  <p className="text-[16px] text-white font-inter_tight font-[400] px-6 leading-relaxed">
+                    You have been disqualified from the tournament due to timeout.
+                  </p>
+                </div>
+                <button
+                  onClick={() => {
+                    setShowDisqualificationModal(false);
+                    CommonConstant.CurrentGameDetails = "";
+                    CommonConstant.SelectedMatchData = "";
+                    router.replace(PATH_DASHBOARD.home);
+                  }}
+                  className="w-[180px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight mt-6 bg-grayA4"
+                >
+                  {"Loser"}
+                </button>
+              </div>
+            </div>
+          </div>
+          
+        )}
         </div>
       )}
     </>

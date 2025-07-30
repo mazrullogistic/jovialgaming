@@ -180,6 +180,12 @@ const TournamentStart = () => {
     });
   }, []);
 
+  useEffect(()=>{
+    EventEmitter.on(EmitterKey.TournamentOver,(res)=>{ 
+      toast.error("Tournament Over");
+    });
+  },[]);
+
   useEffect(() => {}, []);
 
   const getRuleApi = async (gamId) => {
