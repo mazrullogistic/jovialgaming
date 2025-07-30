@@ -73,4 +73,6 @@ export const EmitterKey = {
   DrawerClick: "DrawerClick",
   DisqualifyByAdmin: "DisqualifyByAdmin",
   WinByAdmin: "WinByAdmin",
+  DisqualifyFromMatch: "DisqualifyFromMatch",
+  TournamentOver:"TournamentOver"
 };

@@ -361,6 +361,7 @@ const TournamentModel = ({
         </button>
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
           <p className="text-[18px] text-white font-inter_tight font-[300] text-center">
+            {console.log("currentTourRoundDetails", currentTourRoundDetails)}
             {currentTourRoundDetails?.userCount == 3 ||
             currentTourRoundDetails?.userCount == 4
               ? "Semi Final"
@@ -759,9 +760,11 @@ const TournamentModel = ({
           onClick={() => {
             CommonConstant.CurrentGameDetails = "";
             CommonConstant.SelectedMatchData = "";
-            if (CommonConstant?.matchTournamentData?.winnerId !== 0) {
+            if (CommonConstant?.matchTournamentData?.winnerId!==0 || !matchData.winstatus) {
+              console.log ('WinnerID',CommonConstant?.matchTournamentData?.winnerId);
               route.replace(PATH_DASHBOARD.home);
             } else {
+              console.log('WinnerID',CommonConstant?.matchTournamentData?.winnerId);
               route.back();
             }
           }}
@@ -922,7 +925,7 @@ const TournamentModel = ({
             }}
             className="w-[200px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight mt-8 bg-grayA4"
           >
-            {"Loser"}
+            {"Continue"}
           </button>
         </div>
         <div className="flex max-h-[700px] w-full">
