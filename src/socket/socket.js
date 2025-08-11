@@ -221,6 +221,9 @@ const start = () => {
     }
     else if (message.action === 'tournament_over'){
       EventEmitter.emit(EmitterKey.TournamentOver,message);
+    } else if (message.action === "tournament_dispute_created") {
+      console.log("tournament_dispute_created event received:", message);
+      EventEmitter.emit(EmitterKey.TournamentDisputeCreated, message);
     }
   });
   }

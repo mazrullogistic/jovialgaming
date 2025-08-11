@@ -935,6 +935,120 @@ const TournamentModel = ({
       </div>
     );
   }
+  function renderDispute() {
+    const disputeData = CommonConstant.disputeData || {};
+    
+    return (
+      <div className="max-h-[800px] relative flex justify-center items-center">
+        {adShown && <InterstitialScript />}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center w-full z-10">
+          <div className="rounded-full h-32 w-32 bg-gray-300 flex items-center justify-center border-white border-4 mt-16">
+            <img
+              className="rounded-full h-full w-full object-cover"
+              src={user.data.image}
+            />
+          </div>
+          <div className="mt-4 text-center flex flex-col items-center">
+            <p className="text-[24px] text-white font-inter_tight font-[600] mb-4">
+              Dispute Created
+            </p>
+            <p className="text-[18px] text-white font-inter_tight font-[400] px-8 leading-relaxed mb-6">
+              A dispute has been created for your tournament match. Admin review is required to resolve this issue.
+            </p>
+            
+            {/* Dispute Details Section */}
+            <div className="bg-black25 rounded-lg p-4 mb-4 w-[90%] max-w-[400px] mx-auto">
+              <div className="space-y-3">
+                {/* Case ID */}
+                <div className="flex justify-between items-center">
+                  <span className="text-[14px] text-gray-300 font-inter_tight font-[400]">
+                    Case ID:
+                  </span>
+                  <span className="text-[14px] text-white font-inter_tight font-[600]">
+                    {disputeData.caseId || 'N/A'}
+                  </span>
+                </div>
+                
+                {/* Dispute ID */}
+                <div className="flex justify-between items-center">
+                  <span className="text-[14px] text-gray-300 font-inter_tight font-[400]">
+                    Dispute ID:
+                  </span>
+                  <span className="text-[14px] text-white font-inter_tight font-[600]">
+                    {disputeData.disputeId || 'N/A'}
+                  </span>
+                </div>
+                
+                {/* Match Type */}
+                <div className="flex justify-between items-center">
+                  <span className="text-[14px] text-gray-300 font-inter_tight font-[400]">
+                    Match Type:
+                  </span>
+                  <span className="text-[14px] text-white font-inter_tight font-[600] capitalize">
+                    {disputeData.match_type || 'N/A'}
+                  </span>
+                </div>
+                
+                {/* Tournament Name */}
+                {disputeData.tournament && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-[14px] text-gray-300 font-inter_tight font-[400]">
+                      Tournament:
+                    </span>
+                    <span className="text-[14px] text-white font-inter_tight font-[600] text-right max-w-[200px]">
+                      {disputeData.tournament.name || 'N/A'}
+                    </span>
+                  </div>
+                )}
+                
+                {/* Dispute Details */}
+                <div className="border-t border-gray-600 pt-3 mt-3">
+                  <div className="text-left">
+                    <span className="text-[14px] text-gray-300 font-inter_tight font-[400] block mb-2">
+                      Dispute Details:
+                    </span>
+                    <p className="text-[13px] text-white font-inter_tight font-[400] leading-relaxed">
+                      {disputeData.details || 'No details provided'}
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Regarding */}
+                {disputeData.regarding && (
+                  <div className="border-t border-gray-600 pt-3 mt-3">
+                    <div className="text-left">
+                      <span className="text-[14px] text-gray-300 font-inter_tight font-[400] block mb-2">
+                        Regarding:
+                      </span>
+                      <p className="text-[13px] text-white font-inter_tight font-[400] leading-relaxed">
+                        {disputeData.regarding}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            <button
+              onClick={() => {
+                CommonConstant.CurrentGameDetails = "";
+                CommonConstant.SelectedMatchData = "";
+                CommonConstant.disputeData = null; // Clear dispute data
+                route.replace(PATH_DASHBOARD.home);
+              }}
+              className="w-[200px] h-[40px] text-black text-center font-[500] rounded-xl font-inter_tight bg-grayA4 mt-4"
+            >
+              {"Continue"}
+            </button>
+          </div>
+        </div>
+        <div className="flex max-h-[700px] w-full">
+          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]"></div>
+          <div className="w-[50%] bg-black06 h-screen pl-[15%] pt-[42%] max-h-[700px]"></div>
+        </div>
+      </div>
+    );
+  }
 
   function renderWinnerCard() {
     return (
@@ -1027,6 +1141,8 @@ const TournamentModel = ({
         ? renderLoserCard()
         : selectedModelIndex == 13
         ? renderWinnerCard()
+        : selectedModelIndex == 15
+        ? renderDispute()
         : renderMatchUsersScore()}
     </Modal>
   );

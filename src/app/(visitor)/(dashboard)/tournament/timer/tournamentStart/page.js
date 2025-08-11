@@ -186,6 +186,18 @@ const TournamentStart = () => {
     });
   },[]);
 
+  useEffect(() => {
+    EventEmitter.on(EmitterKey.TournamentDisputeCreated, (res) => {
+      console.log("TournamentDisputeCreated event received:", res.message);
+      // Store dispute data in CommonConstant for the model to access
+      CommonConstant.disputeData = res.message;
+      // Set selected model index to 15 for dispute handling
+      setSelectedModelIndex(15);
+      // Show notification to user
+      toast.error("A dispute has been created for your match. Admin review required.");
+    });
+  }, []);
+
   useEffect(() => {}, []);
 
   const getRuleApi = async (gamId) => {
