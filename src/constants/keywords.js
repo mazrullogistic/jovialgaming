@@ -74,5 +74,6 @@ export const EmitterKey = {
   DisqualifyByAdmin: "DisqualifyByAdmin",
   WinByAdmin: "WinByAdmin",
   DisqualifyFromMatch: "DisqualifyFromMatch",
-  TournamentOver:"TournamentOver"
+  TournamentOver:"TournamentOver",
+  TournamentDisputeCreated: "TournamentDisputeCreated"
 };
