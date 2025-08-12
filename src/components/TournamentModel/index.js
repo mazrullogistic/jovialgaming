@@ -935,6 +935,7 @@ const TournamentModel = ({
       </div>
     );
   }
+  
   function renderDispute() {
     const disputeData = CommonConstant.disputeData || {};
     
@@ -968,17 +969,7 @@ const TournamentModel = ({
                     {disputeData.caseId || 'N/A'}
                   </span>
                 </div>
-                
-                {/* Dispute ID */}
-                <div className="flex justify-between items-center">
-                  <span className="text-[14px] text-gray-300 font-inter_tight font-[400]">
-                    Dispute ID:
-                  </span>
-                  <span className="text-[14px] text-white font-inter_tight font-[600]">
-                    {disputeData.disputeId || 'N/A'}
-                  </span>
-                </div>
-                
+         
                 {/* Match Type */}
                 <div className="flex justify-between items-center">
                   <span className="text-[14px] text-gray-300 font-inter_tight font-[400]">
